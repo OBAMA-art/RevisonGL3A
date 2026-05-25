@@ -1,0 +1,13 @@
+:{$PORT:80} {
+    root * /srv
+    encode gzip
+    file_server
+    try_files {path} /index.html
+
+    @assets {
+        path *.js *.css *.json *.svg *.png *.jpg *.ico
+    }
+    header @assets Cache-Control "public, max-age=3600"
+    header /sw.js Cache-Control "no-cache"
+    header /index.html Cache-Control "no-cache"
+}
