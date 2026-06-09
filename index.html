@@ -10,8 +10,24 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme-futuristic.css">
+  <!-- Vercel Web Analytics (pageviews + visiteurs uniques) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </head>
 <body>
+  <!-- MODALE DE BIENVENUE -->
+  <div id="welcome-modal" class="welcome-modal" hidden>
+    <div class="welcome-card">
+      <div class="welcome-emoji">🎓</div>
+      <div class="welcome-from">— Mot du Délégué —</div>
+      <h2 class="welcome-title">Le Délégué Régional de la GL3A vous souhaite une bonne révision</h2>
+      <p class="welcome-sub">Examens du 10  au 13<sup>er</sup> juin 2026 — bonne chance à tous, on se donne à fond ! 💪</p>
+      <button id="welcome-close" class="btn-primary">C'est parti 🚀</button>
+    </div>
+  </div>
   <header class="topbar">
     <button id="btnBack" class="btn-back" aria-label="Retour" hidden>←</button>
     <div class="topbar-title">
@@ -25,13 +41,14 @@
     <!-- ÉCRAN ACCUEIL : Liste des matières -->
     <section id="screen-home" class="screen active">
       <div class="hero">
-        <h2>4 épreuves demain</h2>
-        <p class="hero-sub">Mardi 26 mai 2026 — Choisis une matière pour réviser.</p>
+        <h2>Rattrapages SN1 &amp; SN2</h2>
+        <p class="hero-sub">Matières classées par unité d'enseignement. Le programme officiel n'est pas encore sorti — le contenu se complète au fur et à mesure.</p>
       </div>
-      <div id="matieres-list" class="cards-grid"></div>
+      <div id="matieres-list"></div>
       <div class="tip">
         <strong>💡 Astuce :</strong> mode <em>Résumé</em> pour ancrer les notions ; mode <em>Quiz</em> pour t'auto-évaluer ; mode <em>Sujets</em> pour t'entraîner aux questions ouvertes.
       </div>
+      <button id="btn-admin" class="admin-link">🔐 Espace délégué (modération)</button>
     </section>
 
     <!-- ÉCRAN MATIÈRE : choix mode (résumé / quiz / sujets) -->
@@ -112,7 +129,79 @@
     <section id="screen-epreuves" class="screen">
       <h2 id="epreuves-titre"></h2>
       <p class="epreuves-intro">Sélectionne une épreuve pour voir toutes ses questions et leurs corrections détaillées.</p>
+      <div class="epreuves-actions">
+        <button id="btn-add-epreuve" class="btn-primary">➕ Ajouter une épreuve</button>
+        <button id="btn-scan-epreuve" class="btn-primary btn-block">📷 Scanner une épreuve (photo)</button>
+        <div class="epreuves-actions-row">
+          <button id="btn-export-epreuves" class="btn-secondary">📤 Exporter mes épreuves</button>
+          <button id="btn-import-epreuves" class="btn-secondary">📥 Importer un fichier</button>
+          <input type="file" id="file-import" accept=".json" hidden>
+        </div>
+      </div>
       <div id="epreuves-list" class="epreuves-list"></div>
+    </section>
+
+    <!-- ÉCRAN FORMULAIRE AJOUT D'ÉPREUVE -->
+    <section id="screen-add-epreuve" class="screen">
+      <h2 id="add-titre">➕ Nouvelle épreuve</h2>
+      <p class="form-intro">Remplis le formulaire. L'épreuve sera enregistrée sur ton téléphone uniquement (tu pourras l'exporter pour la partager).</p>
+
+      <div class="form-group">
+        <label for="ep-titre">Titre de l'épreuve <span class="required">*</span></label>
+        <input type="text" id="ep-titre" placeholder="ex: Examen 2024 — POO Avancée" maxlength="200">
+      </div>
+
+      <div class="form-group">
+        <label for="ep-source">Source / Référence</label>
+        <input type="text" id="ep-source" placeholder="ex: IAI Cameroun, durée 2h, /20 pts" maxlength="200">
+      </div>
+
+      <div class="form-divider">Questions</div>
+      <div id="questions-list" class="questions-list"></div>
+
+      <button id="btn-add-question" class="btn-secondary btn-block">➕ Ajouter une question</button>
+
+      <div id="form-error" class="form-error" hidden></div>
+
+      <div class="form-actions">
+        <button id="btn-save-epreuve" class="btn-primary">💾 Enregistrer l'épreuve</button>
+        <button id="btn-cancel-epreuve" class="btn-secondary">Annuler</button>
+      </div>
+    </section>
+
+    <!-- ÉCRAN SCANNER OCR -->
+    <section id="screen-scan-epreuve" class="screen">
+      <h2 id="scan-titre">📷 Scanner une épreuve</h2>
+      <p class="form-intro">Prends en photo une épreuve papier (ou choisis une image). L'app lit le texte sur ton téléphone, détecte la matière et te dit si l'épreuve est déjà connue. Aucune donnée n'est envoyée sur Internet.</p>
+
+      <div class="scan-buttons">
+        <button id="btn-scan-camera" class="btn-primary">📸 Prendre une photo</button>
+        <button id="btn-scan-gallery" class="btn-secondary">🖼️ Choisir une image</button>
+      </div>
+
+      <input type="file" id="ocr-file-camera" accept="image/*" capture="environment" hidden>
+      <input type="file" id="ocr-file-gallery" accept="image/*" hidden>
+
+      <div id="scan-preview-wrap" class="scan-preview-wrap" hidden>
+        <img id="scan-preview" class="scan-preview" alt="Aperçu de l'épreuve scannée">
+      </div>
+
+      <div id="scan-progress-wrap" class="progress-bar" hidden>
+        <div id="scan-progress-fill" class="progress-fill"></div>
+      </div>
+      <p id="scan-status" class="scan-status" role="status" aria-live="polite"></p>
+
+      <div id="scan-result" class="scan-result" hidden></div>
+
+      <div class="form-actions">
+        <button id="btn-scan-cancel" class="btn-secondary">← Retour aux épreuves</button>
+      </div>
+    </section>
+
+    <!-- ÉCRAN ADMIN / MODÉRATION -->
+    <section id="screen-admin" class="screen">
+      <h2>🔐 Espace délégué</h2>
+      <div id="admin-content"></div>
     </section>
 
     <!-- ÉCRAN DÉTAIL ÉPREUVE -->
@@ -127,12 +216,38 @@
   </main>
 
   <script src="data.js"></script>
+  <script src="data-jeudi.js"></script>
+  <script src="data-ue.js"></script>
   <script src="epreuves.js"></script>
+  <script src="ocr.js"></script>
+  <script src="cloud-config.js"></script>
+  <script src="cloud.js"></script>
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.register('sw.js');
+          // Auto-update : quand un nouveau SW est trouvé, l'installer puis recharger
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            if (!newSW) return;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                // Un nouveau SW est prêt : on l'active et on recharge
+                newSW.postMessage({type: 'SKIP_WAITING'});
+              }
+            });
+          });
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (refreshing) return;
+            refreshing = true;
+            window.location.reload();
+          });
+          // Force la vérification de mise à jour à chaque chargement
+          reg.update().catch(() => {});
+        } catch {}
       });
     }
   </script>
