@@ -1,4 +1,4 @@
-// Épreuves corrigées — auto-générées depuis les PDFs IAI Cameroun
+// Epreuves corrigees - examens IAI Cameroun 2026
 const EPREUVES_DATA = {
   "poo": [
     {
@@ -355,7 +355,7 @@ const EPREUVES_DATA = {
         {
           "numero": "Exercice 2",
           "enonce": "Programme a ecrire sur papier. Creez une interface d'accueil d'une application de presentation personnelle en Flutter. Cette interface simple doit etre dynamique, bien structuree et agreable visuellement. L'interface doit utiliser les widgets suivants : Scaffold (structure de base), AppBar contenant un titre centre (ex 'Mon Profil') et un logo/icone a gauche (via leading ou Icon), SafeArea (pour proteger le contenu des encoches/coins d'ecran), Image (affichee de maniere centree dans le body, image reseau ou locale), Container sous l'image contenant deux textes (un texte en gras pour le nom, un texte plus petit pour une courte bio ou statut), Divider (pour separer visuellement les sections, ce qui precede), Row avec Icons (pour representer des reseaux sociaux ou contacts), Padding ou SizedBox (pour gerer les espacements entre les elements).",
-          "correction": "Solution complete :\n\n```dart\nimport 'package:flutter/material.dart';\n\nvoid main() => runApp(const MonProfilApp());\n\nclass MonProfilApp extends StatelessWidget {\n  const MonProfilApp({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      title: 'Mon Profil',\n      debugShowCheckedModeBanner: false,\n      theme: ThemeData(\n        primarySwatch: Colors.indigo,\n        useMaterial3: true,\n        scaffoldBackgroundColor: const Color(0xFFF5F7FB),\n      ),\n      home: const PageProfil(),\n    );\n  }\n}\n\nclass PageProfil extends StatelessWidget {\n  const PageProfil({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return Scaffold(\n      // 1. AppBar avec titre centre + logo a gauche\n      appBar: AppBar(\n        centerTitle: true,\n        leading: const Padding(\n          padding: EdgeInsets.all(8.0),\n          child: Icon(Icons.account_circle, size: 32),\n        ),\n        title: const Text(\n          'Mon Profil',\n          style: TextStyle(fontWeight: FontWeight.bold),\n        ),\n        backgroundColor: Colors.indigo,\n        foregroundColor: Colors.white,\n        elevation: 2,\n      ),\n\n      // 2. SafeArea pour proteger des encoches\n      body: SafeArea(\n        child: SingleChildScrollView(\n          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.center,\n            children: [\n              // 3. Image centree (avatar circulaire)\n              Center(\n                child: ClipOval(\n                  child: Image.network(\n                    'https://i.pravatar.cc/200?img=12',\n                    width: 140,\n                    height: 140,\n                    fit: BoxFit.cover,\n                    errorBuilder: (_, __, ___) => const CircleAvatar(\n                      radius: 70,\n                      child: Icon(Icons.person, size: 70),\n                    ),\n                  ),\n                ),\n              ),\n              const SizedBox(height: 20),\n\n              // 4. Container sous l'image avec nom + bio\n              Container(\n                width: double.infinity,\n                padding: const EdgeInsets.all(16),\n                decoration: BoxDecoration(\n                  color: Colors.white,\n                  borderRadius: BorderRadius.circular(12),\n                  boxShadow: [\n                    BoxShadow(\n                      color: Colors.black.withOpacity(0.05),\n                      blurRadius: 8,\n                      offset: const Offset(0, 4),\n                    ),\n                  ],\n                ),\n                child: Column(\n                  children: const [\n                    Text(\n                      'OBAMA Guy Oswald',\n                      style: TextStyle(\n                        fontSize: 22,\n                        fontWeight: FontWeight.bold,\n                        color: Colors.indigo,\n                      ),\n                    ),\n                    SizedBox(height: 6),\n                    Text(\n                      'Etudiant en Genie Logiciel - Niveau 3 - Passionne par Flutter et le cloud.',\n                      textAlign: TextAlign.center,\n                      style: TextStyle(\n                        fontSize: 14,\n                        color: Colors.black54,\n                      ),\n                    ),\n                  ],\n                ),\n              ),\n              const SizedBox(height: 24),\n\n              // 5. Divider pour separer les sections\n              const Divider(thickness: 1, color: Colors.grey),\n              const SizedBox(height: 16),\n\n              // Titre de section\n              const Padding(\n                padding: EdgeInsets.only(bottom: 12),\n                child: Text(\n                  'Mes reseaux',\n                  style: TextStyle(\n                    fontSize: 18,\n                    fontWeight: FontWeight.w600,\n                  ),\n                ),\n              ),\n\n              // 6. Row avec icones reseaux sociaux\n              Row(\n                mainAxisAlignment: MainAxisAlignment.spaceEvenly,\n                children: [\n                  _IconeReseau(\n                    icon: Icons.facebook,\n                    color: Colors.blue.shade800,\n                    label: 'Facebook',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.alternate_email,\n                    color: Colors.lightBlue,\n                    label: 'Twitter',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.business_center,\n                    color: Colors.blue.shade900,\n                    label: 'LinkedIn',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.email,\n                    color: Colors.red,\n                    label: 'Email',\n                  ),\n                ],\n              ),\n            ],\n          ),\n        ),\n      ),\n    );\n  }\n}\n\nclass _IconeReseau extends StatelessWidget {\n  final IconData icon;\n  final Color color;\n  final String label;\n\n  const _IconeReseau({\n    required this.icon,\n    required this.color,\n    required this.label,\n  });\n\n  @override\n  Widget build(BuildContext context) {\n    return Padding(\n      padding: const EdgeInsets.all(4.0),\n      child: Column(\n        children: [\n          CircleAvatar(\n            radius: 24,\n            backgroundColor: color.withOpacity(0.15),\n            child: Icon(icon, color: color, size: 26),\n          ),\n          const SizedBox(height: 6),\n          Text(label, style: const TextStyle(fontSize: 11)),\n        ],\n      ),\n    );\n  }\n}\n```\n\nPoints cles a justifier a l'oral :\n- Scaffold structure tout l'ecran.\n- SafeArea evite que le contenu passe sous le notch/status bar.\n- SingleChildScrollView permet a la page de defiler si l'ecran est petit.\n- ClipOval rend l'image circulaire.\n- Container avec BoxDecoration apporte un look 'card' moderne.\n- Divider separe visuellement.\n- Row + MainAxisAlignment.spaceEvenly distribue les 4 icones uniformement.\n- Code reutilisable grace au sous-widget _IconeReseau.\n- Les SizedBox et Padding assurent les espacements coherents.",
+          "correction": "Solution complete :\n\n```dart\nimport 'package:flutter/material.dart';\n\nvoid main() => runApp(const MonProfilApp());\n\nclass MonProfilApp extends StatelessWidget {\n  const MonProfilApp({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      title: 'Mon Profil',\n      debugShowCheckedModeBanner: false,\n      theme: ThemeData(\n        primarySwatch: Colors.indigo,\n        useMaterial3: true,\n        scaffoldBackgroundColor: const Color(0xFFF5F7FB),\n      ),\n      home: const PageProfil(),\n    );\n  }\n}\n\nclass PageProfil extends StatelessWidget {\n  const PageProfil({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return Scaffold(\n      // 1. AppBar avec titre centre + logo a gauche\n      appBar: AppBar(\n        centerTitle: true,\n        leading: const Padding(\n          padding: EdgeInsets.all(8.0),\n          child: Icon(Icons.account_circle, size: 32),\n        ),\n        title: const Text(\n          'Mon Profil',\n          style: TextStyle(fontWeight: FontWeight.bold),\n        ),\n        backgroundColor: Colors.indigo,\n        foregroundColor: Colors.white,\n        elevation: 2,\n      ),\n\n      // 2. SafeArea pour proteger des encoches\n      body: SafeArea(\n        child: SingleChildScrollView(\n          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.center,\n            children: [\n              // 3. Image centree (avatar circulaire)\n              Center(\n                child: ClipOval(\n                  child: Image.network(\n                    'https://i.pravatar.cc/200?img=12',\n                    width: 140,\n                    height: 140,\n                    fit: BoxFit.cover,\n                    errorBuilder: (_, __, ___) => const CircleAvatar(\n                      radius: 70,\n                      child: Icon(Icons.person, size: 70),\n                    ),\n                  ),\n                ),\n              ),\n              const SizedBox(height: 20),\n\n              // 4. Container sous l'image avec nom + bio\n              Container(\n                width: double.infinity,\n                padding: const EdgeInsets.all(16),\n                decoration: BoxDecoration(\n                  color: Colors.white,\n                  borderRadius: BorderRadius.circular(12),\n                  boxShadow: [\n                    BoxShadow(\n                      color: Colors.black.withOpacity(0.05),\n                      blurRadius: 8,\n                      offset: const Offset(0, 4),\n                    ),\n                  ],\n                ),\n                child: Column(\n                  children: const [\n                    Text(\n                      '[Your Name]',\n                      style: TextStyle(\n                        fontSize: 22,\n                        fontWeight: FontWeight.bold,\n                        color: Colors.indigo,\n                      ),\n                    ),\n                    SizedBox(height: 6),\n                    Text(\n                      'Etudiant en Genie Logiciel - Niveau 3 - Passionne par Flutter et le cloud.',\n                      textAlign: TextAlign.center,\n                      style: TextStyle(\n                        fontSize: 14,\n                        color: Colors.black54,\n                      ),\n                    ),\n                  ],\n                ),\n              ),\n              const SizedBox(height: 24),\n\n              // 5. Divider pour separer les sections\n              const Divider(thickness: 1, color: Colors.grey),\n              const SizedBox(height: 16),\n\n              // Titre de section\n              const Padding(\n                padding: EdgeInsets.only(bottom: 12),\n                child: Text(\n                  'Mes reseaux',\n                  style: TextStyle(\n                    fontSize: 18,\n                    fontWeight: FontWeight.w600,\n                  ),\n                ),\n              ),\n\n              // 6. Row avec icones reseaux sociaux\n              Row(\n                mainAxisAlignment: MainAxisAlignment.spaceEvenly,\n                children: [\n                  _IconeReseau(\n                    icon: Icons.facebook,\n                    color: Colors.blue.shade800,\n                    label: 'Facebook',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.alternate_email,\n                    color: Colors.lightBlue,\n                    label: 'Twitter',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.business_center,\n                    color: Colors.blue.shade900,\n                    label: 'LinkedIn',\n                  ),\n                  _IconeReseau(\n                    icon: Icons.email,\n                    color: Colors.red,\n                    label: 'Email',\n                  ),\n                ],\n              ),\n            ],\n          ),\n        ),\n      ),\n    );\n  }\n}\n\nclass _IconeReseau extends StatelessWidget {\n  final IconData icon;\n  final Color color;\n  final String label;\n\n  const _IconeReseau({\n    required this.icon,\n    required this.color,\n    required this.label,\n  });\n\n  @override\n  Widget build(BuildContext context) {\n    return Padding(\n      padding: const EdgeInsets.all(4.0),\n      child: Column(\n        children: [\n          CircleAvatar(\n            radius: 24,\n            backgroundColor: color.withOpacity(0.15),\n            child: Icon(icon, color: color, size: 26),\n          ),\n          const SizedBox(height: 6),\n          Text(label, style: const TextStyle(fontSize: 11)),\n        ],\n      ),\n    );\n  }\n}\n```\n\nPoints cles a justifier a l'oral :\n- Scaffold structure tout l'ecran.\n- SafeArea evite que le contenu passe sous le notch/status bar.\n- SingleChildScrollView permet a la page de defiler si l'ecran est petit.\n- ClipOval rend l'image circulaire.\n- Container avec BoxDecoration apporte un look 'card' moderne.\n- Divider separe visuellement.\n- Row + MainAxisAlignment.spaceEvenly distribue les 4 icones uniformement.\n- Code reutilisable grace au sous-widget _IconeReseau.\n- Les SizedBox et Padding assurent les espacements coherents.",
           "bareme": "10 pts"
         }
       ]
@@ -875,6 +875,1386 @@ const EPREUVES_DATA = {
           "enonce": "Dans Laravel, que fait la commande php artisan tinker ?\nA. Lance un serveur local\nB. Lance une interface REPL pour interagir avec les classes Laravel\nC. Compile les vues Blade\nD. Crée une nouvelle base de données",
           "correction": "Réponse correcte : B. Lance une interface REPL pour interagir avec les classes Laravel\n\nExplication :\nphp artisan tinker ouvre un REPL (Read-Eval-Print Loop) basé sur PsySH. C'est un outil INDISPENSABLE pour tester rapidement du code, interroger les modèles Eloquent, déboguer, etc.\n\nLancement :\nphp artisan tinker\n\nExemples de commandes utiles :\n# Compter les utilisateurs\n>>> User::count()\n=> 42\n\n# Récupérer un utilisateur\n>>> $user = User::find(1)\n=> App\\Models\\User { ... }\n\n# Créer un utilisateur de test\n>>> User::factory()->create([\n...     'email' => 'test@example.com'\n... ])\n\n# Tester une relation\n>>> User::with('posts')->first()->posts\n\n# Hasher un mot de passe\n>>> bcrypt('password')\n=> '$2y$10$...'\n\n# Tester un envoi de mail (en mode log)\n>>> Mail::raw('Bonjour', fn($m) => $m->to('a@b.cm')->subject('Test'))\n\n# Tester une notification\n>>> User::first()->notify(new \\App\\Notifications\\TestNotification)\n\n# Tester une Job\n>>> dispatch(new \\App\\Jobs\\ProcessOrder($order))\n\n# Quitter\n>>> exit\n\nAutres commandes Artisan utiles à connaître :\n- php artisan serve : lance le serveur de dev (réponse A trompeuse mais c'est 'serve', pas 'tinker')\n- php artisan view:cache : compile et cache les vues Blade (réponse C)\n- php artisan migrate : exécute les migrations (proche de la réponse D)\n\nDonc seule la réponse B correspond à tinker.",
           "bareme": "+1 / -1"
+        }
+      ]
+    }
+  ],
+  "ia": [
+    {
+      "titre": "RATTRAPAGE CC — Intelligence Artificielle (Année 2025-2026)",
+      "source": "IAI Cameroun, Génie Logiciel niveau 3, durée 1h, /20 pts",
+      "questions": [
+        {
+          "numero": "Ex1.1",
+          "enonce": "Quelle est la différence fondamentale entre l'approche de la programmation classique et celle du Machine Learning ?",
+          "correction": "En programmation classique, l'humain écrit EXPLICITEMENT les règles que la machine exécute : (entrée + règles → sortie). On code chaque cas particulier.\n\nEn Machine Learning, la machine APPREND les règles à partir d'exemples : (entrées + sorties attendues → règles induites). On fournit des données étiquetées et l'algorithme déduit lui-même les patterns. C'est l'inversion du paradigme : on ne programme plus les règles, on programme l'apprentissage de ces règles.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.2",
+          "enonce": "Définissez brièvement la notion d'« Agent intelligent » dans un environnement informatique.",
+          "correction": "Un agent intelligent est une entité autonome qui :\n• PERÇOIT son environnement via des capteurs (sensors)\n• RAISONNE ou APPREND pour prendre une décision\n• AGIT sur cet environnement via des effecteurs (actuators) pour atteindre des objectifs définis\n\nIl est caractérisé par PEAS (Performance, Environment, Actuators, Sensors). Exemples : chatbot, robot autonome, système de recommandation Netflix, thermostat intelligent, voiture autonome.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.3",
+          "enonce": "Expliquez le concept d'« espace d'états » dans un problème de recherche.",
+          "correction": "L'espace d'états est l'ensemble de TOUTES les configurations possibles (états) que peut prendre un problème, reliées entre elles par des transitions (actions/opérateurs). Un problème de recherche est défini par :\n• un ÉTAT INITIAL (point de départ)\n• un ensemble d'ACTIONS applicables à chaque état\n• une FONCTION DE TRANSITION (état + action → nouvel état)\n• un TEST DE BUT (est-on dans un état objectif ?)\n• une FONCTION DE COÛT\n\nExemple : pour un Rubik's cube, chaque arrangement des facettes est un état ; les rotations sont les actions ; l'espace d'états contient ~43 × 10^18 configurations.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.4",
+          "enonce": "Quelle est la principale différence entre les algorithmes de recherche non informée (BFS/DFS) et les algorithmes de recherche informée (A*) ?",
+          "correction": "La recherche NON INFORMÉE (aveugle : BFS, DFS, coût uniforme) explore l'espace d'états sans aucune information sur la distance restante au but. Elle parcourt systématiquement selon une stratégie fixe (largeur ou profondeur).\n\nLa recherche INFORMÉE utilise une HEURISTIQUE h(n) qui estime le coût restant entre un nœud n et le but. Cela guide l'exploration vers les zones prometteuses. A* combine le coût réel g(n) parcouru et l'estimation h(n) : f(n) = g(n) + h(n). Si h est admissible (ne surestime jamais), A* est OPTIMAL et COMPLET, tout en explorant beaucoup moins de nœuds que BFS.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.5",
+          "enonce": "Dans le contexte de l'apprentissage supervisé, à quoi sert la phase d'évaluation à l'aide d'un jeu de données de test (test set) ?",
+          "correction": "Le test set sert à évaluer la capacité de GÉNÉRALISATION du modèle sur des données qu'il n'a JAMAIS vues durant l'entraînement. Il permet de :\n• Mesurer la performance réelle (accuracy, précision, rappel, F1, AUC, MSE...)\n• Détecter le SURAPPRENTISSAGE (overfitting) : si le modèle est excellent sur le train mais mauvais sur le test, il a appris par cœur au lieu de généraliser\n• Comparer objectivement plusieurs modèles\n• Estimer l'erreur attendue en production\n\nLe test set doit rester totalement isolé pendant l'entraînement (pas de fuite de données). Découpage classique : 70% train / 15% validation / 15% test.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.6",
+          "enonce": "Citez deux algorithmes couramment utilisés pour résoudre des problèmes de classification en Machine Learning.",
+          "correction": "Algorithmes de classification courants :\n• Régression logistique (Logistic Regression) — classification binaire/multi-classes via sigmoïde/softmax\n• Arbres de décision (Decision Trees) et leurs ensembles : Random Forest, Gradient Boosting (XGBoost, LightGBM)\n• SVM (Support Vector Machines) — séparation par hyperplan maximisant la marge\n• k-NN (k-Nearest Neighbors) — vote majoritaire des k plus proches voisins\n• Naïve Bayes — basé sur le théorème de Bayes avec hypothèse d'indépendance\n• Réseaux de neurones (Perceptron multicouche, CNN pour images)",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.7",
+          "enonce": "Qu'est-ce que le partitionnement de données (clustering) et s'agit-il d'un apprentissage supervisé ou non supervisé ?",
+          "correction": "Le clustering (partitionnement) est une technique d'apprentissage NON SUPERVISÉ. Il regroupe automatiquement les données en clusters/groupes homogènes selon leur similarité (distance), SANS étiquettes prédéfinies.\n\nLe modèle découvre seul la structure cachée des données. Algorithmes principaux :\n• k-means : k clusters fixés à l'avance, optimise les centroïdes\n• DBSCAN : basé sur la densité, détecte automatiquement le nombre de clusters\n• CAH (Classification Ascendante Hiérarchique) : agglomération progressive → dendrogramme\n• Mean-shift, Gaussian Mixture Models (GMM)\n\nApplications : segmentation client, détection d'anomalies, compression d'images.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex1.8",
+          "enonce": "Quelle est la fonction principale d'un « Perceptron » au sein d'un réseau de neurones ?",
+          "correction": "Le Perceptron est l'UNITÉ DE BASE d'un réseau de neurones (inventé par Rosenblatt, 1958). Sa fonction principale est de :\n\n1. Calculer une combinaison linéaire pondérée des entrées + biais :\n   z = Σ(wᵢ × xᵢ) + b\n\n2. Appliquer une fonction d'activation (Heaviside, sigmoïde, ReLU, tanh) :\n   ŷ = f(z)\n\nIl sépare l'espace d'entrée en 2 classes via un HYPERPLAN. Un seul Perceptron ne peut résoudre que les problèmes linéairement séparables (limite du XOR). En empilant plusieurs perceptrons en couches (MLP — Multi-Layer Perceptron), on obtient un réseau de neurones capable d'approximer des fonctions complexes (théorème d'approximation universelle).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Ex2.1",
+          "enonce": "Représentation architecturale : Schématisez la structure du Perceptron en faisant apparaître les entrées, poids, biais, sommateur, fonction d'activation et sortie.",
+          "correction": "Schéma textuel du Perceptron :\n\n           w₁ = 0.5\n  x₁ ───────────────►┐\n                     │     ┌─────────┐     ┌──────────────┐\n                     ├────►│ Σ (z)   ├────►│ f (Heaviside)├────► ŷ\n                     │     │ Somme   │     │ seuil à 0    │\n  x₂ ───────────────►┘     └─────────┘     └──────────────┘\n           w₂ = -0.8           ▲\n                                │\n                              b = 0.2\n                              (biais)\n\nÉléments :\n• 2 ENTRÉES : x₁ et x₂\n• 2 POIDS : w₁ = 0.5 et w₂ = -0.8 (sur les connexions)\n• BIAIS : b = 0.2 (constante ajoutée à la somme)\n• SOMMATEUR Σ : calcule z = w₁·x₁ + w₂·x₂ + b\n• FONCTION D'ACTIVATION f : Heaviside (seuil) — f(z) = 1 si z ≥ 0, sinon 0\n• SORTIE : ŷ ∈ {0, 1}",
+          "bareme": "3 pts"
+        },
+        {
+          "numero": "Ex2.2a",
+          "enonce": "Propagation avant — Calculer la combinaison linéaire z pour X = [x₁ = 2, x₂ = 1.5].",
+          "correction": "Formule : z = w₁·x₁ + w₂·x₂ + b\n\nApplication numérique :\nz = 0.5 × 2 + (-0.8) × 1.5 + 0.2\nz = 1.0 + (-1.2) + 0.2\nz = 1.0 - 1.2 + 0.2\n\n┌──────────┐\n│  z = 0   │\n└──────────┘",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Ex2.2b",
+          "enonce": "Propagation avant — Déterminer la sortie prédite ŷ (valeur 0 ou 1).",
+          "correction": "On applique la fonction d'activation Heaviside : f(z) = 1 si z ≥ 0, sinon 0.\n\nCalcul : z = 0, donc z ≥ 0 → la condition est SATISFAITE.\n\n┌──────────┐\n│  ŷ = 1   │\n└──────────┘\n\nLe Perceptron prédit la classe 1 pour ce vecteur d'entrée.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Ex2.3a",
+          "enonce": "Mise à jour des paramètres — Sortie attendue y = 0. Calculer l'erreur globale e = y - ŷ.",
+          "correction": "Formule de l'erreur : e = y - ŷ\n\nApplication :\ne = 0 - 1\n\n┌───────────┐\n│  e = -1   │\n└───────────┘\n\nInterprétation : le modèle a prédit 1 alors qu'il fallait 0. L'erreur négative indique qu'il faut DIMINUER la sortie → on va RÉDUIRE les poids (vu que les entrées sont positives).",
+          "bareme": "1,5 pt"
+        },
+        {
+          "numero": "Ex2.3b",
+          "enonce": "Avec η = 0.1, calculer les nouveaux poids w₁, w₂ et le biais b après ajustement. (Règles : Δwᵢ = η · e · xᵢ et Δb = η · e)",
+          "correction": "Calcul des ajustements (η = 0.1, e = -1) :\n\n• Δw₁ = η · e · x₁ = 0.1 × (-1) × 2   = -0.2\n• Δw₂ = η · e · x₂ = 0.1 × (-1) × 1.5 = -0.15\n• Δb  = η · e       = 0.1 × (-1)       = -0.1\n\nNouveaux paramètres (Wnew = Wold + ΔW) :\n\n┌─────────────────────────────────────┐\n│  w₁_new = 0.5 + (-0.2)   =  0.3     │\n│  w₂_new = -0.8 + (-0.15) = -0.95    │\n│  b_new  = 0.2 + (-0.1)   =  0.1     │\n└─────────────────────────────────────┘\n\nVÉRIFICATION (propagation avant avec les nouveaux paramètres) :\nz_new = 0.3 × 2 + (-0.95) × 1.5 + 0.1\n      = 0.6 - 1.425 + 0.1\n      = -0.725\n\nz_new < 0 → ŷ_new = 0 ✓ (correspond à la sortie attendue y = 0).\n\nLe modèle a CONVERGÉ en une seule itération sur cet exemple. C'est le principe de la règle d'apprentissage du Perceptron (Rosenblatt 1958).",
+          "bareme": "3,5 pts"
+        }
+      ]
+    },
+    {
+      "titre": "Examen Juin 2024 — Introduction à l'IA",
+      "source": "IAI Cameroun, Niveau 3 GL, durée 2h, 20 pts",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Lesquelles sont des données ? A) Texte enregistré ; B) Photo de dessert ; C) Idée orale ; D) Poésie écrite ; E) Email.",
+          "correction": "Réponses : A, B, D, E. Une donnée doit être enregistrée numériquement. L'idée orale (C) non.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "2",
+          "enonce": "Qu'est-ce que le Big Data ?",
+          "correction": "C — Ensemble des données massives enregistrées (5V : Volume, Vélocité, Variété, Véracité, Valeur).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "3",
+          "enonce": "Que permet la Data Science ?",
+          "correction": "A et C — Analyser des données massives + Prédire actions/comportements.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "4",
+          "enonce": "Le ML est sous-discipline de :",
+          "correction": "A et B — Data Science et IA. ML ⊂ IA ⊂ Data Science.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "5",
+          "enonce": "Le ML permet des programmes :",
+          "correction": "A — Capables d'apprendre par eux-mêmes. C'est la définition.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "6",
+          "enonce": "Deep Learning est sous-discipline :",
+          "correction": "C — Machine Learning. DL = branche du ML (réseaux profonds).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "7",
+          "enonce": "Caractéristiques d'un programme d'IA ?",
+          "correction": "B — Raisonne vite sur sujet spécifique. Pas d'émotions, peut être détourné, ne remplace pas l'humain partout.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "8",
+          "enonce": "Les acteurs du numérique utilisent les données pour :",
+          "correction": "A, B, C — Cibler pubs, adapter services, entraîner algos. D (armée française) fantaisiste.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quel résultat comporte un biais algorithmique ?",
+          "correction": "A — Femmes jugées moins capables pour postes à responsabilité. Reproduit une inégalité historique.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "10",
+          "enonce": "Qu'est-ce qu'un deepfake ?",
+          "correction": "B — Trucage hyperréaliste d'image/vidéo (généré par GAN).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "11",
+          "enonce": "Comment l'IA modifie-t-elle le travail ?",
+          "correction": "A et B — Effectue tâches automatisables + remplace métiers routiniers. D (division par 2) non prouvé.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "12",
+          "enonce": "En quoi consiste le nettoyage des données ?",
+          "correction": "A et D — Rendre exploitable + retirer aberrantes. Inclut aussi missing values, doublons, normalisation.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "13",
+          "enonce": "Que montrer au modèle durant entraînement ?",
+          "correction": "A — Partie des données extraites de l'exploration (typiquement 70-80%).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "14",
+          "enonce": "Programme organisant images d'animaux selon critères NON définis : quel apprentissage ?",
+          "correction": "B — Non supervisé (clustering : k-means, DBSCAN, hiérarchique).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "15",
+          "enonce": "Programme annonçant chat/chien/lapin/souris : quel apprentissage ?",
+          "correction": "A — Supervisé. Classes définies à l'avance + labels.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "16",
+          "enonce": "Que permet la convolution ?",
+          "correction": "B — Filtrer l'image en kernels (petits filtres qui parcourent et extraient features locales).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "17",
+          "enonce": "Modélisation des données ?",
+          "correction": "A — Représenter par règles mathématiques. Traduit le problème métier en formalisme.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "Exercice",
+          "enonce": "Optimiser la consommation énergétique d'une usine via l'IA. Détailler les étapes.",
+          "correction": "1) Cadrage (KPIs, contraintes). 2) Collecte (capteurs IoT, météo, prix kWh). 3) Exploration (visualisations temporelles, corrélations). 4) Nettoyage (missing, aberrantes, normalisation). 5) Feature engineering (heure, jour, saison). 6) Modélisation (LSTM/GRU/Prophet/XGBoost pour prévision H+1, H+24). 7) Split 70/15/15 + hyperparams. 8) Évaluation (RMSE, MAE, MAPE vs baseline). 9) Optimisation (PL ou RL pour ordonnancer machines). 10) Déploiement (API REST, dashboard, alertes). 11) Monitoring (drift, réentraînement, ROI).",
+          "bareme": "3 pts"
+        }
+      ]
+    },
+    {
+      "titre": "Rattrapage Juin 2025 — Introduction à l'IA",
+      "source": "IAI Cameroun, Niveau 3 GL/SE, durée 1h",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "1er chatbot au monde ?",
+          "correction": "C — ELIZA (Weizenbaum, MIT, 1966).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "2",
+          "enonce": "Père de l'IA ?",
+          "correction": "A — Marvin Minsky (avec McCarthy, Newell, Simon, Shannon — Dartmouth 1956).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "3",
+          "enonce": "Affirmation VRAIE ?",
+          "correction": "D — Aucune. AGI reste théorique, pas datée par consensus, modèles actuels nécessitent entraînement.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "4",
+          "enonce": "Classifications de l'IA + exemples.",
+          "correction": "4 classifications : Machines réactives (Deep Blue, AlphaGo) ; Mémoire limitée (voitures, chatbots, recommandations) ; Théorie de l'esprit (Sophia, Kismet) ; Conscience de soi (hypothétique). Par capacité : faible/AGI/ASI.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "5",
+          "enonce": "Affirmation FAUSSE sur apprentissage ?",
+          "correction": "Toutes vraies. Navigation = non supervisé/RL ; supervisé nécessite labels ; classification d'images = supervisé.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "6",
+          "enonce": "Affirmation FAUSSE sur régression logistique ?",
+          "correction": "D — Aucune. Sigmoïde = logistique, sortie ∈ [0,1].",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "7",
+          "enonce": "Paquet Python qui détonne ?",
+          "correction": "A — playwright (test web). Autres = data/IA.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "8",
+          "enonce": "Affirmation FAUSSE sur CNN ?",
+          "correction": "C — Les CNN SONT profonds (AlexNet, ResNet).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "9",
+          "enonce": "Technique anti-overfitting ?",
+          "correction": "C — Dropout. Désactive aléatoirement neurones (20-50%) → représentations robustes.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "10",
+          "enonce": "Code réseau 3 entrées / 1 cachée 4 neurones / 2 sorties.",
+          "correction": "import tensorflow as tf\nfrom tensorflow.keras.models import Sequential\nfrom tensorflow.keras.layers import Dense, Input\nmodel = Sequential([\n    Input(shape=(3,)),\n    Dense(4, activation='relu'),\n    Dense(2, activation='softmax')\n])\nmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])",
+          "bareme": "2,5 pts"
+        },
+        {
+          "numero": "11",
+          "enonce": "Affirmation FAUSSE sur BFS/DFS ?",
+          "correction": "A — DFS pile uniquement pour la FRONTIÈRE (non visités), set pour les visités.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "12",
+          "enonce": "BFS vs DFS avec exemple concret (hors école/objet) ?",
+          "correction": "LinkedIn : trouver une personne X via vos relations. BFS visite contacts directs (degré 1), puis 2, puis 3 → '6 degrés de séparation', plus court chemin de mise en relation. DFS suit une chaîne profonde (contact → contact de contact → ...) jusqu'à X ou cul-de-sac. À une bifurcation (un contact connaît 5 personnes) : BFS examine les 5 en parallèle, DFS s'engage dans une seule à fond avant d'essayer les autres.",
+          "bareme": "5 pts"
+        },
+        {
+          "numero": "13",
+          "enonce": "Recherche informée + comment améliorerait-elle l'exemple ?",
+          "correction": "Recherche informée utilise h(n) — estimation de la distance au but. A* : f(n)=g(n)+h(n). Pour LinkedIn : h(n) = similarité de profil (industries, écoles, géographie). On explore prioritairement les contacts ressemblant à X → atteint X en explorant beaucoup moins de profils qu'avec BFS, tout en gardant optimalité si h admissible. LinkedIn fait ça : 'introductions' pondérées par relations communes.",
+          "bareme": "2 pts"
+        }
+      ]
+    }
+  ],
+  "english": [
+    {
+      "titre": "End of Semester Exam — February Session 2022 — Expert English",
+      "source": "IAI Cameroun, Classes GL3 A/B/C, durée 2h",
+      "questions": [
+        {
+          "numero": "Sujet",
+          "enonce": "Considering the job offer below, write a one-page APPLICATION LETTER (where a cover letter is not required for that position) and attach documents necessary for a job application file. Address your letter to the Human Resource Manager.\n\n────────────────────────────────────────\nYOUR ADDRESS (imposed)\nEtoga Germain\nSoftware engineer\n690995452\nP.O Box: 089\nBatouri – Cameroon\n\n────────────────────────────────────────\nPOSITION TITLE: Information Technology (IT) Officer\nLocation of Work: Bertoua, Eastern Region\nType of contract: Permanent\n\nJOB PURPOSE\nThe IT Officer maintains the computer networks of all types of organizations, providing technical support and ensuring the whole company runs smoothly. The IT Officer monitors and maintains the company computer systems, installs and configures hardware and software, and solves technical problems.\n\nDUTIES AND RESPONSIBILITIES\n• Technical expertise: troubleshoot applications/services on physical & virtual servers, networks, storage, security ; install/configure hardware/software/printers ; deploy VMware/vSphere ; configure switches/routers/firewalls/VPN ; disaster recovery plans ; maintenance upgrades ; diagnose problems ; electrical safety ; software licenses ; stocks ; user guidance ; troubleshooting & repair ; logs ; place orders.\n• Communication: maintain reports/documentation, professional interactions with supervisors and colleagues.\n• Creativity: generate solutions, build prioritized problem-solving plans.\n\nQUALIFICATIONS, SKILLS & EXPERIENCE\n• Bachelor's degree in Computer Science, Electrical/Computer Engineering or equivalent experience\n• 3 years tech experience (2 years hands-on)\n• Proficient in Windows Server, Linux, VMware, security best practices, LAN/WAN (TCP/IP, DNS, DHCP, SMTP, SNMP)\n• Strong communication, self-motivated, flexible, results-oriented\n• Excellent English (oral & written)",
+          "correction": "MODEL ANSWER — Full One-Page Application Letter\n────────────────────────────────────────────────────────\n\nEtoga Germain\nSoftware Engineer\nTel: (+237) 690 99 54 52\nP.O. Box: 089\nBatouri — Cameroon\n\n                                                                  Batouri, 28 May 2026\n\nThe Human Resource Manager\n[Company Name]\nBertoua, Eastern Region\nCameroon\n\nDear Sir / Madam,\n\nSUBJECT: APPLICATION FOR THE POSITION OF INFORMATION TECHNOLOGY (IT) OFFICER\n\nFollowing the job advertisement published by your organisation for the position of IT Officer based in Bertoua, I am pleased to submit my application for your kind consideration. As a Software Engineer with hands-on experience in system administration, network configuration and technical support, I am confident that my profile matches the requirements of this permanent position.\n\nDuring my three years of professional experience, of which more than two have been spent in hands-on technical roles, I have developed proficient skills in the architecture, design and troubleshooting of Windows Server and Linux-based operating systems. I have also gained an adequate understanding of VMware virtualisation (vSphere, vCenter), and I am comfortable with the configuration and maintenance of LAN/WAN components such as switches, routers, firewalls and VPN concentrators, as well as core protocols (TCP/IP, DNS, DHCP, SMTP, SNMP). My background includes the deployment and periodic testing of disaster recovery plans, the management of hardware and software inventories and the daily resolution of user-side incidents.\n\nBeyond technical expertise, I pride myself on being a self-motivated, result-oriented and flexible team player, able to prioritise tasks, meet deadlines and remain effective in a high-pressure on-call environment. I communicate fluently in English and French, both orally and in writing, and I am willing to occasionally work outside normal business hours to keep your information systems secure and available. Joining your organisation would allow me to put my technical and interpersonal skills at the service of your company's growth in the Eastern Region.\n\nI have attached all the documents required for the present application. I remain available for any interview or technical test at your earliest convenience and can be reached on (+237) 690 99 54 52 or by email at etoga.germain@example.com.\n\nThank you very much for the time devoted to reviewing my application. I look forward to the opportunity of discussing my motivation and qualifications with you in person.\n\nYours faithfully,\n\n(Signature)\nETOGA GERMAIN\n\nEnclosures (documents attached to the job application file):\n  1. Curriculum Vitae (Résumé) — 2 pages\n  2. Certified photocopy of Bachelor's degree in Computer Science\n  3. Certified photocopies of professional certificates (Windows Server, Linux, VMware, CCNA)\n  4. Work certificates / employer attestations (3 years of experience)\n  5. Two recent letters of recommendation\n  6. Copy of the National Identity Card\n  7. Recent passport-size photograph (taken less than 3 months ago)\n  8. Criminal record extract (less than 3 months old)\n  9. Birth certificate (certified copy)\n 10. Medical certificate of physical fitness\n\n────────────────────────────────────────────────────────\nMARKING SCHEME (suggested over 20 marks)\n────────────────────────────────────────────────────────\n• Letter layout & format (sender address top, date, receiver address, subject line, salutation, closing) ........ 3 marks\n• Subject line in CAPITALS and clearly identifies the post ............................................... 1 mark\n• Opening paragraph: reference to the advertised position + clear statement of intent ............... 2 marks\n• Body paragraphs: qualifications, technical skills explicitly mapped to the job offer (Windows, Linux, VMware, LAN/WAN, security) ....................................................................... 4 marks\n• Soft skills: communication, flexibility, teamwork, availability (mapped to job) ........................ 2 marks\n• Closing paragraph: availability for interview + contact details ............................................. 1 mark\n• Final salutation (Yours faithfully — recipient unknown) + name in CAPITALS ....................... 1 mark\n• List of enclosures (job application file): at least 6 relevant documents .................................... 3 marks\n• Grammar, spelling, punctuation, professional vocabulary ................................................... 2 marks\n• Tone (formal, polite, persuasive) + general impression of fluency .......................................... 1 mark\n\n────────────────────────────────────────────────────────\nTIPS (FR) — Pourquoi cette structure ?\n────────────────────────────────────────────────────────\n• Lorsque le sujet précise « where a cover letter is NOT required », la lettre d'application doit jouer le rôle À LA FOIS du courrier d'accompagnement ET de l'introduction au dossier. Tu dois donc être plus DÉVELOPPÉ que pour une simple cover letter.\n• « Yours faithfully » : on l'utilise lorsque le destinataire est inconnu (Dear Sir/Madam). Si on connaissait son nom (Dear Mr Smith), on aurait écrit « Yours sincerely ».\n• Liste des pièces jointes (Enclosures) OBLIGATOIRE : le sujet le demande explicitement (« attach documents necessary for a job application file »). N'oublie aucun document classique du dossier camerounais : CNI, casier judiciaire, certificat médical, extrait d'acte de naissance.\n• Mappage point par point avec l'offre : pour chaque exigence (Windows Server, Linux, VMware, LAN/WAN, sécurité, communication, flexibilité), tu DOIS faire écho dans ta lettre. C'est ce qui te démarquera d'un texte générique.\n• Ton formel mais confiant : évite les formules trop humbles (« I would be honoured ») au profit de phrases d'engagement (« I am confident that... », « Joining your organisation would allow me to... »).\n• Une page exactement : pas plus, pas moins. Vise 4 paragraphes courts (≈ 350-400 mots) + l'en-tête + la liste des pièces jointes.",
+          "bareme": "/ 20 marks (1 question unique sur 2h)"
+        }
+      ]
+    },
+    {
+      "titre": "EXPERT ENGLISH RESIT EXAM — June 2025",
+      "source": "IAI Cameroun, duration 1h, total 20 marks",
+      "questions": [
+        {
+          "numero": "A1",
+          "enonce": "Which is NOT an element of the communication process? A. Sender  B. Receiver  C. Telephone  D. Message",
+          "correction": "Answer: C. Telephone. Téléphone est un canal/outil, pas un élément constitutif du processus. Éléments : Sender, Message, Channel, Receiver, Feedback, Context, Noise.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A2",
+          "enonce": "Verbal communication includes: A. Facial expressions  B. Gestures  C. Spoken words  D. Eye contact",
+          "correction": "Answer: C. Spoken words. Verbal = utilisation de mots (oraux ou écrits). A, B, D = non-verbal.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A3",
+          "enonce": "An example of formal communication: A. Telling jokes  B. Writing a business email  C. Chatting at a party  D. Talking to a friend",
+          "correction": "Answer: B. Writing a business email. Registre formel codifié. A, C, D = informel.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "B1",
+          "enonce": "Define communication and name two elements of the communication process.",
+          "correction": "Définition (1 pt) : Communication is the process by which information is exchanged between a sender and a receiver via a channel to achieve mutual understanding. Deux éléments (2 pts) : (1) SENDER — encodes and transmits ; (2) RECEIVER — decodes and interprets. Acceptés : Message, Channel, Feedback, Context.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B2",
+          "enonce": "Explain the difference between verbal and non-verbal communication with one example of each.",
+          "correction": "Différence (2 pts) : Verbal uses WORDS (spoken/written) ; non-verbal transmits via body language, gestures, expressions, tone — without words. Exemple verbal (0,5) : presenting a project in a sprint review. Exemple non-verbal (0,5) : nodding to show approval.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B3",
+          "enonce": "Mention 3 key features of business communication.",
+          "correction": "(1) CLARITY — message clair et précis sans ambiguïté. (2) CONCISENESS — court, direct, pas de mots inutiles. (3) FORMALITY — ton poli, vocabulaire formel, pas de slang. Autres : accuracy, purpose-driven, courteous.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "C1",
+          "enonce": "Imagine you are a team leader. Write a short formal email (6-8 sentences) to inform your team about an urgent meeting. Include: Subject, Greeting, Purpose, Time & Date, Closing.",
+          "correction": "Modèle (8 pts répartis Subject 1,5 / Greeting 1 / Purpose 2 / Time&Date 1,5 / Closing 1 / Language 1) :\n\nSubject: URGENT — Production Incident Review Meeting on Thursday 28 May 2026\n\nDear Team,\n\nI hope you are all doing well. I am writing to inform you that an urgent meeting has been scheduled to discuss the critical incident detected on our payment microservice last night. The meeting will be held on Thursday, 28 May 2026, from 10:10 AM to 12:10 PM in Conference Room A (Google Meet link sent separately). Please come prepared with logs, root-cause hypotheses and proposed workarounds. Your attendance is mandatory; should you have a conflict, kindly notify me before EOD today.\n\nThank you for your cooperation and prompt response.\n\nKind regards,\n[Your Name]\nTeam Leader — Backend Squad",
+          "bareme": "8 marks"
+        }
+      ]
+    },
+    {
+      "titre": "Practice Exam — Technical English for SE",
+      "source": "Épreuve d'entraînement",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Vocabulary Matching: (a) Deploy (b) Repository (c) Deprecated (d) Endpoint (e) Latency / 1. Delay between request and response. 2. URL exposed by an API. 3. Marked obsolete. 4. Release to production. 5. Storage location for source code.",
+          "correction": "(a) Deploy → 4 ; (b) Repository → 5 ; (c) Deprecated → 3 ; (d) Endpoint → 2 ; (e) Latency → 1.",
+          "bareme": "5 marks"
+        },
+        {
+          "numero": "2",
+          "enonce": "Gap-fill: 'I created a feature ____ from main, made several ____ messages, asked the senior dev to ____ my pull request after he helped me ____ a null pointer using the NestJS ____.' (framework / merge / debug / branch / commit)",
+          "correction": "Ordre : (1) BRANCH, (2) COMMIT, (3) MERGE, (4) DEBUG, (5) FRAMEWORK.",
+          "bareme": "5 marks"
+        },
+        {
+          "numero": "3",
+          "enonce": "Error correction (1 erreur par phrase): (a) I have fix the bug yesterday. (b) The team are responsible of the deployment. (c) We will deployed the application on Friday. (d) She is more better than him at debugging. (e) The endpoint return a JSON response.",
+          "correction": "(a) FIXED (past simple avec yesterday). (b) responsible FOR (pas OF). (c) will DEPLOY (base form après will). (d) BETTER (better est déjà comparatif). (e) returnS (3e personne singulier).",
+          "bareme": "5 marks"
+        },
+        {
+          "numero": "4",
+          "enonce": "Reading: 'Sprints last two weeks. Retrospectives identify what went well and what could be improved. Daily standups (15 min) share progress, blockers, plans. CI/CD pipelines automate testing/release, reducing human error and accelerating time-to-market.' (1) Length of a sprint? (2) Purpose of retrospective? (3) Two benefits of CI/CD?",
+          "correction": "(1) TWO WEEKS. (2) Identifier what went well and what could be improved — boucle d'amélioration continue. (3) Benefits : (a) reduce risk of human error by automating ; (b) accelerate time-to-market. Autres : repeatability, faster feedback, quality assurance.",
+          "bareme": "6 marks"
+        },
+        {
+          "numero": "5",
+          "enonce": "Email Writing: As junior dev, write 5-7 sentences email to tech lead: (a) report patient list feature done, (b) request code review, (c) mention Friday off. Include Subject, Greeting, Body, Closing.",
+          "correction": "Subject: Code Review Request — Patient List Feature (#234)\n\nDear Mr. Tech Lead,\n\nI hope this email finds you well. I am writing to inform you that I have successfully completed the patient list feature on the medical-records module, including pagination and search. The pull request (#234) has been pushed to the dev branch and all unit tests pass on CI. Could you kindly perform a code review at your earliest convenience? Please also note I will be on leave Friday 29 May, so it would be helpful to merge before EOD Thursday.\n\nKind regards,\n[Your Name] — Junior Developer",
+          "bareme": "8 marks"
+        },
+        {
+          "numero": "6",
+          "enonce": "Use each idiom in a business sentence: (a) get the ball rolling (b) low-hanging fruit (c) touch base (d) deep dive (e) circle back.",
+          "correction": "(a) 'Let's GET THE BALL ROLLING on the new auth module before sprint end.' (b) 'For the first release, focus on the LOW-HANGING FRUIT — fix the obvious login bugs.' (c) 'Let's TOUCH BASE Monday morning to align on the API contract.' (d) 'We need a DEEP DIVE into the legacy code before refactoring.' (e) 'I don't have the metrics now but will CIRCLE BACK by Wednesday.'",
+          "bareme": "5 marks"
+        }
+      ]
+    },
+    {
+      "titre": "Practice Exam — Communication (Chapter I)",
+      "source": "Basé sur Chapter I Communication.pdf (Mrs Onguene Vanessa, 2025-2026)",
+      "questions": [
+        {
+          "numero": "A1",
+          "enonce": "SECTION A — MULTIPLE CHOICE QUESTIONS\n\nQ1. According to the course, communication is best defined as:\nA) The act of speaking loudly to convince other people\nB) The process of sharing ideas, thoughts and feelings through verbal and non-verbal means\nC) The transmission of written messages only through official channels\nD) A one-way process from a manager to an employee",
+          "correction": "Answer: B\n\nExplication (EN): The course explicitly defines communication as \"the process of sharing our ideas, thoughts, feelings with other people through verbal and non-verbal communication\" and \"the interchange of thoughts or opinions through shared symbols\".\n\nExplication (FR): Le cours définit la communication comme le processus de partage des idées, pensées et sentiments par des moyens verbaux ET non-verbaux. Les options A (volume), C (écrit seul) et D (sens unique) sont incorrectes : la communication est bidirectionnelle et multi-canal.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A2",
+          "enonce": "Q2. Which of the following is NOT a step in the communication process described in the course?\nA) The sender encodes the idea in a message\nB) The message travels through a channel\nC) The receiver pays the sender for the message\nD) Feedback travels back to the sender",
+          "correction": "Answer: C\n\nExplication (EN): The 6-step communication process is: (1) Sender has an idea, (2) Sender encodes idea in a message, (3) Message travels through channel, (4) Receiver decodes the message, (5) Feedback travels to sender, (6) Possible additional feedback to receiver. Payment is not part of the model.\n\nExplication (FR): Le modèle en 6 étapes du cours est: 1-l'émetteur a une idée, 2-il encode le message, 3-le message voyage via un canal, 4-le récepteur décode, 5-feedback vers l'émetteur, 6-feedback additionnel possible. Le paiement n'a aucune place dans ce schéma.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A3",
+          "enonce": "Q3. Eye contact, posture and facial expressions are examples of:\nA) Verbal communication\nB) Written communication\nC) Non-verbal communication\nD) Computer-mediated communication",
+          "correction": "Answer: C\n\nExplication (EN): The course lists facial expressions, gestures, posture, eye contact, body movements and touch as types of non-verbal communication, which is \"the transfer of information from one person to another without the use of words or spoken language\".\n\nExplication (FR): Le cours classe les expressions faciales, gestes, posture, contact visuel et toucher comme communication NON-VERBALE puisqu'aucun mot n'est utilisé. La verbale, au contraire, repose sur des mots écrits ou parlés.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "B1",
+          "enonce": "SECTION B — STRUCTURAL QUESTIONS\n\nQ4. Define internal communication and list THREE channels organizations use to share information internally.",
+          "correction": "Model answer (EN): Internal communication is the function responsible for effective communications among participants within an organization. In simple terms, it keeps everyone in the organization informed.\n\nThree channels (any 3 of the following):\n- Verbal channels (face-to-face meetings, briefings)\n- Paper channels (printed memos, notices)\n- Electronic channels via the company intranet, email, social media, messaging apps, video calls, or telephones\n\nMarking scheme:\n- 1 mark for the definition (organization-internal exchange).\n- 1 mark for mentioning \"keep everyone informed\".\n- 1 mark for 3 valid channels.\n\nExplication (FR): La communication interne se déroule à l'intérieur de l'entreprise. Les canaux principaux cités dans le cours sont l'intranet (24/7), l'email, les réseaux sociaux internes, la messagerie, les appels vidéo, le téléphone, et les rencontres en face-à-face.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B2",
+          "enonce": "Q5. What is the difference between verbal and non-verbal communication? Give one concrete example of each.",
+          "correction": "Model answer (EN):\nVerbal communication uses spoken OR written words to convey a message (e.g., delivering an oral presentation, writing an email).\nNon-verbal communication transfers information WITHOUT words, using facial expressions, gestures, posture, eye contact or touch (e.g., nodding to show agreement, smiling at a colleague).\n\nMarking scheme:\n- 1 mark: clear definition of verbal (words, spoken/written).\n- 1 mark: clear definition of non-verbal (no words, body signals).\n- 1 mark: one valid example for each type.\n\nExplication (FR): La clé : verbale = MOTS (à l'oral ou à l'écrit) ; non-verbale = TOUT SAUF LES MOTS (gestes, regards, posture). Une lettre est verbale-écrite ; une poignée de main est non-verbale.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B3",
+          "enonce": "Q6. State THREE reasons why external communication is important for a company.",
+          "correction": "Model answer (EN) — any THREE of:\n1. Maintaining good relationships with existing customers (retention, brand loyalty).\n2. Sharing news and developments about the business with partners, shareholders and clients.\n3. Building brand identity through chosen words and images.\n4. Improving brand awareness via advertising, websites and social media.\n5. Communicating with suppliers to build lasting business relationships.\n\nMarking scheme: 1 mark per valid reason correctly explained (3 x 1 = 3 marks).\n\nExplication (FR): La communication externe relie l'entreprise à son environnement (clients, fournisseurs, médias, investisseurs). Elle sert à fidéliser, informer, construire la marque, accroître la notoriété et nourrir les relations partenaires.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "C1",
+          "enonce": "SECTION C — APPLICATION QUESTION\n\nQ7. You are the Communication Officer of MTN Cameroon. Your company has just launched a new mobile data plan called \"MTN PULSE 4G+\". Write a press release (200–250 words) to inform the public about this new product. Respect the typical structure of an external communication message (headline, opening, body with key features and benefits, closing with contact details).",
+          "correction": "MODEL ANSWER (~230 words):\n\nFOR IMMEDIATE RELEASE\nDouala, 28 May 2026\n\nMTN CAMEROON LAUNCHES \"PULSE 4G+\": A NEW HIGH-SPEED DATA PLAN FOR YOUNG PROFESSIONALS\n\nMTN Cameroon is proud to announce the official launch of its latest mobile data plan, MTN PULSE 4G+, designed to meet the growing connectivity needs of students, freelancers and young professionals across the country.\n\nStarting from 1st June 2026, customers will benefit from 30 GB of data, unlimited night browsing from 11 p.m. to 6 a.m., and free access to selected educational platforms, all for only 5,000 FCFA per month. The new plan is fully compatible with our 4G+ network, which now covers more than 85% of the national territory.\n\n\"With MTN PULSE 4G+, we are reinforcing our commitment to digital inclusion and supporting the productivity of the Cameroonian youth,\" said the Chief Marketing Officer. The plan can be activated by dialling *128# or directly from the MyMTN mobile application.\n\nFor more information, please visit www.mtn.cm or contact our Customer Care service at 8000 (toll-free).\n\nAbout MTN Cameroon: MTN is a leading telecommunications operator providing voice, data and digital financial services to over 11 million subscribers in Cameroon.\n\nPress contact:\nCommunication Department\nEmail: press@mtn.cm\nTel: +237 233 50 00 00\n\n---\nMARKING CRITERIA (8 marks):\n- Layout / press-release structure (headline, dateline, body, contact) : 2 marks\n- Content relevance (product features, benefits, target audience) : 2 marks\n- Register / formal professional tone : 1 mark\n- Grammar and spelling : 1 mark\n- Vocabulary / business terms (launch, customer, network, subscriber...) : 1 mark\n- Clear call-to-action and contact details : 1 mark\n\nExplication (FR): Un communiqué de presse doit comporter un titre accrocheur, une date, un paragraphe d'accroche, le corps (caractéristiques + bénéfices client), une citation d'un responsable, un encadré \"About...\", et les coordonnées de contact. Le registre est formel et factuel.",
+          "bareme": "8 marks"
+        }
+      ]
+    },
+    {
+      "titre": "Practice Exam — Business Communication (Chapter II)",
+      "source": "Basé sur Chapter II business communication.pdf (Mrs Onguene Vanessa, 2025-2026)",
+      "questions": [
+        {
+          "numero": "A1",
+          "enonce": "SECTION A — MULTIPLE CHOICE QUESTIONS\n\nQ1. Communication flowing from top-level executives to bottom-level employees in the form of instructions and directives is called:\nA) Upward communication\nB) Downward communication\nC) Horizontal communication\nD) Crosswise communication",
+          "correction": "Answer: B\n\nExplication (EN): The course defines downward communication as \"the information flow from the top-level executives to the bottom-level employees. It takes the form of instructions, directives, and goals.\"\n\nExplication (FR): Communication descendante = du haut vers le bas (directives du patron vers les employés). L'inverse, la communication ascendante (upward), correspond au feedback des employés vers la direction.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A2",
+          "enonce": "Q2. Which of the following is NOT a type of informal communication?\nA) Single Strand\nB) Gossip Chain\nC) Vertical Chain\nD) Cluster Chain",
+          "correction": "Answer: C\n\nExplication (EN): The four types of INFORMAL communication listed in the course are: Single Strand, Gossip Chain, Probability Chain and Cluster Chain. \"Vertical\" belongs to FORMAL communication.\n\nExplication (FR): Le cours liste 4 types informels : Single Strand, Gossip Chain, Probability Chain, Cluster Chain. La communication \"verticale\" est au contraire une catégorie FORMELLE (descendante ou ascendante).",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A3",
+          "enonce": "Q3. A short written internal message used to inform a group of staff about a specific problem, decision or event is called a:\nA) Press release\nB) Proposal\nC) Memo\nD) Cover letter",
+          "correction": "Answer: C\n\nExplication (EN): A memo is described in the course as a document \"used to inform a group of people about a specific problem, solution or events\". A press release goes to the media, a proposal sells a service to clients, and a cover letter accompanies a job application.\n\nExplication (FR): Le memo (memorandum) est une note interne. Le communiqué de presse va vers les médias, la proposition commerciale vers les clients, la lettre de motivation vers un recruteur.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "B1",
+          "enonce": "SECTION B — STRUCTURAL QUESTIONS\n\nQ4. Differentiate formal communication from informal communication. Provide one example of each.",
+          "correction": "Model answer (EN):\nFormal communication is the exchange of OFFICIAL information between two or more people within the same organization, following predefined rules and using official channels (e.g., a meeting between department heads, a memo from the CEO).\nInformal communication is CASUAL communication between coworkers, unofficial in nature, based on social relationships outside the normal hierarchy (e.g., a chat at the coffee machine, a gossip during lunch break).\n\nMarking scheme:\n- 1 mark : formal definition (official, rules, channels).\n- 1 mark : informal definition (casual, social, outside hierarchy).\n- 1 mark : one valid example for each.\n\nExplication (FR): La clé est l'OFFICIEL vs le CASUAL. Une réunion convoquée par memo = formel. Un débrief au coin café = informel. Les deux coexistent en entreprise.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B2",
+          "enonce": "Q5. State THREE advantages of formal communication in business.",
+          "correction": "Model answer (EN) — any THREE of:\n1. Clarity and accuracy: reduces misinterpretation by following standardized rules.\n2. Professionalism: maintains the organization's professional image with clients.\n3. Hierarchy and structure: defines proper channels of information flow, prevents confusion.\n4. Legal documents / written record: ensures legal compliance and traceability.\n5. Decision-making: provides accurate data via the right channels.\n6. Supports organizational culture: conveys mission, values and goals.\n7. Crisis management: enables quick official dissemination of information.\n\nMarking scheme: 1 mark per advantage clearly explained (3 x 1 = 3 marks).\n\nExplication (FR): Avantages clés du formel : clarté, professionnalisme, traçabilité écrite (juridique), structure hiérarchique et qualité de la prise de décision.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B3",
+          "enonce": "Q6. What is Computer-Mediated Communication (CMC)? Give TWO examples of CMC tools commonly used in business today.",
+          "correction": "Model answer (EN):\nComputer-Mediated Communication (CMC) is any form of communication between two or more individuals who interact and/or influence each other through SEPARATE COMPUTERS via the internet or a network connection using software. CMC does NOT cover how computers talk to one another, but how PEOPLE talk via computers.\n\nTwo examples (any 2 of):\n- Email / chat\n- Skype, Zoom, Google Meet (video conferencing)\n- Internet telephony (VoIP)\n- Instant messaging apps (WhatsApp, Microsoft Teams, Slack)\n- Avatar-mediated communication or robot-mediated communication\n\nMarking scheme:\n- 1 mark: correct definition.\n- 1 mark: emphasis on \"people communicating via computers\" (not machine-to-machine).\n- 1 mark: 2 valid examples.\n\nExplication (FR): La CMC, c'est l'humain qui parle à l'humain À TRAVERS la machine (email, visio, chat). Le dialogue machine-machine (API, protocoles réseau) n'est PAS de la CMC.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "C1",
+          "enonce": "SECTION C — APPLICATION QUESTION\n\nQ7. You are the Head of the IT Department at IAI-Cameroun. The general administration has decided that, starting next month, all staff must use the new internal messaging platform \"IAI-Connect\" instead of WhatsApp for work-related discussions. Write a MEMORANDUM (200–250 words) to all staff to announce this change. Respect the standard memo format.",
+          "correction": "MODEL ANSWER (full sample):\n\nMEMORANDUM\n\nDATE: 28 May 2026\nTO: All IAI-Cameroun Staff\nFROM: Mr [Your Name], Head of IT Department\nSUBJECT: Migration from WhatsApp to the new internal platform \"IAI-Connect\" effective 1st July 2026\n\nDear Colleagues,\n\nFollowing recent decisions of the General Administration, please be informed that, as from 1st July 2026, all professional discussions, file exchanges and group conversations must take place exclusively on our new internal messaging platform, IAI-CONNECT.\n\nThis change has been motivated by three main reasons. First, IAI-Connect guarantees a much higher level of data security and confidentiality than commercial applications. Second, all conversations will be archived automatically, which will support legal compliance and traceability. Finally, the platform provides integrated tools for project management, video conferencing and document sharing.\n\nIn order to make the transition smooth, the IT Department will organize training sessions in each department from 10 to 20 June 2026. Personal login credentials will be sent to your professional email address before 5 June. Please install the application on your office computer AND on your mobile phone.\n\nThe use of WhatsApp for professional matters will no longer be authorized after 30 June 2026.\n\nShould you encounter any difficulty, please feel free to contact the IT support team at support@iai-cameroun.org or extension 1234.\n\nThank you for your full cooperation.\n\nMr [Your Name]\nHead of IT Department\n\n---\nMARKING CRITERIA (8 marks):\n- Standard memo header (DATE, TO, FROM, SUBJECT) : 2 marks\n- Clear subject line : 0.5 mark\n- Body structure (announcement / reasons / instructions / deadline) : 2 marks\n- Professional and polite tone : 1 mark\n- Grammar / spelling : 1 mark\n- Business vocabulary (compliance, deadline, training session...) : 1 mark\n- Closing salutation + signature : 0.5 mark\n\nExplication (FR): Un memo se reconnaît à son en-tête (Date, To, From, Subject), un corps structuré en paragraphes (annonce / justification / instructions / deadline / contact), un ton formel mais courtois. Éviter le \"hey guys\" : c'est un canal OFFICIEL.",
+          "bareme": "8 marks"
+        }
+      ]
+    },
+    {
+      "titre": "Practice Exam — Job Search (Chapter III)",
+      "source": "Basé sur Chapter III Initiation to job Search.pdf (Mrs Onguene Vanessa, 2025-2026)",
+      "questions": [
+        {
+          "numero": "A1",
+          "enonce": "SECTION A — MULTIPLE CHOICE QUESTIONS\n\nQ1. According to Wikipedia (as quoted in the course), the IMMEDIATE goal of job seeking is usually to:\nA) Sign an employment contract on the same day\nB) Obtain a job interview with an employer that may lead to being hired\nC) Receive a salary advance\nD) Send the largest possible number of CVs in one week",
+          "correction": "Answer: B\n\nExplication (EN): The course states: \"The immediate goal of job seeking is usually to obtain a job interview with an employer which may lead to getting hired.\" Hiring itself is a later outcome.\n\nExplication (FR): L'objectif IMMÉDIAT n'est pas d'être embauché, mais d'OBTENIR L'ENTRETIEN. Embauche = conséquence éventuelle. Distinction très fréquente en épreuve.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A2",
+          "enonce": "Q2. Which type of resume puts EMPHASIS ON SKILLS rather than on chronological work experience, and is therefore ideal for candidates with employment gaps or career changes?\nA) Reverse-chronological resume\nB) Functional resume\nC) Combination resume\nD) Cover letter",
+          "correction": "Answer: B\n\nExplication (EN): The course states: \"A functional resume places emphasis on your skills rather than your work experience. This resume is ideal for those who are changing careers or those who have gaps in employment.\"\n\nExplication (FR): Le CV FONCTIONNEL met l'accent sur les COMPÉTENCES (parfait pour reconversion ou trou dans le parcours). Le chronologique-inverse liste les emplois récents en premier. Le combiné est un hybride. La cover letter n'est PAS un CV.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "A3",
+          "enonce": "Q3. Which of the following is the CORRECT order of the standard job-search process described in the course?\nA) Apply → Search jobs → Write resume → Attend interview → Follow up → Accept offer\nB) Search jobs → Write resume → Apply → Practice/Prepare → Attend interview → Follow up → Accept job offer\nC) Write resume → Accept job offer → Search jobs → Apply → Attend interview\nD) Attend interview → Search jobs → Write resume → Apply → Follow up",
+          "correction": "Answer: B\n\nExplication (EN): The course lists 7 steps in this order: (1) Search jobs, (2) Write resume, (3) Apply, (4) Practice and prepare, (5) Attend the interview, (6) Follow up, (7) Accept job offer.\n\nExplication (FR): Mémorise les 7 étapes dans l'ordre : Recherche, Rédaction CV, Postuler, Préparation, Entretien, Relance (Follow-up), Acceptation. Question piège classique sur l'ordre.",
+          "bareme": "1 mark"
+        },
+        {
+          "numero": "B1",
+          "enonce": "SECTION B — STRUCTURAL QUESTIONS\n\nQ4. Define a Resume (CV) and list the SIX KEY SECTIONS it must contain according to the course.",
+          "correction": "Model answer (EN):\nA resume (or CV) is a formal document that displays an individual's professional background and relevant skills. It generally consists of work history, education, a professional summary and a list of skills.\n\nThe SIX key sections (per the course):\n1. Contact information\n2. Professional summary\n3. Education\n4. Work experience\n5. Skills\n6. Languages spoken\n\nMarking scheme:\n- 1 mark : clear definition.\n- 2 marks : the 6 key sections (deduct 0.5 per missing section beyond the second omission).\n\nExplication (FR): Le CV est UN DOCUMENT FORMEL de marketing personnel. Les 6 sections obligatoires : Contacts, Résumé pro, Formation, Expérience, Compétences, Langues. Les sections optionnelles (certifications, prix, bénévolat...) viennent en plus.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B2",
+          "enonce": "Q5. What is a cover letter? Explain its THREE main purposes as described in the course.",
+          "correction": "Model answer (EN):\nA cover letter is a ONE-PAGE document that you submit AS PART of your job application (alongside your CV/Resume). It requires good written communication skills and is generally written in 6 structured steps.\n\nIts three main purposes:\n1. To introduce yourself and briefly summarize your professional background.\n2. To demonstrate your written communication skills.\n3. To show that you can be a STRONG FIT for the position you are applying for.\n\nMarking scheme:\n- 1 mark : definition.\n- 2 marks : the three purposes (1 mark for two purposes, 2 marks for all three).\n\nExplication (FR): La lettre de motivation accompagne le CV. Elle se présente, met en avant la qualité de l'expression écrite, et démontre que tu es LE BON CANDIDAT pour CE poste-là. C'est un exercice de séduction professionnelle, pas une copie du CV.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "B3",
+          "enonce": "Q6. List THREE different methods a job seeker can use to find a job, and briefly explain how ONE of them works.",
+          "correction": "Model answer (EN) — any THREE of:\n- Business and personal networks\n- Social media platforms (LinkedIn, Facebook...)\n- Employment websites (Minajobs, Emploi.cm, Indeed...)\n- Classified fields in newspapers\n- Private and public recruitment agencies\n- Company websites (career page)\n- Professional guidance such as outplacement\n- Visiting organizations directly\n- Job alerts (email subscription)\n\nExample of explanation (Employment websites):\nThe candidate creates a profile, uploads their CV, sets keyword filters (job title, location, contract type) and receives automated suggestions. AI algorithms now match candidate profiles to vacancies, reducing time spent browsing.\n\nMarking scheme:\n- 1.5 mark : three correctly named methods.\n- 1.5 mark : detailed and clear explanation of one method.\n\nExplication (FR): Tu peux citer le bouche-à-oreille, LinkedIn, les sites d'emploi (Minajobs, Indeed), les annonces du journal, les agences de recrutement (Adecco, Manpower), les pages \"Carrières\" des entreprises, ou les alertes mail.",
+          "bareme": "3 marks"
+        },
+        {
+          "numero": "C1",
+          "enonce": "SECTION C — APPLICATION QUESTION\n\nQ7. You are [Your Name], a final-year student in Software Engineering at IAI-Cameroun (Yaoundé). You have just seen on LinkedIn an offer for a JUNIOR FULL-STACK DEVELOPER position at Orange Cameroun. Write a COVER LETTER (Application Letter, 250–300 words) following the structure taught in the course (header, greetings, three body paragraphs, final salutation, signature).",
+          "correction": "MODEL ANSWER (full sample):\n\n[Your Name]\nFinal-year Student — Software Engineering (GL3A)\nIAI-Cameroun, Yaoundé\nPhone: +237 6XX XX XX XX\nEmail: your.email@example.com\n\n28 May 2026\n\nThe Head of Human Resources\nOrange Cameroun S.A.\nDouala, Cameroon\n\nDear Sir / Madam,\n\nAPPLICATION FOR THE POSITION OF JUNIOR FULL-STACK DEVELOPER\n\nI am writing to apply for the position of Junior Full-Stack Developer, which I discovered on your official LinkedIn page on 25 May 2026. As a final-year student in Software Engineering at IAI-Cameroun, I am genuinely interested in joining Orange Cameroun, a company whose digital transformation projects and commitment to youth innovation strongly inspire me.\n\nDuring my three years of training, I have acquired solid skills in front-end development (React, Next.js, Flutter) and back-end development (NestJS, Node.js, PostgreSQL, Prisma). For my final-year project, I designed and developed a full-stack medical-record management system composed of a NestJS API, a Next.js web admin and a Flutter mobile application with offline synchronization. This project allowed me to master REST APIs, JWT authentication, role-based access control (RBAC) and CI/CD with Git. I am also fluent in both English and French, and I work well both independently and in agile teams.\n\nPlease find enclosed my Curriculum Vitae, my academic transcripts and two letters of recommendation from my supervisors. I am available for an interview at your earliest convenience and could start an internship or junior contract from 1st July 2026.\n\nThank you very much for your time and consideration. I look forward to discussing how my skills and motivation could contribute to Orange Cameroun's success.\n\nYours faithfully,\n\n(Handwritten signature)\n[YOUR NAME]\n\n---\nMARKING CRITERIA (8 marks):\n- Header (sender + receiver addresses + date) per course template : 1.5 marks\n- Greetings + subject line (\"APPLICATION FOR THE POSITION OF…\") : 1 mark\n- Paragraph 1 — Source of information + interest : 1 mark\n- Paragraph 2 — Education / experience / skills : 1.5 marks\n- Paragraph 3 — Enclosed documents + availability : 1 mark\n- Closing salutation (Yours faithfully / sincerely) + name in capitals : 1 mark\n- Grammar, spelling, professional tone : 1 mark\n\nExplication (FR): Structure stricte : adresse expéditeur + date en haut à droite ; adresse destinataire en haut à gauche ; salutation ; objet en majuscules souligné ; 3 paragraphes (origine de l'offre + intérêt ; profil/compétences ; pièces jointes + disponibilité) ; salutation finale ; nom en MAJUSCULES. Astuce : \"Yours faithfully\" quand on ne connaît pas le nom ; \"Yours sincerely\" quand on l'écrit (Dear Mr Smith…).",
+          "bareme": "8 marks"
+        }
+      ]
+    }
+  ],
+  "secubd": [
+    {
+      "titre": "Épreuve de Sécurité des Bases de Données - Session 1",
+      "source": "Inspirée des exercices d'application du cours BELINGA Estelle, Master Sécurité des SI, IAI Cameroun 2023-2024",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Définissez la sécurité des bases de données et énumérez les quatre éléments qu'elle doit gérer et protéger.",
+          "correction": "La sécurité des BD est un ensemble de moyens, contrôles et mesures conçus pour protéger les bases de données contre les menaces accidentelles et intentionnelles afin de préserver la confidentialité, l'intégrité et la disponibilité (CIA) des données. Les quatre éléments protégés sont : (1) les données de la BD, (2) le SGBD lui-même, (3) toutes les applications associées, (4) le serveur de BD qu'il soit physique ou virtuel.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Citez et expliquez les trois piliers de la sécurité des bases de données. Pour chacun, donnez une menace et un exemple concret.",
+          "correction": "(1) Confidentialité : seules les personnes/programmes autorisés accèdent aux données. Menace : accès non autorisé. Exemple : un stagiaire consulte les salaires des cadres. (2) Intégrité : les données ne sont ni modifiées ni falsifiées par des parties non autorisées (s'appuie sur les contraintes d'intégrité). Menace : abus de privilège légitime. Exemple : une secrétaire à qui on a donné le droit de modifier les notes change la moyenne d'un étudiant. (3) Disponibilité : accessibilité 24/7. Menace : déni de service ou crash disque. Exemple : un DDoS rend le portail de gestion académique inaccessible pendant la période des résultats.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Donnez deux types d'attaques non frauduleuses et trois types d'attaques frauduleuses. Pour chaque attaque frauduleuse, indiquez si elle vise la confidentialité, l'intégrité ou la disponibilité.",
+          "correction": "Attaques non frauduleuses : (a) catastrophes naturelles (inondation, incendie du datacenter), (b) erreurs humaines (mauvaise manipulation, suppression accidentelle d'une table). Attaques frauduleuses : (1) Abus de privilège excessif (vise confidentialité et intégrité) : un user a plus de droits qu'il n'en faut et les utilise mal. (2) Injection SQL (vise confidentialité, intégrité, voire disponibilité) : altère, vole ou détruit des données via du code SQL injecté. (3) Attaque par déni de service – DoS (vise disponibilité) : sature le serveur de requêtes pour bloquer les utilisateurs légitimes.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Expliquez le principe de l'injection SQL et illustrez un contournement d'authentification avec la payload \"admin' OR '1'='1' --\". Précisez la requête finale exécutée et pourquoi elle réussit.",
+          "correction": "Principe : l'attaquant injecte du code SQL dans un champ utilisateur, modifiant ainsi la requête envoyée par l'application à la BD, pour exécuter des instructions non prévues. Cas d'usage : sur un formulaire de login, l'application construit SELECT * FROM users WHERE username='$user' AND password='$pwd'. L'attaquant saisit username = admin' OR '1'='1' -- et un mot de passe quelconque. La requête finale devient : SELECT * FROM users WHERE username='admin' OR '1'='1' --' AND password='xxx'. La condition '1'='1' est toujours vraie (donc OR donne true), le -- commente le reste de la requête (notamment la vérification du mot de passe). Résultat : la requête renvoie l'utilisateur admin et le système connecte l'attaquant sans connaître le mot de passe.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Citez trois mesures techniques de prévention contre l'injection SQL et expliquez brièvement chacune.",
+          "correction": "(1) Requêtes paramétrées (prepared statements) : on prépare la requête avec des marqueurs (?, :param) et on lie les valeurs séparément ; le moteur SQL ne réinterprète pas les valeurs comme du code. (2) Validation et échappement des entrées : type strict, longueur maximale, whitelist de caractères, expressions régulières ; toute entrée non conforme est rejetée. (3) Principe du moindre privilège pour le compte applicatif : le compte utilisé par l'application n'a que les privilèges SELECT/INSERT/UPDATE strictement nécessaires sur les tables concernées, pas DROP, ni GRANT, ni d'accès aux tables système. Compléments : ORM, WAF, monitoring des erreurs SQL et désactivation de l'affichage des erreurs détaillées en production.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Soient les utilisateurs S1, S2, S3 et les objets : une imprimante imp et un fichier toto.txt, avec les autorisations : S1 est propriétaire de toto.txt ; imp est en accès libre ; S2 peut lire toto.txt ; S3 peut imprimer tous les fichiers sur lesquels il a un droit de lecture ; S3 n'a aucun droit sur toto.txt. Modélisez la matrice de contrôle d'accès selon le modèle de Lampson.",
+          "correction": "S = {S1, S2, S3}, O = {toto.txt, imp}, opérations = {own, r, w, x, p (print)}.\nM(S1, toto.txt) = own (read, write, execute, plus droit de transmission)\nM(S2, toto.txt) = r\nM(S3, toto.txt) = – (aucun droit)\nM(S1, imp) = x (accès libre)\nM(S2, imp) = x\nM(S3, imp) = x\nMatrice :\n           | toto.txt | imp\n    S1     |  own     |  x\n    S2     |   r      |  x\n    S3     |   –      |  x\nNB : S3 ne peut imprimer toto.txt car il n'a pas de droit de lecture dessus (règle métier 'imp ne peut imprimer un fichier que si la requête vient d'un sujet ayant droit de lecture').",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Énoncez les deux propriétés du modèle de Bell-LaPadula et précisez pour chacune le pilier de sécurité protégé.",
+          "correction": "Bell-LaPadula (1973) protège la CONFIDENTIALITÉ. (1) SS-propriété (Simple Security) ou no-read-up : un sujet ne peut lire un objet QUE si son niveau de sécurité (habilitation) est >= classification de l'objet. Empêche un sujet de niveau bas (ex : Confidentiel) de lire un document Top Secret. (2) Propriété étoile (*) ou no-write-down : un sujet ne peut écrire dans un objet QUE si son niveau de sécurité <= classification de l'objet. Empêche un sujet Top Secret d'écrire (et donc de divulguer) des informations dans un objet Confidentiel accessible aux niveaux inférieurs.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "8",
+          "enonce": "On considère : S = {Bob (Top Secret), Sonia (Non Classé)}, O = {fichiers personnels (Top Secret), fichiers du courriel (Secret), fichiers du log (Confidentiel), fichiers des coordonnées (Non Classé)}. En appliquant Bell-LaPadula, indiquez pour chaque sujet et chaque fichier les opérations autorisées (lecture/écriture).",
+          "correction": "Bob (Top Secret) : peut LIRE fichiers personnels (égal), courriel (sup), log (sup), coordonnées (sup) car no-read-up respecté (TS >= tous). Pour l'écriture (no-write-down) : Bob ne peut écrire que là où la classification >= son habilitation TS, donc UNIQUEMENT fichiers personnels.\nSonia (Non Classé) : pour la lecture, son habilitation NC doit être >= classification : seulement fichiers des coordonnées (NC=NC). Pour l'écriture, son habilitation NC doit être <= classification : TOUS les fichiers (personnels, courriel, log, coordonnées).\nMatrice Lampson résultante :\n            | personnels | courriel | log | coordonnées\n   Bob      |    r,w     |    r     |  r  |     r\n   Sonia    |     w      |    w     |  w  |    r,w",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "9",
+          "enonce": "Comparez DAC, MAC et RBAC en remplissant un tableau avec les colonnes : principe, qui décide, contexte d'usage, avantage principal, inconvénient principal.",
+          "correction": "DAC : Principe = le propriétaire de l'objet attribue/retire les droits. Décideur = propriétaire. Usage = systèmes Unix, SGBD classiques. Avantage = flexibilité, simplicité. Inconvénient = vulnérable aux chevaux de Troie, explosion des ACL, ne respecte pas toujours la politique d'entreprise.\nMAC : Principe = classifications/habilitations imposées par l'admin, règles strictes (Bell-LaPadula, Biba). Décideur = admin système. Usage = défense, gouvernement, données très sensibles. Avantage = sécurité forte et cohérente. Inconvénient = rigide, complexe, coûteux.\nRBAC : Principe = permissions liées à des rôles reflétant la structure de l'entreprise ; users affectés aux rôles. Décideur = admin via les rôles. Usage = entreprises classiques avec turnover. Avantage = scalable, facile à administrer. Inconvénient = explosion potentielle des rôles, moins fin que ABAC.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "10",
+          "enonce": "Une vue est-elle un mécanisme de sécurité ? Justifiez votre réponse et donnez un exemple SQL de création de vue restreignant l'accès aux champs sexe, code matière et note d'un secrétaire.",
+          "correction": "Oui, une vue est un mécanisme de sécurité car elle permet (a) le masquage de colonnes sensibles (on ne sélectionne que certains champs), (b) le filtrage horizontal (clauses WHERE), (c) la délégation de privilèges sur la vue sans accorder de droits sur la table source. Exemple :\nCREATE VIEW v_secdaac AS\n  SELECT etudiant.sexe, note.code, note.note\n  FROM etudiant\n  INNER JOIN note ON etudiant.matricule = note.matricule ;\nGRANT SELECT ON v_secdaac TO 'secdaac'@'localhost' ;\nLe secrétaire ne voit ni le matricule, ni le nom, ni le quartier des étudiants : seules trois colonnes lui sont exposées, conformément au principe du moindre privilège.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "11",
+          "enonce": "Énoncez les six règles fondamentales d'une bonne politique de gestion des privilèges sur un SGBD.",
+          "correction": "Règle 1 : Attribution du moindre privilège (minimum strictement nécessaire). Règle 2 : Contrôle de la population (synchroniser les comptes avec les arrivées/départs/promotions). Règle 3 : Supervision de la délégation des tâches d'administration (audit a posteriori). Règle 4 : Contrôle physique des connexions (restriction aux hôtes/IP spécifiques connus, notamment pour comptes applicatifs). Règle 5 : Limitation des ressources utilisées (quotas CPU, sessions, requêtes/seconde par utilisateur). Règle 6 : Journaliser les comportements suspects (audit logs des requêtes non conformes, alertes sur élévations de privilèges, accès hors heures).",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "12",
+          "enonce": "Citez et expliquez brièvement les huit étapes de la sécurité des bases de données.",
+          "correction": "(1) Découverte : inventaire des BD et des données sensibles. (2) Évaluation des vulnérabilités et de la configuration : scans avec outils type Scuba, audits de configuration vs benchmarks CIS. (3) Renforcement (hardening) : application des patchs, désactivation des comptes par défaut, durcissement des paramètres. (4) Audit des modifications : suivre tous les changements de schéma et de configuration. (5) Surveillance de l'activité (DAM – Database Activity Monitoring) : monitoring temps réel des requêtes pour détecter anomalies. (6) Audit : conformité, revue périodique des accès et privilèges. (7) Authentification, contrôle d'accès et gestion des droits : MFA, RBAC, moindre privilège. (8) Chiffrement : TDE pour les données au repos, TLS pour les données en transit, gestion sécurisée des clés (KMS/HSM).",
+          "bareme": "4 points"
+        }
+      ]
+    },
+    {
+      "titre": "Épreuve de Sécurité des Bases de Données - Session 2 (Travaux Pratiques)",
+      "source": "Inspirée du TP IAI Cameroun : gestion sécurisée de la base de données académique gestetudiant",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Vous créez la base gestetudiant avec les tables etudiants(matricule, nom, prenom, sexe, datnaiss, quartier), matieres(idmat, libelle, coefficient) et notes(matricule, idmat, note). Écrivez les commandes SQL pour créer ces trois tables avec leurs clés primaires et étrangères, et les contraintes d'intégrité appropriées (note entre 0 et 20).",
+          "correction": "CREATE DATABASE gestetudiant ;\nUSE gestetudiant ;\n\nCREATE TABLE etudiants (\n  matricule VARCHAR(20) PRIMARY KEY,\n  nom VARCHAR(50) NOT NULL,\n  prenom VARCHAR(50) NOT NULL,\n  sexe ENUM('M','F') NOT NULL,\n  datnaiss DATE NOT NULL,\n  quartier VARCHAR(100)\n) ;\n\nCREATE TABLE matieres (\n  idmat VARCHAR(10) PRIMARY KEY,\n  libelle VARCHAR(100) NOT NULL,\n  coefficient INT NOT NULL CHECK (coefficient > 0)\n) ;\n\nCREATE TABLE notes (\n  matricule VARCHAR(20),\n  idmat VARCHAR(10),\n  note DECIMAL(4,2) CHECK (note >= 0 AND note <= 20),\n  PRIMARY KEY (matricule, idmat),\n  FOREIGN KEY (matricule) REFERENCES etudiants(matricule) ON DELETE CASCADE,\n  FOREIGN KEY (idmat) REFERENCES matieres(idmat) ON DELETE CASCADE\n) ;",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Créez quatre utilisateurs : daac, daacadj, rf_sw (responsable filière software), secdaac, tous depuis localhost avec un mot de passe respectant les bonnes pratiques. Justifiez la robustesse du mot de passe choisi.",
+          "correction": "CREATE USER 'daac'@'localhost' IDENTIFIED BY 'D@ac#2026!SecurePass' ;\nCREATE USER 'daacadj'@'localhost' IDENTIFIED BY 'D@acAdj#2026!Strong' ;\nCREATE USER 'rf_sw'@'localhost' IDENTIFIED BY 'RfSw#2026!Robuste9' ;\nCREATE USER 'secdaac'@'localhost' IDENTIFIED BY 'S3cDaac#2026!Solide' ;\nJustification : 19+ caractères, mélange de majuscules, minuscules, chiffres, caractères spéciaux ; pas de mot du dictionnaire ; entropie suffisante pour résister au brute force (> 100 bits) ; en production, ces mots de passe seraient générés aléatoirement et stockés dans un coffre-fort (Vault, CyberArk), avec expiration à 90 jours et rotation automatique.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Créez les rôles role_daac, role_daacadj, role_rf, role_sec puis attribuez à chacun les privilèges suivants : DAAC tous privilèges sur gestetudiant.* ; DAACAdj tous privilèges sur etudiants et SELECT sur notes/matieres ; RF SELECT/INSERT/UPDATE sur notes et SELECT sur etudiants/matieres ; SEC SELECT/INSERT/UPDATE sur etudiants uniquement.",
+          "correction": "CREATE ROLE 'role_daac', 'role_daacadj', 'role_rf', 'role_sec' ;\n\n-- DAAC : tous privilèges\nGRANT ALL PRIVILEGES ON gestetudiant.* TO 'role_daac' ;\n\n-- DAACAdj\nGRANT ALL PRIVILEGES ON gestetudiant.etudiants TO 'role_daacadj' ;\nGRANT SELECT ON gestetudiant.notes TO 'role_daacadj' ;\nGRANT SELECT ON gestetudiant.matieres TO 'role_daacadj' ;\n\n-- Responsable de filière\nGRANT SELECT, INSERT, UPDATE ON gestetudiant.notes TO 'role_rf' ;\nGRANT SELECT ON gestetudiant.etudiants TO 'role_rf' ;\nGRANT SELECT ON gestetudiant.matieres TO 'role_rf' ;\n\n-- Secrétaire\nGRANT SELECT, INSERT, UPDATE ON gestetudiant.etudiants TO 'role_sec' ;\n\nFLUSH PRIVILEGES ;",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Affectez les rôles aux utilisateurs précédemment créés et activez par défaut le rôle pour chaque utilisateur.",
+          "correction": "GRANT 'role_daac' TO 'daac'@'localhost' ;\nGRANT 'role_daacadj' TO 'daacadj'@'localhost' ;\nGRANT 'role_rf' TO 'rf_sw'@'localhost' ;\nGRANT 'role_sec' TO 'secdaac'@'localhost' ;\n\nSET DEFAULT ROLE ALL TO\n  'daac'@'localhost',\n  'daacadj'@'localhost',\n  'rf_sw'@'localhost',\n  'secdaac'@'localhost' ;\n\nFLUSH PRIVILEGES ;\n-- Vérification\nSHOW GRANTS FOR 'rf_sw'@'localhost' USING 'role_rf' ;",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Créez une vue v_daacadj montrant uniquement nom, prénom, sexe, idmat, note pour le directeur adjoint, et accordez SELECT/UPDATE sur cette vue à l'utilisateur daacadj.",
+          "correction": "CREATE VIEW v_daacadj AS\n  SELECT e.nom, e.prenom, e.sexe, n.idmat, n.note\n  FROM etudiants e\n  INNER JOIN notes n ON e.matricule = n.matricule ;\n\nGRANT SELECT, UPDATE ON gestetudiant.v_daacadj TO 'daacadj'@'localhost' ;\n\nFLUSH PRIVILEGES ;\nNB : la vue masque le matricule, la date de naissance et le quartier (champs jugés non nécessaires pour cette fonction). Le SELECT par daacadj ne dévoilera que les colonnes exposées.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Un attaquant tente l'injection \"' OR 1=1 -- \" dans le champ nom de l'application web qui exécute : SELECT * FROM etudiants WHERE nom='$nom'. (a) Écrivez la requête finale exécutée. (b) Pourquoi est-elle dangereuse ? (c) Réécrivez le code (pseudo-code PHP avec PDO) en utilisant une requête paramétrée pour bloquer l'attaque.",
+          "correction": "(a) Requête finale : SELECT * FROM etudiants WHERE nom='' OR 1=1 -- '. La condition OR 1=1 est toujours vraie, le -- commente le reste. La requête retourne donc TOUS les étudiants.\n(b) Danger : fuite massive de données personnelles (RGPD), exposition de tous les matricules, dates de naissance, quartiers, sexes ; possible énumération suivie d'autres attaques (ex : UNION SELECT pour extraire d'autres tables, ou ; DROP TABLE pour détruire la base).\n(c) Code sécurisé en PHP avec PDO :\n$pdo = new PDO('mysql:host=localhost ;dbname=gestetudiant ;charset=utf8mb4', 'rf_sw', $passwd, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => false]) ;\n$stmt = $pdo->prepare('SELECT * FROM etudiants WHERE nom = :nom') ;\n$stmt->execute(['nom' => $_POST['nom']]) ;\n$rows = $stmt->fetchAll(PDO::FETCH_ASSOC) ;\nGrâce au prepared statement, la valeur passée pour :nom est traitée strictement comme une donnée, jamais comme du code SQL. L'injection est neutralisée.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Décrivez une stratégie de sauvegarde 3-2-1 pour la base gestetudiant en production, avec une RPO (Recovery Point Objective) de 1 heure et une RTO (Recovery Time Objective) de 4 heures.",
+          "correction": "Stratégie 3-2-1 : 3 copies des données, sur 2 supports différents, dont 1 hors site.\n(1) Sauvegarde full hebdomadaire chaque dimanche à 02h00 (mysqldump --single-transaction --routines --triggers gestetudiant > full.sql, chiffrée AES-256). Conservée 1 mois.\n(2) Sauvegardes incrémentales toutes les heures via les binary logs MySQL (log-bin activé). Garantit RPO = 1h.\n(3) Sauvegarde différentielle quotidienne à 22h00 pour accélérer la restauration.\nSupports : (a) NAS local sur le réseau du datacenter principal ; (b) stockage S3/Azure Blob chiffré côté serveur (KMS) hors site. Plus une copie froide sur bande LTO trimestrielle conservée 5 ans.\nRestauration : restaurer le dernier full, puis le dernier différentiel, puis rejouer les binlogs jusqu'au point souhaité. RTO de 4h tenable avec ces volumes et un runbook documenté.\nTests : restauration trimestrielle sur environnement de staging pour valider l'intégrité ; surveillance des sauvegardes via Nagios/Prometheus avec alertes sur échec.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "8",
+          "enonce": "Activez l'audit général MySQL pour journaliser toutes les requêtes des utilisateurs daac et rf_sw. Donnez les commandes et le plan de rotation/conservation des logs.",
+          "correction": "-- Plugin audit (MariaDB Audit Plugin ou MySQL Enterprise Audit)\nINSTALL PLUGIN server_audit SONAME 'server_audit.so' ;\nSET GLOBAL server_audit_logging = ON ;\nSET GLOBAL server_audit_events = 'CONNECT,QUERY,TABLE' ;\nSET GLOBAL server_audit_incl_users = 'daac,rf_sw' ;\nSET GLOBAL server_audit_file_path = '/var/log/mysql/audit.log' ;\nSET GLOBAL server_audit_file_rotate_size = 100000000 ; -- 100 Mo\nSET GLOBAL server_audit_file_rotations = 30 ; -- 30 fichiers conservés\nPlan : rotation par taille (100 Mo) ; centralisation des logs vers un SIEM (ELK, Splunk, Wazuh) ; conservation 1 an pour conformité ; alertes sur patterns suspects (DROP TABLE, GRANT, échecs de login répétés, requêtes hors heures 22h-06h). Les logs sont en lecture seule pour le DBA opérationnel et en écriture exclusive pour mysql afin d'éviter qu'un attaquant ne les efface.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "9",
+          "enonce": "Activez le chiffrement au transport (TLS) entre le client et MySQL et forcez l'utilisateur rf_sw à utiliser SSL.",
+          "correction": "-- Côté serveur : générer/installer les certificats (CA, server cert, server key)\n-- dans my.cnf ajouter :\n[mysqld]\nssl-ca=/etc/mysql/ssl/ca.pem\nssl-cert=/etc/mysql/ssl/server-cert.pem\nssl-key=/etc/mysql/ssl/server-key.pem\nrequire_secure_transport = ON\n-- Forcer SSL pour l'utilisateur :\nALTER USER 'rf_sw'@'localhost' REQUIRE SSL ;\n-- Vérifier l'usage de SSL :\nSHOW STATUS LIKE 'Ssl_cipher' ;\n-- Côté client :\nmysql -u rf_sw -p --ssl-ca=/etc/mysql/ssl/ca.pem --ssl-cert=/etc/mysql/ssl/client-cert.pem --ssl-key=/etc/mysql/ssl/client-key.pem -h db.iaicameroun.com\nAinsi, toutes les communications (credentials, requêtes, résultats) sont chiffrées en transit avec TLS 1.2+ ; l'écoute passive du réseau (sniffing) devient inutile.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "10",
+          "enonce": "Le directeur quitte l'IAI. Quelles actions de sécurité immédiates devez-vous mener sur les comptes BD ?",
+          "correction": "Actions immédiates (idéalement avant son départ effectif) : (1) Désactiver le compte : ALTER USER 'daac'@'localhost' ACCOUNT LOCK ; (2) Révoquer tous les rôles : REVOKE 'role_daac' FROM 'daac'@'localhost' ; (3) Tracer dans les audit logs toutes les dernières actions du compte (recherche d'exports massifs, GRANT suspects, modifications de mots de passe). (4) Identifier les éventuels comptes de service partagés et changer leurs mots de passe. (5) Identifier les clés SSH/API associées à cet utilisateur et les révoquer. (6) Récupérer matériel et tokens MFA. (7) Après période de transition (1-3 mois), supprimer définitivement le compte : DROP USER 'daac'@'localhost' ; (8) Nommer formellement un successeur et lui attribuer le rôle role_daac. (9) Mettre à jour la documentation et la matrice RACI. Cette démarche applique la Règle 2 de la politique de gestion des privilèges (contrôle de la population).",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "11",
+          "enonce": "Donnez la différence entre chiffrement symétrique (AES), chiffrement asymétrique (RSA) et hashage (bcrypt). Quel mécanisme utiliseriez-vous pour : (a) stocker les mots de passe utilisateurs, (b) chiffrer les fichiers de données au repos, (c) échanger une clé entre client et serveur ?",
+          "correction": "Différences :\n- AES (symétrique) : même clé pour chiffrer et déchiffrer ; rapide, adapté au chiffrement de gros volumes ; problème = distribution sécurisée de la clé. AES-256 est le standard.\n- RSA (asymétrique) : paire clé publique (chiffre) / clé privée (déchiffre) ; lent, adapté à l'échange de clés et à la signature. Tailles recommandées : 2048 ou 4096 bits.\n- bcrypt (hashage à sens unique) : transforme un mot de passe en empreinte irréversible, avec sel aléatoire et facteur de coût adaptatif ; non destiné à être déchiffré.\nChoix :\n(a) Stockage de mots de passe : bcrypt (ou Argon2id avec memoryCost adapté). JAMAIS de chiffrement réversible.\n(b) Chiffrement des fichiers de données au repos : AES-256 via TDE (Transparent Data Encryption) ou chiffrement au niveau du système de fichiers (LUKS) ; la clé maître est protégée par un HSM/KMS.\n(c) Échange de clé entre client et serveur : RSA ou ECDH (Elliptic Curve Diffie-Hellman), encapsulés dans TLS lors du handshake. TLS génère une clé de session symétrique (AES) pour la suite des échanges. C'est le modèle hybride symétrique + asymétrique.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "12",
+          "enonce": "Quelle est l'obligation principale du RGPD applicable à une BD d'étudiants ? Citez trois mesures techniques que vous mettriez en place pour vous y conformer.",
+          "correction": "Le RGPD (Règlement UE 2016/679) impose la protection des données personnelles selon les principes de licéité, minimisation, exactitude, limitation de conservation, intégrité et confidentialité ; il consacre les droits des personnes concernées : accès, rectification, effacement (droit à l'oubli), portabilité, opposition. Il impose aussi notification de violation à l'autorité (CNIL/équivalent) sous 72h et une analyse d'impact (DPIA) pour les traitements à risque.\nTrois mesures techniques :\n(1) Chiffrement : TDE pour la BD au repos + TLS en transit ; ainsi, en cas de vol des disques, les données restent illisibles.\n(2) Pseudonymisation ou masquage dynamique : remplacer le matricule par un identifiant aléatoire dans les environnements de dev/staging ; masquer les dates de naissance pour les utilisateurs n'en ayant pas besoin.\n(3) Journalisation des accès aux données personnelles (audit trail) avec conservation 1 à 3 ans et alertes sur accès massif, plus mécanisme automatisé de purge à la fin de la période légale (ex : 5 ans après la fin de la scolarité). Complément : politique de mots de passe forte, MFA pour les administrateurs, RBAC strict, formation du personnel à la protection des données, désignation d'un DPO.",
+          "bareme": "3 points"
+        }
+      ]
+    }
+  ],
+  "bigdata": [
+    {
+      "titre": "Épreuve type Big Data & NoSQL - Examen blanc 1",
+      "source": "Inspirée du cours Mr. MESSIO (IAI Cameroun) - sujet fabriqué pour révision SN2",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Définissez le Big Data et présentez ses 5 caractéristiques principales (5V) avec un exemple pour chacune.",
+          "correction": "Le Big Data désigne des ensembles de données dont le volume, la diversité et la vitesse de génération dépassent les capacités des outils traditionnels de gestion de bases de données. Les 5V : Volume (Facebook génère plusieurs pétaoctets/jour), Variété (mix de texte, vidéo, JSON, capteurs IoT), Vélocité (flux Twitter ou trading temps réel), Véracité (qualité et fiabilité, ex. nettoyage de capteurs défaillants), Valeur (insights stratégiques permettant des décisions, ex. recommandations Netflix).",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Citez et décrivez brièvement les quatre familles principales de bases de données NoSQL, en donnant un exemple de SGBD pour chacune.",
+          "correction": "(1) Clé-Valeur : paires clé→valeur, accès O(1) par clé, optimisé pour cache et session — Redis, Amazon DynamoDB. (2) Documents : documents JSON/BSON regroupés en collections, schéma flexible — MongoDB, CouchDB. (3) Colonnes : tables à colonnes dynamiques regroupées en familles, optimisé pour écritures massives et analytique — Apache Cassandra, HBase. (4) Graphes : nœuds + relations + propriétés, idéal pour modéliser des liens — Neo4j, Amazon Neptune.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Énoncez le théorème CAP, expliquez chaque propriété et classez MongoDB et Cassandra selon ce théorème.",
+          "correction": "Théorème CAP (Brewer, 2000) : dans un système distribué, il est impossible de garantir simultanément les trois propriétés Consistency (tous les nœuds voient la même donnée à un instant t), Availability (toute requête reçoit une réponse) et Partition tolerance (le système continue à fonctionner malgré une partition réseau). En pratique, P est obligatoire, le choix se fait entre CP et AP. MongoDB est CP (cohérence forte via le primaire du replica set, indisponibilité possible pendant l'élection d'un nouveau primaire). Cassandra est AP (toujours disponible en écriture/lecture, cohérence ajustable et à terme par défaut).",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Expliquez la différence entre HDFS et MapReduce dans l'écosystème Hadoop.",
+          "correction": "HDFS (Hadoop Distributed File System) est la couche de stockage : il découpe les fichiers en blocs (128 Mo par défaut) répliqués sur les DataNodes pilotés par un NameNode. MapReduce est le paradigme de traitement distribué en deux phases : Map transforme les données en paires clé-valeur en parallèle sur les nœuds, Reduce agrège les résultats par clé. HDFS répond au problème du stockage massif, MapReduce au problème du calcul distribué. Depuis Hadoop 2, l'ordonnancement des jobs est géré par YARN.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Soit la collection MongoDB 'etudiants' contenant des documents de la forme : {_id, nom, age, filiere, notes: [{matiere, valeur}]}. Écrivez les requêtes pour : (a) trouver les étudiants en 'GL3A' de plus de 20 ans ; (b) ajouter une note de 15 en 'Big Data' à l'étudiant Alice ; (c) calculer la moyenne d'âge par filière.",
+          "correction": "(a) db.etudiants.find({filiere: 'GL3A', age: {$gt: 20}}); (b) db.etudiants.updateOne({nom: 'Alice'}, {$push: {notes: {matiere: 'Big Data', valeur: 15}}}); (c) db.etudiants.aggregate([{$group: {_id: '$filiere', moyenneAge: {$avg: '$age'}}}]). Note : on pourrait ajouter {$sort: {moyenneAge: -1}} pour trier les filières.",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Décrivez l'architecture Lambda et ses trois couches en précisant pour chacune une technologie typique.",
+          "correction": "L'architecture Lambda (Nathan Marz) gère les données massives en combinant traitement batch et temps réel via trois couches. (1) Batch layer : stocke le master dataset immuable et calcule des vues agrégées périodiquement — technologies : HDFS pour le stockage, Hadoop MapReduce ou Spark pour le calcul. (2) Speed layer : traite les données récentes en temps réel pendant que le batch s'exécute — technologies : Spark Streaming, Apache Flink, Storm, avec stockage dans Cassandra ou Redis. (3) Serving layer : expose aux clients la fusion des vues batch et temps réel — technologies : Cassandra, MongoDB, ElasticSearch. Les clients fusionnent les vues pour disposer de données complètes et fraîches.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Différenciez sharding et réplication. Une base de données peut-elle utiliser les deux mécanismes simultanément ? Justifiez.",
+          "correction": "Le sharding (partitionnement horizontal) divise un dataset en fragments répartis sur plusieurs nœuds selon une clé de partition. Objectif : scalabilité horizontale (capacité de stockage et débit d'écriture). La réplication copie les mêmes données sur plusieurs nœuds (master-slave ou multi-master). Objectif : haute disponibilité, tolérance aux pannes, scalabilité en lecture. Oui, les deux sont complémentaires : MongoDB combine replica sets (HA) et sharding (scale en écriture) ; chaque shard est lui-même un replica set. Cassandra combine partitionnement (anneau de hachage cohérent) et facteur de réplication (RF=3 typique) pour avoir à la fois scalabilité et tolérance aux pannes.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "8",
+          "enonce": "Écrivez une requête Cypher (Neo4j) qui : (a) crée deux personnes Alice et Bob et une relation d'amitié entre elles ; (b) trouve tous les amis des amis d'Alice qui ne sont pas déjà ses amis directs.",
+          "correction": "(a) CREATE (a:Personne {nom: 'Alice'})-[:AMI]->(b:Personne {nom: 'Bob'}); (b) MATCH (alice:Personne {nom: 'Alice'})-[:AMI]->(ami)-[:AMI]->(amiDami) WHERE amiDami <> alice AND NOT (alice)-[:AMI]->(amiDami) RETURN DISTINCT amiDami.nom AS suggestion. Ce type de requête est typique des moteurs de recommandation d'amis dans les réseaux sociaux. Neo4j est très performant car la traversée se fait en index-free adjacency (suivi direct des pointeurs).",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "9",
+          "enonce": "Expliquez les concepts de partition key et clustering key dans Cassandra à l'aide d'un exemple de table.",
+          "correction": "Dans Cassandra, la clé primaire combine une partition key et une (ou plusieurs) clustering key. La partition key détermine, via un hachage (Murmur3), le nœud de stockage dans l'anneau : tous les enregistrements partageant la même partition key sont sur le même nœud. La clustering key trie les lignes au sein d'une partition. Exemple : CREATE TABLE messages (utilisateur_id UUID, date TIMESTAMP, message TEXT, PRIMARY KEY ((utilisateur_id), date)) WITH CLUSTERING ORDER BY (date DESC). Ici utilisateur_id est la partition key (tous les messages d'un utilisateur sur le même nœud), date est la clustering key (tri chronologique décroissant). Permet de récupérer rapidement les derniers messages d'un utilisateur en une requête à un seul nœud.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "10",
+          "enonce": "Distinguez les approches ETL et ELT dans un pipeline de données. Laquelle est privilégiée dans un contexte Big Data et pourquoi ?",
+          "correction": "ETL (Extract-Transform-Load) extrait les données des sources, les transforme sur un serveur intermédiaire (nettoyage, jointures, agrégations), puis charge le résultat dans la cible (data warehouse). Adapté aux SGBDR traditionnels qui ne peuvent ingérer que des données structurées. ELT (Extract-Load-Transform) charge directement les données brutes dans une cible scalable (data lake HDFS, S3, ou data warehouse cloud comme BigQuery/Snowflake) puis effectue les transformations à la demande grâce à la puissance de calcul de la cible. En Big Data, ELT est privilégié car : (1) les volumes sont trop importants pour être transformés en intermédiaire, (2) les cibles modernes ont une puissance de calcul massive et scalable, (3) on conserve les données brutes permettant de retraiter différemment plus tard (data lake comme source de vérité), (4) les schémas évolutifs sont supportés (schema-on-read).",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "11",
+          "enonce": "Citez 4 types de données Redis et donnez pour chacun un exemple d'usage concret.",
+          "correction": "(1) Strings : valeur simple jusqu'à 512 Mo — ex. cache d'un objet JSON sérialisé (SET user:42 '{...}'). (2) Lists : listes chaînées — ex. file d'attente de jobs (LPUSH/BRPOP). (3) Sets : ensembles non ordonnés — ex. ensemble de tags d'un article (SADD article:1:tags 'bigdata'). (4) Sorted Sets (ZSet) : ensembles ordonnés par score — ex. classement temps réel de joueurs (ZADD leaderboard 1500 'Alice'). (5) Hashes : objets clé→valeur — ex. profil utilisateur (HSET user:42 nom 'Alice' age 25). Mentionner aussi Streams pour les flux d'événements et HyperLogLog pour les comptages approximatifs.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "12",
+          "enonce": "Quelles sont les principales différences entre une base SQL relationnelle et une base NoSQL ? Donnez 4 critères.",
+          "correction": "(1) Schéma : SQL impose un schéma rigide défini avant insertion (DDL), NoSQL est schema-less ou schema-flexible (les documents/colonnes peuvent varier). (2) Scalabilité : SQL scale verticalement (machine plus puissante), NoSQL scale horizontalement (ajout de nœuds). (3) Modèle de données : SQL utilise des tables relationnelles avec jointures, NoSQL utilise des modèles variés (clé-valeur, documents, colonnes, graphes) sans jointure native. (4) Transactions : SQL garantit ACID, NoSQL adopte BASE (cohérence à terme). (5) Langage : SQL est standardisé, NoSQL utilise des API spécifiques (CQL, MQL, Cypher). (6) Usage : SQL pour les données structurées avec relations complexes (ERP, banque), NoSQL pour les données semi/non structurées massives (web, IoT, social).",
+          "bareme": "3 points"
+        }
+      ]
+    },
+    {
+      "titre": "Épreuve type Big Data & NoSQL - Examen blanc 2 (cas pratique)",
+      "source": "Sujet fabriqué pour entraînement IAI Cameroun SN2 - inspiré du programme du cours Mr. MESSIO",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Une plateforme de e-commerce stocke 2 To de logs de navigation par jour. Le service marketing souhaite analyser les parcours utilisateurs en temps réel et générer des recommandations produits. Justifiez le choix d'une architecture Lambda et proposez les technologies pour chaque couche.",
+          "correction": "Justification : volume massif (2 To/jour) impossible à gérer avec un SGBDR, besoin simultané d'analyses fiables historiques (batch) et de recommandations temps réel (speed). Architecture proposée : (1) Ingestion via Apache Kafka qui sert de bus d'événements distribué. (2) Batch layer : stockage du master dataset sur HDFS ou S3, calcul des modèles de recommandation et agrégations longues via Apache Spark (jobs nocturnes). (3) Speed layer : Spark Streaming ou Flink consomme Kafka, met à jour les vues temps réel dans Redis (cache de recommandations) ou Cassandra (historique de navigation). (4) Serving layer : MongoDB ou ElasticSearch pour exposer les recommandations à l'API web. (5) Visualisation via Tableau ou Power BI pour le marketing. Avantages : tolérance aux erreurs (recomputation), scalabilité, latence faible.",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Vous concevez la base d'un réseau social. Quel SGBD NoSQL choisiriez-vous pour : (a) le profil utilisateur, (b) les sessions de connexion, (c) le fil d'actualité, (d) les recommandations d'amis ? Justifiez chaque choix.",
+          "correction": "(a) Profil utilisateur : MongoDB (base documents) car schéma flexible permettant des champs optionnels (bio, photo, intérêts variables), requêtes par champs (recherche par email, ville), index secondaires. (b) Sessions : Redis (clé-valeur in-memory) car accès ultra-rapide par token de session, TTL natif pour expiration automatique (ex. SETEX session:abc123 3600 user_id), pas besoin de persistance forte. (c) Fil d'actualité : Cassandra (colonnes) car écritures massives (chaque post génère N entrées pour les abonnés), partition key par utilisateur et clustering key par date décroissante permettant de récupérer les derniers posts d'un utilisateur en une seule requête à un nœud. (d) Recommandations d'amis : Neo4j (graphe) car requête naturelle de type 'amis des amis' via Cypher en pattern matching, performance constante grâce à l'index-free adjacency.",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Un développeur souhaite migrer une application MySQL surchargée (4000 écritures/seconde) vers MongoDB. Quels mécanismes MongoDB doit-il configurer pour assurer la scalabilité et la haute disponibilité ? Décrivez en détail.",
+          "correction": "Le développeur doit configurer simultanément un sharded cluster avec replica sets. (1) Replica Set : pour la haute disponibilité, chaque shard est un replica set composé d'un primaire (reçoit les écritures) et d'au moins 2 secondaires (réplication asynchrone). En cas de panne du primaire, une élection automatique désigne un nouveau primaire en quelques secondes (failover). On peut aussi configurer un arbiter pour départager les votes. (2) Sharding : pour la scalabilité en écriture, on partitionne la collection sur plusieurs shards via une shard key. Choix critique : shard key hachée (ex. _id haché) pour une distribution uniforme, ou shard key rangée (ex. date) pour les requêtes par plage. Le routeur mongos dirige les requêtes vers le bon shard via les config servers qui stockent les métadonnées. (3) Index appropriés pour éviter les COLLSCAN. (4) Write concern (w:'majority') pour garantir la cohérence des écritures critiques. (5) Read preference (primary/secondary/nearest) pour répartir la charge en lecture. Capacité finale : on peut scale horizontalement en ajoutant des shards à la demande.",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Soit le pipeline d'agrégation MongoDB suivant : db.ventes.aggregate([{$match: {pays: 'Cameroun'}}, {$group: {_id: '$produit', total: {$sum: '$montant'}}}, {$sort: {total: -1}}, {$limit: 5}]). Expliquez chaque étape et donnez l'équivalent SQL.",
+          "correction": "Étapes : (1) $match : filtre les documents pour ne garder que les ventes au Cameroun (équivalent WHERE en SQL). (2) $group : regroupe par produit et calcule la somme des montants pour chaque groupe (équivalent GROUP BY + SUM). (3) $sort : trie le résultat par total décroissant (équivalent ORDER BY total DESC). (4) $limit : retourne uniquement les 5 premiers (équivalent LIMIT 5). Équivalent SQL : SELECT produit, SUM(montant) AS total FROM ventes WHERE pays='Cameroun' GROUP BY produit ORDER BY total DESC LIMIT 5. Cette requête identifie les 5 produits les plus vendus en valeur au Cameroun. Optimisation : créer un index composé db.ventes.createIndex({pays:1, produit:1}) pour accélérer le $match et le $group.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Expliquez la différence entre une cohérence forte et une cohérence à terme (eventual consistency). Donnez un exemple concret où l'une est préférable à l'autre.",
+          "correction": "Cohérence forte (strong consistency) : après une écriture réussie, toutes les lectures ultérieures retournent la valeur écrite, sur n'importe quel nœud. Implémentée via synchronisation (verrous distribués, consensus type Paxos/Raft, two-phase commit). Coût : latence accrue et baisse de disponibilité en cas de partition réseau (théorème CAP). Cohérence à terme (eventual consistency) : après une écriture, les nœuds convergent vers la même valeur, mais des lectures intermédiaires peuvent retourner des valeurs obsolètes. Latence basse et haute disponibilité. Exemples : (a) Cohérence forte préférable : transaction bancaire (transfert de 1000€), réservation de billets d'avion, gestion de stock médical où une vente de la dernière unité ne doit pas être contredite. (b) Cohérence à terme préférable : compteur de vues sur YouTube (un léger décalage est acceptable), commentaires sur un blog (un délai de quelques secondes avant que tous voient le commentaire est tolérable), panier d'achat dans un site e-commerce à très grande échelle.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Citez 3 défis principaux du Big Data en entreprise et proposez une solution pour chacun.",
+          "correction": "(1) Stockage massif et coût : les volumes de Po nécessitent un stockage scalable et économique. Solution : utiliser un Data Lake basé sur HDFS ou un stockage objet cloud (Amazon S3, Google Cloud Storage) qui scale horizontalement à très bas coût (~0.02$/Go/mois). (2) Sécurité et confidentialité : risques de fuite de données personnelles, conformité RGPD/CCPA. Solution : chiffrement au repos (TDE, KMS) et en transit (TLS), contrôles d'accès fins (RBAC, Kerberos sur Hadoop), anonymisation/pseudonymisation des données personnelles, audit logging. (3) Intégration de données hétérogènes : sources multiples avec formats variés. Solution : pipelines ETL/ELT avec outils comme Apache NiFi, Airflow ou Talend, schémas évolutifs (schema-on-read), data catalog (Apache Atlas) pour gouvernance. (4 bonus) Compétences rares : pénurie de data engineers/scientists. Solution : formation continue, outils low-code (Dataiku, Knime), AutoML.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Vous avez la table Cassandra suivante : CREATE TABLE capteurs_iot (capteur_id UUID, timestamp TIMESTAMP, temperature FLOAT, humidite FLOAT, PRIMARY KEY ((capteur_id), timestamp)). (a) Pourquoi ce design est-il adapté à des séries temporelles IoT ? (b) Écrivez la requête CQL pour récupérer les 100 dernières mesures du capteur 'abc-123'.",
+          "correction": "(a) Ce design est adapté car : (1) la partition key capteur_id distribue les données sur l'anneau Cassandra avec une bonne répartition (chaque capteur est sur un nœud déterministe), (2) la clustering key timestamp permet un tri natif chronologique au sein de chaque partition, donc l'accès aux dernières mesures est ultra-rapide (lecture séquentielle SSTable), (3) Cassandra excelle dans les écritures massives requises par l'IoT (millions de points/seconde), (4) le facteur de réplication assure la tolérance aux pannes. Idéalement on ajouterait WITH CLUSTERING ORDER BY (timestamp DESC) pour stocker physiquement les données dans l'ordre décroissant. (b) SELECT * FROM capteurs_iot WHERE capteur_id = abc-123-uuid ORDER BY timestamp DESC LIMIT 100. Note : si on n'a pas spécifié CLUSTERING ORDER, ORDER BY timestamp DESC est autorisé seulement car la partition key est filtrée par égalité.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "8",
+          "enonce": "Comparez Hadoop MapReduce et Apache Spark sur 4 critères. Dans quel cas chacun est-il préférable ?",
+          "correction": "(1) Modèle d'exécution : MapReduce lit/écrit le disque entre chaque job (Map → disque → Reduce), Spark conserve les RDD en mémoire entre transformations. (2) Performance : Spark est 10 à 100x plus rapide pour des pipelines itératifs (machine learning, graphes) grâce au in-memory. MapReduce reste compétitif pour des jobs simples one-shot très volumineux. (3) API : MapReduce a une API bas niveau verbeuse en Java, Spark offre des API riches en Scala/Java/Python/R avec abstractions de haut niveau (DataFrames, Datasets, SQL). (4) Écosystème : MapReduce est centré batch, Spark unifie batch, streaming (Spark Streaming/Structured Streaming), ML (MLlib), graphes (GraphX), SQL. (5) Tolérance aux pannes : MapReduce recalcule depuis disque, Spark via lineage des RDD. Cas d'usage : MapReduce préférable pour des ETL volumineux nocturnes sur cluster Hadoop existant avec ressources limitées (RAM). Spark préférable pour ML/Deep Learning, requêtes interactives, streaming temps réel, pipelines complexes nécessitant plusieurs passes sur les données.",
+          "bareme": "4 points"
+        }
+      ]
+    }
+  ],
+  "sig": [
+    {
+      "titre": "Exercice 01 (tutore) - Selections SQL sur la table commune",
+      "source": "Chapitre 2 - Rappel Langage SQL et Extensions spatiales (Mme KO Nathalie, IAI Cameroun), section VII",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Selectionner les communes du departement de la Sarthe de plus de 1500 habitants en affichant un tableau avec les noms de communes et leur population. (On utilise la table commune, les champs nom des communes et population dans le SELECT, et deux conditions 'departement de la Sarthe' ET 'population de plus de 1500 habitants' dans le WHERE.)",
+          "correction": "On selectionne deux colonnes (nom et population) et on combine deux conditions avec AND dans la clause WHERE. En supposant que le nom du departement est porte par la colonne nom_dept et le nom de commune par nom_comm :\n\nSELECT nom_comm, population\nFROM commune\nWHERE nom_dept = 'Sarthe' AND population > 1500;\n\nSi les colonnes de la table sont nommees en majuscules (comme dans la table fournie : NOM_DEPT, NOM_COMM, POPULATION), il faut proteger les noms par des guillemets doubles sous PostgreSQL et utiliser la valeur litterale exacte :\n\nSELECT \"NOM_COMM\", \"POPULATION\"\nFROM commune\nWHERE \"NOM_DEPT\" = 'SARTHE' AND \"POPULATION\" > 1500;\n\nPoints cles : AND lie deux conditions completes (chacune avec son operateur de comparaison) ; la valeur litterale 'SARTHE' est sensible a la casse (guillemets simples).",
+          "bareme": "5 points : 2 pts pour le SELECT des deux bonnes colonnes, 1,5 pt pour la condition sur le departement, 1,5 pt pour la condition population > 1500 reliee par AND."
+        },
+        {
+          "numero": "2",
+          "enonce": "Selectionner les communes de la table COMMUNE dont le statut n'est PAS chef-lieu de canton et afficher la colonne NOM_COMM en lui donnant comme alias NOM, ainsi que les colonnes STATUT, POPULATION et SUPERFICIE. (Indice : traduire le 'n'est pas' par l'utilisation de NOT.)",
+          "correction": "On traduit la negation par NOT (ou de maniere equivalente par l'operateur <>) et on attribue un alias avec AS :\n\nSELECT \"NOM_COMM\" AS \"NOM\", \"STATUT\", \"POPULATION\", \"SUPERFICIE\"\nFROM commune\nWHERE NOT (\"STATUT\" = 'Chef-lieu de canton');\n\nForme equivalente avec l'operateur different :\n\nSELECT \"NOM_COMM\" AS \"NOM\", \"STATUT\", \"POPULATION\", \"SUPERFICIE\"\nFROM commune\nWHERE \"STATUT\" <> 'Chef-lieu de canton';\n\nPoints cles : NOT inverse la condition ; l'alias se definit avec AS (l'alias en majuscules necessite des guillemets doubles pour preserver la casse) ; la valeur 'Chef-lieu de canton' doit etre ecrite exactement (sensibilite a la casse).",
+          "bareme": "4 points : 1 pt pour la negation correcte (NOT ou <>), 1,5 pt pour l'alias NOM bien defini avec AS, 1,5 pt pour l'affichage des trois autres colonnes."
+        },
+        {
+          "numero": "3",
+          "enonce": "Calculer pour chaque departement : la population totale, la densite moyenne de population des communes = moyenne(population commune / superficie commune) arrondie a deux decimales, la population de la commune la plus peuplee et celle de la moins peuplee, la superficie moyenne des communes. (Resultat attendu par departement, ex : SARTHE -> population_dept 28200 ; densite_moy 0.57 ; pop_max 15400 ; pop_min 400 ; surface_moy 2255.19.)",
+          "correction": "On agrege par departement avec GROUP BY et on utilise les fonctions d'agregation sum, avg, max, min. Attention : population et superficie etant des ENTIERS, il faut convertir (cast) la population en decimal AVANT la division, sinon la division entiere renvoie un resultat tronque.\n\nSELECT \"NOM_DEPT\",\n       sum(\"POPULATION\") AS population_dept,\n       round(avg(cast(\"POPULATION\" AS numeric) / \"SUPERFICIE\"), 2) AS densite_moy_communes,\n       max(\"POPULATION\") AS pop_max_commune,\n       min(\"POPULATION\") AS pop_min_commune,\n       round(avg(cast(\"SUPERFICIE\" AS numeric)), 2) AS surface_moy_commune\nFROM commune\nGROUP BY \"NOM_DEPT\";\n\nNotation compacte PostGIS avec :: pour le cast :\n\nSELECT \"NOM_DEPT\",\n       sum(\"POPULATION\") AS population_dept,\n       round(avg(\"POPULATION\"::numeric / \"SUPERFICIE\"), 2) AS densite_moy_communes,\n       max(\"POPULATION\") AS pop_max_commune,\n       min(\"POPULATION\") AS pop_min_commune,\n       round(avg(\"SUPERFICIE\"::numeric), 2) AS surface_moy_commune\nFROM commune\nGROUP BY \"NOM_DEPT\";\n\nPoints cles : GROUP BY sur NOM_DEPT ; usage des cinq fonctions d'agregation ; transtypage en numeric AVANT la division pour eviter la division entiere ; round(..., 2) pour deux decimales.",
+          "bareme": "6 points : 1 pt pour le GROUP BY sur NOM_DEPT, 1 pt par indicateur correct (sum, densite moyenne, max, min, superficie moyenne = 5 pts), avec penalite si le cast avant division est oublie (la densite serait alors 0)."
+        },
+        {
+          "numero": "4",
+          "enonce": "Quels sont les surfaces (en km2) et perimetres (en km), arrondis a deux chiffres apres la virgule, des communes du departement de la Sarthe ? On considere que la geometrie s'appelle geometry et que le SRID est le 2154 (RGF93/Lambert93), d'unite le metre. (Indice : trouver la fonction geometrique qui renvoie une aire et celle qui renvoie un perimetre ; ces fonctions ne prennent pas de parametre d'unite, il faut donc faire la conversion soi-meme par une division.)",
+          "correction": "On utilise les fonctions spatiales PostGIS ST_Area (surface, en m2 car le SRID 2154 est en metres) et ST_Perimeter (perimetre, en m). Pour convertir en km2 on divise la surface par 1 000 000 (1 km2 = 1 000 000 m2) et pour convertir en km on divise le perimetre par 1 000. On arrondit a deux decimales avec round, en s'assurant du type numeric.\n\nSELECT \"NOM_COMM\",\n       round((ST_Area(geometry) / 1000000)::numeric, 2) AS surface_km2,\n       round((ST_Perimeter(geometry) / 1000)::numeric, 2) AS perimetre_km\nFROM commune\nWHERE \"NOM_DEPT\" = 'SARTHE';\n\nPoints cles : ST_Area renvoie une aire en unite du SRID (ici le m2), ST_Perimeter un perimetre en m ; conversion m2 -> km2 par division par 1 000 000 et m -> km par division par 1 000 ; round(..., 2) pour deux decimales (le format numeric est obligatoire pour round sous PostGIS) ; filtre WHERE sur le departement de la Sarthe. On veillera a prefixer par ST_ pour la conformite au standard SQL/MM.",
+          "bareme": "5 points : 1,5 pt pour ST_Area et la conversion en km2, 1,5 pt pour ST_Perimeter et la conversion en km, 1 pt pour l'arrondi a deux decimales, 1 pt pour le filtre WHERE sur la Sarthe."
+        }
+      ]
+    }
+  ],
+  "entreprenariat": [
+    {
+      "titre": "Examen de Rattrapage - QCM (Niveau 3, duree 1h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf - Examen de Rattrapage, Cours: Creation d'entreprise (page 1) - Centre d'Excellence Technologique Paul Biya / IAI Cameroun",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Que signifie SWOT ? A) Forces, faiblesses, opportunites et menaces ; B) ... ; C) ... ; D) ...",
+          "correction": "Reponse A. SWOT = Strengths, Weaknesses, Opportunities, Threats = Forces, Faiblesses, Opportunites et Menaces. C'est l'outil de diagnostic strategique croisant l'analyse interne (forces/faiblesses) et externe (opportunites/menaces).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "2",
+          "enonce": "Sur quoi porte un exemple de force dans une analyse SWOT ?",
+          "correction": "Reponse B. Une force est un element interne positif de l'entreprise. L'analyse SWOT oppose les facteurs internes (forces/faiblesses) aux facteurs externes (opportunites/menaces).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "3",
+          "enonce": "Quel est l'objectif/element principal de l'environnement interne d'une entreprise ?",
+          "correction": "Reponse B : la structure organisationnelle. L'environnement interne regroupe l'organisation, les ressources et procedures propres a la firme, par opposition au marche externe.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "4",
+          "enonce": "Quel est un exemple de facteur externe affectant l'environnement de l'entreprise ?",
+          "correction": "Reponse C : la demande du marche et la concurrence. Ce sont des elements du micro-environnement externe que l'entreprise subit (clients, concurrents, fournisseurs).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "5",
+          "enonce": "Quelle est une caracteristique cle d'une structure organisationnelle hierarchique ?",
+          "correction": "Reponse C : plusieurs niveaux de gestion et une chaine de commandement claire. La hierarchie repose sur des lignes d'autorite verticales bien definies.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "6",
+          "enonce": "Dans une structure hierarchique, qui rapporte generalement au gestionnaire de departement ?",
+          "correction": "Reponse B : les chefs d'equipe ou superviseurs, qui encadrent eux-memes les employes de premiere ligne.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "7",
+          "enonce": "Qui est credite du developpement de la theorie de la gestion scientifique ?",
+          "correction": "Reponse A : Frederick Winslow Taylor, pere de l'organisation scientifique du travail (taylorisme).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "8",
+          "enonce": "Quel est le principe cle de la theorie de la gestion scientifique ?",
+          "correction": "Reponse B : la standardisation des processus de travail et des taches, afin d'optimiser le rendement (decomposition et chronometrage des operations).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quelle structure organisationnelle combine les structures fonctionnelles et basees sur le projet ?",
+          "correction": "Reponse D : la structure matricielle, qui croise une logique metier (fonctionnelle) et une logique projet, avec une double ligne de rattachement.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "10",
+          "enonce": "Quel type d'innovation implique l'introduction du commerce electronique et de l'education en ligne ?",
+          "correction": "Reponse C : l'innovation de modele commercial (business model), car le e-commerce et l'e-learning transforment la facon de creer et de capter de la valeur.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "11",
+          "enonce": "Quel est un moteur cle de l'innovation ?",
+          "correction": "Reponse C : la collaboration et l'experimentation. L'aversion au risque, la bureaucratie et l'attachement strict aux methodes traditionnelles freinent l'innovation.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "12",
+          "enonce": "Quel est l'objectif principal d'une entreprise ?",
+          "correction": "Reponse B : generer des profits et creer de la valeur. Le but de l'entreprise est de produire des biens/services vendus avec profit pour assurer sa survie et son developpement.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "13",
+          "enonce": "Quelle est une caracteristique d'une entreprise prospere ?",
+          "correction": "Reponse C : un leadership fort et une planification strategique. La dependance excessive a un seul client (option D) est au contraire un facteur de risque.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "14",
+          "enonce": "Quelle est l'etape cle dans le processus de creation d'une entreprise ?",
+          "correction": "Reponse D : toutes les reponses ci-dessus (etude de marche/analyses, business plan complet, campagne marketing). Le processus enchaine ces etapes complementaires.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "15",
+          "enonce": "Qu'est-ce qui est essentiel pour obtenir un financement pour une nouvelle entreprise ?",
+          "correction": "Reponse A : un plan d'affaires (business plan) bien redige, document de reference qui convainc banquiers et investisseurs.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "16",
+          "enonce": "Qui est credite du developpement de la theorie de la gestion administrative ?",
+          "correction": "Reponse B : Henri Fayol, fondateur de la theorie administrative et des fonctions du management.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "17",
+          "enonce": "Selon la theorie de la gestion administrative, quelle est l'une des fonctions cles de la gestion ?",
+          "correction": "Reponse D : toutes les reponses (controler, diriger, organiser). Fayol cite prevoir/planifier, organiser, commander, coordonner et controler.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "18",
+          "enonce": "Quelle est la source courante d'idees commerciales ?",
+          "correction": "Reponse D : toutes les reponses (etudes de marche, experience personnelle et competences, analyse de la concurrence).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "19",
+          "enonce": "Qu'est-ce qu'une source potentielle d'opportunites commerciales ?",
+          "correction": "Reponse D : toutes les reponses (technologies emergentes et tendances, changement de reglementation gouvernementale, changement du comportement des consommateurs).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "20",
+          "enonce": "Quelle est une consideration cle lors de l'evaluation de la faisabilite d'une idee commerciale ?",
+          "correction": "Reponse D : toutes les reponses (taille et potentiel de croissance du marche, paysage concurrentiel et part de marche, projections financieres et retour sur investissement).",
+          "bareme": "1 pt"
+        }
+      ]
+    },
+    {
+      "titre": "Epreuve d'Entrepreneuriat et Creation d'Entreprise (Niveau 3 GL/SR, 2024/2025, duree 2h, aucun document autorise)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 2) - Centre d'Excellence Technologique Paul Biya, 2024/2025",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Apres avoir donne une definition simple de l'entreprise, citer sur le plan prive celles qu'on retrouve le plus dans notre environnement economique. Laquelle de ces formes juridiques choisiriez-vous si vous arrivez de creer votre propre entreprise et pourquoi ? (5 points)",
+          "correction": "DEFINITION : l'entreprise est une entite economique et juridiquement autonome qui combine travail et capital pour produire des biens ou services vendus sur un marche afin de satisfaire des besoins et faire du profit. FORMES PRIVEES les plus repandues dans l'environnement camerounais : l'entreprise individuelle (EI), l'EURL/SASU (unipersonnelle), la SARL (2-9 associes), la SA/SPA (grande entreprise), la SNC (societe familiale) et le GIC. CHOIX ARGUMENTE : pour une premiere creation, la SARL est generalement recommandee car elle limite la responsabilite aux apports, autorise plusieurs associes, exige un capital accessible et confere un meilleur 'standing' qu'une EI ; l'EI/EURL convient si l'on veut rester seul maitre a bord avec des formalites allegees. (Toute reponse coherente et justifiee est acceptee.)",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "La creation d'entreprise est un important levier de developpement de notre pays. Expliquer cette assertion avec un (01) exemple precis. (2 points)",
+          "correction": "La creation d'entreprise est le 1er moteur de creation d'emploi et de richesse : elle renouvelle le systeme economique (destruction creatrice de Schumpeter), genere de l'innovation et contribue au PIB. Au Cameroun, ~99% des ~94 000 entreprises sont des PME ; selon le ministre de tutelle la creation d'entreprise contribuerait a creer environ 64% des emplois et 34% du produit brut (2020). EXEMPLE : une start-up de e-commerce ou une PME agroalimentaire qui cree des emplois directs et induits, forme du personnel et dynamise une filiere locale.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Citer quatre structures de promotion de la creation d'entreprises au Cameroun et donner le role de chacune d'elles. (4 points)",
+          "correction": "Quatre structures (1 point chacune avec role) : (1) le CFCE - Centre de Formalites de Creation d'Entreprise : guichet unique d'immatriculation et de delivrance des documents de creation ; (2) l'APME - Agence de Promotion des PME : appui, accompagnement et encadrement des PME ; (3) le BMN - Bureau de Mise a Niveau : amelioration de la competitivite des entreprises ; (4) la Bourse de sous-traitance et de partenariat / Agro-PME Fondation : mise en relation, conseil et financement des promoteurs. (Les Centres de Gestion Agrees et les structures bancaires/business angels sont egalement acceptes.)",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Pour des projets sociaux, le cycle de projet contient differentes phases dont l'identification est l'une des principales. Pourquoi ? Quelle difference faites-vous entre un projet economique et un projet social ? (2 points)",
+          "correction": "L'IDENTIFICATION est cruciale car c'est la phase de decouverte et de validation de l'idee : elle conditionne la pertinence, la faisabilite et le succes du projet ; une mauvaise identification du besoin/de l'opportunite compromet toutes les phases suivantes. DIFFERENCE : un projet economique vise principalement la rentabilite financiere et le profit ; un projet social vise prioritairement l'impact social (amelioration des conditions de vie, emploi, cohesion) meme si une viabilite financiere reste necessaire.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "En quoi consiste le metier d'entrepreneur ? Comment un entrepreneur cree-t-il son entreprise ? (2 points)",
+          "correction": "Le METIER d'entrepreneur consiste a creer, developper et gerer une entreprise : il est responsable de toutes les activites, assume le risque, decide d'investir, mobilise des ressources humaines, technologiques et financieres et exerce un leadership pour diriger son equipe. CREATION : il suit les cinq etapes - evaluation de l'opportunite, conception/formulation du projet (etudes de marche, juridique, financiere), montage juridique et financement, prise de decision, puis lancement de l'activite.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Quelles sont les differentes etapes de validation d'une idee de creation d'entreprise ? citer sans definir. (5 points)",
+          "correction": "Etapes de validation de l'idee : (1) definir precisement l'idee initiale (que vendre ? a qui ? quelle valeur ?) ; (2) rechercher des informations et recueillir l'avis d'experts ; (3) tester l'idee aupres de personnes exterieures ; (4) analyser les contraintes du projet ; (5) verifier l'adequation createur/projet ; (6) transformer l'idee en opportunite realiste resistant a l'usure du temps et a la competition ; aboutissant a la conception du business plan.",
+          "bareme": "5 points"
+        }
+      ]
+    },
+    {
+      "titre": "Rattrapage Creation d'Entreprise (Niveau 3)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 3) - Rattrapage, Centre d'Excellence Technologique Paul Biya",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Quelle difference faites-vous entre une entreprise et une societe ? (1.5 pts) Presentez l'effectif de personnel comme un critere de classification des entreprises. (2 pts) Quelle difference faites-vous entre la creation ex-nihilo et l'essaimage ? (2 pts) Quelle difference faites-vous entre un document projet et un business plan ? (1 pt)",
+          "correction": "ENTREPRISE vs SOCIETE : l'entreprise est une notion economique (unite de production combinant travail et capital) ; la societe est sa forme juridique, personne morale creee par contrat entre associes (SARL, SA...). Toute societe est une entreprise mais une entreprise peut exister sans etre une societe (entreprise individuelle). EFFECTIF comme critere : TPE 0-9 salaries, PE 10-49, ME 50-199, GE 200 et plus ; critere de moins en moins utilise car l'automatisation reduit les effectifs et chaque pays a sa propre definition. EX-NIHILO vs ESSAIMAGE : ex-nihilo = creer a partir de rien, seul, risque maximal ; essaimage = creer en etant salarie avec l'appui (materiel, financier, commercial) de son entreprise, risque reduit. DOCUMENT PROJET vs BUSINESS PLAN : le document projet decrit l'idee et les grandes lignes ; le business plan est un dossier complet a vocation argumentaire (volets redactionnel et financier) destine a convaincre banquiers et investisseurs.",
+          "bareme": "6.5 points"
+        },
+        {
+          "numero": "Ex.2",
+          "enonce": "Selon vous, quels peuvent etre les facteurs contextuels ou personnels favorisant la creation d'entreprise ? Commentez les qualites qu'il faut avoir, selon Schumpeter, pour etre un bon entrepreneur. (1 pt)",
+          "correction": "FACTEURS PERSONNELS : personnalite, motivation, competences, experience, tenacite, sens des responsabilites, resistance au stress, capacite de travail, d'ecoute, d'adaptation et a se vendre. FACTEURS CONTEXTUELS : etat des marches, environnement socio-economique, croissance demographique (demande), concentration de petites entreprises, taux d'urbanisation eleve, dispositifs d'aide (modele de BIRD : interaction variables personnelles / cadre contextuel). QUALITES SELON SCHUMPETER : capacite d'innovation, leadership, gout d'aller a l'encontre du statu quo, prise de risque, et la 'joie de creer/gagner' qui prime sur la seule recherche du profit.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "Ex.3",
+          "enonce": "Definir : 1. l'entrepreneur (1pt) ; 2. le profit entrepreneurial (1pt) ; 3. l'entreprise (1pt) ; 4. au cameroun, l'idee originale d'avoir un cabinet de marketing (1pt) ; 5. la creation d'entreprise (1pt) ; 6. l'entrepreneur peut etre defini comme une personne qui exploite les ressources humaines et materielles pour creer, developper et implanter en relation avec un type d'activites qui permettent de generer l'emploi (1pt) ; 7. l'entrepreneuriat. (sur 7 pts)",
+          "correction": "1. ENTREPRENEUR : personne qui cree, developpe et implante une entreprise dont elle assume les risques, en mobilisant moyens financiers, humains et materiels pour realiser un profit (Larousse). 2. PROFIT ENTREPRENEURIAL (J.-B. Say) : remuneration distincte du profit du capital, recompensant la fonction de coordination et la prise de risque de l'entrepreneur. 3. ENTREPRISE : entite economique et juridiquement autonome combinant travail et capital pour produire des biens/services pour le marche. 4. CABINET DE MARKETING : entreprise de services (secteur tertiaire) offrant conseil et accompagnement marketing aux entreprises ; idee originale exploitant une opportunite de marche peu couverte. 5. CREATION D'ENTREPRISE : action de creer, de tirer du neant ; processus en cinq etapes aboutissant au lancement d'une activite economique nouvelle. 6. (definition de l'entrepreneur comme exploitant de ressources pour generer de l'emploi - a valider). 7. ENTREPRENEURIAT : action de creer de la richesse et/ou de l'emploi par la creation ou la reprise d'une entreprise.",
+          "bareme": "7 points"
+        }
+      ]
+    },
+    {
+      "titre": "Controle Continu de Creation d'Entreprise (Annee 2022-2023, Classe SR3B, duree 2h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (pages 4 et 9, identiques) - Controle Continu 2022-2023",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Definir les termes suivants : Entreprise, entrepreneuriat, environnement, management. (4 pts)",
+          "correction": "ENTREPRISE : entite economique et juridiquement autonome combinant travail et capital pour produire des biens/services vendus sur un marche. ENTREPRENEURIAT : action de creer de la richesse et/ou de l'emploi par la creation ou reprise d'une entreprise (generer de la valeur par l'exploitation de nouveaux produits/processus/marches - OCDE). ENVIRONNEMENT : ensemble des facteurs externes (macro, micro, meso) ayant une influence directe ou indirecte sur l'entreprise. MANAGEMENT : ensemble de techniques pour gerer, organiser, diriger, controler et planifier les activites de l'entreprise (Fayol : prevoir, organiser, commander, coordonner, controler).",
+          "bareme": "4 points (1 pt par terme)"
+        },
+        {
+          "numero": "1",
+          "enonce": "Citer un inconvenient du modele de Shapero. (1 pt)",
+          "correction": "Le modele de l'evenement entrepreneurial de Shapero met l'accent sur le declenchement par un evenement (deplacement) et sur les perceptions de desirabilite et de faisabilite ; son principal inconvenient est qu'il privilegie les facteurs de declenchement/situationnels et neglige le processus de mise en oeuvre et la dimension dynamique/temporelle de la creation, restant assez statique et difficilement operationnalisable.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "2",
+          "enonce": "Quelles sont les etapes du processus de creation d'une entreprise au Cameroun ? (2 pts)",
+          "correction": "Cinq etapes : (1) evaluation de l'opportunite ; (2) conception et formulation du projet (etude de marche, juridique, financiere) ; (3) montage juridique et scenarios de financement et de rentabilite ; (4) prise de decision ; (5) lancement de l'activite. Au Cameroun, le montage juridique et les formalites se concretisent au CFCE.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Citer les 6 formes de creation d'entreprise. (2 pts)",
+          "correction": "Les formes de creation : (1) creation ex-nihilo ; (2) creation par essaimage (a chaud/curatif et a froid/dynamique) ; (3) creation par franchise ; (4) reprise d'entreprise en bonne sante ; (5) reprise d'entreprise en difficulte ; (6) l'intrapreneuriat (creation/renouvellement au sein d'une organisation existante).",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Donner un exemple de titre, des beneficiaires, d'objectif global, d'objectifs specifiques et d'activites d'un projet de creation d'entreprise. (3 pts)",
+          "correction": "Exemple (projet 'Tech4All') : TITRE : plateforme e-commerce de materiel informatique. BENEFICIAIRES : particuliers, entreprises et institutions. OBJECTIF GLOBAL : devenir la plateforme de reference en e-commerce informatique de la sous-region d'ici 2030. OBJECTIFS SPECIFIQUES : developper une plateforme web/mobile securisee ; etablir un reseau de fournisseurs ; mettre en place une logistique rapide (<72h) ; mener des campagnes digitales ; recruter et former le personnel. ACTIVITES : developpement du site/app, signature de partenariats, ouverture d'un entrepot, campagnes de communication, recrutement.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Comment calcule-t-on le resultat net d'une entreprise et quels sont les types de resultat net ? (1 pt)",
+          "correction": "RESULTAT NET = total des produits - total des charges (ou Chiffre d'affaires - charges, apres impots). Types : resultat d'exploitation, resultat financier et resultat exceptionnel, dont la somme apres impot sur les societes donne le resultat net (benefice si positif, perte si negatif).",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "6",
+          "enonce": "Classer les entreprises en fonction de l'effectif du personnel. (1 pt)",
+          "correction": "TPE : 0 a 9 salaries ; Petites entreprises : 10 a 49 salaries ; Moyennes entreprises : 50 a 199 salaries ; Grandes entreprises : 200 salaries et plus.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "7",
+          "enonce": "En utilisant le critere secteur, classer les entreprises. (1 pt)",
+          "correction": "Secteur primaire (production de matieres premieres : agriculture, peche, mines) ; secteur secondaire (transformation/industrie : textile, chimie, batiment) ; secteur tertiaire (services : assurance, transport, professions liberales) ; secteur quaternaire (traitement et diffusion de l'information, informatique).",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "8",
+          "enonce": "Quelle est la relation qui existe entre un business plan et une etude de marche ? (1 pt)",
+          "correction": "L'etude de marche est une composante du business plan : elle analyse la demande, l'offre, la concurrence et l'environnement, et fournit les donnees qui alimentent la partie redactionnelle (positionnement) et la partie financiere (previsions de chiffre d'affaires) du business plan. Le business plan integre et formalise les conclusions de l'etude de marche.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quelles sont les differentes sources d'idees de creation d'entreprise ? (1 pt)",
+          "correction": "Sources d'idees : l'experience personnelle et les competences, les etudes/analyses de marche, l'analyse de la concurrence, l'observation des problemes/besoins non satisfaits, les technologies emergentes, les evolutions reglementaires et les changements de comportement des consommateurs.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "10",
+          "enonce": "Expliquer l'importance du business plan pour une entreprise. (1 pt)",
+          "correction": "Le business plan formalise le projet, sert de document de reference et de pilotage, et a une vocation argumentaire : il permet d'obtenir un financement bancaire, d'attirer des investisseurs et de negocier avec les fournisseurs. Sa qualite conditionne le succes de la demande de financement.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "11",
+          "enonce": "Citer et expliquer les qualites d'un bon manager. (1 pt)",
+          "correction": "Un bon manager sait prevoir/planifier, organiser, commander/diriger, coordonner et controler (Fayol). Qualites : leadership, capacite de decision, sens de la communication, ecoute active, capacite a motiver et a deleguer, rigueur et vision strategique.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "12",
+          "enonce": "Citer les strategies utilisees en marketing. (1 pt)",
+          "correction": "Strategies marketing : strategie de domination par les couts, strategie de differenciation et strategie de concentration/niche (Porter) ; on peut citer aussi les strategies du mix marketing (produit, prix, place/distribution, promotion - les 4P) et les strategies de segmentation, ciblage et positionnement.",
+          "bareme": "1 point"
+        }
+      ]
+    },
+    {
+      "titre": "Examen de Fin de Semestre - Creation d'Entreprise (duree 2h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 5) - Examen de fin de semestre",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Definir les termes suivants : Entreprise, entrepreneur, entrepreneuriat, environnement, organisation, management. (6 pts)",
+          "correction": "ENTREPRISE : entite economique et juridiquement autonome combinant travail et capital pour produire des biens/services pour le marche. ENTREPRENEUR : personne qui cree, developpe et implante une entreprise dont elle assume les risques. ENTREPRENEURIAT : action de creer de la richesse et/ou de l'emploi par la creation ou reprise d'une entreprise. ENVIRONNEMENT : ensemble des facteurs externes (macro/micro/meso) influencant l'entreprise. ORGANISATION : ensemble des activites visant la repartition et la coordination des taches et responsabilites de chaque individu en vue de la production. MANAGEMENT : ensemble de techniques pour gerer, organiser, diriger, controler et planifier (Fayol).",
+          "bareme": "6 points (1 pt par terme)"
+        },
+        {
+          "numero": "1",
+          "enonce": "Citer deux modeles de creation d'entreprise et donner la difference qui existe entre les deux modeles. (2 pts)",
+          "correction": "Deux modeles : la creation EX-NIHILO (a partir de rien, seul, risque maximal, fort besoin de dimensionnement financier) et la creation par ESSAIMAGE (avec l'appui de l'entreprise-mere alors qu'on est salarie, risque reduit). DIFFERENCE : presence ou non d'un accompagnement/structure d'appui et niveau de risque, l'ex-nihilo etant entierement autonome et la plus risquee, l'essaimage etant accompagnee.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Quelles sont les etapes du processus de creation d'une entreprise ? (2 pts)",
+          "correction": "(1) Evaluation de l'opportunite ; (2) conception et formulation du projet ; (3) montage juridique et scenarios de financement/rentabilite ; (4) prise de decision ; (5) lancement de l'activite.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Presenter l'effectif du personnel comme un critere de classification des entreprises. (2 pts)",
+          "correction": "L'effectif (nombre de salaries) classe les entreprises en TPE (0-9), PE (10-49), ME (50-199) et GE (200+). Critere simple mais de moins en moins utilise car l'automatisation reduit les effectifs et chaque pays adopte sa propre definition de la PME.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Quelle est la relation qui existe entre un business plan et une etude de marche ? (1 pt)",
+          "correction": "L'etude de marche est un intrant du business plan : elle fournit l'analyse de la demande et de la concurrence qui nourrit le positionnement strategique et les previsions financieres du business plan.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "5",
+          "enonce": "Qu'est-ce qu'une opportunite d'affaire ? (1 pt)",
+          "correction": "Une opportunite d'affaire est une occasion d'affaire : c'est l'ancrage (la rencontre) entre une idee et un marche, qui resiste a l'usure du temps et a la competition.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "6",
+          "enonce": "Citer les principales motivations a la creation d'entreprise. (2 pts)",
+          "correction": "Motivations : independance (etre son propre patron), recherche de profit/richesse, creation d'emploi, accomplissement personnel, exploitation d'une opportunite/innovation, alternative au chomage, mise en valeur d'une competence ou d'une passion (cas de l'innerpreneur).",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Citer et commenter les qualites qu'il faut avoir pour etre un bon entrepreneur. (sur 5 pts)",
+          "correction": "Les 10 qualites du cours : tenacite, sens des responsabilites, resistance aux chocs/stress, capacite de travail, sante, aptitude a communiquer son enthousiasme, bon sens, capacite d'ecoute, capacite d'adaptation et capacite a se vendre. Commentaire : ces qualites assurent l'adequation homme/projet et permettent de mener l'idee jusqu'au bout malgre les difficultes, de mobiliser les ressources et de convaincre partenaires et clients.",
+          "bareme": "5 points"
+        }
+      ]
+    },
+    {
+      "titre": "Epreuve de Creation d'Entreprise - Cas pratique Dieudonne MBALLA (SR3 et GL3, duree 2h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (pages 6-7) - Cas pratique",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Definir les termes suivants : Organisation, Creation, Entreprise, Entreprenariat, Entrepreneur, opportunite, chiffre d'affaire. (7 pts)",
+          "correction": "ORGANISATION : ensemble d'activites de repartition et coordination des taches et responsabilites en vue de la production. CREATION : action de creer, de tirer du neant. ENTREPRISE : entite economique et juridiquement autonome produisant des biens/services pour le marche. ENTREPRENEURIAT : action de creer richesse et/ou emploi par creation ou reprise d'entreprise. ENTREPRENEUR : personne qui cree, developpe et implante une entreprise dont elle assume les risques. OPPORTUNITE : occasion d'affaire, ancrage entre l'idee et le marche. CHIFFRE D'AFFAIRE : valeur annuelle des ventes (CA = prix de vente x quantite vendue).",
+          "bareme": "7 points"
+        },
+        {
+          "numero": "Cas-1",
+          "enonce": "Cas pratique : Dieudonne MBALLA a cree CRU et CRU, groupe qui rassemble des societes specialisees dans le marketing. Issu d'une famille relativement entreprenante, il quitte son emploi salarie (chef de produit junior, chef de groupe) chez BIYONG confiserie apres avoir longtemps occupe ces fonctions, malgre des passages a ES Douala, l'ecole de la CPA (centre de perfectionnement aux affaires), un cabinet d'etudes a Yaounde et chez For MONTY confiserie. TAF 1 : En utilisant le modele SHAPERO, faire ressortir trois elements qui ont influence la decision d'entreprendre de Dieudonne MBALLA. (3 pts)",
+          "correction": "Le modele de SHAPERO (evenement entrepreneurial) repose sur trois ressorts : la PERCEPTION DE DESIRABILITE (attrait personnel/social pour l'acte d'entreprendre), la PERCEPTION DE FAISABILITE (sentiment d'etre capable, grace aux competences/ressources) et un DEPLACEMENT/EVENEMENT DECLENCHEUR. Pour MBALLA : (1) le deplacement = son depart/insatisfaction chez BIYONG et For MONTY (evenement negatif declencheur) ; (2) la desirabilite = son origine familiale entreprenante et son envie d'independance ; (3) la faisabilite = sa solide experience professionnelle (chef de produit, chef de groupe), sa formation (CPA, cabinet d'etudes) qui le rendent capable de creer son propre cabinet de marketing.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "Cas-2",
+          "enonce": "TAF 2 : Degager l'importance de l'itineraire professionnel de Dieudonne MBALLA. (3 pts)",
+          "correction": "L'itineraire professionnel de MBALLA (postes successifs de chef de produit junior puis chef de groupe, passages par l'enseignement/CPA et plusieurs cabinets) lui a apporte : une EXPERIENCE METIER approfondie du marketing, un RESEAU professionnel et relationnel, des COMPETENCES manageriales et techniques, et la maturation progressive de l'IDEE/OPPORTUNITE de creer son propre cabinet. Cet itineraire illustre que l'accumulation d'experiences et de competences (capital humain) reduit l'incertitude et augmente les chances de reussite de la creation ex-nihilo.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "Cas-3",
+          "enonce": "TAF 3 : Quel est le principal facteur de differenciation des six formes de creation d'entreprise ? Donner la difference entre la forme de creation par essaimage et la creation par franchise. (3 pts)",
+          "correction": "PRINCIPAL FACTEUR DE DIFFERENCIATION : le degre d'innovation et le rapport a l'existant (creer du nouveau vs reprendre/imiter), qui determine le niveau de risque assume. ESSAIMAGE vs FRANCHISE : dans l'essaimage, le salarie cree avec l'appui (gratuit, materiel, financier, commercial) de son entreprise-mere ; dans la franchise, le franchise applique une formule existante avec l'accompagnement du franchiseur mais cet accompagnement est PAYANT, et la franchise convient a celui qui n'a pas d'idee propre ni de capacite a innover.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "Cas-4",
+          "enonce": "TAF 4 : En quoi l'intrapreneur n'est-il pas un entrepreneur au sens classique ou on l'entend ? (1 pt)",
+          "correction": "L'intrapreneur cree ou innove AU SEIN d'une organisation existante : il reste un SALARIE soumis a des obligations contractuelles et morales envers son employeur, n'engage pas (ou peu) son propre capital et ne supporte pas personnellement la totalite du risque financier. L'entrepreneur classique, lui, cree sa propre structure, est independant et assume integralement les risques financiers et patrimoniaux.",
+          "bareme": "1 point"
+        }
+      ]
+    },
+    {
+      "titre": "Epreuve de Creation d'Entreprise (SR3 et GL3, duree 1h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 10) - Centre d'Excellence Technologique Paul Biya",
+      "questions": [
+        {
+          "numero": "Q.I",
+          "enonce": "Definir : Entreprise, Chiffre d'affaires, Intrapreneuriat, Opportunite, Creation, environnement. (6 pts)",
+          "correction": "ENTREPRISE : entite economique et juridiquement autonome combinant travail et capital pour produire des biens/services pour le marche. CHIFFRE D'AFFAIRES : valeur annuelle des ventes (CA = prix de vente x quantite vendue). INTRAPRENEURIAT : processus par lequel un individu, en association avec une organisation existante, cree une nouvelle activite ou genere le renouvellement/l'innovation au sein de cette organisation (Sharma et Chrisman, 1999). OPPORTUNITE : occasion d'affaire, ancrage entre l'idee et le marche. CREATION : action de creer, de tirer du neant. ENVIRONNEMENT : ensemble des facteurs externes (macro/micro/meso) influencant l'entreprise.",
+          "bareme": "6 points"
+        },
+        {
+          "numero": "Q.II-1",
+          "enonce": "Quelle difference faites-vous entre une entreprise et une societe ? (1.5 pts)",
+          "correction": "L'entreprise est une notion economique (unite de production) ; la societe est une forme juridique, personne morale nee d'un contrat entre associes (SARL, SA...). Toute societe est une entreprise, mais une entreprise peut exister sans etre une societe (cas de l'entreprise individuelle).",
+          "bareme": "1.5 point"
+        },
+        {
+          "numero": "Q.II-2",
+          "enonce": "Quelle difference faites-vous entre la creation ex-nihilo et l'essaimage ? (1.5 pts)",
+          "correction": "Ex-nihilo : creation a partir de rien, sans appui, par un entrepreneur autonome, risque maximal. Essaimage : creation par un salarie avec l'appui (materiel, financier, commercial) de son entreprise-mere, risque reduit.",
+          "bareme": "1.5 point"
+        },
+        {
+          "numero": "Q.II-3",
+          "enonce": "Quelle difference faites-vous entre le macro environnement et le micro environnement ? (1 pt)",
+          "correction": "Le MACRO-environnement regroupe les facteurs generaux subis par l'entreprise (politique, juridique, economique, socioculturel, technologique) sur lesquels elle a peu de controle. Le MICRO-environnement (environnement specifique) est compose des acteurs en relation directe (clients, fournisseurs, concurrents, distributeurs, partenaires) sur lesquels l'entreprise peut agir par sa strategie.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "Q.III-1",
+          "enonce": "Selon vous, quels peuvent etre les facteurs contextuels ou personnels favorisant la creation d'entreprise ? (2 pts)",
+          "correction": "Facteurs PERSONNELS : personnalite, motivation, competences, experience, tenacite, gout du risque, sante. Facteurs CONTEXTUELS : etat des marches, environnement socio-economique, croissance demographique, urbanisation, concentration de petites entreprises, dispositifs d'aide (modele de BIRD).",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "Q.III-2",
+          "enonce": "Commentez les qualites qu'il faut avoir, selon Schumpeter, pour etre un bon entrepreneur. (2 pts)",
+          "correction": "Selon Schumpeter, le bon entrepreneur est avant tout un INNOVATEUR : capacite a creer de nouvelles combinaisons, leadership, aptitude a aller a l'encontre du statu quo economique, prise de risque, et une motivation ou la joie de creer et de gagner l'emporte sur la simple recherche du profit.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "Q.III-3",
+          "enonce": "A quoi sert une etude de marche ? (1 pt)",
+          "correction": "L'etude de marche sert a analyser la demande (clients, besoins), l'offre (concurrence), et l'environnement specifique afin de valider l'opportunite, dimensionner le projet, definir l'offre et le positionnement, et alimenter les previsions du business plan.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "Q.V-1",
+          "enonce": "Qu'est-ce qu'une opportunite d'affaire ? (1 pt)",
+          "correction": "Une occasion d'affaire : l'ancrage (rencontre) entre une idee et un marche, qui se distingue de la simple idee par son potentiel reel d'exploitation rentable.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "Q.V-2",
+          "enonce": "Qu'est-ce qu'un projet ? (1 pt)",
+          "correction": "Un projet est un ensemble coordonne d'activites, ayant un debut et une fin, visant a atteindre un objectif precis avec des ressources limitees, sous la contrainte du triangle d'or cout-delai-performance.",
+          "bareme": "1 point"
+        },
+        {
+          "numero": "Q.V-3",
+          "enonce": "Presentez l'effectif du personnel comme critere de classification d'entreprise. (3 pts)",
+          "correction": "L'effectif classe les entreprises en TPE (0-9 salaries), PE (10-49), ME (50-199) et GE (200 et plus). Critere simple mais de moins en moins utilise (automatisation reduisant les effectifs ; definitions de la PME variables selon les pays).",
+          "bareme": "3 points"
+        }
+      ]
+    },
+    {
+      "titre": "Epreuve de Creation d'Entreprise - Definitions et schemas",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 8) - Centre d'Excellence Technologique Paul Biya",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Definir les termes ou concepts suivants : entrepreneuriat, chiffre d'affaires, creation d'entreprise. (3 pts)",
+          "correction": "ENTREPRENEURIAT : action de creer de la richesse et/ou de l'emploi par la creation ou la reprise d'une entreprise (generer de la valeur par l'exploitation de nouveaux produits/processus/marches - OCDE). CHIFFRE D'AFFAIRES : valeur annuelle des ventes (CA = prix de vente x quantite vendue), critere de taille le moins precis. CREATION D'ENTREPRISE : action de creer, de tirer du neant ; processus structure en cinq etapes aboutissant au lancement d'une activite economique.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Qu'est-ce que l'externalisation ? Donnez deux (02) avantages ainsi que deux (02) inconvenients. (3 pts)",
+          "correction": "EXTERNALISATION (outsourcing) : confier a un prestataire externe une activite ou fonction auparavant realisee en interne. AVANTAGES : recentrage sur le coeur de metier ; reduction et flexibilisation des couts ; acces a une expertise specialisee. INCONVENIENTS : dependance vis-a-vis du prestataire ; perte de maitrise/savoir-faire ; risques sur la qualite, la confidentialite et les delais.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Quelle difference faites-vous entre la creation ex-nihilo et essaimage ? Donnez deux (02) inconvenients. (3 pts)",
+          "correction": "EX-NIHILO : creation a partir de rien, autonome, risque maximal. ESSAIMAGE : creation par un salarie avec l'appui de son entreprise-mere, risque reduit. DEUX INCONVENIENTS de l'ex-nihilo : besoin de temps long pour implanter le produit/convaincre le marche ; risques eleves a evaluer et fort besoin de financement a dimensionner ; (pour l'essaimage : motivations parfois negatives en essaimage a chaud, projets peu mûris et dependance a l'entreprise-mere).",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Quelles sont les limites du modele de Shapero ? (2 pts)",
+          "correction": "Limites du modele de Shapero : il est centre sur le declenchement (evenement/deplacement) et les perceptions de desirabilite et de faisabilite, mais il neglige le processus dynamique de mise en oeuvre, ne tient pas suffisamment compte du contexte economique global et reste difficilement operationnalisable/mesurable ; il est assez statique.",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Citer les trois (03) strategies d'accès a la creation. Quelle est la strategie qui donne a la petite entreprise les plus grandes chances de reussir son demarrage ? Justifier votre reponse. (5 pts)",
+          "correction": "TROIS STRATEGIES D'ACCES A LA CREATION : la creation ex-nihilo, la creation par essaimage et la creation par franchise (la reprise pouvant aussi etre citee). STRATEGIE OFFRANT LES PLUS GRANDES CHANCES POUR UNE PETITE ENTREPRISE : la creation par ESSAIMAGE (ou la franchise), car elle beneficie d'un accompagnement (materiel, financier, commercial, manageriale) qui REDUIT LE NIVEAU DE RISQUE et accelere le demarrage ; l'essaimage dynamique facilite la creation grace a un projet fiable et un appui de l'entreprise-mere, donnant des resultats superieurs a la creation ex-nihilo.",
+          "bareme": "5 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "Faire le schema illustrant la production dans une entreprise. (4 pts)",
+          "correction": "Schema attendu : COMBINAISON DES FACTEURS DE PRODUCTION -> PRODUCTION. Entrees : FACTEUR TRAVAIL (main d'oeuvre) + FACTEUR CAPITAL (batiments, machines, materiel ; capital fixe et circulant) + matieres premieres/biens intermediaires ; PROCESSUS de combinaison efficiente (recherche du meilleur resultat au moindre cout) ; SORTIES : biens (materiels) et services (immateriels) vendus sur le marche, generant valeur ajoutee repartie entre salaries, Etat, banque et entreprise.",
+          "bareme": "4 points"
+        }
+      ]
+    },
+    {
+      "titre": "Controle Continu d'Entrepreneuriat et Creation d'Entreprise (Annee 2024/2025, Classe SR3B, duree 1h)",
+      "source": "EPREUVES DE Creation d'entreprise.pdf (page 15) - Controle Continu 2024/2025",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Definir les termes suivants : Entrepreneuriat, chiffre d'affaires, management, entreprise. (4 pts)",
+          "correction": "ENTREPRENEURIAT : action de creer de la richesse et/ou de l'emploi par la creation ou reprise d'une entreprise. CHIFFRE D'AFFAIRES : valeur annuelle des ventes (CA = prix x quantite vendue). MANAGEMENT : ensemble de techniques pour gerer, organiser, diriger, controler et planifier les activites (Fayol : prevoir, organiser, commander, coordonner, controler). ENTREPRISE : entite economique et juridiquement autonome combinant travail et capital pour produire des biens/services pour le marche.",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "2",
+          "enonce": "Citer les criteres de differenciation des entreprises. (4 pts)",
+          "correction": "Trois criteres de classification : la TAILLE (effectif, chiffre d'affaires, capital investi), le SECTEUR D'ACTIVITE (primaire, secondaire, tertiaire, quaternaire) et la FORME JURIDIQUE (selon la propriete du capital et la nature juridique : EI, SARL, SA, SNC, GIC...).",
+          "bareme": "4 points"
+        },
+        {
+          "numero": "3",
+          "enonce": "Quelles sont les etapes de la creation d'entreprise ? (3 pts)",
+          "correction": "(1) Evaluation de l'opportunite ; (2) conception et formulation du projet ; (3) montage juridique et scenarios de financement et de rentabilite ; (4) prise de decision ; (5) lancement de l'activite.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "4",
+          "enonce": "Expliquer brievement la difference qui existe entre la fonction comptable et financiere et la fonction administrative d'une entreprise. (3 pts)",
+          "correction": "La FONCTION COMPTABLE ET FINANCIERE enregistre les operations, etablit les etats financiers (bilan, compte de resultat), gere la tresorerie, recherche les financements et assure la rentabilite/l'equilibre financier. La FONCTION ADMINISTRATIVE assure la coordination generale, la gestion des ressources humaines, l'organisation, la circulation de l'information et l'application des procedures (au sens de Fayol : prevoir, organiser, commander, coordonner, controler).",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "5",
+          "enonce": "Quelles sont les variantes du marketing ? (2 pts)",
+          "correction": "Variantes du marketing : marketing strategique vs marketing operationnel ; marketing B2B vs B2C ; marketing digital ; marketing direct ; marketing relationnel ; marketing social. (Le marketing-mix s'articule autour des 4P : produit, prix, place/distribution, promotion.)",
+          "bareme": "2 points"
+        },
+        {
+          "numero": "6",
+          "enonce": "'La creation d'entreprise est un important levier de developpement de tout pays', expliquer cette assertion en vous appuyant sur 2 exemples precis. (3 pts)",
+          "correction": "La creation d'entreprise est le 1er moteur de creation d'emploi et de richesse, source d'innovation (destruction creatrice) et de developpement structurel. EXEMPLE 1 : au Cameroun, les PME (99% du tissu economique) creent la majorite des emplois et contribuent fortement au PIB. EXEMPLE 2 : des entreprises innovantes (Apple, Microsoft, Amazon, Google) ont, par l'innovation, cree des filieres entieres, des millions d'emplois et transforme l'economie mondiale.",
+          "bareme": "3 points"
+        },
+        {
+          "numero": "7",
+          "enonce": "Citer et expliquer brievement 4 fonctions d'un manager. (3 pts)",
+          "correction": "Selon Fayol : (1) PREVOIR/PLANIFIER : anticiper et fixer les objectifs et moyens ; (2) ORGANISER : structurer les ressources et repartir les taches ; (3) COMMANDER/DIRIGER : mobiliser et animer les equipes ; (4) COORDONNER : harmoniser les actions ; (5) CONTROLER : verifier la conformite aux objectifs et corriger les ecarts (4 fonctions au choix a expliquer).",
+          "bareme": "3 points"
         }
       ]
     }

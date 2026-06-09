@@ -4,6 +4,9 @@
 const $ = (id) => document.getElementById(id);
 const STORAGE_BEST = 'gl3a_best_scores';
 const STORAGE_THEME = 'gl3a_theme';
+const STORAGE_WELCOME = 'gl3a_welcome_seen';
+const STORAGE_USER_EPREUVES = 'gl3a_user_epreuves';
+const STORAGE_UE_OPEN = 'gl3a_ue_open';
 
 const state = {
   matiere: null,
@@ -44,30 +47,143 @@ function goBack() {
   else go(prev, false);
 }
 
-// ============ ACCUEIL ============
-function renderHome() {
+// ============ ACCUEIL (groupé par Unité d'Enseignement) ============
+function getAllMatieres() {
+  return [
+    ...(typeof MATIERES !== 'undefined' ? MATIERES : []),
+    ...(typeof MATIERES_JEUDI !== 'undefined' ? MATIERES_JEUDI : []),
+    ...(typeof MATIERES_EXTRA !== 'undefined' ? MATIERES_EXTRA : [])
+  ];
+}
+
+function isMatiereVide(m) {
+  return (!m.resume || !m.resume.length)
+      && (!m.qcm || !m.qcm.length)
+      && (!m.questionsOuvertes || !m.questionsOuvertes.length);
+}
+
+// État déplié/replié des UE (mémorisé)
+function getOpenUEs() {
+  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_UE_OPEN) || '[]')); }
+  catch { return new Set(); }
+}
+function toggleUE(ueId) {
+  const set = getOpenUEs();
+  if (set.has(ueId)) set.delete(ueId); else set.add(ueId);
+  try { localStorage.setItem(STORAGE_UE_OPEN, JSON.stringify([...set])); } catch {}
+  return set.has(ueId);
+}
+
+// UE effective = celle fixée par l'admin (config) sinon celle par défaut de la matière.
+function getEffectiveUE(m) {
+  const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
+  return (c && c.ue) || m.ue;
+}
+// Horaire/date d'examen = uniquement ce que l'admin a renseigné (sinon rien).
+function getExamLabel(m) {
+  const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
+  return (c && c.exam_label) ? c.exam_label : '';
+}
+function getMatiereOrdre(m) {
+  const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
+  return (c && typeof c.ordre === 'number') ? c.ordre : 999;
+}
+
+function renderHome(skipConfigRefresh) {
   const list = $('matieres-list');
-  list.innerHTML = MATIERES.map(m => `
-    <button class="matiere-card" data-id="${m.id}" style="--accent: ${m.couleur}">
+  const allMatieres = getAllMatieres();
+  const unites = (typeof UNITES !== 'undefined') ? UNITES : [];
+
+  const renderCard = m => {
+    const vide = isMatiereVide(m);
+    const examLabel = getExamLabel(m);
+    const meta = examLabel ? `📅 ${escapeHtml(examLabel)}` : (vide ? '📭 Contenu à venir' : '📚 Disponible');
+    return `
+    <button class="matiere-card${vide ? ' matiere-vide' : ''}" data-id="${m.id}" style="--accent: ${m.couleur}">
       <span class="icon">${m.icone}</span>
       <span class="info">
         <h3>${m.titre}</h3>
         <p>${m.sousTitre}</p>
-        <span class="time">⏰ ${m.horaire}</span>
+        <span class="time">${meta}</span>
       </span>
       <span class="arrow">›</span>
-    </button>
-  `).join('');
+    </button>`;
+  };
+
+  const openSet = getOpenUEs();
+  const sectionHTML = (ueId, icone, label, items) => {
+    const prets = items.filter(m => !isMatiereVide(m)).length;
+    const open = openSet.has(ueId);
+    return `
+      <div class="ue-section${open ? ' ue-open' : ''}" data-ue="${ueId}">
+        <button class="ue-header" data-ue-toggle="${ueId}">
+          <span class="ue-icon">${icone || '📦'}</span>
+          <div class="ue-title">
+            <h3>${label}</h3>
+            <span class="ue-sub">${items.length} matières · ${prets} avec contenu</span>
+          </div>
+          <span class="ue-chevron">▾</span>
+        </button>
+        <div class="ue-cards">${items.map(renderCard).join('')}</div>
+      </div>`;
+  };
+
+  let html = '';
+  let lastSem = null;
+  unites.forEach(ue => {
+    const items = allMatieres
+      .filter(m => getEffectiveUE(m) === ue.id)
+      .sort((a, b) => getMatiereOrdre(a) - getMatiereOrdre(b));
+    if (!items.length) return;
+    if (ue.semestre !== lastSem) {
+      html += `<div class="sem-divider">${ue.semestre === 'S5' ? 'Semestre 5' : 'Semestre 6'}</div>`;
+      lastSem = ue.semestre;
+    }
+    html += sectionHTML(ue.id, ue.icone, ue.label, items);
+  });
+  // Matières sans UE reconnue (sécurité)
+  const orphelines = allMatieres.filter(m => !unites.some(u => u.id === getEffectiveUE(m)));
+  if (orphelines.length) {
+    html += sectionHTML('autres', '📦', 'Autres matières', orphelines);
+  }
+  list.innerHTML = html;
+
+  // Accordéon : clic sur l'en-tête déroule/replie l'UE
+  list.querySelectorAll('.ue-header').forEach(h => {
+    h.addEventListener('click', () => {
+      const section = h.closest('.ue-section');
+      const isOpen = toggleUE(h.dataset.ueToggle);
+      section.classList.toggle('ue-open', isOpen);
+    });
+  });
+
   list.querySelectorAll('.matiere-card').forEach(btn => {
     btn.addEventListener('click', () => {
-      const m = MATIERES.find(x => x.id === btn.dataset.id);
+      const m = allMatieres.find(x => x.id === btn.dataset.id);
       renderMatiere(m);
     });
   });
+  // Bouton espace délégué (modération)
+  const _adm = $('btn-admin');
+  if (_adm) {
+    if (typeof cloudConfigured === 'function' && cloudConfigured()) {
+      _adm.hidden = false;
+      _adm.onclick = () => renderAdminScreen();
+    } else {
+      _adm.hidden = true;
+    }
+  }
   $('appTitle').textContent = 'Révisions GL3A';
-  $('appSubtitle').textContent = 'Examen — 26 mai 2026';
+  $('appSubtitle').textContent = 'Rattrapages SN1 & SN2';
   go('home', false);
   state.history = [];
+
+  // Rafraîchit en arrière-plan le classement officiel (config admin) une seule fois, puis re-render.
+  if (!skipConfigRefresh && typeof cloudFetchMatiereConfig === 'function' && cloudConfigured()) {
+    cloudFetchMatiereConfig().then(() => {
+      if (state.currentScreen === 'home') renderHome(true);
+    }).catch(() => {});
+  }
 }
 
 // ============ ÉCRAN MATIÈRE ============
@@ -76,19 +192,37 @@ function renderMatiere(m) {
   document.documentElement.style.setProperty('--accent', m.couleur);
   $('appTitle').textContent = m.titre;
   $('appSubtitle').textContent = m.sousTitre;
+  const examLabel = getExamLabel(m);
+  const sousLigne = examLabel ? `${m.sousTitre} · 📅 ${escapeHtml(examLabel)}` : m.sousTitre;
+  const nResume = (m.resume || []).length, nQcm = (m.qcm || []).length, nSujets = (m.questionsOuvertes || []).length;
   $('matiere-header').innerHTML = `
     <div class="big-icon">${m.icone}</div>
     <h2>${m.titre}</h2>
-    <p>${m.sousTitre} · ${m.horaire}</p>
+    <p>${sousLigne}</p>
+    ${isMatiereVide(m) ? '<p class="matiere-vide-note">📭 Cours pas encore intégré. Tu peux déjà ajouter ou 📷 scanner des épreuves — elles seront partagées après validation du délégué.</p>' : ''}
   `;
   $('matiere-header').style.setProperty('--accent', m.couleur);
-  $('quiz-count').textContent = `${m.qcm.length} questions à choix multiples`;
 
-  const ep = (typeof EPREUVES_DATA !== 'undefined' && EPREUVES_DATA[m.id]) || [];
-  const totalQuestions = ep.reduce((acc, e) => acc + e.questions.length, 0);
+  // Descriptions des modes (gèrent le cas vide)
+  $('quiz-count').textContent = nQcm ? `${nQcm} questions à choix multiples` : 'Pas encore de QCM';
+  const dResume = document.querySelector('.mode-card[data-mode="resume"] .mode-desc');
+  if (dResume) dResume.textContent = nResume ? 'Les notions clés en un coup d\'œil' : 'Pas encore de résumé';
+  const dSujets = document.querySelector('.mode-card[data-mode="sujets"] .mode-desc');
+  if (dSujets) dSujets.textContent = nSujets ? 'Questions type examen' : 'Pas encore de sujets';
+
+  // Griser visuellement les modes vides (sauf Épreuves, toujours actif)
+  document.querySelector('.mode-card[data-mode="resume"]').classList.toggle('mode-disabled', !nResume);
+  document.querySelector('.mode-card[data-mode="quiz"]').classList.toggle('mode-disabled', !nQcm);
+  document.querySelector('.mode-card[data-mode="sujets"]').classList.toggle('mode-disabled', !nSujets);
+
+  const epStat = (typeof EPREUVES_DATA !== 'undefined' && EPREUVES_DATA[m.id]) || [];
+  const epUser = getUserEpreuves(m.id);
+  const epCloud = (typeof getCloudApproved === 'function') ? getCloudApproved(m.id) : [];
+  const ep = [...epStat, ...epCloud, ...epUser];
+  const totalQuestions = ep.reduce((acc, e) => acc + (e.questions || []).length, 0);
   $('epreuves-count').textContent = ep.length
-    ? `${ep.length} épreuves · ${totalQuestions} questions corrigées`
-    : 'Aucune épreuve disponible';
+    ? `${ep.length} épreuves · ${totalQuestions} questions${epCloud.length ? ' · ' + epCloud.length + ' ✅' : ''}${epUser.length ? ' · ' + epUser.length + ' 📝' : ''}`
+    : 'Aucune épreuve — ➕ ajoute ou 📷 scanne !';
 
   const best = getBestScore(m.id);
   $('best-score').innerHTML = best ? `🏆 Meilleur score : <strong>${best.score}/${best.total}</strong>` : '';
@@ -96,35 +230,338 @@ function renderMatiere(m) {
   document.querySelectorAll('.mode-card').forEach(c => {
     c.onclick = () => {
       const mode = c.dataset.mode;
-      if (mode === 'resume') renderResume(m);
-      else if (mode === 'quiz') startQuiz(m);
-      else if (mode === 'sujets') renderSujets(m);
-      else if (mode === 'epreuves') renderEpreuves(m);
+      if (mode === 'resume') {
+        if (!nResume) return toastVide('résumé');
+        renderResume(m);
+      } else if (mode === 'quiz') {
+        if (!nQcm) return toastVide('quiz');
+        startQuiz(m);
+      } else if (mode === 'sujets') {
+        if (!nSujets) return toastVide('sujets ouverts');
+        renderSujets(m);
+      } else if (mode === 'epreuves') renderEpreuves(m);
     };
   });
   go('matiere');
 }
 
+function toastVide(quoi) {
+  alert(`📭 Le ${quoi} de cette matière n'est pas encore disponible.\n\nLe programme officiel des rattrapages n'est pas encore sorti. En attendant, tu peux déjà ajouter ou scanner des épreuves dans « 📋 Épreuves corrigées ».`);
+}
+
+// ============ ÉPREUVES PERSO (localStorage) ============
+function getUserEpreuvesAll() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_USER_EPREUVES) || '{}'); }
+  catch { return {}; }
+}
+function getUserEpreuves(matiereId) {
+  return getUserEpreuvesAll()[matiereId] || [];
+}
+function saveUserEpreuves(matiereId, list) {
+  const all = getUserEpreuvesAll();
+  all[matiereId] = list;
+  try { localStorage.setItem(STORAGE_USER_EPREUVES, JSON.stringify(all)); return true; }
+  catch { return false; }
+}
+function deleteUserEpreuve(matiereId, idx) {
+  const list = getUserEpreuves(matiereId);
+  list.splice(idx, 1);
+  saveUserEpreuves(matiereId, list);
+}
+function normalizeTitle(t) {
+  return String(t || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')   // enlève les accents
+    .replace(/[^\w\s]/g, ' ')                            // ponctuation → espace
+    .replace(/\s+/g, ' ').trim();
+}
+function isDuplicateEpreuve(matiereId, titre) {
+  const norm = normalizeTitle(titre);
+  if (!norm) return false;
+  const all = [
+    ...((typeof EPREUVES_DATA !== 'undefined' && EPREUVES_DATA[matiereId]) || []),
+    ...getUserEpreuves(matiereId)
+  ];
+  return all.some(e => normalizeTitle(e.titre) === norm);
+}
+
 // ============ ÉPREUVES CORRIGÉES ============
-function renderEpreuves(m) {
-  const ep = (typeof EPREUVES_DATA !== 'undefined' && EPREUVES_DATA[m.id]) || [];
+function renderEpreuves(m, skipCloudRefresh) {
+  const epStatiques = (typeof EPREUVES_DATA !== 'undefined' && EPREUVES_DATA[m.id]) || [];
+  const epUser = getUserEpreuves(m.id);
+  const epCloud = (typeof getCloudApproved === 'function') ? getCloudApproved(m.id) : [];
+
+  // Une épreuve perso déjà publiée en ligne (même titre normalisé) n'est plus affichée en double.
+  const cloudTitles = new Set(epCloud.map(e => normalizeTitle(e.titre)));
+  const submittedHas = (typeof isSubmitted === 'function') ? isSubmitted : () => false;
+
+  const all = [
+    ...epStatiques.map((e, i) => ({...e, _kind: 'static', _idx: i})),
+    ...epCloud.map((e, i) => ({...e, _kind: 'cloud', _idx: i})),
+    ...epUser
+      .map((e, i) => ({...e, _kind: 'user', _idx: i}))
+      .filter(e => !cloudTitles.has(normalizeTitle(e.titre)))
+  ];
+
   $('epreuves-titre').textContent = `📋 ${m.titre} — Épreuves corrigées`;
-  if (!ep.length) {
-    $('epreuves-list').innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:30px;">Aucune épreuve disponible pour cette matière.</p>';
+  if (!all.length) {
+    $('epreuves-list').innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:30px;">Aucune épreuve disponible. Clique sur ➕ pour en ajouter une, ou 📷 pour en scanner une !</p>';
   } else {
-    $('epreuves-list').innerHTML = ep.map((e, i) => `
-      <button class="epreuve-card" data-idx="${i}">
-        <div class="ep-num">Épreuve ${i + 1}</div>
+    $('epreuves-list').innerHTML = all.map((e, i) => {
+      let badge = '';
+      if (e._kind === 'cloud') badge = '<span class="ep-badge ep-badge-cloud">✅ Communauté</span>';
+      else if (e._kind === 'user') badge = submittedHas(e.titre)
+        ? '<span class="ep-badge ep-badge-pending">⏳ En attente</span>'
+        : '<span class="ep-badge">📝 Perso</span>';
+
+      let actions = '';
+      if (e._kind === 'user') {
+        const canSubmit = (typeof cloudConfigured === 'function' && cloudConfigured() && !submittedHas(e.titre));
+        actions = `<div class="ep-actions">
+          ${canSubmit ? `<span class="ep-submit-btn" data-sub="${e._idx}">🌐 Soumettre en ligne</span>` : ''}
+          <span class="ep-delete-btn" data-del="${e._idx}">🗑️ Supprimer</span>
+        </div>`;
+      }
+
+      return `
+      <button class="epreuve-card" data-kind="${e._kind}" data-idx="${e._idx}">
+        <div class="ep-num">Épreuve ${i + 1}${badge}</div>
         <div class="ep-titre">${escapeHtml(e.titre)}</div>
         <div class="ep-source">${escapeHtml(e.source || '')}</div>
-        <div class="ep-meta">${e.questions.length} questions corrigées →</div>
-      </button>
-    `).join('');
+        <div class="ep-meta">${(e.questions || []).length} questions corrigées →</div>
+        ${actions}
+      </button>`;
+    }).join('');
+
     document.querySelectorAll('.epreuve-card').forEach(btn => {
-      btn.onclick = () => renderEpreuveDetail(m, ep[btn.dataset.idx]);
+      btn.onclick = (ev) => {
+        if (ev.target.classList.contains('ep-delete-btn')) {
+          const idx = parseInt(ev.target.dataset.del, 10);
+          if (confirm('Supprimer cette épreuve personnelle ?')) { deleteUserEpreuve(m.id, idx); renderEpreuves(m); }
+          return;
+        }
+        if (ev.target.classList.contains('ep-submit-btn')) {
+          const idx = parseInt(ev.target.dataset.sub, 10);
+          submitEpreuveToCloud(m, getUserEpreuves(m.id)[idx]);
+          return;
+        }
+        const idx = parseInt(btn.dataset.idx, 10);
+        let epreuve;
+        if (btn.dataset.kind === 'user') epreuve = epUser[idx];
+        else if (btn.dataset.kind === 'cloud') epreuve = epCloud[idx];
+        else epreuve = epStatiques[idx];
+        renderEpreuveDetail(m, epreuve);
+      };
     });
   }
+
+  $('btn-add-epreuve').onclick = () => renderAddEpreuve(m);
+  $('btn-export-epreuves').onclick = () => exportUserEpreuves(m);
+  $('btn-import-epreuves').onclick = () => $('file-import').click();
+  $('file-import').onchange = (e) => importUserEpreuves(e, m);
+  const _sb = $('btn-scan-epreuve'); if (_sb) _sb.onclick = () => renderScanEpreuve(m);
+
   go('epreuves');
+
+  // Rafraîchit en arrière-plan les épreuves validées du cloud (une seule fois), puis re-render.
+  if (!skipCloudRefresh && typeof cloudFetchApproved === 'function' && cloudConfigured()) {
+    cloudFetchApproved().then(() => {
+      if (state.currentScreen === 'epreuves' && state.matiere && state.matiere.id === m.id) {
+        renderEpreuves(m, true);
+      }
+    }).catch(() => {});
+  }
+}
+
+// ============ FORMULAIRE AJOUT D'ÉPREUVE ============
+let addFormState = { matiere: null, questions: [{enonce: '', correction: '', bareme: ''}] };
+
+function renderAddEpreuve(m) {
+  addFormState = { matiere: m, questions: [{enonce: '', correction: '', bareme: ''}] };
+  $('add-titre').textContent = `➕ Nouvelle épreuve — ${m.titre}`;
+  $('ep-titre').value = '';
+  $('ep-source').value = '';
+  $('form-error').hidden = true;
+  $('form-error').className = 'form-error';
+  renderQuestionsForm();
+
+  $('btn-add-question').onclick = () => {
+    addFormState.questions.push({enonce: '', correction: '', bareme: ''});
+    renderQuestionsForm();
+  };
+  $('btn-save-epreuve').onclick = () => saveNewEpreuve(m);
+  $('btn-cancel-epreuve').onclick = () => {
+    if (confirm('Annuler la création de cette épreuve ?')) renderEpreuves(m);
+  };
+  go('add-epreuve');
+}
+
+function renderQuestionsForm() {
+  // Sauvegarde temporaire de ce que l'utilisateur a déjà tapé
+  const cards = document.querySelectorAll('.question-form-card');
+  cards.forEach((card, i) => {
+    if (addFormState.questions[i]) {
+      addFormState.questions[i].enonce = card.querySelector('[data-field="enonce"]').value;
+      addFormState.questions[i].correction = card.querySelector('[data-field="correction"]').value;
+      addFormState.questions[i].bareme = card.querySelector('[data-field="bareme"]').value;
+    }
+  });
+
+  $('questions-list').innerHTML = addFormState.questions.map((q, i) => `
+    <div class="question-form-card" data-q="${i}">
+      <div class="q-form-header">
+        <span class="q-form-num">Question ${i + 1}</span>
+        ${addFormState.questions.length > 1 ? `<button type="button" class="q-form-remove" data-remove="${i}">🗑️</button>` : ''}
+      </div>
+      <div class="form-group">
+        <label>Énoncé <span class="required">*</span></label>
+        <textarea data-field="enonce" placeholder="Texte de la question...">${escapeHtml(q.enonce)}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Correction <span class="required">*</span></label>
+        <textarea data-field="correction" rows="5" placeholder="Réponse complète, raisonnement, code...">${escapeHtml(q.correction)}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Barème (optionnel)</label>
+        <input type="text" data-field="bareme" value="${escapeHtml(q.bareme)}" placeholder="ex: 3 pts" maxlength="40">
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.q-form-remove').forEach(btn => {
+    btn.onclick = () => {
+      const idx = parseInt(btn.dataset.remove, 10);
+      addFormState.questions.splice(idx, 1);
+      renderQuestionsForm();
+    };
+  });
+}
+
+function saveNewEpreuve(m) {
+  // Sync DOM → state
+  document.querySelectorAll('.question-form-card').forEach((card, i) => {
+    addFormState.questions[i].enonce = card.querySelector('[data-field="enonce"]').value;
+    addFormState.questions[i].correction = card.querySelector('[data-field="correction"]').value;
+    addFormState.questions[i].bareme = card.querySelector('[data-field="bareme"]').value;
+  });
+
+  const titre = $('ep-titre').value.trim();
+  const source = $('ep-source').value.trim();
+  const questions = addFormState.questions
+    .map(q => ({
+      enonce: q.enonce.trim(),
+      correction: q.correction.trim(),
+      bareme: q.bareme.trim()
+    }))
+    .filter(q => q.enonce && q.correction);
+
+  const err = $('form-error');
+  err.className = 'form-error';
+
+  if (!titre) {
+    err.textContent = '⚠️ Le titre de l\'épreuve est obligatoire.';
+    err.hidden = false;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+  if (!questions.length) {
+    err.textContent = '⚠️ Ajoute au moins une question complète (énoncé + correction).';
+    err.hidden = false;
+    return;
+  }
+  if (isDuplicateEpreuve(m.id, titre)) {
+    err.textContent = `❌ Une épreuve avec ce titre existe déjà dans la base "${m.titre}". Choisis un autre titre.`;
+    err.hidden = false;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+
+  // Sauvegarder
+  const nouvelle = {
+    titre,
+    source: source || `Épreuve personnelle · ${new Date().toLocaleDateString('fr-FR')}`,
+    questions: questions.map((q, i) => ({
+      numero: String(i + 1),
+      enonce: q.enonce,
+      correction: q.correction,
+      bareme: q.bareme || ''
+    }))
+  };
+  const list = getUserEpreuves(m.id);
+  list.push(nouvelle);
+  if (!saveUserEpreuves(m.id, list)) {
+    err.textContent = '⚠️ Impossible d\'enregistrer (espace de stockage plein ?). Essaie d\'exporter puis de supprimer d\'anciennes épreuves.';
+    err.hidden = false;
+    return;
+  }
+  // Succès → retour à la liste
+  renderEpreuves(m);
+}
+
+// ============ EXPORT / IMPORT JSON ============
+function exportUserEpreuves(m) {
+  const list = getUserEpreuves(m.id);
+  if (!list.length) {
+    alert('Tu n\'as encore aucune épreuve personnelle à exporter pour cette matière.');
+    return;
+  }
+  const data = {
+    app: 'revisions-gl3a',
+    version: 1,
+    matiere: m.id,
+    matiere_titre: m.titre,
+    exported_at: new Date().toISOString(),
+    epreuves: list
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `epreuves_${m.id}_${Date.now()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importUserEpreuves(event, m) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.app !== 'revisions-gl3a' || !Array.isArray(data.epreuves)) {
+        alert('❌ Fichier invalide. Ce n\'est pas un export de cette application.');
+        return;
+      }
+      if (data.matiere !== m.id) {
+        if (!confirm(`Ce fichier contient des épreuves pour "${data.matiere_titre || data.matiere}". Tu es sur "${m.titre}". Importer quand même ?`)) {
+          event.target.value = '';
+          return;
+        }
+      }
+      const list = getUserEpreuves(m.id);
+      let added = 0, dups = 0;
+      for (const ep of data.epreuves) {
+        if (!ep.titre || !Array.isArray(ep.questions)) continue;
+        if (isDuplicateEpreuve(m.id, ep.titre) || list.some(x => normalizeTitle(x.titre) === normalizeTitle(ep.titre))) {
+          dups++;
+          continue;
+        }
+        list.push(ep);
+        added++;
+      }
+      saveUserEpreuves(m.id, list);
+      alert(`✅ Import terminé !\n\n• ${added} épreuve(s) ajoutée(s)\n• ${dups} doublon(s) ignoré(s)`);
+      renderEpreuves(m);
+    } catch (err) {
+      alert('❌ Fichier illisible : ' + err.message);
+    } finally {
+      event.target.value = '';
+    }
+  };
+  reader.readAsText(file);
 }
 
 function renderEpreuveDetail(m, e) {
@@ -403,6 +840,28 @@ $('btnTheme').addEventListener('click', () => {
 
 $('btnBack').addEventListener('click', goBack);
 
+// ============ MODALE BIENVENUE ============
+function showWelcomeIfFirstVisit() {
+  try {
+    if (localStorage.getItem(STORAGE_WELCOME) === '1') return;
+  } catch {}
+  const modal = $('welcome-modal');
+  if (!modal) return;
+  modal.hidden = false;
+  $('welcome-close').addEventListener('click', () => {
+    modal.hidden = true;
+    try { localStorage.setItem(STORAGE_WELCOME, '1'); } catch {}
+  });
+  // Fermer aussi en cliquant à l'extérieur de la carte
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.hidden = true;
+      try { localStorage.setItem(STORAGE_WELCOME, '1'); } catch {}
+    }
+  });
+}
+
 // ============ INIT ============
 initTheme();
 renderHome();
+showWelcomeIfFirstVisit();

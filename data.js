@@ -6,9 +6,9 @@ const MATIERES = [
     id: "poo",
     titre: "POO Avancée",
     sousTitre: "Django / Flask (Python)",
-    horaire: "08h00 - 10h00",
     couleur: "#6366f1",
     icone: "🐍",
+    ue: "prog2",
     resume: [
       {titre: "Environnement virtuel Python", contenu: "Espace isolé pour installer des dépendances par projet. Créé avec `python -m venv iai` puis activé via `Scripts\\activate` (Windows) ou `source bin/activate` (Linux)."},
       {titre: "Architecture MVT de Django", contenu: "Django suit le pattern Modèle-Vue-Template : modèle (ORM), vue (logique métier), template (HTML). Un projet contient plusieurs apps réutilisables."},
@@ -66,9 +66,9 @@ const MATIERES = [
     id: "mobile",
     titre: "Programmation Mobile",
     sousTitre: "Flutter / Dart",
-    horaire: "10h10 - 12h10",
     couleur: "#06b6d4",
     icone: "📱",
+    ue: "prog1",
     resume: [
       {titre: "Flutter et le multiplateforme", contenu: "Framework open-source Google (2018) pour apps Android/iOS/Web/Desktop depuis une seule base Dart. Moteur Skia/Impeller, 60/120 FPS."},
       {titre: "Le langage Dart", contenu: "Langage exclusif de Flutter, fortement typé, OO. Compile AOT (production) et JIT (dev). Null Safety. Mots-clés : var, final (runtime), const (compilation), late."},
@@ -128,9 +128,9 @@ const MATIERES = [
     id: "data",
     titre: "Analyse des Données",
     sousTitre: "Statistiques, ACP, AFC, CAH",
-    horaire: "12h40 - 14h40",
     couleur: "#10b981",
     icone: "📊",
+    ue: "ia_ue",
     resume: [
       {titre: "Définition et objectifs de l'ADD", contenu: "Ensemble de méthodes descriptives pour résumer, organiser et visualiser l'information d'un grand tableau multidimensionnel afin d'en révéler la structure (Fénelon)."},
       {titre: "Statistiques descriptives de base", contenu: "Moyenne : résume une série par un nombre. Variance : dispersion (moy. des carrés des écarts). Écart-type : √variance. Covariance : liaison linéaire entre 2 variables."},
@@ -191,9 +191,9 @@ const MATIERES = [
     id: "web",
     titre: "Outils de Prog. Web",
     sousTitre: "Laravel / PHP",
-    horaire: "14h50 - 16h50",
     couleur: "#ef4444",
     icone: "🌐",
+    ue: "prog2",
     resume: [
       {titre: "Architecture MVC Laravel", contenu: "Laravel = framework PHP basé sur MVC. Sépare logique métier (Modèles Eloquent), présentation (Vues Blade), routage (Contrôleurs). Code maintenable et testable."},
       {titre: "Routes Laravel", contenu: "routes/web.php (sessions+CSRF) ou routes/api.php (préfixe /api, JSON, stateless). Syntaxe : Route::get('/products', [Controller::class, 'index']). Routes nommées, groupes, middlewares."},

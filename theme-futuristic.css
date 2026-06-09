@@ -1,0 +1,351 @@
+/* =========================================================================
+   theme-futuristic.css — Refonte visuelle "futuriste" de Révisions GL3A
+   Surcharge styles.css (chargé après). 100% offline : dégradés, verre, néon,
+   animations CSS. Aucune image/police externe.
+   ========================================================================= */
+
+/* ---------------- PALETTE (sombre = défaut) ---------------- */
+:root {
+  --bg: #060713;
+  --bg-elevated: rgba(255, 255, 255, 0.05);
+  --bg-card: rgba(255, 255, 255, 0.045);
+  --text: #eaf0ff;
+  --text-muted: #9aa6c9;
+  --primary: #7c5cff;
+  --primary-hover: #9a82ff;
+  --success: #2ee6a6;
+  --danger: #ff5d73;
+  --warning: #ffb547;
+  --border: rgba(255, 255, 255, 0.10);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --glass-blur: blur(16px) saturate(150%);
+  --neon1: #7c5cff;  /* violet */
+  --neon2: #22d3ee;  /* cyan   */
+  --neon3: #ff5ca8;  /* rose   */
+}
+[data-theme="light"] {
+  --bg: #eef1fb;
+  --bg-elevated: rgba(255, 255, 255, 0.7);
+  --bg-card: rgba(255, 255, 255, 0.66);
+  --text: #131a33;
+  --text-muted: #5a6588;
+  --border: rgba(20, 30, 70, 0.12);
+  --glass-blur: blur(16px) saturate(140%);
+}
+
+/* ---------------- FOND AURORA ANIMÉ ---------------- */
+body {
+  background: var(--bg);
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20% -20% -20% -20%;
+  z-index: -2;
+  background:
+    radial-gradient(38% 42% at 18% 12%, color-mix(in srgb, var(--neon1) 55%, transparent), transparent 70%),
+    radial-gradient(34% 40% at 88% 18%, color-mix(in srgb, var(--neon2) 45%, transparent), transparent 72%),
+    radial-gradient(42% 46% at 72% 88%, color-mix(in srgb, var(--neon3) 42%, transparent), transparent 72%),
+    radial-gradient(40% 44% at 8% 82%, color-mix(in srgb, var(--neon2) 32%, transparent), transparent 72%);
+  filter: blur(40px);
+  opacity: 0.55;
+  animation: auroraDrift 26s ease-in-out infinite alternate;
+}
+[data-theme="light"] body::before { opacity: 0.40; }
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--text) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text) 5%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+          mask-image: radial-gradient(circle at 50% 0%, #000 0%, transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+@keyframes auroraDrift {
+  0%   { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(2%, 3%, 0) rotate(8deg) scale(1.08); }
+  100% { transform: translate3d(-2%, -2%, 0) rotate(-6deg) scale(1.04); }
+}
+
+/* ---------------- TOPBAR EN VERRE ---------------- */
+.topbar {
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border);
+}
+.topbar h1 {
+  background: linear-gradient(92deg, var(--text), color-mix(in srgb, var(--neon2) 80%, var(--text)));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
+}
+.btn-back, .btn-icon {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+}
+.btn-icon:hover, .btn-back:hover { border-color: color-mix(in srgb, var(--neon2) 60%, transparent); }
+
+/* ---------------- HERO ---------------- */
+.hero h2 {
+  font-size: 30px;
+  letter-spacing: -0.8px;
+  background: linear-gradient(96deg, #fff 0%, var(--neon2) 38%, var(--neon1) 70%, var(--neon3) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 20px color-mix(in srgb, var(--neon1) 35%, transparent));
+}
+[data-theme="light"] .hero h2 {
+  background: linear-gradient(96deg, var(--neon1), var(--neon2) 60%, var(--neon3));
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* ---------------- SEMESTRE DIVIDER ---------------- */
+.sem-divider {
+  border: none;
+  color: var(--text-muted);
+  display: flex; align-items: center; gap: 10px;
+}
+.sem-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* ---------------- ACCORDÉON UE (verre + halo) ---------------- */
+.ue-header {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, var(--neon1), var(--neon2)) 1;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  transition: transform .18s, box-shadow .25s, border-color .25s;
+}
+.ue-header:hover {
+  box-shadow: 0 10px 40px color-mix(in srgb, var(--neon1) 22%, rgba(0,0,0,0.3));
+}
+.ue-section.ue-open .ue-header {
+  box-shadow: 0 12px 46px color-mix(in srgb, var(--neon1) 30%, rgba(0,0,0,0.35));
+}
+.ue-icon {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--neon1) 30%, transparent), color-mix(in srgb, var(--neon2) 24%, transparent));
+  box-shadow: inset 0 0 14px color-mix(in srgb, var(--neon2) 25%, transparent);
+}
+.ue-title h3 { letter-spacing: -0.2px; }
+
+/* ---------------- CARTES MATIÈRES (verre + glow accent) ---------------- */
+.matiere-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+  transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .25s, border-color .25s;
+}
+.matiere-card::before {
+  width: 4px;
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--neon2)));
+  box-shadow: 0 0 18px var(--accent);
+}
+.matiere-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--accent) 30%, rgba(0,0,0,0.35));
+}
+.matiere-card .icon {
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 40%, transparent), color-mix(in srgb, var(--accent) 12%, transparent));
+  box-shadow: inset 0 0 16px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.matiere-card .info h3 { letter-spacing: -0.2px; }
+.matiere-card .time {
+  color: color-mix(in srgb, var(--accent) 85%, var(--text));
+  text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.matiere-card .arrow { color: color-mix(in srgb, var(--accent) 70%, var(--text-muted)); }
+
+/* ---------------- ÉCRAN MATIÈRE : HEADER + MODES ---------------- */
+.matiere-header {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 50px color-mix(in srgb, var(--accent) 22%, rgba(0,0,0,0.35));
+  overflow: hidden;
+}
+.matiere-header::before {
+  background: radial-gradient(60% 80% at 50% 0%, color-mix(in srgb, var(--accent) 40%, transparent), transparent 70%);
+  opacity: 0.5;
+}
+.matiere-header .big-icon {
+  filter: drop-shadow(0 6px 22px color-mix(in srgb, var(--accent) 55%, transparent));
+  animation: floaty 4s ease-in-out infinite;
+}
+.matiere-header h2 {
+  background: linear-gradient(95deg, #fff, color-mix(in srgb, var(--accent) 75%, #fff));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+[data-theme="light"] .matiere-header h2 {
+  background: linear-gradient(95deg, var(--accent), color-mix(in srgb, var(--accent) 50%, #333));
+  -webkit-background-clip: text; background-clip: text;
+}
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.mode-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.25);
+  transition: transform .18s, box-shadow .25s, border-color .25s;
+}
+.mode-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 16px 44px color-mix(in srgb, var(--accent) 26%, rgba(0,0,0,0.3));
+}
+.mode-card .mode-icon { filter: drop-shadow(0 3px 12px color-mix(in srgb, var(--accent) 45%, transparent)); }
+.mode-card .mode-title { letter-spacing: -0.2px; }
+
+/* ---------------- BOUTONS NÉON ---------------- */
+.btn-primary {
+  background: linear-gradient(100deg, var(--accent, var(--primary)), color-mix(in srgb, var(--accent, var(--primary)) 55%, var(--neon3)));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent, var(--primary)) 45%, transparent), inset 0 1px 0 rgba(255,255,255,0.25);
+  letter-spacing: 0.2px;
+  transition: transform .15s, box-shadow .25s, filter .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 34px color-mix(in srgb, var(--accent, var(--primary)) 60%, transparent); }
+.btn-secondary {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  transition: transform .15s, border-color .2s;
+}
+.btn-secondary:hover { border-color: color-mix(in srgb, var(--neon2) 55%, transparent); transform: translateY(-1px); }
+
+/* ---------------- QUIZ ---------------- */
+.quiz-question {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.progress-bar { background: var(--bg-card); border: 1px solid var(--border); }
+.progress-fill {
+  background: linear-gradient(90deg, var(--neon2), var(--accent, var(--primary)), var(--neon3));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent, var(--primary)) 60%, transparent);
+}
+.quiz-option {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  transition: transform .12s, border-color .2s, box-shadow .2s;
+}
+.quiz-option:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--accent, var(--primary)) 60%, transparent);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--accent, var(--primary)) 22%, transparent);
+  transform: translateY(-1px);
+}
+.quiz-option.correct { box-shadow: 0 0 24px color-mix(in srgb, var(--success) 40%, transparent); }
+.quiz-option.wrong   { box-shadow: 0 0 24px color-mix(in srgb, var(--danger) 35%, transparent); }
+.quiz-score { text-shadow: 0 0 14px color-mix(in srgb, var(--success) 45%, transparent); }
+
+/* ---------------- RÉSULTAT ---------------- */
+.result-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--accent, var(--primary)) 30%, rgba(0,0,0,0.4));
+  position: relative; overflow: hidden;
+}
+.result-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(70% 90% at 50% -10%, color-mix(in srgb, var(--accent, var(--primary)) 35%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.result-emoji { filter: drop-shadow(0 6px 24px color-mix(in srgb, var(--accent, var(--primary)) 55%, transparent)); animation: floaty 3.5s ease-in-out infinite; }
+.result-score {
+  background: linear-gradient(95deg, var(--neon2), var(--accent, var(--primary)), var(--neon3));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 18px color-mix(in srgb, var(--accent, var(--primary)) 40%, transparent));
+}
+
+/* ---------------- ÉPREUVES / CARTES DIVERSES ---------------- */
+.epreuve-card, .resume-item, .sujet-item, .question-card, .admin-card, .prog-row, .question-form-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  transition: transform .18s, box-shadow .22s, border-color .2s;
+}
+.epreuve-card { box-shadow: 0 8px 26px rgba(0,0,0,0.22); }
+.epreuve-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); box-shadow: 0 14px 40px color-mix(in srgb, var(--accent) 22%, rgba(0,0,0,0.3)); }
+.resume-item h3 { text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 30%, transparent); }
+
+/* ---------------- ÉCRAN : titres de section en dégradé ---------------- */
+#resume-titre, #sujets-titre, #epreuves-titre, #screen-review h2, #screen-admin > h2, #screen-scan-epreuve > h2, #add-titre {
+  background: linear-gradient(95deg, var(--text), color-mix(in srgb, var(--neon2) 75%, var(--text)));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
+}
+
+/* ---------------- TIP / lien admin ---------------- */
+.tip {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid color-mix(in srgb, var(--neon1) 30%, var(--border));
+}
+.admin-link {
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  transition: border-color .2s, color .2s;
+}
+.admin-link:hover { border-color: color-mix(in srgb, var(--neon3) 55%, transparent); color: var(--text); }
+
+/* ---------------- MODALE DE BIENVENUE SPECTACULAIRE ---------------- */
+.welcome-modal { background: radial-gradient(80% 80% at 50% 30%, rgba(10,12,30,0.65), rgba(3,4,12,0.82)); }
+.welcome-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+          backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 90px color-mix(in srgb, var(--neon1) 35%, rgba(0,0,0,0.55)), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.welcome-card::before {
+  height: 100%;
+  background:
+    radial-gradient(50% 40% at 50% 0%, color-mix(in srgb, var(--neon1) 30%, transparent), transparent 60%),
+    radial-gradient(60% 50% at 80% 100%, color-mix(in srgb, var(--neon3) 22%, transparent), transparent 60%);
+  opacity: 1;
+}
+.welcome-card > * { position: relative; }
+.welcome-title {
+  background: linear-gradient(95deg, #fff, var(--neon2) 45%, var(--neon1) 75%, var(--neon3));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ---------------- BADGES ---------------- */
+.ep-badge, .scan-badge { -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+
+/* ---------------- Respect du "reduced motion" ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+  .matiere-header .big-icon, .result-emoji { animation: none; }
+  * { transition: none !important; }
+}
