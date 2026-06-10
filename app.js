@@ -21,31 +21,67 @@ const state = {
   }
 };
 
-// ============ NAVIGATION ============
+// ============ NAVIGATION (synchronisée avec l'historique du navigateur) ============
+let _navLock = false;   // vrai pendant une restauration (popstate) : on n'écrit pas l'historique
+
+function currentRoute(screenId) {
+  return { screen: screenId, m: (state.matiere && state.matiere.id) || null };
+}
+
 function go(screenId, addToHistory = true) {
+  const changed = state.currentScreen !== screenId;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const target = $(`screen-${screenId}`);
   if (!target) return;
   target.classList.add('active');
   window.scrollTo({top: 0, behavior: 'instant'});
-
-  if (addToHistory && state.currentScreen !== screenId) {
-    state.history.push(state.currentScreen);
-  }
   state.currentScreen = screenId;
   $('btnBack').hidden = (screenId === 'home');
+
+  // Synchronise l'historique du navigateur (sauf pendant une restauration)
+  if (!_navLock) {
+    const route = currentRoute(screenId);
+    try { sessionStorage.setItem('gl3a_route', JSON.stringify(route)); } catch {}
+    if (addToHistory && changed) history.pushState(route, '');
+    else history.replaceState(route, '');
+  }
 }
 
+// Le bouton retour de l'app = le bouton retour du téléphone (on dépile l'historique)
 function goBack() {
-  const prev = state.history.pop();
-  if (!prev) {
-    go('home', false);
-    return;
-  }
-  // Re-render selon écran cible
-  if (prev === 'matiere' && state.matiere) renderMatiere(state.matiere);
-  else go(prev, false);
+  history.back();
 }
+
+// Restaure/affiche l'écran décrit par une route (sans réécrire l'historique).
+function dispatchRoute(route) {
+  const m = (route && route.m && typeof findMatiereById === 'function') ? findMatiereById(route.m) : null;
+  if (m) state.matiere = m;   // rétablit le contexte matière après restauration
+  switch (route && route.screen) {
+    case 'matiere':         m ? renderMatiere(m) : renderHome(); break;
+    case 'resume':          m ? renderResume(m) : renderHome(); break;
+    case 'sujets':          m ? renderSujets(m) : renderHome(); break;
+    case 'epreuves':        m ? renderEpreuves(m) : renderHome(); break;
+    // Écrans à état dynamique : on revient au parent sûr
+    case 'quiz':
+    case 'result':
+    case 'review':          m ? renderMatiere(m) : renderHome(); break;
+    case 'epreuve-detail':
+    case 'scan-epreuve':
+    case 'add-epreuve':     m ? renderEpreuves(m) : renderHome(); break;
+    case 'admin':           renderHome(); break;   // nécessite reconnexion
+    case 'home':
+    default:                renderHome(); break;
+  }
+}
+
+// Bouton retour du navigateur / du téléphone
+window.addEventListener('popstate', (e) => {
+  const route = (e.state && e.state.screen) ? e.state : { screen: 'home', m: null };
+  try { sessionStorage.setItem('gl3a_route', JSON.stringify(route)); } catch {}
+  _navLock = true;
+  dispatchRoute(route);
+  _navLock = false;
+});
 
 // ============ ACCUEIL (groupé par Unité d'Enseignement) ============
 function getAllMatieres() {
@@ -189,6 +225,7 @@ function renderHome(skipConfigRefresh) {
 // ============ ÉCRAN MATIÈRE ============
 function renderMatiere(m) {
   state.matiere = m;
+  if (typeof logEvent === 'function') logEvent('matiere', m.id);
   document.documentElement.style.setProperty('--accent', m.couleur);
   $('appTitle').textContent = m.titre;
   $('appSubtitle').textContent = m.sousTitre;
@@ -710,6 +747,7 @@ function showResult() {
   $('result-message').textContent = msg;
 
   saveBestScore(state.matiere.id, score, total);
+  if (typeof logEvent === 'function') logEvent('quiz_done', state.matiere.id);
   $('btn-review').hidden = state.quiz.erreurs.length === 0;
   go('result');
 }
@@ -863,5 +901,16 @@ function showWelcomeIfFirstVisit() {
 
 // ============ INIT ============
 initTheme();
+// Lire la route sauvegardée AVANT que renderHome n'écrase le sessionStorage
+let _savedRoute = null;
+try { _savedRoute = JSON.parse(sessionStorage.getItem('gl3a_route') || 'null'); } catch {}
+// L'accueil est la base de l'historique
+try { history.replaceState({ screen: 'home', m: null }, ''); } catch {}
 renderHome();
+// Restaure l'écran où l'utilisateur était avant un rafraîchissement
+if (_savedRoute && _savedRoute.screen && _savedRoute.screen !== 'home') {
+  dispatchRoute(_savedRoute);   // empile une entrée → le retour ramène à l'accueil
+}
 showWelcomeIfFirstVisit();
+// Compteur de visiteurs (Supabase) — au plus une visite/appareil/jour
+if (typeof cloudTrackVisit === 'function') cloudTrackVisit();
