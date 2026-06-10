@@ -22,12 +22,12 @@ create index if not exists epreuves_matiere_status_idx
   on public.epreuves (matiere_id, status);
 
 -- 2) LISTE DES ADMINS (toi seul pour l'instant)
---    Remplace l'email ci-dessous par CELUI avec lequel tu créeras ton compte Supabase.
+--    Remplace 'admin@example.com' par l'email du compte admin (Authentication → Users).
 create table if not exists public.admins (
   email text primary key
 );
 
-insert into public.admins (email) values ('guyoswald@gmail.com')
+insert into public.admins (email) values ('admin@example.com')
   on conflict (email) do nothing;
 
 -- Helper : l'utilisateur courant est-il admin ?
