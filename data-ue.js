@@ -1,5 +1,4 @@
-// Unités d'enseignement (UE) + matières des rattrapages SN1/SN2.
-// Contenu de SIG, Python, J2E, Entreprenariat, Infographie généré depuis les cours.
+// Unites d'enseignement (UE) + matieres des rattrapages SN1/SN2.
 const UNITES = [
   {
     "id": "app_bd",
@@ -519,10 +518,375 @@ const MATIERES_EXTRA = [
     "icone": "📈",
     "couleur": "#0d9488",
     "ue": "app_bd",
-    "placeholder": true,
-    "resume": [],
-    "qcm": [],
-    "questionsOuvertes": []
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "SIAD : definition",
+        "contenu": "Un Systeme d'Information d'Aide a la Decision (SIAD / DSS) est un systeme interactif assistant le decideur dans des problemes semi-structures, en combinant donnees, modeles et interface. Il ne remplace pas le decideur mais l'eclaire."
+      },
+      {
+        "titre": "Modele de rationalite economique",
+        "contenu": "Ce modele suppose un decideur parfaitement rationnel disposant d'informations completes, de preferences stables et capable de maximiser son utilite. Il s'oppose a la rationalite limitee (Simon) ou information et capacite cognitive sont bornees."
+      },
+      {
+        "titre": "Types de decisions",
+        "contenu": "On distingue les decisions structurees (programmables, automatisables), semi-structurees (cible des SIAD) et non structurees (strategiques, jugement humain). On les classe aussi en strategiques, tactiques et operationnelles selon l'horizon."
+      },
+      {
+        "titre": "Loi de Pareto (80/20)",
+        "contenu": "Loi statistique selon laquelle environ 80 % des effets proviennent de 20 % des causes. Elle aide a prioriser : on concentre l'effort sur le petit nombre de causes (les 20 %) responsables de la majorite des consequences."
+      },
+      {
+        "titre": "Diagramme de Pareto",
+        "contenu": "Representation par un histogramme decroissant des causes complete d'une courbe cumulative des pourcentages. Il visualise les causes dominantes (les `vital few`) a traiter en priorite par rapport aux `trivial many`."
+      },
+      {
+        "titre": "Matrice d'Eisenhower",
+        "contenu": "Outil de gestion du temps croisant deux axes (Important / Non important) x (Urgent / Non urgent), donnant 4 quadrants : Faire, Planifier, Deleguer, Eliminer. Elle hierarchise les taches pour reduire la procrastination."
+      },
+      {
+        "titre": "Diagramme d'Ishikawa (causes-effets)",
+        "contenu": "Aussi appele diagramme en arete de poisson, il organise les causes d'un probleme par familles (souvent les 5M : Main-d'oeuvre, Methode, Materiel, Matiere, Milieu). Combine a Pareto, il approfondit l'analyse des causes racines."
+      },
+      {
+        "titre": "Matrice de decision (tableau multicritere)",
+        "contenu": "Tableau croisant alternatives (lignes) et criteres (colonnes). Chaque critere recoit un poids, chaque alternative un score par critere ; le score pondere total designe la meilleure option. Methode d'aide a la decision multicritere."
+      },
+      {
+        "titre": "Methode AHP",
+        "contenu": "L'Analytic Hierarchy Process (Saaty) pondere les criteres par comparaisons par paires sur une echelle 1-9, structurees en hierarchie. Elle calcule des priorites via les vecteurs propres et controle la coherence (ratio de coherence)."
+      },
+      {
+        "titre": "Normalisation des scores",
+        "contenu": "Pour comparer des criteres d'echelles differentes, on convertit les scores en valeurs comprises entre 0 et 1 (ex. min-max). Cela rend les criteres homogenes avant ponderation et agregation dans la matrice de decision."
+      },
+      {
+        "titre": "Analyse SWOT",
+        "contenu": "Outil strategique recensant Forces, Faiblesses (interne), Opportunites et Menaces (externe). Il aide au diagnostic prealable a la decision strategique en croisant capacites internes et environnement."
+      },
+      {
+        "titre": "Analyse PESTEL",
+        "contenu": "Cadre d'analyse de l'environnement macro selon 6 dimensions : Politique, Economique, Sociologique, Technologique, Ecologique, Legal. Il identifie les facteurs externes influencant la decision strategique."
+      },
+      {
+        "titre": "Diagramme de Gantt",
+        "contenu": "Outil de planification de projet representant les taches en barres horizontales le long d'un axe temporel, montrant durees, jalons et dependances. Il sert au pilotage et au suivi, non a la ponderation de criteres."
+      },
+      {
+        "titre": "Process de prise de decision",
+        "contenu": "Le modele de Simon decrit 3 a 4 phases : Intelligence (identifier le probleme), Design/Conception (generer les alternatives), Choix (selectionner via criteres) et Implementation/Controle (executer et evaluer)."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Le modele de rationalite economique suppose que :",
+        "options": [
+          "A) Les decideurs ont des informations parfaites et completes",
+          "B) Les decisions sont prises sur la base de l'instinct",
+          "C) Les emotions jouent un role crucial dans la prise de decision",
+          "D) Les contraintes de ressources sont ignorees"
+        ],
+        "reponse": "A",
+        "explication": "La rationalite economique postule un decideur disposant d'une information parfaite et complete et maximisant son utilite, par opposition a la rationalite limitee de Simon."
+      },
+      {
+        "q": "Quelle est la definition de la loi de Pareto ?",
+        "options": [
+          "A) Une loi statistique qui indique que 80 % des effets proviennent de 20 % des causes",
+          "B) Une regle qui conseille de maintenir 20 % des causes en reserve sur les 80 %",
+          "C) Une loi economique stipulant que 80 % des revenus sont generes par 20 % de la population",
+          "D) Une theorie mathematique sur la repartition des nombres premiers"
+        ],
+        "reponse": "A",
+        "explication": "La loi de Pareto (principe 80/20) enonce qu'environ 80 % des effets proviennent de 20 % des causes ; les autres formulations sont des cas particuliers ou des erreurs."
+      },
+      {
+        "q": "Quels sont les quatre quadrants de la matrice d'Eisenhower ?",
+        "options": [
+          "A) Important-Urgent, Important-Non Urgent, Non Important-Urgent, Non Important-Non Urgent",
+          "B) Important-Non Important, Urgent-Non Urgent, Important-Urgent, Non Important-Non Urgent",
+          "C) Critique-Non Critique, Immediat-Non Immediat, Important-Non Important, Urgent-Non Urgent",
+          "D) Important-Critique, Non Important-Non Critique, Urgent-Non Urgent, Important-Non Urgent"
+        ],
+        "reponse": "A",
+        "explication": "La matrice croise les axes Importance et Urgence, donnant les 4 quadrants Important-Urgent, Important-Non Urgent, Non Important-Urgent et Non Important-Non Urgent."
+      },
+      {
+        "q": "Quelle technique peut etre combinee avec la loi de Pareto pour une analyse plus approfondie des causes principales des problemes ?",
+        "options": [
+          "A) Analyse SWOT",
+          "B) Analyse de regression",
+          "C) Diagramme d'Ishikawa (causes et effets)",
+          "D) Analyse PESTEL"
+        ],
+        "reponse": "C",
+        "explication": "Le diagramme d'Ishikawa (arete de poisson) detaille les familles de causes ; couple a Pareto qui hierarchise, il approfondit l'analyse des causes racines."
+      },
+      {
+        "q": "Comment la matrice d'Eisenhower aide-t-elle a ameliorer la gestion du temps ?",
+        "options": [
+          "A) En augmentant le nombre de taches a accomplir",
+          "B) En se concentrant sur les taches non urgentes",
+          "C) En reduisant la procrastination en hierarchisant les taches importantes et urgentes",
+          "D) En divisant les taches en segments de 5 minutes"
+        ],
+        "reponse": "C",
+        "explication": "En classant les taches selon importance et urgence, la matrice fait prioriser l'essentiel et reduit la procrastination."
+      },
+      {
+        "q": "Dans une matrice de decision, comment les alternatives sont-elles generalement evaluees ?",
+        "options": [
+          "A) Par un vote des employes",
+          "B) En attribuant des poids et des scores a chaque critere pour chaque alternative",
+          "C) En utilisant un algorithme de tri rapide",
+          "D) En suivant l'opinion du decideur principal sans structure formelle"
+        ],
+        "reponse": "B",
+        "explication": "La matrice de decision pondere chaque critere et note chaque alternative ; le score pondere agrege departage les options."
+      },
+      {
+        "q": "Quelle methode est couramment utilisee pour ponderer les criteres dans une matrice de decision ?",
+        "options": [
+          "A) Analyse de regression",
+          "B) Methode de la hierarchie analytique (AHP)",
+          "C) Analyse de variance",
+          "D) Diagramme de Gantt"
+        ],
+        "reponse": "B",
+        "explication": "L'AHP de Saaty pondere les criteres par comparaisons par paires sur une echelle 1-9 et controle la coherence des jugements."
+      },
+      {
+        "q": "Quelle technique peut etre utilisee pour normaliser les scores dans une matrice de decision ?",
+        "options": [
+          "A) Multiplication des scores par un facteur constant",
+          "B) Conversion des scores en valeurs comprises entre 0 et 1",
+          "C) Utilisation de l'algorithme de tri rapide",
+          "D) Chiffrement des donnees"
+        ],
+        "reponse": "B",
+        "explication": "La normalisation ramene les scores a une echelle commune (ex. entre 0 et 1) pour rendre comparables des criteres d'unites differentes."
+      },
+      {
+        "q": "Laquelle des affirmations suivantes est une application correcte de la loi de Pareto dans le domaine des affaires ?",
+        "options": [
+          "A) 80 % des produits d'une entreprise representent 20 % des ventes",
+          "B) 80 % des ventes proviennent de 20 % des clients",
+          "C) 20 % des employes sont responsables de 80 % des problemes",
+          "D) 80 % des couts sont dus a 20 % des fournisseurs"
+        ],
+        "reponse": "B",
+        "explication": "L'application classique du 80/20 : une minorite (20 %) de clients genere la majorite (80 %) du chiffre d'affaires. Les options B, C et D illustrent toutes le principe, mais B en est l'exemple commercial canonique."
+      },
+      {
+        "q": "Quel est un potentiel inconvenient de l'application stricte de la loi de Pareto ?",
+        "options": [
+          "A) Cela peut entrainer une surcharge de travail pour les employes",
+          "B) Cela peut conduire a une negligence des problemes moins frequents mais critiques",
+          "C) Cela peut augmenter les couts de production",
+          "D) Cela peut reduire la qualite des produits"
+        ],
+        "reponse": "B",
+        "explication": "En ne ciblant que les 20 % dominants, on risque d'ignorer des problemes rares mais a fort impact (ex. risques critiques)."
+      },
+      {
+        "q": "Que designe la rationalite limitee de Herbert Simon ?",
+        "options": [
+          "A) Un decideur omniscient maximisant parfaitement son utilite",
+          "B) Un decideur dont l'information, le temps et les capacites cognitives sont bornes et qui se contente d'une solution satisfaisante",
+          "C) Une absence totale de logique dans la decision",
+          "D) Une decision prise uniquement par algorithme"
+        ],
+        "reponse": "B",
+        "explication": "Simon montre que le decideur reel, limite en information et cognition, vise le 'satisficing' (solution satisfaisante) plutot que l'optimum."
+      },
+      {
+        "q": "Quelle phase NE fait PAS partie du modele de decision de Simon ?",
+        "options": [
+          "A) Intelligence (identification du probleme)",
+          "B) Conception (generation des alternatives)",
+          "C) Choix (selection d'une alternative)",
+          "D) Facturation (emission des factures)"
+        ],
+        "reponse": "D",
+        "explication": "Le modele de Simon comprend Intelligence, Conception (Design), Choix et Implementation/Controle ; la facturation n'en fait pas partie."
+      },
+      {
+        "q": "Quel type de decision un SIAD cible-t-il en priorite ?",
+        "options": [
+          "A) Les decisions totalement structurees et automatisables",
+          "B) Les decisions semi-structurees",
+          "C) Les decisions purement aleatoires",
+          "D) Aucune decision"
+        ],
+        "reponse": "B",
+        "explication": "Les SIAD assistent surtout les problemes semi-structures, ou modeles et donnees aident sans remplacer le jugement humain."
+      },
+      {
+        "q": "Dans la matrice d'Eisenhower, que faire d'une tache Importante mais Non Urgente ?",
+        "options": [
+          "A) La faire immediatement",
+          "B) La planifier",
+          "C) La deleguer",
+          "D) L'eliminer"
+        ],
+        "reponse": "B",
+        "explication": "Important-Non Urgent correspond a la planification : ces taches a forte valeur doivent etre programmees avant de devenir urgentes."
+      },
+      {
+        "q": "Dans la matrice d'Eisenhower, que faire d'une tache Non Importante mais Urgente ?",
+        "options": [
+          "A) La faire soi-meme en priorite absolue",
+          "B) La deleguer",
+          "C) La planifier a long terme",
+          "D) L'ignorer definitivement"
+        ],
+        "reponse": "B",
+        "explication": "Non Important-Urgent se delegue : la tache presse mais n'apporte pas de valeur propre au decideur."
+      },
+      {
+        "q": "Sur quelle echelle l'AHP compare-t-elle les criteres par paires ?",
+        "options": [
+          "A) Une echelle de 1 a 9",
+          "B) Une echelle de 0 a 1",
+          "C) Une echelle binaire 0/1",
+          "D) Une echelle de -10 a +10"
+        ],
+        "reponse": "A",
+        "explication": "Saaty utilise une echelle de jugement de 1 (importance egale) a 9 (importance extreme) pour les comparaisons par paires."
+      },
+      {
+        "q": "Que mesure le ratio de coherence (CR) dans l'AHP ?",
+        "options": [
+          "A) La rentabilite du projet",
+          "B) La coherence des jugements de comparaison par paires",
+          "C) La duree des taches",
+          "D) Le cout total des alternatives"
+        ],
+        "reponse": "B",
+        "explication": "Le CR verifie que les jugements ne sont pas contradictoires ; un CR <= 0,10 est generalement juge acceptable."
+      },
+      {
+        "q": "L'analyse SWOT distingue des facteurs :",
+        "options": [
+          "A) Uniquement financiers",
+          "B) Internes (Forces, Faiblesses) et externes (Opportunites, Menaces)",
+          "C) Uniquement temporels",
+          "D) Uniquement reglementaires"
+        ],
+        "reponse": "B",
+        "explication": "SWOT croise le diagnostic interne (Forces/Faiblesses) et l'analyse externe (Opportunites/Menaces)."
+      },
+      {
+        "q": "Que recouvre l'acronyme PESTEL ?",
+        "options": [
+          "A) Politique, Economique, Sociologique, Technologique, Ecologique, Legal",
+          "B) Produit, Echange, Service, Technique, Energie, Logistique",
+          "C) Prix, Etude, Strategie, Tactique, Evaluation, Logique",
+          "D) Personne, Equipe, Systeme, Technologie, Environnement, Loi"
+        ],
+        "reponse": "A",
+        "explication": "PESTEL analyse l'environnement macro : Politique, Economique, Sociologique, Technologique, Ecologique et Legal."
+      },
+      {
+        "q": "A quoi sert principalement un diagramme de Gantt ?",
+        "options": [
+          "A) A ponderer des criteres de decision",
+          "B) A planifier et suivre l'ordonnancement des taches d'un projet dans le temps",
+          "C) A normaliser des scores entre 0 et 1",
+          "D) A analyser les causes racines d'un probleme"
+        ],
+        "reponse": "B",
+        "explication": "Le Gantt visualise les taches, durees et dependances sur un axe temporel pour planifier et piloter un projet."
+      },
+      {
+        "q": "Dans un diagramme de Pareto, comment sont ordonnees les categories de causes ?",
+        "options": [
+          "A) Par ordre alphabetique",
+          "B) Par frequence/impact decroissant avec une courbe cumulative",
+          "C) De maniere aleatoire",
+          "D) Par ordre chronologique d'apparition"
+        ],
+        "reponse": "B",
+        "explication": "Le diagramme de Pareto classe les causes par frequence decroissante et superpose une courbe des pourcentages cumules."
+      },
+      {
+        "q": "Le diagramme d'Ishikawa est aussi appele :",
+        "options": [
+          "A) Diagramme en arete de poisson",
+          "B) Diagramme de Gantt",
+          "C) Diagramme de flux",
+          "D) Diagramme de Venn"
+        ],
+        "reponse": "A",
+        "explication": "Sa forme en arete de poisson lui vaut ce surnom ; il organise les causes par familles (souvent les 5M)."
+      },
+      {
+        "q": "Que represente la regle des 5M dans le diagramme d'Ishikawa ?",
+        "options": [
+          "A) Cinq mois de planning",
+          "B) Main-d'oeuvre, Methode, Materiel, Matiere, Milieu",
+          "C) Cinq metriques financieres",
+          "D) Cinq managers responsables"
+        ],
+        "reponse": "B",
+        "explication": "Les 5M regroupent les familles de causes : Main-d'oeuvre, Methode, Materiel, Matiere (matieres premieres) et Milieu (environnement)."
+      },
+      {
+        "q": "Quel bareme s'applique a la partie QCM de l'epreuve de SIAD (rattrapage 2025) ?",
+        "options": [
+          "A) Bonne reponse 1 pt, fausse 0 pt, pas de reponse 0 pt",
+          "B) Bonne reponse 0,5 pt, fausse -0,5 pt, pas de reponse 0 pt",
+          "C) Bonne reponse 0,5 pt, fausse 0 pt, pas de reponse -0,5 pt",
+          "D) Bonne reponse 2 pts, fausse -1 pt, pas de reponse 0 pt"
+        ],
+        "reponse": "B",
+        "explication": "L'enonce precise : bonne reponse 0,5 pt, fausse reponse -0,5 pt, pas de reponse 0 pt (penalisation des erreurs)."
+      },
+      {
+        "q": "Pourquoi normaliser les scores avant l'agregation dans une matrice de decision multicritere ?",
+        "options": [
+          "A) Pour chiffrer les donnees et les securiser",
+          "B) Pour rendre comparables des criteres exprimes dans des unites et echelles differentes",
+          "C) Pour augmenter artificiellement le nombre de criteres",
+          "D) Pour supprimer les poids des criteres"
+        ],
+        "reponse": "B",
+        "explication": "Sans normalisation, des criteres d'echelles heterogenes (ex. prix en FCFA vs note sur 10) fausseraient l'agregation ponderee."
+      },
+      {
+        "q": "Quelle affirmation caracterise le mieux un SIAD par rapport a un systeme transactionnel ?",
+        "options": [
+          "A) Il automatise entierement la decision sans intervention humaine",
+          "B) Il fournit donnees, modeles et analyses pour eclairer le decideur, qui garde le choix final",
+          "C) Il sert uniquement a enregistrer les operations courantes",
+          "D) Il remplace le decideur par un vote collectif"
+        ],
+        "reponse": "B",
+        "explication": "Un SIAD est un outil d'aide : il appuie le decideur par des modeles et analyses sans se substituer a son jugement, contrairement a un systeme transactionnel qui traite les operations."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Presentez le schema de la matrice d'Eisenhower et expliquez l'action recommandee pour chacun des quatre quadrants (sujet de la Partie 2 de l'epreuve).",
+        "reponseAttendue": "La matrice d'Eisenhower est un tableau 2x2 croisant deux axes : l'axe de l'IMPORTANCE (Important / Non important) et l'axe de l'URGENCE (Urgent / Non urgent). On obtient quatre quadrants :\n\n1) Important ET Urgent -> FAIRE immediatement soi-meme (crises, echeances imminentes, problemes critiques).\n2) Important ET Non urgent -> PLANIFIER (prevention, planification strategique, formation, taches a forte valeur a programmer pour ne pas qu'elles deviennent urgentes).\n3) Non important ET Urgent -> DELEGUER (interruptions, certains mails ou appels : la tache presse mais n'apporte pas de valeur propre, on la confie a un tiers).\n4) Non important ET Non urgent -> ELIMINER / abandonner (distractions, activites chronophages sans valeur).\n\nSchema (representation) :\n                  URGENT            NON URGENT\nIMPORTANT      | 1. FAIRE        | 2. PLANIFIER  |\nNON IMPORTANT  | 3. DELEGUER     | 4. ELIMINER   |\n\nInteret : la matrice ameliore la gestion du temps en faisant hierarchiser les taches selon importance et urgence, ce qui reduit la procrastination et concentre l'energie sur ce qui cree de la valeur (quadrants 1 et surtout 2)."
+      },
+      {
+        "q": "Donnez un exemple concret pour chacun des quatre cadrans de la matrice d'Eisenhower (sujet de la Partie 2 de l'epreuve).",
+        "reponseAttendue": "Exemples (un par cadran) :\n\n- Important / Urgent (FAIRE) : repondre a une panne serveur en production qui bloque les clients ; rendre un rapport de projet du a la fin de la journee ; gerer un incident de securite.\n\n- Important / Non urgent (PLANIFIER) : preparer la revision d'un examen prevu dans trois semaines ; mettre en place une politique de sauvegarde des donnees ; suivre une formation pour monter en competence.\n\n- Non important / Urgent (DELEGUER) : repondre a certains courriels ou appels qui pressent mais peuvent etre traites par un collegue ; organiser une reunion logistique qu'un assistant peut prendre en charge.\n\n- Non important / Non urgent (ELIMINER) : consulter les reseaux sociaux sans objectif ; assister a une reunion sans ordre du jour ni enjeu ; trier des e-mails publicitaires inutiles.\n\nLa coherence des exemples avec les deux axes (valeur + delai) est l'element evalue."
+      },
+      {
+        "q": "Expliquez la loi de Pareto (principe 80/20), illustrez-la par un exemple en gestion d'entreprise et indiquez une limite de son application stricte.",
+        "reponseAttendue": "Definition : la loi de Pareto, ou principe 80/20, est une loi statistique selon laquelle environ 80 % des effets proviennent de 20 % des causes. Elle invite a concentrer l'effort sur la minorite de causes (les 'vital few', 20 %) responsable de la majeure partie des resultats, plutot que de disperser l'effort sur la multitude de causes secondaires ('trivial many').\n\nExemple en entreprise : 80 % du chiffre d'affaires est souvent realise par 20 % des clients ; on priorise donc la fidelisation de ces clients cles. Autres applications : 80 % des reclamations proviennent de 20 % des produits ; 80 % des retards de projet sont dus a 20 % des taches.\n\nOutils associes : le diagramme de Pareto (histogramme decroissant + courbe cumulative) visualise les causes dominantes ; couple au diagramme d'Ishikawa, il approfondit l'analyse des causes racines.\n\nLimite : une application strictement mecanique peut conduire a negliger des problemes peu frequents mais critiques (les 80 % de causes restantes peuvent inclure un risque rare a impact majeur, ex. defaillance de securite). Le ratio 80/20 n'est par ailleurs qu'une approximation, variable selon les contextes."
+      },
+      {
+        "q": "Decrivez la demarche de construction d'une matrice de decision multicritere : structure du tableau, ponderation des criteres (role de l'AHP), normalisation des scores et choix final.",
+        "reponseAttendue": "1) Structure : une matrice de decision est un tableau croisant les ALTERNATIVES (en lignes) et les CRITERES d'evaluation (en colonnes). Chaque cellule contient le score d'une alternative sur un critere.\n\n2) Definition et ponderation des criteres : on identifie les criteres pertinents puis on leur attribue des POIDS refletant leur importance relative. Une methode rigoureuse est l'AHP (Analytic Hierarchy Process) de Saaty : on compare les criteres deux a deux sur une echelle de 1 a 9, on en deduit les priorites (vecteur propre), et on controle la coherence des jugements via le ratio de coherence (CR <= 0,10 acceptable).\n\n3) Notation et normalisation : chaque alternative est notee sur chaque critere. Comme les criteres ont des unites et echelles differentes, on NORMALISE les scores, par exemple en les ramenant a une valeur comprise entre 0 et 1 (normalisation min-max), afin de les rendre comparables.\n\n4) Agregation et choix : on calcule pour chaque alternative un SCORE PONDERE total = somme (poids du critere x score normalise). L'alternative au score agrege le plus eleve est retenue.\n\n5) Analyse de sensibilite : on peut faire varier les poids pour verifier la robustesse du classement.\n\nCette demarche structure et objective la decision multicritere, par opposition a un choix fonde sur la seule intuition du decideur."
+      },
+      {
+        "q": "Qu'est-ce qu'un Systeme d'Information d'Aide a la Decision (SIAD) ? Situez-le par rapport au modele de rationalite economique et a la rationalite limitee de Simon, et decrivez les phases du processus de decision.",
+        "reponseAttendue": "Definition : un SIAD (Decision Support System) est un systeme d'information interactif qui assiste le decideur face a des problemes semi-structures, en combinant des donnees, des modeles d'analyse et une interface conviviale. Son but est d'eclairer la decision, non de la remplacer : le jugement final reste humain.\n\nRationalite economique vs rationalite limitee : le modele de rationalite economique suppose un decideur ideal disposant d'une information parfaite et complete, de preferences stables, et capable de maximiser son utilite. La realite releve plutot de la RATIONALITE LIMITEE (Herbert Simon) : l'information, le temps et les capacites cognitives sont bornes, si bien que le decideur se contente d'une solution SATISFAISANTE ('satisficing') plutot que de l'optimum theorique. Le SIAD vient precisement compenser ces limites en fournissant donnees et modeles.\n\nPhases du processus de decision (modele de Simon) :\n- Intelligence : detecter et formuler le probleme, collecter l'information.\n- Conception (Design) : generer et modeliser les alternatives possibles.\n- Choix : evaluer les alternatives selon des criteres (ex. matrice de decision, AHP) et selectionner la meilleure.\n- Implementation / Controle : mettre en oeuvre la decision puis en evaluer les resultats (boucle de retroaction).\n\nLe SIAD intervient a chaque phase : acces aux donnees (Intelligence), modelisation (Conception), simulation et comparaison d'alternatives (Choix), suivi par tableaux de bord (Controle)."
+      }
+    ]
   },
   {
     "id": "j2e",
@@ -1351,10 +1715,423 @@ const MATIERES_EXTRA = [
     "icone": "🅾️",
     "couleur": "#f97316",
     "ue": "admin_bd",
-    "placeholder": true,
-    "resume": [],
-    "qcm": [],
-    "questionsOuvertes": []
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "Instance Oracle",
+        "contenu": "Une instance Oracle est l'ensemble des structures mémoire (la SGA) et des processus d'arrière-plan (DBWR, LGWR, SMON, PMON, CKPT...) qui s'exécutent en RAM. Elle est distincte de la base de données (les fichiers sur disque) : une instance pilote une base, et c'est le couple instance + base qui forme un serveur Oracle opérationnel."
+      },
+      {
+        "titre": "SGA (System Global Area)",
+        "contenu": "La SGA est une zone mémoire partagée par tous les processus de l'instance, allouée au démarrage. Ses composants principaux sont le `Database Buffer Cache` (blocs de données), le `Shared Pool` (Library Cache + Data Dictionary Cache) et le `Redo Log Buffer` (vecteurs de reprise avant écriture dans les redo logs)."
+      },
+      {
+        "titre": "PGA (Program Global Area)",
+        "contenu": "La PGA est une zone mémoire privée, propre à chaque processus serveur/utilisateur, non partagée. Elle contient la zone de tri, les informations de session et l'état du curseur. Sa taille n'a aucun lien avec les arguments INITIAL/NEXT/MINEXTENTS de CREATE TABLESPACE qui concernent l'allocation disque des extents."
+      },
+      {
+        "titre": "Processus d'arriere-plan",
+        "contenu": "Ce sont les processus système de l'instance : `DBWR` (écrit les blocs modifiés du buffer cache vers les datafiles), `LGWR` (écrit le redo log buffer vers les fichiers redo), `SMON` (reprise d'instance, défragmentation), `PMON` (nettoie les processus utilisateur défaillants, libère les ressources) et `CKPT` (déclenche les points de reprise / checkpoints)."
+      },
+      {
+        "titre": "DBWR et LGWR",
+        "contenu": "`DBWR` (Database Writer) écrit asynchroniquement les blocs sales (dirty buffers) du Database Buffer Cache vers les datafiles. `LGWR` (Log Writer) écrit séquentiellement le contenu du Redo Log Buffer dans les fichiers redo log à chaque COMMIT, à chaque remplissage du tiers du buffer ou toutes les 3 secondes (write-ahead logging)."
+      },
+      {
+        "titre": "SMON, PMON et CKPT",
+        "contenu": "`SMON` effectue la récupération automatique de l'instance au redémarrage (instance recovery) et coalesce les espaces libres. `PMON` détecte et nettoie les processus utilisateur morts (rollback, libération de verrous). `CKPT` met à jour les en-têtes des datafiles et le fichier de contrôle lors d'un checkpoint pour synchroniser SGA et disque."
+      },
+      {
+        "titre": "Fichiers de la base de donnees",
+        "contenu": "Une base Oracle repose sur trois types de fichiers physiques : les `datafiles` (données et index réels), les `control files` (métadonnées sur la structure de la base : noms/emplacements des fichiers, SCN, informations RMAN) et les `redo log files` (journalisation de toutes les modifications, indispensables à la reprise)."
+      },
+      {
+        "titre": "Tablespaces et segments",
+        "contenu": "Un `tablespace` est une unité logique de stockage qui regroupe un ou plusieurs datafiles. Le tablespace `SYSTEM` contient obligatoirement le dictionnaire de données (data dictionary) et ne peut être supprimé. La hiérarchie logique est : tablespace → segment (table, index) → extent (extent) → bloc Oracle (plus petite unité d'E/S)."
+      },
+      {
+        "titre": "Demarrage de l'instance (NOMOUNT / MOUNT / OPEN)",
+        "contenu": "Le démarrage suit trois phases : `STARTUP NOMOUNT` lit le fichier de paramètres et alloue la SGA + démarre les processus (instance seule) ; `MOUNT` lit le fichier de contrôle et associe la base ; `OPEN` ouvre les datafiles et redo logs, rendant la base accessible aux utilisateurs. `SHUTDOWN` parcourt l'inverse."
+      },
+      {
+        "titre": "Mode ARCHIVELOG et RMAN",
+        "contenu": "En mode `ARCHIVELOG`, le processus ARCn archive chaque redo log rempli avant réécriture, permettant la récupération jusqu'à un instant précis (point-in-time recovery). `RMAN` (Recovery Manager) est l'outil Oracle de sauvegarde/restauration : sauvegardes complètes, incrémentielles, validation des blocs et catalogue de récupération."
+      },
+      {
+        "titre": "PL/SQL",
+        "contenu": "`PL/SQL` est l'extension procédurale d'Oracle au langage SQL : il ajoute variables, structures de contrôle (IF, LOOP), curseurs, gestion d'exceptions et blocs nommés. Un bloc se structure en sections `DECLARE` / `BEGIN` / `EXCEPTION` / `END;` et permet d'écrire procédures stockées, fonctions, packages et triggers exécutés côté serveur."
+      },
+      {
+        "titre": "Utilisateurs, privileges et roles",
+        "contenu": "Oracle gère la sécurité via des `utilisateurs` (schémas), des `privilèges` système (CREATE SESSION, CREATE TABLE) ou objet (SELECT, UPDATE sur une table), accordés par `GRANT` et retirés par `REVOKE`. Un `rôle` regroupe un ensemble de privilèges pour les attribuer en bloc (ex. rôles prédéfinis CONNECT, RESOURCE, DBA)."
+      },
+      {
+        "titre": "SQL*Plus et outils d'administration",
+        "contenu": "`SQL*Plus` est l'interface ligne de commande historique pour se connecter à Oracle et exécuter SQL/PL/SQL. Les principaux outils d'administration sont `Oracle Enterprise Manager` (OEM, console graphique), `SQL Developer` (IDE graphique) et `SQL*Plus`. C'est par SQL*Plus connecté SYSDBA qu'on lance STARTUP/SHUTDOWN."
+      },
+      {
+        "titre": "Operateurs d'ensemble",
+        "contenu": "Les opérateurs d'ensemble combinent les résultats de deux requêtes SELECT compatibles en projection : `UNION` (fusion sans doublons), `UNION ALL` (fusion avec doublons), `INTERSECT` (lignes communes aux deux ensembles) et `MINUS` (lignes du premier absent du second). Ils exigent le même nombre de colonnes et des types compatibles."
+      },
+      {
+        "titre": "GROUP BY, ROLLUP et CUBE",
+        "contenu": "`GROUP BY` regroupe les lignes pour appliquer des fonctions d'agrégation. `ROLLUP(a,b)` produit en plus des sous-totaux hiérarchiques et un total général (agrégation en cascade de droite à gauche). `CUBE(a,b)` génère tous les sous-totaux de toutes les combinaisons possibles de colonnes, donnant un tableau croisé multidimensionnel complet."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Quel processus d'arriere-plan effectue les taches de nettoyage (recuperation d'instance, coalescence des espaces libres) au niveau d'une instance Oracle ?",
+        "options": [
+          "A) CKPT",
+          "B) LGWR",
+          "C) SMON",
+          "D) DBWR"
+        ],
+        "reponse": "C",
+        "explication": "SMON (System Monitor) assure la recuperation automatique de l'instance et le nettoyage/coalescence des extents libres."
+      },
+      {
+        "q": "Quel processus libere les ressources et nettoie les processus utilisateur defaillants ?",
+        "options": [
+          "A) DBWR",
+          "B) PMON",
+          "C) LGWR",
+          "D) ARCn"
+        ],
+        "reponse": "B",
+        "explication": "PMON (Process Monitor) detecte les processus utilisateur morts, effectue le rollback et libere verrous et ressources."
+      },
+      {
+        "q": "Parmi ces outils, lesquels servent a administrer un SGBD Oracle ?",
+        "options": [
+          "A) Oracle Enterprise Manager, SQL Developer et SQL*Plus",
+          "B) Microsoft Access uniquement",
+          "C) phpMyAdmin",
+          "D) pgAdmin"
+        ],
+        "reponse": "A",
+        "explication": "OEM (console graphique), SQL Developer (IDE) et SQL*Plus (ligne de commande) sont les outils d'administration Oracle."
+      },
+      {
+        "q": "A quel moment la SGA est-elle creee dans l'environnement de la base de donnees ?",
+        "options": [
+          "A) A la creation de la base",
+          "B) Quand la base est montee (MOUNT)",
+          "C) Quand l'instance est demarree (STARTUP NOMOUNT)",
+          "D) Quand le processus utilisateur demarre"
+        ],
+        "reponse": "C",
+        "explication": "La SGA est allouee des le demarrage de l'instance, en phase NOMOUNT, avant tout montage ou ouverture de la base."
+      },
+      {
+        "q": "Quelle affirmation decrit correctement la memoire PGA ?",
+        "options": [
+          "A) Elle est partagee par tous les processus",
+          "B) Elle est propre a chaque processus serveur/utilisateur",
+          "C) Elle correspond a l'argument INITIAL de CREATE TABLESPACE",
+          "D) Elle est stockee dans le fichier de controle"
+        ],
+        "reponse": "B",
+        "explication": "La PGA est une zone memoire privee, non partagee, dediee a chaque processus (tri, session, curseur)."
+      },
+      {
+        "q": "L'instance Oracle est composee de :",
+        "options": [
+          "A) SGA + processus d'arriere-plan",
+          "B) SGA + PGA + processus d'arriere-plan",
+          "C) Base de donnees + SGA",
+          "D) Fichiers de donnees uniquement"
+        ],
+        "reponse": "B",
+        "explication": "Une instance = structures memoire (SGA et PGA) + processus d'arriere-plan ; la base de donnees (fichiers) en est distincte."
+      },
+      {
+        "q": "Que contient la SGA (System Global Area) ?",
+        "options": [
+          "A) Database Buffer Cache, Shared Pool et Redo Log Buffer",
+          "B) Uniquement le Database Buffer Cache",
+          "C) Les fichiers de controle",
+          "D) Les processus utilisateur"
+        ],
+        "reponse": "A",
+        "explication": "La SGA regroupe le Database Buffer Cache, le Shared Pool et le Redo Log Buffer (et parfois Large/Java Pool)."
+      },
+      {
+        "q": "Quel est le role du processus DBWR (Database Writer) ?",
+        "options": [
+          "A) Ecrire les modifications dans les fichiers redo log",
+          "B) Ecrire les blocs modifies du buffer cache vers les datafiles",
+          "C) Gerer les connexions utilisateur",
+          "D) Archiver les fichiers redo log"
+        ],
+        "reponse": "B",
+        "explication": "DBWR transfere les blocs sales (dirty buffers) du Database Buffer Cache vers les fichiers de donnees."
+      },
+      {
+        "q": "Que contiennent les fichiers de controle (control files) d'Oracle ?",
+        "options": [
+          "A) Les donnees des tables",
+          "B) Les metadonnees sur la structure de la base",
+          "C) Les requetes SQL en cours",
+          "D) Uniquement les index"
+        ],
+        "reponse": "B",
+        "explication": "Les control files stockent la structure physique : noms/emplacements des fichiers, SCN, infos de checkpoint et RMAN."
+      },
+      {
+        "q": "Concernant le tablespace SYSTEM, quelle affirmation est exacte ?",
+        "options": [
+          "A) Il peut etre supprime sans probleme",
+          "B) Il contient le dictionnaire de donnees d'Oracle",
+          "C) Il ne contient que des donnees utilisateur",
+          "D) Il est optionnel dans une base Oracle"
+        ],
+        "reponse": "B",
+        "explication": "Le tablespace SYSTEM heberge le dictionnaire de donnees, il est obligatoire et ne peut etre supprime."
+      },
+      {
+        "q": "Que retourne une jointure INNER JOIN entre deux tables ?",
+        "options": [
+          "A) Toutes les lignes de la table de gauche",
+          "B) Toutes les lignes de la table de droite",
+          "C) Uniquement les lignes ayant une correspondance dans les deux tables",
+          "D) Toutes les lignes des deux tables"
+        ],
+        "reponse": "C",
+        "explication": "Un INNER JOIN ne conserve que les lignes pour lesquelles la condition de jointure est satisfaite des deux cotes."
+      },
+      {
+        "q": "Quelle est la syntaxe Oracle traditionnelle (implicite) pour une jointure interne entre A et B ?",
+        "options": [
+          "A) SELECT * FROM A INNER JOIN B ON A.id = B.id",
+          "B) SELECT * FROM A, B WHERE A.id = B.id",
+          "C) SELECT * FROM A LEFT JOIN B ON A.id = B.id",
+          "D) SELECT * FROM A UNION B"
+        ],
+        "reponse": "B",
+        "explication": "La syntaxe traditionnelle Oracle exprime la jointure dans la clause WHERE : FROM A, B WHERE A.id = B.id."
+      },
+      {
+        "q": "Que retourne un LEFT OUTER JOIN ?",
+        "options": [
+          "A) Toutes les lignes de la table de droite",
+          "B) Toutes les lignes de la table de gauche, avec NULL quand il n'y a pas de correspondance",
+          "C) Le meme resultat qu'un INNER JOIN",
+          "D) Il ne peut pas utiliser NULL"
+        ],
+        "reponse": "B",
+        "explication": "Le LEFT OUTER JOIN conserve toutes les lignes de la table de gauche, completees par NULL si aucune correspondance a droite."
+      },
+      {
+        "q": "Pour eviter le produit cartesien lors d'une jointure, il faut :",
+        "options": [
+          "A) Utiliser DISTINCT",
+          "B) Specifier une condition de jointure (WHERE ou ON)",
+          "C) Utiliser ORDER BY",
+          "D) Limiter avec ROWNUM"
+        ],
+        "reponse": "B",
+        "explication": "Sans condition de jointure, toutes les combinaisons de lignes sont produites (produit cartesien) ; il faut une clause de liaison."
+      },
+      {
+        "q": "Soit la requete : SELECT e.nom, d.nom_dept FROM employes e, departements d WHERE e.dept_id = d.id ; cette jointure est :",
+        "options": [
+          "A) Une syntaxe Oracle classique correcte",
+          "B) Fausse car il manque INNER JOIN",
+          "C) Fausse car les alias sont incorrects",
+          "D) Fausse car WHERE est mal place"
+        ],
+        "reponse": "A",
+        "explication": "C'est la syntaxe de jointure traditionnelle d'Oracle, parfaitement valide : alias + condition dans WHERE."
+      },
+      {
+        "q": "Quel processus ecrit le contenu du Redo Log Buffer dans les fichiers redo log ?",
+        "options": [
+          "A) DBWR",
+          "B) LGWR",
+          "C) PMON",
+          "D) SMON"
+        ],
+        "reponse": "B",
+        "explication": "LGWR (Log Writer) ecrit sequentiellement le Redo Log Buffer vers les redo log files, notamment a chaque COMMIT."
+      },
+      {
+        "q": "Dans quel ordre se deroulent les phases de demarrage d'une instance Oracle ?",
+        "options": [
+          "A) OPEN, MOUNT, NOMOUNT",
+          "B) MOUNT, NOMOUNT, OPEN",
+          "C) NOMOUNT, MOUNT, OPEN",
+          "D) STARTUP, SHUTDOWN, OPEN"
+        ],
+        "reponse": "C",
+        "explication": "STARTUP NOMOUNT (SGA + processus), puis MOUNT (lecture control file), puis OPEN (ouverture datafiles/redo)."
+      },
+      {
+        "q": "A quoi sert le processus CKPT (Checkpoint) ?",
+        "options": [
+          "A) Il ecrit les donnees vers les datafiles",
+          "B) Il met a jour les en-tetes des datafiles et le control file lors d'un checkpoint",
+          "C) Il archive les redo logs",
+          "D) Il gere les sessions utilisateur"
+        ],
+        "reponse": "B",
+        "explication": "CKPT declenche le checkpoint et met a jour les en-tetes de fichiers + le control file pour synchroniser SGA et disque."
+      },
+      {
+        "q": "Quel mode d'archivage permet une recuperation jusqu'a un instant precis (point-in-time) ?",
+        "options": [
+          "A) NOARCHIVELOG",
+          "B) ARCHIVELOG",
+          "C) MOUNT mode",
+          "D) READ ONLY"
+        ],
+        "reponse": "B",
+        "explication": "En mode ARCHIVELOG, les redo logs remplis sont archives, autorisant une recuperation complete ou jusqu'a un instant donne."
+      },
+      {
+        "q": "Quel est l'outil Oracle dedie a la sauvegarde et restauration de la base ?",
+        "options": [
+          "A) SQL*Loader",
+          "B) RMAN (Recovery Manager)",
+          "C) Data Pump",
+          "D) SQL*Plus"
+        ],
+        "reponse": "B",
+        "explication": "RMAN gere les sauvegardes (completes/incrementielles), la validation des blocs et la restauration/recuperation."
+      },
+      {
+        "q": "Quelle commande SQL accorde un privilege a un utilisateur ou un role ?",
+        "options": [
+          "A) GRANT",
+          "B) COMMIT",
+          "C) ALTER",
+          "D) ASSIGN"
+        ],
+        "reponse": "A",
+        "explication": "GRANT attribue privileges systeme ou objet ; REVOKE les retire. Exemple : GRANT SELECT ON t TO user;"
+      },
+      {
+        "q": "Qu'est-ce qu'un role dans la gestion des droits Oracle ?",
+        "options": [
+          "A) Un fichier de donnees",
+          "B) Un regroupement nomme de privileges attribuable en bloc",
+          "C) Un processus d'arriere-plan",
+          "D) Un segment de la SGA"
+        ],
+        "reponse": "B",
+        "explication": "Un role regroupe plusieurs privileges (ex. CONNECT, RESOURCE, DBA) pour faciliter leur attribution aux utilisateurs."
+      },
+      {
+        "q": "Que fait l'operateur d'ensemble INTERSECT ?",
+        "options": [
+          "A) Fusionne les deux ensembles sans doublons",
+          "B) Retourne les lignes communes aux deux requetes",
+          "C) Retourne les lignes du premier absent du second",
+          "D) Retourne le produit cartesien"
+        ],
+        "reponse": "B",
+        "explication": "INTERSECT ne renvoie que les lignes presentes simultanement dans les deux ensembles de resultats."
+      },
+      {
+        "q": "Que fait l'operateur MINUS en SQL Oracle ?",
+        "options": [
+          "A) Retourne les lignes du premier SELECT absentes du second",
+          "B) Retourne les lignes communes",
+          "C) Additionne les deux ensembles",
+          "D) Trie les resultats"
+        ],
+        "reponse": "A",
+        "explication": "MINUS (equivalent EXCEPT) renvoie les lignes du premier ensemble qui ne figurent pas dans le second."
+      },
+      {
+        "q": "Quelle est la difference entre ROLLUP et CUBE ?",
+        "options": [
+          "A) ROLLUP genere tous les sous-totaux, CUBE seulement le total general",
+          "B) ROLLUP genere des sous-totaux hierarchiques, CUBE genere toutes les combinaisons de sous-totaux",
+          "C) Ils sont strictement identiques",
+          "D) CUBE ne fonctionne qu'avec une seule colonne"
+        ],
+        "reponse": "B",
+        "explication": "ROLLUP produit une agregation hierarchique (n+1 niveaux), CUBE produit tous les sous-totaux de toutes les combinaisons (2^n)."
+      },
+      {
+        "q": "A quoi sert la clause CONNECT BY PRIOR dans une requete Oracle ?",
+        "options": [
+          "A) A joindre deux tables",
+          "B) A parcourir des donnees hierarchiques (requete arborescente)",
+          "C) A creer un index",
+          "D) A archiver les redo logs"
+        ],
+        "reponse": "B",
+        "explication": "CONNECT BY PRIOR (avec START WITH) realise une requete hierarchique parent-enfant (parcours d'arbre)."
+      },
+      {
+        "q": "Quelle section d'un bloc PL/SQL gere les erreurs d'execution ?",
+        "options": [
+          "A) DECLARE",
+          "B) BEGIN",
+          "C) EXCEPTION",
+          "D) END"
+        ],
+        "reponse": "C",
+        "explication": "La section EXCEPTION capture et traite les erreurs runtime ; DECLARE declare, BEGIN execute, END termine le bloc."
+      },
+      {
+        "q": "Quelle est la plus petite unite d'entree/sortie geree par Oracle sur le disque ?",
+        "options": [
+          "A) Le tablespace",
+          "B) Le segment",
+          "C) L'extent",
+          "D) Le bloc de donnees (data block)"
+        ],
+        "reponse": "D",
+        "explication": "Hierarchie : tablespace > segment > extent > bloc Oracle, le bloc etant la plus petite unite d'E/S logique."
+      },
+      {
+        "q": "Pour limiter le nombre de lignes retournees dans Oracle (avant la clause FETCH), on utilise traditionnellement :",
+        "options": [
+          "A) ROWNUM",
+          "B) LIMIT",
+          "C) TOP",
+          "D) OFFSET seul"
+        ],
+        "reponse": "A",
+        "explication": "Oracle utilise la pseudo-colonne ROWNUM (LIMIT/TOP appartiennent a MySQL/SQL Server). Depuis 12c, FETCH FIRST existe aussi."
+      },
+      {
+        "q": "Le Redo Log Buffer fait partie de quelle structure memoire ?",
+        "options": [
+          "A) La PGA",
+          "B) La SGA",
+          "C) Le fichier de controle",
+          "D) Le datafile"
+        ],
+        "reponse": "B",
+        "explication": "Le Redo Log Buffer est un composant de la SGA, ecrit ensuite vers les redo log files par LGWR."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Representez et expliquez l'architecture d'un serveur Oracle (instance + base de donnees), en detaillant les structures memoire (SGA, PGA) et les principaux processus d'arriere-plan.",
+        "reponseAttendue": "Un serveur Oracle = une INSTANCE + une BASE DE DONNEES.\n\n1) L'INSTANCE (en memoire RAM) comprend les structures memoire et les processus d'arriere-plan, allouees au demarrage (STARTUP NOMOUNT) :\n- SGA (System Global Area), zone partagee : Database Buffer Cache (copies des blocs de donnees), Shared Pool (Library Cache pour les ordres SQL/PL-SQL parses + Data Dictionary Cache), Redo Log Buffer (vecteurs de reprise), et optionnellement Large Pool / Java Pool.\n- PGA (Program Global Area), zone privee a chaque processus serveur : zone de tri, variables de session, etat des curseurs.\n- Processus d'arriere-plan : DBWR ecrit les blocs modifies du buffer cache vers les datafiles ; LGWR ecrit le Redo Log Buffer vers les redo log files (a chaque COMMIT) ; SMON assure la recuperation d'instance et la coalescence ; PMON nettoie les processus utilisateur defaillants ; CKPT declenche les checkpoints et met a jour control files et en-tetes de datafiles ; ARCn (en mode ARCHIVELOG) archive les redo logs.\n\n2) La BASE DE DONNEES (fichiers sur disque) comprend trois types de fichiers :\n- Datafiles : donnees et index reels (organises en tablespaces).\n- Control files : metadonnees de structure (noms/emplacements des fichiers, SCN, infos RMAN).\n- Redo Log Files : journalisation de toutes les modifications, indispensable a la reprise.\n\nLes deux TYPES de serveur Oracle (2 TYPE attendu) :\n- Serveur dedie (Dedicated Server) : chaque processus utilisateur dispose de son propre processus serveur.\n- Serveur partage (Shared/Multi-Threaded Server) : un pool de processus serveur partages sert plusieurs connexions utilisateur via un dispatcher.\n\nSchema logique : Utilisateur -> Processus serveur -> SGA (Buffer Cache/Shared Pool/Redo Buffer) -> processus DBWR/LGWR/CKPT -> fichiers (datafiles, control files, redo logs)."
+      },
+      {
+        "q": "Expliquez les trois etapes de demarrage d'une instance Oracle (NOMOUNT, MOUNT, OPEN), ce qui se passe a chaque etape, et a quoi servent ces niveaux pour l'administration.",
+        "reponseAttendue": "Le demarrage d'Oracle est progressif en trois phases :\n\n1) STARTUP NOMOUNT : Oracle lit le fichier de parametres (pfile/spfile), alloue la SGA et demarre les processus d'arriere-plan. L'instance existe mais aucune base n'est associee. Niveau utile pour CREATE DATABASE ou recreer un control file.\n\n2) ALTER DATABASE MOUNT (ou STARTUP MOUNT) : l'instance lit le fichier de controle et associe la base de donnees ; elle connait alors l'emplacement des datafiles et redo logs, mais ils ne sont pas encore ouverts. Niveau utile pour les operations de maintenance : renommer des datafiles, activer le mode ARCHIVELOG, effectuer une recuperation complete (RECOVER), restaurer avec RMAN.\n\n3) ALTER DATABASE OPEN (ou STARTUP, niveau par defaut) : Oracle ouvre les datafiles et les redo log files, effectue si necessaire la recuperation d'instance (SMON), et la base devient accessible aux utilisateurs.\n\nLe SHUTDOWN parcourt l'inverse (close, dismount, shutdown). Les modes d'arret : SHUTDOWN NORMAL/TRANSACTIONAL/IMMEDIATE (arret propre) et SHUTDOWN ABORT (arret brutal necessitant une recuperation d'instance au redemarrage). Ces niveaux permettent au DBA d'effectuer des operations selon le niveau d'acces requis."
+      },
+      {
+        "q": "Definissez : SGBD Oracle, operateur d'ensemble, integrite des donnees, et l'operateur INTERSECT. Donnez un exemple pour INTERSECT.",
+        "reponseAttendue": "SGBD Oracle : Systeme de Gestion de Base de Donnees relationnel (SGBDR) edite par Oracle Corporation. C'est un logiciel qui permet de definir, stocker, manipuler, securiser et administrer de grands volumes de donnees structurees, garantissant les proprietes ACID des transactions, le controle d'acces concurrent et la persistance.\n\nOperateur d'ensemble : operateur SQL qui combine les resultats de deux requetes SELECT compatibles (meme nombre de colonnes, types compatibles) en appliquant la theorie des ensembles. Les quatre operateurs Oracle sont UNION, UNION ALL, INTERSECT et MINUS.\n\nIntegrite des donnees : ensemble de regles et contraintes garantissant l'exactitude, la coherence et la validite des donnees dans la base. On distingue l'integrite de domaine (types, CHECK, NOT NULL), l'integrite d'entite (cle primaire unique et non nulle) et l'integrite referentielle (cle etrangere referencant une cle existante).\n\nOperateur INTERSECT : retourne uniquement les lignes communes (l'intersection) aux deux ensembles de resultats, sans doublons.\nExemple :\nSELECT id_client FROM commandes_2024\nINTERSECT\nSELECT id_client FROM commandes_2025;\n-> renvoie les clients ayant commande a la fois en 2024 et en 2025."
+      },
+      {
+        "q": "Expliquez la difference entre GROUP BY, GROUP BY ROLLUP et CUBE. Illustrez avec une requete d'agregation sur les ventes par region et produit.",
+        "reponseAttendue": "GROUP BY : regroupe les lignes partageant les memes valeurs sur les colonnes specifiees pour appliquer des fonctions d'agregation (SUM, COUNT, AVG...). Il ne produit que les regroupements detailles, sans sous-totaux ni total general.\n\nGROUP BY ROLLUP(a, b) : produit en plus des regroupements detailles des sous-totaux HIERARCHIQUES, en agregeant de droite a gauche, plus un total general. Pour ROLLUP(region, produit), on obtient : (region, produit), puis le sous-total par region, puis le total general -> n+1 niveaux d'agregation.\n\nGROUP BY CUBE(a, b) : genere TOUTES les combinaisons possibles de sous-totaux (2^n niveaux pour n colonnes). Pour CUBE(region, produit) : (region, produit), sous-total par region, sous-total par produit, et total general -> tableau croise multidimensionnel complet.\n\nExemple :\nSELECT region, produit, SUM(montant) AS total\nFROM ventes\nGROUP BY ROLLUP(region, produit);\n-> lignes detaillees + sous-total par region + total general.\n\nEn remplacant ROLLUP par CUBE, on obtient en plus les sous-totaux par produit (toutes regions confondues). ROLLUP convient aux hierarchies (annee>mois>jour), CUBE aux analyses croisees multidimensionnelles."
+      },
+      {
+        "q": "Decrivez la strategie de sauvegarde et de restauration d'une base Oracle : difference entre mode NOARCHIVELOG et ARCHIVELOG, role de RMAN, et types de recuperation.",
+        "reponseAttendue": "Modes d'archivage :\n- NOARCHIVELOG : les fichiers redo log sont reutilises de maniere circulaire sans etre archives. Seules des sauvegardes a froid (base fermee) sont coherentes ; en cas de perte, on ne peut restaurer qu'a l'etat de la derniere sauvegarde (perte des transactions intermediaires). Pas de point-in-time recovery.\n- ARCHIVELOG : avant qu'un redo log rempli ne soit reecrit, le processus ARCn l'archive sur disque (archived redo logs). Cela autorise les sauvegardes a chaud (base ouverte) et la recuperation complete ou jusqu'a un instant precis (point-in-time recovery) en rejouant les archives.\n\nRMAN (Recovery Manager) : outil Oracle dedie a la sauvegarde/restauration. Il permet : sauvegardes completes et incrementielles (niveau 0/1), compression et validation des blocs (detection de corruption), gestion d'un catalogue de recuperation, sauvegarde des datafiles, control files, spfile et archived redo logs. Commandes typiques : BACKUP DATABASE; , RESTORE DATABASE; , RECOVER DATABASE;.\n\nTypes de recuperation :\n- Recuperation d'instance (instance recovery) : automatique au redemarrage apres un crash (SMON rejoue les redo logs en ligne, roll forward + rollback).\n- Recuperation de media (media recovery) : manuelle apres perte/corruption d'un fichier, via RESTORE puis RECOVER (rejeu des archives en mode ARCHIVELOG).\n- Recuperation complete : ramene la base a l'etat le plus recent.\n- Recuperation incomplete / point-in-time : ramene la base a un instant ou un SCN donne (UNTIL TIME / UNTIL SCN), utile apres une erreur logique.\n\nUne bonne strategie combine ARCHIVELOG + sauvegardes RMAN regulieres (completes + incrementielles) + sauvegardes multiplexees du control file et des redo logs."
+      }
+    ]
   },
   {
     "id": "sqlserver",
@@ -1363,10 +2140,435 @@ const MATIERES_EXTRA = [
     "icone": "🗄️",
     "couleur": "#ea580c",
     "ue": "admin_bd",
-    "placeholder": true,
-    "resume": [],
-    "qcm": [],
-    "questionsOuvertes": []
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "Architecture client-serveur SQL Server",
+        "contenu": "Microsoft SQL Server est un SGBDR client-serveur dont le moteur relationnel (Database Engine) traite les requêtes T-SQL via le protocole `TDS` (Tabular Data Stream). Une instance est une copie isolée du moteur, identifiée par défaut par le nom de la machine ou nommée (`MACHINE\\INSTANCE`), avec son propre jeu de bases système, ports et services."
+      },
+      {
+        "titre": "Bases de données système",
+        "contenu": "`master` stocke la configuration serveur, les logins et les métadonnées de toutes les bases ; `model` est le gabarit copié à chaque `CREATE DATABASE` ; `msdb` héberge SQL Server Agent (jobs, alertes, historique de sauvegarde) ; `tempdb` est recréée à chaque démarrage et sert aux objets temporaires et au tri."
+      },
+      {
+        "titre": "Fichiers d'une base (.mdf/.ndf/.ldf)",
+        "contenu": "Une base comporte un fichier de données primaire `.mdf` (obligatoire, un seul), des fichiers secondaires `.ndf` (optionnels, pour répartir les données sur plusieurs disques/groupes de fichiers) et au moins un fichier journal `.ldf` qui enregistre toutes les transactions pour la récupération."
+      },
+      {
+        "titre": "Transact-SQL (T-SQL)",
+        "contenu": "`Transact-SQL` est l'extension procédurale propriétaire de SQL par Microsoft. Elle ajoute au SQL standard les variables (`DECLARE`), le contrôle de flux (`IF`, `WHILE`, `TRY...CATCH`), les fonctions intégrées, les procédures stockées, les déclencheurs et la gestion explicite des transactions."
+      },
+      {
+        "titre": "DDL, DML, DCL, TCL",
+        "contenu": "Le T-SQL se décline en DDL (structure : `CREATE`, `ALTER`, `DROP`), DML (données : `SELECT`, `INSERT`, `UPDATE`, `DELETE`), DCL (droits : `GRANT`, `REVOKE`, `DENY`) et TCL (transactions : `BEGIN TRAN`, `COMMIT`, `ROLLBACK`)."
+      },
+      {
+        "titre": "DROP vs DELETE vs TRUNCATE",
+        "contenu": "`DELETE` (DML) supprime des lignes selon un `WHERE`, est journalisé ligne à ligne et déclenche les triggers ; `DROP` (DDL) supprime intégralement l'objet (table, structure et données) ; `TRUNCATE` vide une table en désallouant les pages, sans `WHERE`, non journalisé ligne à ligne et réinitialise l'`IDENTITY`."
+      },
+      {
+        "titre": "Composants de la suite SQL Server",
+        "contenu": "Au-delà du moteur de base de données : `SSIS` (Integration Services, ETL Extract-Transform-Load), `SSAS` (Analysis Services, cubes OLAP et data mining), `SSRS` (Reporting Services, états/rapports), interrogés en `MDX`/`DAX`, plus les outils `SSMS`, `SQL Server Profiler`, `sqlcmd` et l'Assistant de paramétrage du moteur de base de données."
+      },
+      {
+        "titre": "OLTP vs OLAP",
+        "contenu": "Un serveur OLTP (transactionnel) gère de nombreuses petites transactions concurrentes en lecture/écriture sur un schéma normalisé, optimisé pour l'intégrité et le temps de réponse. Un serveur OLAP (analytique, ex. SSAS) agrège de gros volumes historiques dénormalisés (étoile/flocon) pour l'aide à la décision, en lecture quasi exclusive."
+      },
+      {
+        "titre": "SSMS et SQL Server Profiler",
+        "contenu": "`SSMS` (SQL Server Management Studio) est l'environnement graphique d'administration et d'écriture de requêtes. `SQL Server Profiler` capture et trace en temps réel les événements du serveur (requêtes, connexions, deadlocks) ; cette trace, persistée dans un fichier `.trc`, fait office de journal d'audit/diagnostic des activités."
+      },
+      {
+        "titre": "Sécurité : logins, users, rôles, schémas",
+        "contenu": "Un `login` (niveau serveur, stocké dans `master`) authentifie une connexion ; un `user` (niveau base) lui est mappé pour autoriser l'accès à une base. Les permissions s'octroient via des rôles serveur (`sysadmin`) et de base (`db_owner`, `db_datareader`). Un `schema` est un conteneur de noms d'objets servant aussi d'unité de gestion des droits."
+      },
+      {
+        "titre": "SGBD multi-bases et multi-schémas",
+        "contenu": "Une même instance SQL Server héberge plusieurs bases de données indépendantes (multi-bases). Au sein de chaque base, les objets sont organisés en plusieurs schémas (`dbo`, `ventes`, ...), namespaces logiques qui isolent et sécurisent les objets : SQL Server est donc multi-base ET multi-schéma."
+      },
+      {
+        "titre": "Sauvegardes : full, differential, log",
+        "contenu": "`BACKUP DATABASE` complète copie toute la base ; la sauvegarde différentielle ne copie que les pages modifiées depuis la dernière complète (base = dernière full) ; `BACKUP LOG` copie le journal des transactions (mode FULL/BULK_LOGGED) et permet une restauration à un instant précis (`point-in-time`)."
+      },
+      {
+        "titre": "Restauration et RESTORE",
+        "contenu": "La restauration applique `RESTORE DATABASE ... WITH NORECOVERY` pour la full, puis la différentielle, puis les logs dans l'ordre, et enfin `WITH RECOVERY` (ou `STOPAT`) pour rendre la base accessible. La restauration complète remplace toute la base ; la différentielle nécessite d'abord la full de base correspondante."
+      },
+      {
+        "titre": "Index clustered et non-clustered",
+        "contenu": "L'index `CLUSTERED` ordonne physiquement les lignes selon la clé (un seul par table, souvent la clé primaire) : les pages de données sont les feuilles. L'index `NONCLUSTERED` est une structure séparée (B-tree) dont les feuilles pointent vers les lignes ; on peut en créer plusieurs pour accélérer les recherches sur d'autres colonnes."
+      },
+      {
+        "titre": "SQL Server Agent et jobs",
+        "contenu": "`SQL Server Agent` est le service de planification stocké dans `msdb`. Il exécute des `jobs` (tâches T-SQL, SSIS, scripts) selon des `schedules`, déclenche des `alerts` et envoie des notifications par `operators`, automatisant sauvegardes, réindexations et maintenance."
+      },
+      {
+        "titre": "Contraintes et intégrité",
+        "contenu": "L'intégrité est garantie par des contraintes : `PRIMARY KEY` (identité unique non nulle), `FOREIGN KEY` (intégrité référentielle), `UNIQUE`, `NOT NULL`, `CHECK` (règle de validation) et `DEFAULT`. Elles s'ajoutent en DDL (`ALTER TABLE ... ADD CONSTRAINT`) et le moteur les vérifie à chaque modification."
+      },
+      {
+        "titre": "Déclencheurs (triggers) et procédures stockées",
+        "contenu": "Une procédure stockée est un bloc T-SQL nommé et précompilé exécuté par `EXEC`. Un `trigger` est une procédure liée à une table, déclenchée automatiquement sur `INSERT`/`UPDATE`/`DELETE` (tables logiques `inserted`/`deleted`) ; il sert à maintenir des règles métier, par ex. décrémenter les places disponibles d'une table de mariage."
+      },
+      {
+        "titre": "BULK INSERT, BCP et chargement de masse",
+        "contenu": "`BULK INSERT` est une commande T-SQL qui charge un fichier de données dans une table depuis l'intérieur du serveur. `bcp` (Bulk Copy Program) est un utilitaire en ligne de commande externe qui importe ET exporte des données entre un fichier et une table, scriptable hors SSMS."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Quel élément est l'intrus parmi les outils/composants suivants ?",
+        "options": [
+          "A) SSMS",
+          "B) SQL Server Profiler",
+          "C) SQL SERVER",
+          "D) sqlcmd"
+        ],
+        "reponse": "C",
+        "explication": "SSMS, Profiler et sqlcmd sont des outils ; SQL SERVER désigne le SGBD lui-même, pas un outil de la suite (question issue de l'épreuve de rattrapage)."
+      },
+      {
+        "q": "L'ETL (Extraction Transformation Loading) est mis en oeuvre par quel composant de SQL Server ?",
+        "options": [
+          "A) SSIS",
+          "B) SSMS",
+          "C) SSAS",
+          "D) SSRS"
+        ],
+        "reponse": "A",
+        "explication": "SSIS (SQL Server Integration Services) est le moteur ETL ; SSAS fait l'OLAP, SSRS les rapports, SSMS est l'outil d'administration."
+      },
+      {
+        "q": "En quelle année est sortie la première version de SQL Server ?",
+        "options": [
+          "A) 1979",
+          "B) 1969",
+          "C) 1989",
+          "D) 1959"
+        ],
+        "reponse": "C",
+        "explication": "La première version (SQL Server 1.0, sous OS/2, issue d'un partenariat Microsoft-Sybase-Ashton-Tate) date de 1989."
+      },
+      {
+        "q": "L'Assistant de paramétrage du moteur de base de données (Database Engine Tuning Advisor) permet :",
+        "options": [
+          "A) Une optimisation du fonctionnement du moteur de BD",
+          "B) De réaliser toutes les opérations au niveau du moteur",
+          "C) D'exécuter des requêtes au niveau du moteur",
+          "D) De sauvegarder les bases système"
+        ],
+        "reponse": "A",
+        "explication": "Le Tuning Advisor analyse une charge de travail et recommande des index/statistiques : il optimise les performances du moteur."
+      },
+      {
+        "q": "Quelle est l'extension d'un fichier secondaire de données dans SQL Server ?",
+        "options": [
+          "A) .ldf",
+          "B) .mdf",
+          "C) .pdf",
+          "D) .ndf"
+        ],
+        "reponse": "D",
+        "explication": ".ndf = fichier de données secondaire ; .mdf = primaire ; .ldf = journal des transactions."
+      },
+      {
+        "q": "Quelle base système est recréée à chaque démarrage de l'instance ?",
+        "options": [
+          "A) master",
+          "B) model",
+          "C) tempdb",
+          "D) msdb"
+        ],
+        "reponse": "C",
+        "explication": "tempdb est entièrement reconstruite à partir de model à chaque redémarrage ; elle ne conserve aucune donnée."
+      },
+      {
+        "q": "Quelle base système sert de modèle (gabarit) à toute nouvelle base créée ?",
+        "options": [
+          "A) master",
+          "B) model",
+          "C) msdb",
+          "D) tempdb"
+        ],
+        "reponse": "B",
+        "explication": "CREATE DATABASE copie la structure de model ; toute modification de model se répercute sur les futures bases."
+      },
+      {
+        "q": "Où SQL Server Agent stocke-t-il ses jobs et son historique ?",
+        "options": [
+          "A) master",
+          "B) tempdb",
+          "C) msdb",
+          "D) model"
+        ],
+        "reponse": "C",
+        "explication": "msdb héberge SQL Server Agent : jobs, schedules, alertes et historique des sauvegardes."
+      },
+      {
+        "q": "Quel protocole assure le transport des résultats entre client et serveur SQL Server ?",
+        "options": [
+          "A) HTTP",
+          "B) TDS (Tabular Data Stream)",
+          "C) ODBC",
+          "D) FTP"
+        ],
+        "reponse": "B",
+        "explication": "TDS est le protocole applicatif natif de SQL Server pour échanger requêtes et jeux de résultats tabulaires."
+      },
+      {
+        "q": "Combien une table peut-elle posséder d'index clustered au maximum ?",
+        "options": [
+          "A) 0",
+          "B) 1",
+          "C) 2",
+          "D) Illimité"
+        ],
+        "reponse": "B",
+        "explication": "L'index clustered ordonne physiquement les lignes : il ne peut donc en exister qu'un seul par table."
+      },
+      {
+        "q": "Quelle commande supprime définitivement la structure ET les données d'une table ?",
+        "options": [
+          "A) DELETE",
+          "B) TRUNCATE",
+          "C) DROP",
+          "D) DENY"
+        ],
+        "reponse": "C",
+        "explication": "DROP TABLE supprime l'objet entier ; DELETE/TRUNCATE ne suppriment que les lignes en gardant la structure."
+      },
+      {
+        "q": "Quelle différence essentielle existe entre DELETE et TRUNCATE ?",
+        "options": [
+          "A) DELETE supprime la table, TRUNCATE non",
+          "B) TRUNCATE accepte une clause WHERE",
+          "C) TRUNCATE ne journalise pas ligne à ligne et réinitialise l'IDENTITY",
+          "D) DELETE est du DDL, TRUNCATE du DML"
+        ],
+        "reponse": "C",
+        "explication": "TRUNCATE désalloue les pages (peu journalisé), n'accepte pas de WHERE et remet le compteur IDENTITY à sa valeur initiale."
+      },
+      {
+        "q": "Lequel de ces composants effectue l'analyse OLAP (cubes, agrégations) ?",
+        "options": [
+          "A) SSIS",
+          "B) SSAS",
+          "C) SSRS",
+          "D) SSMS"
+        ],
+        "reponse": "B",
+        "explication": "SSAS (Analysis Services) construit et interroge les cubes multidimensionnels et modèles tabulaires."
+      },
+      {
+        "q": "Quel langage interroge nativement les cubes multidimensionnels de SSAS ?",
+        "options": [
+          "A) MDX",
+          "B) DAX",
+          "C) XML",
+          "D) HTML"
+        ],
+        "reponse": "A",
+        "explication": "MDX (MultiDimensional eXpressions) interroge les cubes OLAP ; DAX cible les modèles tabulaires/Power BI."
+      },
+      {
+        "q": "Quel objet de sécurité existe au niveau du serveur et authentifie une connexion ?",
+        "options": [
+          "A) Le user de base",
+          "B) Le schéma",
+          "C) Le login",
+          "D) Le rôle de base"
+        ],
+        "reponse": "C",
+        "explication": "Le login (stocké dans master) authentifie au niveau serveur ; il est ensuite mappé à un user dans chaque base."
+      },
+      {
+        "q": "Quel rôle serveur fixe confère les privilèges les plus élevés ?",
+        "options": [
+          "A) db_owner",
+          "B) public",
+          "C) sysadmin",
+          "D) db_datareader"
+        ],
+        "reponse": "C",
+        "explication": "sysadmin est le rôle serveur le plus puissant : ses membres peuvent tout faire sur l'instance."
+      },
+      {
+        "q": "Quelle sauvegarde ne copie que les pages modifiées depuis la dernière sauvegarde complète ?",
+        "options": [
+          "A) Complète (full)",
+          "B) Différentielle",
+          "C) Du journal (log)",
+          "D) Copy-only"
+        ],
+        "reponse": "B",
+        "explication": "La sauvegarde différentielle copie uniquement les extents modifiés depuis la dernière full, qui lui sert de base."
+      },
+      {
+        "q": "Pour une restauration à un instant précis (point-in-time), quel type de sauvegarde est indispensable ?",
+        "options": [
+          "A) Différentielle seule",
+          "B) Du journal des transactions (log)",
+          "C) Complète seule",
+          "D) Copy-only"
+        ],
+        "reponse": "B",
+        "explication": "Les sauvegardes de log, en mode de récupération FULL, permettent de rejouer les transactions jusqu'à un STOPAT précis."
+      },
+      {
+        "q": "Quelle option de RESTORE laisse la base non opérationnelle pour appliquer d'autres sauvegardes ensuite ?",
+        "options": [
+          "A) WITH RECOVERY",
+          "B) WITH NORECOVERY",
+          "C) WITH REPLACE",
+          "D) WITH INIT"
+        ],
+        "reponse": "B",
+        "explication": "NORECOVERY laisse la base en mode 'restauration' afin d'appliquer ensuite différentielles et logs ; RECOVERY finalise et ouvre la base."
+      },
+      {
+        "q": "Quelle contrainte garantit l'intégrité référentielle entre deux tables ?",
+        "options": [
+          "A) PRIMARY KEY",
+          "B) CHECK",
+          "C) FOREIGN KEY",
+          "D) DEFAULT"
+        ],
+        "reponse": "C",
+        "explication": "La FOREIGN KEY impose que la valeur référencée existe dans la table parente, assurant la cohérence des liens."
+      },
+      {
+        "q": "Quel objet s'exécute AUTOMATIQUEMENT lors d'un INSERT/UPDATE/DELETE sur une table ?",
+        "options": [
+          "A) Une vue",
+          "B) Une procédure stockée",
+          "C) Un déclencheur (trigger)",
+          "D) Une fonction scalaire"
+        ],
+        "reponse": "C",
+        "explication": "Le trigger DML se déclenche automatiquement sur l'événement de modification, via les tables logiques inserted/deleted."
+      },
+      {
+        "q": "Pour mettre à jour automatiquement les places disponibles d'une table quand une commande est passée, on utilise :",
+        "options": [
+          "A) Une vue indexée",
+          "B) Un déclencheur (trigger) sur la table Commande",
+          "C) Un index non-clustered",
+          "D) Une contrainte CHECK"
+        ],
+        "reponse": "B",
+        "explication": "Un trigger AFTER INSERT/DELETE sur Commande peut recalculer et propager le nombre de places restantes en temps réel."
+      },
+      {
+        "q": "Quel utilitaire en ligne de commande importe ET exporte des données entre un fichier et une table ?",
+        "options": [
+          "A) BULK INSERT",
+          "B) bcp (Bulk Copy Program)",
+          "C) sqlcmd",
+          "D) SSMS"
+        ],
+        "reponse": "B",
+        "explication": "bcp est un exécutable externe bidirectionnel (import/export) ; BULK INSERT est une commande T-SQL qui n'importe que vers la table."
+      },
+      {
+        "q": "Quelle différence distingue BULK INSERT de bcp ?",
+        "options": [
+          "A) BULK INSERT est externe au serveur",
+          "B) bcp ne fait que de l'import",
+          "C) BULK INSERT est une commande T-SQL interne, bcp un outil externe",
+          "D) bcp s'exécute uniquement dans SSMS"
+        ],
+        "reponse": "C",
+        "explication": "BULK INSERT s'exécute côté serveur en T-SQL (import seul) ; bcp est un programme en ligne de commande externe, bidirectionnel."
+      },
+      {
+        "q": "Que représente un schéma (schema) dans une base SQL Server ?",
+        "options": [
+          "A) Un fichier physique .mdf",
+          "B) Un conteneur logique d'objets et unité de gestion des droits",
+          "C) Une sauvegarde différentielle",
+          "D) Une instance du moteur"
+        ],
+        "reponse": "B",
+        "explication": "Le schéma est un namespace (ex. dbo) qui regroupe des objets et sur lequel on peut accorder des permissions."
+      },
+      {
+        "q": "Quelle commande crée la structure d'une nouvelle base de données ?",
+        "options": [
+          "A) BACKUP DATABASE",
+          "B) CREATE DATABASE",
+          "C) USE DATABASE",
+          "D) ALTER LOGIN"
+        ],
+        "reponse": "B",
+        "explication": "CREATE DATABASE crée la base et ses fichiers en se basant sur le gabarit model."
+      },
+      {
+        "q": "Quelle clause de CREATE TABLE déclare une croissance automatique d'un fichier de 5 Go ?",
+        "options": [
+          "A) SIZE = 5GB",
+          "B) FILEGROWTH = 5GB",
+          "C) MAXSIZE = 5GB",
+          "D) AUTOGROW = 5GB"
+        ],
+        "reponse": "B",
+        "explication": "FILEGROWTH précise l'incrément (ici 5 Go) ajouté au fichier quand il est saturé ; SIZE fixe la taille initiale, MAXSIZE le plafond."
+      },
+      {
+        "q": "Quel langage cible les modèles tabulaires (Power BI / SSAS Tabular) ?",
+        "options": [
+          "A) MDX",
+          "B) DAX",
+          "C) TDS",
+          "D) BCP"
+        ],
+        "reponse": "B",
+        "explication": "DAX (Data Analysis Expressions) est le langage des modèles tabulaires ; MDX reste celui des cubes multidimensionnels."
+      },
+      {
+        "q": "Quelle affirmation décrit le mieux une trace SQL Server ?",
+        "options": [
+          "A) Une sauvegarde complète chiffrée",
+          "B) Un enregistrement d'événements du serveur, persistable en fichier .trc faisant office de log d'audit",
+          "C) Un index clustered",
+          "D) Un fichier de données secondaire"
+        ],
+        "reponse": "B",
+        "explication": "Une trace (Profiler/Extended Events) capture les événements ; sauvegardée en .trc, elle joue le rôle de journal d'audit/diagnostic."
+      },
+      {
+        "q": "Citez une tâche typique d'un administrateur de bases SQL Server :",
+        "options": [
+          "A) Concevoir l'interface graphique de l'application cliente",
+          "B) Gérer les sauvegardes/restaurations et la sécurité (logins, rôles)",
+          "C) Rédiger le cahier des charges fonctionnel métier",
+          "D) Développer le pilote TDS"
+        ],
+        "reponse": "B",
+        "explication": "Le DBA assure sauvegardes/restaurations, sécurité, performance (index, tuning), maintenance et surveillance des instances."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Décrivez l'architecture de Microsoft SQL Server : notion d'instance, rôle des quatre bases système (master, model, msdb, tempdb) et types de fichiers (.mdf, .ndf, .ldf).",
+        "reponseAttendue": "SQL Server est un SGBDR client-serveur. Une INSTANCE est une installation isolée du moteur de base de données, possédant ses propres services, ports, configuration et jeu de bases système ; on distingue l'instance par défaut (nom de la machine) et les instances nommées (MACHINE\\INSTANCE), plusieurs pouvant coexister sur un même serveur. Les clients dialoguent avec le moteur via le protocole TDS.\n\nLes quatre bases système :\n- master : contient la configuration de l'instance, les logins, les métadonnées de toutes les bases et l'emplacement des fichiers ; sa perte rend l'instance inutilisable.\n- model : base modèle/gabarit copiée à chaque CREATE DATABASE ; toute modification (taille, objets) se répercute sur les futures bases.\n- msdb : utilisée par SQL Server Agent pour stocker jobs, schedules, alertes, opérateurs et l'historique des sauvegardes.\n- tempdb : base de travail recréée à chaque démarrage à partir de model ; héberge tables temporaires, variables de table, résultats intermédiaires de tri/hachage et version store.\n\nLes fichiers d'une base :\n- .mdf : fichier de données primaire, obligatoire et unique, contenant les données et le pointeur vers les autres fichiers.\n- .ndf : fichiers de données secondaires, optionnels et multiples, pour répartir les données sur plusieurs disques ou groupes de fichiers (filegroups).\n- .ldf : fichier(s) journal des transactions, enregistrant toutes les modifications pour assurer la récupération (recovery), le rollback et les sauvegardes de log.\nLa correspondance avec l'épreuve : le fichier primaire 'gestion_prim' (.mdf), secondaire 'gestion_sec' (.ndf) et journal 'gestion_log' (.ldf)."
+      },
+      {
+        "q": "Comparez la stratégie de sauvegarde et de restauration sous SQL Server : sauvegarde complète, différentielle et du journal des transactions. Donnez l'ordre de restauration et le rôle du mode de récupération.",
+        "reponseAttendue": "Trois types de sauvegardes :\n1. Complète (FULL, BACKUP DATABASE) : copie l'intégralité des données de la base + assez de journal pour la rendre cohérente. Sert de point de base.\n2. Différentielle (WITH DIFFERENTIAL) : copie uniquement les extents modifiés depuis la DERNIÈRE sauvegarde complète. Plus rapide et plus petite qu'une full, mais dépend toujours de sa full de base. Elle est cumulative (chaque différentielle contient les changements depuis la full).\n3. Du journal (BACKUP LOG) : copie la partie active du journal des transactions ; disponible seulement en mode de récupération FULL ou BULK_LOGGED. Permet le point-in-time recovery (restauration à un instant précis via STOPAT) et tronque le journal.\n\nModes de récupération : SIMPLE (pas de sauvegarde de log, pas de point-in-time), FULL (toutes les transactions journalisées, restauration à la seconde près), BULK_LOGGED (variante de FULL optimisant les opérations en masse).\n\nOrdre de restauration typique :\n- RESTORE DATABASE ... FROM full WITH NORECOVERY ;\n- RESTORE DATABASE ... FROM derniere_differentielle WITH NORECOVERY ;\n- RESTORE LOG ... FROM log1 WITH NORECOVERY ; (puis les logs suivants dans l'ordre)\n- RESTORE LOG ... WITH RECOVERY (ou STOPAT = 'date heure') pour finaliser et ouvrir la base.\nNORECOVERY maintient la base en état de restauration pour appliquer d'autres sauvegardes ; RECOVERY effectue le rollforward/rollback final et rend la base accessible. Différences clés full vs différentielle : la full est complète et autonome, la différentielle est partielle, dépendante de sa full, plus rapide à produire et à restaurer."
+      },
+      {
+        "q": "Expliquez le modèle de sécurité de SQL Server : différence entre login et user, rôles serveur et rôles de base, schémas, et commandes de gestion des privilèges (DCL).",
+        "reponseAttendue": "La sécurité de SQL Server est hiérarchisée sur deux niveaux : serveur (instance) et base de données.\n\nNiveau serveur :\n- Login : principal d'authentification stocké dans master. Deux modes : authentification Windows (intégrée, Kerberos/NTLM) ou authentification SQL Server (login + mot de passe). Le login autorise la connexion à l'instance.\n- Rôles serveur fixes : sysadmin (tous droits), serveradmin, securityadmin, dbcreator, etc., regroupant des privilèges au niveau instance.\n\nNiveau base :\n- User : principal de base mappé à un login, donnant accès à une base précise. Un même login peut être mappé à plusieurs users dans différentes bases.\n- Rôles de base fixes : db_owner (tous droits sur la base), db_datareader (SELECT sur toutes les tables), db_datawriter (INSERT/UPDATE/DELETE), db_ddladmin, etc. On peut aussi créer des rôles applicatifs personnalisés (CREATE ROLE).\n\nSchémas : namespace logique (ex. dbo, ventes) qui regroupe des objets (tables, vues, procédures). Le schéma est à la fois un préfixe de nommage (schema.objet) et une unité de permission : accorder un droit sur un schéma le propage à tous ses objets. Chaque user possède un schéma par défaut.\n\nDCL (Data Control Language) :\n- GRANT permission ON objet TO principal : accorde un droit (ex. GRANT SELECT ON dbo.CLIENT TO user1).\n- REVOKE : retire un droit précédemment accordé ou refusé.\n- DENY : interdit explicitement un droit (le DENY l'emporte sur tout GRANT, même hérité d'un rôle).\nPrincipe du moindre privilège : n'accorder que les droits strictement nécessaires, de préférence via des rôles plutôt que individuellement."
+      },
+      {
+        "q": "Comparez les composants de la suite SQL Server (moteur de BD, SSIS, SSAS, SSRS) et situez les langages T-SQL, MDX et DAX ainsi que les notions OLTP/OLAP.",
+        "reponseAttendue": "La plateforme SQL Server regroupe plusieurs services complémentaires :\n- Database Engine (moteur de BD) : coeur relationnel qui stocke, sécurise et interroge les données via T-SQL ; cible les charges OLTP.\n- SSIS (Integration Services) : plateforme ETL (Extract, Transform, Load) pour extraire des données de sources hétérogènes, les transformer/nettoyer et les charger (ex. alimentation d'un entrepôt). Conçoit des packages (.dtsx).\n- SSAS (Analysis Services) : moteur OLAP/data mining ; construit des cubes multidimensionnels et des modèles tabulaires pour l'analyse décisionnelle (agrégations rapides sur de gros volumes).\n- SSRS (Reporting Services) : génération, publication et diffusion de rapports/états (tableaux, graphiques) à partir des données.\nOutils associés : SSMS (administration GUI), SQL Server Profiler (trace), sqlcmd, Database Engine Tuning Advisor.\n\nLangages :\n- T-SQL : dialecte procédural propriétaire pour le moteur relationnel (DDL, DML, DCL, TCL, procédures, triggers).\n- MDX (MultiDimensional eXpressions) : interrogation des cubes multidimensionnels SSAS.\n- DAX (Data Analysis eXpressions) : formules et mesures des modèles tabulaires SSAS / Power BI.\n\nOLTP vs OLAP :\n- OLTP (On-Line Transaction Processing) : nombreuses petites transactions concurrentes (insert/update/delete), schéma normalisé, priorité à l'intégrité et au temps de réponse. C'est le rôle du moteur relationnel.\n- OLAP (On-Line Analytical Processing) : peu d'utilisateurs analystes, requêtes complexes d'agrégation sur de grands volumes historiques, schéma dénormalisé (étoile/flocon), priorité à la rapidité de lecture/agrégation. C'est le rôle de SSAS.\nTrois différences OLTP/OLAP : usage (transactionnel vs analytique), modélisation (normalisé vs dénormalisé), volume/fréquence (beaucoup de petites écritures vs lectures massives agrégées)."
+      },
+      {
+        "q": "Définissez procédure stockée et déclencheur (trigger), expliquez leurs différences, et montrez sur l'exemple d'une base de réservation comment un trigger maintient automatiquement le nombre de places disponibles d'une table.",
+        "reponseAttendue": "Procédure stockée : bloc de code T-SQL nommé, précompilé et stocké dans la base, exécuté explicitement par l'utilisateur ou l'application avec EXEC nom_proc [params]. Avantages : réutilisation, réduction du trafic réseau, plan d'exécution mis en cache, encapsulation de la logique métier et meilleure sécurité (on accorde EXECUTE sans donner accès direct aux tables). Elle accepte paramètres d'entrée/sortie et valeur de retour.\nExemple : CREATE PROCEDURE InvitesParTable @id_table INT AS BEGIN SELECT I.nom FROM Invites I WHERE I.id_table = @id_table; END;\n\nDéclencheur (trigger) : type particulier de procédure stockée LIÉE à une table (ou vue) et exécutée AUTOMATIQUEMENT lors d'un événement DML (INSERT, UPDATE, DELETE) — AFTER ou INSTEAD OF. Il accède aux tables logiques 'inserted' (nouvelles lignes) et 'deleted' (anciennes lignes). On ne l'appelle jamais directement.\n\nDifférences clés :\n- Invocation : la procédure est appelée explicitement (EXEC) ; le trigger se déclenche automatiquement sur l'événement.\n- Paramètres : la procédure en accepte ; le trigger non (il lit inserted/deleted).\n- Usage : la procédure encapsule une logique réutilisable ; le trigger applique des règles d'intégrité/métier réactives et l'audit.\n\nMaintien automatique des places (cas du mariage / réservation) : on crée un trigger sur la table Commande (ou Invités) qui, à chaque INSERT, décrémente le champ 'places' de la table concernée, et à chaque DELETE le ré-incrémente :\nCREATE TRIGGER trg_MajPlaces ON Invites AFTER INSERT AS\nBEGIN\n  UPDATE T SET T.places = T.places - 1\n  FROM [Table] T\n  JOIN inserted i ON i.id_table = T.id_table;\nEND;\nAinsi, dès qu'un invité est affecté à une table, les places disponibles sont mises à jour sans intervention manuelle ; un trigger AFTER DELETE symétrique restaure la place libérée. Une contrainte CHECK (places >= 0) complète le dispositif pour empêcher le surnombre."
+      }
+    ]
   },
   {
     "id": "chinois",
@@ -1387,10 +2589,431 @@ const MATIERES_EXTRA = [
     "icone": "📣",
     "couleur": "#38bdf8",
     "ue": "langues",
-    "placeholder": true,
-    "resume": [],
-    "qcm": [],
-    "questionsOuvertes": []
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "Definition de la communication",
+        "contenu": "La communication est le processus de transmission d'un message d'un emetteur vers un recepteur via un canal, dans le but de produire une comprehension partagee et eventuellement un changement de comportement. Elle repose sur le decodage correct du message et la presence d'un retour (feedback)."
+      },
+      {
+        "titre": "Schema de Shannon-Weaver",
+        "contenu": "Le modele canonique comporte sept elements : emetteur (source), message (information codee), canal (support de transmission), recepteur (destinataire), feedback (retour), bruit (perturbation) et contexte (situation). Le codage et le decodage assurent la mise en forme et l'interpretation du message."
+      },
+      {
+        "titre": "Communication verbale vs non-verbale",
+        "contenu": "La communication verbale utilise les mots (oral ou ecrit) ; la communication non-verbale passe par les gestes, postures, expressions du visage, regard, ton et silence. Le non-verbal accompagne, renforce ou contredit le verbal et porte une part importante du sens emotionnel."
+      },
+      {
+        "titre": "Ecoute active",
+        "contenu": "L'ecoute active consiste a comprendre reellement le message de l'interlocuteur avant de repondre, en se concentrant sur lui, en reformulant, en questionnant et en evitant de juger ou d'interrompre. Son objectif principal est de comprendre le message pour etablir une relation de confiance."
+      },
+      {
+        "titre": "Communication interpersonnelle",
+        "contenu": "Echange direct entre deux personnes (ou en petit groupe) en presence ou a distance. Elle se caracterise par l'immediatete du feedback, l'importance du non-verbal et l'adaptation au contexte relationnel des interlocuteurs."
+      },
+      {
+        "titre": "Communication institutionnelle / corporate",
+        "contenu": "La communication institutionnelle vise a promouvoir l'image, l'identite et la notoriete globale de l'entreprise (et non un produit precis) aupres de ses publics : valeurs, mission, responsabilite. Elle cible salaries, partenaires, medias, pouvoirs publics et grand public."
+      },
+      {
+        "titre": "Communication marketing",
+        "contenu": "La communication marketing a pour but de promouvoir un produit ou un service et d'influencer l'acte d'achat (publicite, promotion, marketing direct, communication digitale). Elle s'adresse aux clients et prospects et soutient les ventes et la differenciation face a la concurrence."
+      },
+      {
+        "titre": "Communication interne vs externe",
+        "contenu": "La communication interne s'adresse aux membres de l'entreprise (salaries, services) pour informer, motiver et federer ; la communication externe vise les publics exterieurs (clients, fournisseurs, medias, partenaires) pour vendre, informer et construire l'image. Toutes deux sont indispensables a la competitivite."
+      },
+      {
+        "titre": "Communication electronique et Web 2.0",
+        "contenu": "La communication electronique exploite les TIC et le Web 2.0 (site web, e-mailing, reseaux sociaux, blog, newsletter, podcast) pour diffuser l'information de maniere interactive, rapide et a faible cout. Elle augmente la visibilite, la reactivite et la notoriete de l'entreprise."
+      },
+      {
+        "titre": "Objectifs cognitif, affectif et conatif",
+        "contenu": "Une action de communication poursuit trois types d'objectifs : cognitif (faire connaitre, informer), affectif (faire aimer, creer une attitude favorable) et conatif (faire agir, declencher l'achat ou le comportement). Ils correspondent aux etapes du modele AIDA : Attention, Interet, Desir, Action."
+      },
+      {
+        "titre": "Plan de communication",
+        "contenu": "Document qui englobe toutes les actions necessaires pour guider la strategie de communication d'une entreprise. Ses etapes : analyser le contexte global, fixer les objectifs (strategie), determiner les cibles, definir les messages, choisir les outils/medias, puis elaborer et evaluer le plan."
+      },
+      {
+        "titre": "Freins et obstacles a la communication",
+        "contenu": "Les freins (bruits) peuvent etre techniques (canal defaillant), semantiques (vocabulaire mal compris), psychologiques (prejuges, emotions, stress), culturels ou organisationnels. Ils alterent le message ; on les reduit par la reformulation, la clarte, l'ecoute et le feedback."
+      },
+      {
+        "titre": "Redaction administrative et professionnelle",
+        "contenu": "La redaction administrative repond a des regles de clarte, concision, objectivite, courtoisie et respect des conventions de presentation. Elle privilegie un style neutre et precis ; ses ecrits types sont la lettre, la note de service, le compte rendu et le rapport."
+      },
+      {
+        "titre": "Correspondance administrative",
+        "contenu": "Une correspondance administrative comporte des elements normalises : en-tete (timbre/expediteur), references, objet, formule d'appel, corps du message structure, formule de politesse, signature et eventuelles pieces jointes. La lettre administrative entre services est impersonnelle, la lettre a caractere personnel s'adresse a un individu."
+      },
+      {
+        "titre": "Prise de parole en public",
+        "contenu": "La prise de parole efficace exige preparation (plan, message cle), maitrise du non-verbal (posture, regard, voix), gestion du trac et adaptation a l'auditoire. La structure type suit l'accroche, le developpement argumente et la conclusion percutante."
+      },
+      {
+        "titre": "La reunion",
+        "contenu": "Outil de communication interne collectif. Une reunion efficace requiert un ordre du jour, un animateur, un secretaire, un objectif clair, une duree maitrisee et un compte rendu diffuse. On distingue reunions d'information, de decision, de resolution de probleme et de brainstorming."
+      },
+      {
+        "titre": "La contrefacon",
+        "contenu": "La contrefacon est la reproduction ou imitation frauduleuse d'une marque, d'un produit ou d'une creation protegee, portant atteinte aux droits de propriete intellectuelle. On la combat par le depot de marque, la sensibilisation des consommateurs, les controles douaniers et les poursuites judiciaires."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Quel est l'objectif principal de la communication verbale ?",
+        "options": [
+          "A) Influencer les autres physiquement",
+          "B) Transmettre des informations pour etablir des relations et resoudre des problemes",
+          "C) Ignorer le message",
+          "D) Remplacer le non-verbal"
+        ],
+        "reponse": "B",
+        "explication": "La communication verbale sert d'abord a transmettre l'information, etablir des relations et resoudre des problemes."
+      },
+      {
+        "q": "Quel est le role de l'ecoute active dans la communication verbale ?",
+        "options": [
+          "A) Repondre au message immediatement",
+          "B) Controler la conversation",
+          "C) Comprendre le message de l'interlocuteur",
+          "D) Ignorer le message"
+        ],
+        "reponse": "C",
+        "explication": "L'ecoute active vise avant tout a comprendre reellement le message avant de reagir."
+      },
+      {
+        "q": "Quel est l'avantage de la communication verbale par rapport a la communication non verbale ?",
+        "options": [
+          "A) Elle est plus rapide",
+          "B) Elle est plus precise",
+          "C) Elle est plus personnelle",
+          "D) Elle est plus formelle"
+        ],
+        "reponse": "B",
+        "explication": "Le langage verbal permet une plus grande precision dans la formulation et la comprehension du message."
+      },
+      {
+        "q": "Que designe le terme 'feedback' dans le schema de la communication ?",
+        "options": [
+          "A) Le bruit qui perturbe le message",
+          "B) Le canal de transmission",
+          "C) Le retour du recepteur vers l'emetteur",
+          "D) Le codage du message"
+        ],
+        "reponse": "C",
+        "explication": "Le feedback est la reponse ou reaction du recepteur, qui ferme la boucle de communication."
+      },
+      {
+        "q": "Dans le modele de Shannon-Weaver, qu'appelle-t-on 'bruit' ?",
+        "options": [
+          "A) Le message principal",
+          "B) Toute perturbation qui altere la transmission du message",
+          "C) Le recepteur",
+          "D) Le retour d'information"
+        ],
+        "reponse": "B",
+        "explication": "Le bruit designe toute interference (technique, semantique, psychologique) qui degrade le message."
+      },
+      {
+        "q": "Un 'influenceur' sur les reseaux sociaux est principalement quelqu'un qui :",
+        "options": [
+          "A) Gere les serveurs d'une entreprise",
+          "B) Oriente les opinions et comportements de sa communaute",
+          "C) Redige uniquement des lois",
+          "D) Repare le materiel informatique"
+        ],
+        "reponse": "B",
+        "explication": "L'influenceur dispose d'une audience qu'il peut orienter, ce qui en fait un relais marketing."
+      },
+      {
+        "q": "Qu'est-ce qu'un 'community manager' ?",
+        "options": [
+          "A) Le directeur financier",
+          "B) Le responsable de l'animation et de la gestion des communautes en ligne",
+          "C) Un developpeur back-end",
+          "D) Un huissier de justice"
+        ],
+        "reponse": "B",
+        "explication": "Le community manager anime, modere et federe la communaute d'une marque sur les reseaux sociaux."
+      },
+      {
+        "q": "Qu'est-ce qu'un 'leader d'opinion' ?",
+        "options": [
+          "A) Une personne dont l'avis influence celui d'un groupe",
+          "B) Le logiciel de gestion d'une marque",
+          "C) Un type de bruit semantique",
+          "D) Le canal de transmission"
+        ],
+        "reponse": "A",
+        "explication": "Le leader d'opinion est une personnalite credible dont les avis orientent ceux de son groupe de reference."
+      },
+      {
+        "q": "Qu'est-ce qu'un 'podcast' ?",
+        "options": [
+          "A) Un contenu audio (ou video) diffuse et ecoutable a la demande",
+          "B) Une lettre administrative",
+          "C) Un type de reunion",
+          "D) Un bruit technique"
+        ],
+        "reponse": "A",
+        "explication": "Le podcast est un contenu audio/video telechargeable et consultable a la demande, outil du Web 2.0."
+      },
+      {
+        "q": "Qu'est-ce qu'un 'blog' ?",
+        "options": [
+          "A) Un site personnel ou d'entreprise publiant regulierement des articles",
+          "B) Une formule de politesse",
+          "C) Un compte rendu de reunion",
+          "D) Un canal televise"
+        ],
+        "reponse": "A",
+        "explication": "Le blog est un espace de publication d'articles dates, outil de communication digitale et de contenu."
+      },
+      {
+        "q": "La communication institutionnelle a pour but principal de :",
+        "options": [
+          "A) Vendre un produit precis",
+          "B) Promouvoir l'image et la notoriete globale de l'entreprise",
+          "C) Reparer un bruit technique",
+          "D) Remplacer la communication interne"
+        ],
+        "reponse": "B",
+        "explication": "La communication institutionnelle (corporate) valorise l'image et l'identite de l'entreprise, pas un produit."
+      },
+      {
+        "q": "La communication marketing vise principalement a :",
+        "options": [
+          "A) Federer le personnel interne",
+          "B) Promouvoir un produit et influencer l'achat",
+          "C) Rediger des notes de service",
+          "D) Animer les reunions"
+        ],
+        "reponse": "B",
+        "explication": "La communication marketing soutient la vente et l'achat d'un produit ou service."
+      },
+      {
+        "q": "La communication interne s'adresse :",
+        "options": [
+          "A) Aux clients et fournisseurs",
+          "B) Aux membres de l'entreprise (salaries, services)",
+          "C) Uniquement aux medias",
+          "D) Aux concurrents"
+        ],
+        "reponse": "B",
+        "explication": "La communication interne cible les publics internes pour informer, motiver et federer."
+      },
+      {
+        "q": "Quel objectif vise a 'faire agir' la cible (declencher l'achat) ?",
+        "options": [
+          "A) Cognitif",
+          "B) Affectif",
+          "C) Conatif",
+          "D) Semantique"
+        ],
+        "reponse": "C",
+        "explication": "L'objectif conatif vise le comportement et l'action (achat, adhesion)."
+      },
+      {
+        "q": "Quel objectif vise a 'faire connaitre' et informer la cible ?",
+        "options": [
+          "A) Cognitif",
+          "B) Affectif",
+          "C) Conatif",
+          "D) Technique"
+        ],
+        "reponse": "A",
+        "explication": "L'objectif cognitif concerne la connaissance et la notoriete (faire savoir)."
+      },
+      {
+        "q": "Quel objectif vise a 'faire aimer' et creer une attitude favorable ?",
+        "options": [
+          "A) Cognitif",
+          "B) Affectif",
+          "C) Conatif",
+          "D) Organisationnel"
+        ],
+        "reponse": "B",
+        "explication": "L'objectif affectif agit sur les sentiments et l'image (faire aimer)."
+      },
+      {
+        "q": "Le modele AIDA decrit la sequence :",
+        "options": [
+          "A) Analyse - Information - Decision - Action",
+          "B) Attention - Interet - Desir - Action",
+          "C) Achat - Image - Diffusion - Audit",
+          "D) Annonce - Interview - Debat - Avis"
+        ],
+        "reponse": "B",
+        "explication": "AIDA = Attention, Interet, Desir, Action, etapes psychologiques de la persuasion publicitaire."
+      },
+      {
+        "q": "Quelle est la premiere etape d'un plan de communication ?",
+        "options": [
+          "A) Choisir les outils",
+          "B) Analyser le contexte global de l'entreprise",
+          "C) Diffuser le message",
+          "D) Evaluer les ventes"
+        ],
+        "reponse": "B",
+        "explication": "On commence par analyser le contexte (diagnostic) avant de fixer objectifs, cibles et messages."
+      },
+      {
+        "q": "Dans le plan de communication, apres avoir fixe les objectifs, on doit :",
+        "options": [
+          "A) Determiner les cibles",
+          "B) Rediger le compte rendu",
+          "C) Lancer la facturation",
+          "D) Supprimer le feedback"
+        ],
+        "reponse": "A",
+        "explication": "L'ordre logique : contexte, objectifs, cibles, messages, outils, elaboration."
+      },
+      {
+        "q": "La contrefacon consiste a :",
+        "options": [
+          "A) Ameliorer un produit existant",
+          "B) Reproduire frauduleusement une marque ou un produit protege",
+          "C) Deposer une marque a l'INPI",
+          "D) Faire une etude de marche"
+        ],
+        "reponse": "B",
+        "explication": "La contrefacon est une imitation illicite portant atteinte a la propriete intellectuelle."
+      },
+      {
+        "q": "Quel moyen permet de lutter efficacement contre la contrefacon ?",
+        "options": [
+          "A) Supprimer la marque",
+          "B) Le depot de marque et les controles douaniers",
+          "C) Baisser la qualite du produit",
+          "D) Ignorer le phenomene"
+        ],
+        "reponse": "B",
+        "explication": "La protection juridique (depot), les douanes et la sensibilisation luttent contre la contrefacon."
+      },
+      {
+        "q": "La communication electronique repose principalement sur :",
+        "options": [
+          "A) Les TIC et les outils du Web 2.0",
+          "B) Le courrier postal uniquement",
+          "C) La reunion physique",
+          "D) Le bouche-a-oreille seul"
+        ],
+        "reponse": "A",
+        "explication": "Elle s'appuie sur Internet et les outils numeriques (site, mail, reseaux sociaux, blog)."
+      },
+      {
+        "q": "Un avantage majeur de la communication electronique est :",
+        "options": [
+          "A) Son cout eleve et sa lenteur",
+          "B) Sa rapidite, son interactivite et son faible cout",
+          "C) L'absence de feedback",
+          "D) Son caractere strictement oral"
+        ],
+        "reponse": "B",
+        "explication": "Le numerique offre rapidite, large portee, interactivite et couts reduits."
+      },
+      {
+        "q": "La lettre administrative a caractere personnel se distingue de la lettre entre services car elle :",
+        "options": [
+          "A) Est impersonnelle",
+          "B) S'adresse nommement a un individu",
+          "C) N'a pas d'objet",
+          "D) Ne comporte pas de signature"
+        ],
+        "reponse": "B",
+        "explication": "La lettre a caractere personnel s'adresse a une personne nommee ; la lettre entre services est impersonnelle."
+      },
+      {
+        "q": "Quelle qualite est essentielle a la redaction administrative ?",
+        "options": [
+          "A) L'ambiguite",
+          "B) La clarte et la concision",
+          "C) Le langage familier",
+          "D) La subjectivite"
+        ],
+        "reponse": "B",
+        "explication": "L'ecrit administratif doit etre clair, concis, objectif et courtois."
+      },
+      {
+        "q": "Lequel de ces elements fait partie d'une correspondance administrative ?",
+        "options": [
+          "A) Un hashtag publicitaire",
+          "B) L'objet et la formule de politesse",
+          "C) Un emoji",
+          "D) Un slogan de marque"
+        ],
+        "reponse": "B",
+        "explication": "L'objet, la formule d'appel et la formule de politesse sont des elements normalises de la lettre administrative."
+      },
+      {
+        "q": "Pour une prise de parole en public reussie, il faut d'abord :",
+        "options": [
+          "A) Improviser totalement",
+          "B) Preparer un plan et un message cle, et connaitre l'auditoire",
+          "C) Lire mot a mot sans regarder le public",
+          "D) Parler le plus vite possible"
+        ],
+        "reponse": "B",
+        "explication": "La preparation (plan, message, connaissance de l'auditoire) conditionne l'efficacite de l'expose."
+      },
+      {
+        "q": "Quel document formalise les decisions et echanges d'une reunion ?",
+        "options": [
+          "A) Le compte rendu (ou proces-verbal)",
+          "B) Le slogan",
+          "C) Le bon de commande",
+          "D) Le podcast"
+        ],
+        "reponse": "A",
+        "explication": "Le compte rendu (ou PV) consigne et diffuse les decisions prises en reunion."
+      },
+      {
+        "q": "Quels sont des outils de communication EXTERNE d'une entreprise ?",
+        "options": [
+          "A) Note de service et intranet",
+          "B) Publicite, site web et relations presse",
+          "C) Reunion d'equipe interne",
+          "D) Journal interne du personnel"
+        ],
+        "reponse": "B",
+        "explication": "La publicite, le site web et les relations presse s'adressent aux publics externes."
+      },
+      {
+        "q": "Le 'manager' dans une entreprise exerce notamment la fonction de :",
+        "options": [
+          "A) Planifier, organiser, diriger et controler",
+          "B) Uniquement nettoyer les locaux",
+          "C) Seulement signer les cheques",
+          "D) Imiter les produits concurrents"
+        ],
+        "reponse": "A",
+        "explication": "Les fonctions managériales classiques (Fayol) sont planifier, organiser, diriger/animer et controler."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Definissez la communication, presentez le schema complet de la communication (Shannon-Weaver) et expliquez le role de chaque composante.",
+        "reponseAttendue": "La communication est le processus par lequel un emetteur transmet un message a un recepteur via un canal, en vue d'une comprehension partagee. Le schema de Shannon-Weaver comporte : 1) l'EMETTEUR (source) qui code le message ; 2) le MESSAGE, contenu informationnel mis en forme ; 3) le CANAL, support de transmission (voix, ecrit, reseau) ; 4) le RECEPTEUR qui decode et interprete ; 5) le FEEDBACK, retour du recepteur permettant de verifier la comprehension et de reguler l'echange ; 6) le BRUIT, toute perturbation (technique, semantique, psychologique) qui altere le message ; 7) le CONTEXTE, situation dans laquelle se deroule l'echange. Le codage (mise en signes) et le decodage (interpretation) sont essentiels : une communication reussie suppose un code commun, un canal adapte, un bruit minimal et un feedback effectif. Conclusion : la communication n'est efficace que lorsque le sens decode par le recepteur correspond a l'intention de l'emetteur."
+      },
+      {
+        "q": "Comparez communication interne et communication externe de l'entreprise : definitions, cibles, objectifs et outils, en illustrant par des exemples dans l'environnement camerounais.",
+        "reponseAttendue": "La communication INTERNE s'adresse aux membres de l'entreprise (salaries, services, directions) ; ses objectifs sont d'informer, motiver, federer, diffuser la culture d'entreprise et accompagner le changement. Outils : note de service, journal interne, intranet, reunions, affichage, messagerie interne. Exemple camerounais : une PME de Yaounde diffuse une note de service et anime une reunion hebdomadaire pour coordonner ses equipes. La communication EXTERNE vise les publics exterieurs (clients, prospects, fournisseurs, partenaires, medias, pouvoirs publics) ; ses objectifs sont de vendre, informer, construire l'image et la notoriete, fideliser. Outils : publicite (radio, affichage, reseaux sociaux), relations presse, site web, e-mailing, evenementiel, sponsoring. Exemple : un operateur telecom camerounais lance une campagne publicitaire et anime une page Facebook pour promouvoir un forfait. Les deux sont complementaires et indispensables a la competitivite : une communication interne efficace cree un climat social favorable qui soutient la performance et la coherence du discours externe."
+      },
+      {
+        "q": "Une entreprise souhaite lancer un nouveau produit. En tant que responsable de la communication, elaborez le plan de communication etape par etape.",
+        "reponseAttendue": "Plan de communication pour le lancement d'un nouveau produit : 1) ANALYSER LE CONTEXTE GLOBAL : diagnostic interne (forces/faiblesses, ressources) et externe (marche, concurrence, opportunites/menaces) - analyse SWOT. 2) FIXER LES OBJECTIFS : definir des objectifs cognitifs (faire connaitre le produit, notoriete), affectifs (creer une image favorable) et conatifs (declencher l'essai/l'achat), mesurables et dates. 3) DETERMINER LES CIBLES : identifier les publics vises (clients potentiels, prescripteurs, distributeurs) et les segmenter. 4) DEFINIR LES MESSAGES : construire un message cle clair, coherent avec le positionnement et adapte a chaque cible (axe et promesse). 5) CHOISIR LES OUTILS ET MEDIAS : selectionner les supports (publicite, reseaux sociaux, e-mailing, evenement de lancement, relations presse) selon la cible et le budget. 6) ELABORER ET PLANIFIER : etablir le calendrier, le budget et la repartition des actions. 7) METTRE EN OEUVRE ET EVALUER : deployer les actions puis mesurer les resultats (notoriete, ventes, engagement) au moyen d'indicateurs, et ajuster. Conclusion : un bon plan est coherent (objectifs-cibles-messages-outils) et evaluable."
+      },
+      {
+        "q": "Definissez l'ecoute active et la communication non verbale, et montrez leur importance dans la communication interpersonnelle.",
+        "reponseAttendue": "L'ECOUTE ACTIVE est une attitude d'ecoute qui vise a comprendre reellement le message de l'interlocuteur avant de repondre. Elle mobilise des techniques : concentration sur l'autre, reformulation (\"si je comprends bien...\"), questionnement, signes d'attention (regard, hochement), suspension du jugement et absence d'interruption. Son objectif principal est de comprendre le message et d'instaurer la confiance. La COMMUNICATION NON VERBALE regroupe tous les signaux non langagiers : gestes, postures, expressions du visage, regard, distance (proxemie), ton et debit de la voix, silences. Elle accompagne, renforce ou parfois contredit le verbal et transmet une large part de la charge emotionnelle et relationnelle. Importance en communication interpersonnelle : l'ecoute active reduit les malentendus, valorise l'interlocuteur et facilite la resolution de conflits ; le non-verbal permet de decoder les emotions, d'ajuster son discours et de garantir la coherence entre ce qui est dit et la maniere de le dire. Ensemble, ils ameliorent la qualite de la relation, la comprehension mutuelle et l'efficacite de l'echange."
+      },
+      {
+        "q": "Qu'est-ce que la communication electronique ? Citez et expliquez quatre outils du Web 2.0 et montrez leur importance pour la communication d'une entreprise.",
+        "reponseAttendue": "La communication electronique est la communication qui s'appuie sur les TIC et Internet, notamment les outils du Web 2.0 (web participatif et interactif), pour diffuser l'information de maniere rapide, interactive et a faible cout. Quatre outils du Web 2.0 : 1) LE SITE WEB / vitrine institutionnelle : presente l'entreprise, ses produits et permet le e-commerce, renforce la credibilite et la visibilite. 2) LES RESEAUX SOCIAUX (Facebook, LinkedIn, X) : permettent l'interaction directe avec les clients, l'animation de communaute (community management) et la diffusion virale des messages. 3) LE BLOG : publication reguliere d'articles (contenu/expertise) ameliorant le referencement et l'image de marque. 4) L'E-MAILING / NEWSLETTER : envoi cible et personnalise d'informations et d'offres, fidelisant la clientele a faible cout. (Le podcast et la video en ligne sont aussi possibles.) Importance pour l'entreprise : augmentation de la visibilite et de la notoriete, interaction et feedback immediats avec les cibles, ciblage precis, reduction des couts de communication, fidelisation et soutien aux ventes. Limites/freins a maitriser : fracture numerique, dependance technologique, gestion de l'e-reputation et besoin de competences specialisees."
+      }
+    ]
   },
   {
     "id": "entreprenariat",
