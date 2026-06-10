@@ -349,3 +349,58 @@ body::after {
   .matiere-header .big-icon, .result-emoji { animation: none; }
   * { transition: none !important; }
 }
+
+/* ---------------- STATISTIQUES DE FRÉQUENTATION (admin) ---------------- */
+.admin-stats { margin-bottom: 16px; }
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.stat-box {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.22);
+}
+.stat-num {
+  font-size: 26px; font-weight: 800; line-height: 1;
+  background: linear-gradient(95deg, var(--neon2), var(--neon1));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-lbl { font-size: 11px; color: var(--text-muted); }
+
+/* ---------------- DASHBOARD ANALYTICS (admin) ---------------- */
+.stat-card {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.22);
+}
+.stat-title { font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; }
+.chart-row {
+  display: flex; align-items: flex-end; gap: 4px;
+  height: 92px; overflow-x: auto; padding-bottom: 2px;
+}
+.chart-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 22px; flex: 1; }
+.chart-bar {
+  width: 100%; max-width: 18px; border-radius: 5px 5px 0 0;
+  background: linear-gradient(180deg, var(--neon2), var(--neon1));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--neon1) 45%, transparent);
+}
+.chart-x { font-size: 9px; color: var(--text-muted); white-space: nowrap; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.bar-lbl { font-size: 12px; flex: 0 0 38%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; height: 9px; border-radius: 999px; background: color-mix(in srgb, var(--text) 8%, transparent); overflow: hidden; }
+.bar-fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--neon2), var(--neon3)); }
+.bar-n { font-size: 12px; font-weight: 700; color: var(--neon2); flex: 0 0 auto; }
+
+.stat-empty { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 4px 0; }

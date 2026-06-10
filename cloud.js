@@ -10,6 +10,8 @@ const SUPABASE_LIB_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
 const CLOUD_CACHE_KEY = 'gl3a_cloud_approved';
 const CLOUD_SUBMITTED_KEY = 'gl3a_submitted_titles';
 const CONFIG_CACHE_KEY = 'gl3a_matiere_config';
+const VISITOR_KEY = 'gl3a_visitor_id';
+const VISIT_DAY_KEY = 'gl3a_visit_day';
 
 let _sbLib = null, _sbLibLoading = null, _sbClient = null;
 
@@ -100,6 +102,55 @@ async function cloudSaveMatiereConfig(rows) {
   const { error } = await c.from('matiere_config').upsert(payload, { onConflict: 'matiere_id' });
   if (error) throw error;
   return true;
+}
+
+/* ----------------- COMPTEUR DE VISITEURS (analytics) --------------------- */
+function getVisitorId() {
+  let id = null;
+  try { id = localStorage.getItem(VISITOR_KEY); } catch {}
+  if (!id) {
+    id = (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'v-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    try { localStorage.setItem(VISITOR_KEY, id); } catch {}
+  }
+  return id;
+}
+// Enregistre une visite — au plus UNE par appareil et par jour. Silencieux si offline.
+async function cloudTrackVisit() {
+  if (!cloudConfigured()) return;
+  const today = new Date().toISOString().slice(0, 10);
+  try { if (localStorage.getItem(VISIT_DAY_KEY) === today) return; } catch {}
+  try {
+    const c = await sbClient();
+    await c.from('visits').insert({
+      visitor_id: getVisitorId(),
+      day: today,
+      ua: (navigator.userAgent || '').slice(0, 300)
+    });
+    try { localStorage.setItem(VISIT_DAY_KEY, today); } catch {}
+  } catch (e) { /* table absente / offline : on ignore */ }
+}
+// Journalise un événement anonyme (matière ouverte, quiz terminé…). Fire-and-forget.
+function logEvent(type, label) {
+  if (!cloudConfigured()) return;
+  sbClient().then(c => c.from('events').insert({
+    visitor_id: getVisitorId(), type: type, label: label || null
+  })).catch(() => {});
+}
+// Renvoie les compteurs agrégés { total, unique, today, today_unique }.
+async function cloudVisitStats() {
+  const c = await sbClient();
+  const { data, error } = await c.rpc('visit_stats');
+  if (error) throw error;
+  return data || {};
+}
+// Tableau de bord complet (évolution, top matières, appareils, quiz).
+async function cloudAnalytics() {
+  const c = await sbClient();
+  const { data, error } = await c.rpc('analytics_overview');
+  if (error) throw error;
+  return data || {};
 }
 
 /* ---------------------- SOUMISSION (contributeur) ------------------------ */
@@ -249,6 +300,7 @@ async function showAdminQueue(email) {
       <span class="admin-who">👤 ${escapeHtml(email)}</span>
       <button id="admin-logout-btn" class="btn-secondary">Déconnexion</button>
     </div>
+    <div id="admin-stats" class="admin-stats"><p class="scan-status">📊 Chargement des statistiques…</p></div>
     <button id="admin-prog-btn" class="btn-primary btn-block">📅 Organiser le programme (UE & horaires)</button>
     <h3 class="admin-h3">⏳ Épreuves en attente</h3>
     <div id="admin-pending"><p class="scan-status">Chargement…</p></div>
@@ -256,6 +308,16 @@ async function showAdminQueue(email) {
   $('admin-logout-btn').onclick = async () => { try { await cloudLogout(); } catch {} renderAdminScreen(); };
   $('admin-prog-btn').onclick = () => renderAdminProgramme(email);
   $('admin-home-btn').onclick = () => renderHome();
+
+  // Tableau de bord de fréquentation (détaillé)
+  cloudAnalytics().then(a => renderAnalytics(a))
+    .catch(() => {
+      // repli sur les compteurs simples si analytics_overview n'existe pas encore
+      cloudVisitStats().then(s => renderAnalytics(s))
+        .catch(() => {
+          $('admin-stats').innerHTML = `<div class="form-error">📊 Statistiques indisponibles. As-tu exécuté le SQL <code>supabase-visits.sql</code> ?</div>`;
+        });
+    });
 
   let pending;
   try { pending = await cloudFetchPending(); }
@@ -290,6 +352,72 @@ async function showAdminQueue(email) {
 
   document.querySelectorAll('.admin-approve').forEach(b => b.onclick = () => moderate(b.dataset.id, true, email));
   document.querySelectorAll('.admin-reject').forEach(b => b.onclick = () => moderate(b.dataset.id, false, email));
+}
+
+/* ============== UI : TABLEAU DE BORD DE FRÉQUENTATION ==================== */
+function renderAnalytics(a) {
+  a = a || {};
+  const box = $('admin-stats');
+  if (!box) return;
+
+  // KPI principaux
+  let html = `
+    <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num">${a.unique ?? 0}</span><span class="stat-lbl">👥 Visiteurs uniques</span></div>
+      <div class="stat-box"><span class="stat-num">${a.today_unique ?? 0}</span><span class="stat-lbl">📆 Uniques aujourd'hui</span></div>
+      <div class="stat-box"><span class="stat-num">${a.today ?? 0}</span><span class="stat-lbl">⚡ Visites aujourd'hui</span></div>
+      <div class="stat-box"><span class="stat-num">${a.total ?? 0}</span><span class="stat-lbl">📈 Visites totales</span></div>
+    </div>`;
+
+  // Évolution (14 derniers jours) — mini bar chart
+  const byDay = Array.isArray(a.by_day) ? a.by_day : [];
+  if (byDay.length) {
+    const maxV = Math.max(1, ...byDay.map(d => d.visits || 0));
+    const bars = byDay.map(d => {
+      const h = Math.round(((d.visits || 0) / maxV) * 64) + 4;
+      const jour = (d.day || '').slice(8, 10) + '/' + (d.day || '').slice(5, 7);
+      return `<div class="chart-col" title="${escapeHtml(d.day)} : ${d.visits} visites, ${d.uniques} uniques">
+        <div class="chart-bar" style="height:${h}px"></div>
+        <span class="chart-x">${escapeHtml(jour)}</span>
+      </div>`;
+    }).join('');
+    html += `<div class="stat-card">
+      <div class="stat-title">📊 Évolution (14 derniers jours)</div>
+      <div class="chart-row">${bars}</div>
+    </div>`;
+  }
+
+  // Top matières consultées (toujours affiché, même vide)
+  const top = Array.isArray(a.top_matieres) ? a.top_matieres : [];
+  let topHtml;
+  if (top.length) {
+    const maxN = Math.max(1, ...top.map(t => t.n || 0));
+    topHtml = top.map(t => {
+      const w = Math.round(((t.n || 0) / maxN) * 100);
+      return `<div class="bar-row">
+        <span class="bar-lbl">${escapeHtml(matLabel(t.label))}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${w}%"></span></span>
+        <span class="bar-n">${t.n}</span>
+      </div>`;
+    }).join('');
+  } else {
+    topHtml = `<p class="stat-empty">Aucune matière consultée pour l'instant. Les données apparaîtront dès que les étudiants ouvriront des matières (et que le SQL <code>analytics</code> est exécuté).</p>`;
+  }
+  html += `<div class="stat-card">
+    <div class="stat-title">📚 Matières les plus consultées</div>
+    ${topHtml}
+  </div>`;
+
+  // Appareils + quiz
+  const dev = a.devices || {};
+  const mob = dev.mobile || 0, desk = dev.desktop || 0, tot = mob + desk;
+  const pMob = tot ? Math.round((mob / tot) * 100) : 0;
+  html += `<div class="stat-grid">
+    <div class="stat-box"><span class="stat-num">${tot ? pMob + '%' : '—'}</span><span class="stat-lbl">📱 Mobile (${mob}) · 💻 ${desk}</span></div>
+    <div class="stat-box"><span class="stat-num">${a.quiz_done ?? 0}</span><span class="stat-lbl">🎯 Quiz terminés</span></div>
+  </div>`;
+
+  box.innerHTML = html;
 }
 
 /* ============== UI : ADMIN — ORGANISER LE PROGRAMME (UE & horaires) ====== */
