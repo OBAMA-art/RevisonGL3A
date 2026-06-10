@@ -2258,5 +2258,601 @@ const EPREUVES_DATA = {
         }
       ]
     }
+  ],
+  "siad": [
+    {
+      "titre": "Epreuve de SIAD (Rattrapage) 2025 - 1 heure",
+      "source": "SIAD.pdf - EPREUVE DE SIAD (RATTRAPAGE) 2025, IAI Cameroun",
+      "questions": [
+        {
+          "numero": "P1-Q1",
+          "enonce": "PARTIE 1 (QCM, choisir la/les bonne(s) reponse(s)). Le modele de rationalite economique suppose que : A) Les decideurs ont des informations parfaites et completes ; B) Les decisions sont prises sur la base de l'instinct ; C) Les emotions jouent un role crucial dans la prise de decision ; D) Les contraintes de ressources sont ignorees.",
+          "correction": "Reponse : A. Le modele de rationalite economique repose sur l'hypothese d'un decideur disposant d'une information parfaite et complete et maximisant rationnellement son utilite. (On peut aussi retenir D comme corollaire frequent dans certains enonces, mais A est la reponse de reference.)",
+          "bareme": "0,5 pt (bonne) / -0,5 pt (fausse) / 0 pt (sans reponse)"
+        },
+        {
+          "numero": "P1-Q2",
+          "enonce": "Quelle est la definition de la loi de Pareto ? A) Une loi statistique qui indique que 80 % des effets proviennent de 20 % des causes ; B) Une regle de decision qui conseille de maintenir 20 % des causes en reserve sur les 80 % ; C) Une loi economique qui stipule que 80 % des revenus sont generes par 20 % de la population ; D) Une theorie mathematique sur la repartition des nombres premiers.",
+          "correction": "Reponse : A. La loi de Pareto (80/20) enonce qu'environ 80 % des effets proviennent de 20 % des causes.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q3",
+          "enonce": "Quels sont les quatre quadrants de la matrice d'Eisenhower ? A) Important-Urgent, Important-Non Urgent, Non Important-Urgent, Non Important-Non Urgent ; B) Important-Non Important, Urgent-Non Urgent, Important-Urgent, Non Important-Non Urgent ; C) Critique-Non Critique, Immediat-Non Immediat, Important-Non Important, Urgent-Non Urgent ; D) Important-Critique, Non Important-Non Critique, Urgent-Non Urgent, Important-Non Urgent.",
+          "correction": "Reponse : A. La matrice croise Importance et Urgence : Important-Urgent, Important-Non Urgent, Non Important-Urgent, Non Important-Non Urgent.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q4",
+          "enonce": "Quelle technique peut etre combinee avec la loi de Pareto pour une analyse plus approfondie des causes principales des problemes ? A) Analyse SWOT ; B) Analyse de regression ; C) Diagramme d'Ishikawa (ou diagramme de causes et effets) ; D) Analyse PESTEL.",
+          "correction": "Reponse : C. Le diagramme d'Ishikawa detaille les familles de causes ; combine a Pareto (qui priorise), il approfondit l'analyse des causes racines.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q5",
+          "enonce": "Comment la matrice d'Eisenhower aide-t-elle a ameliorer la gestion du temps ? A) En augmentant le nombre de taches a accomplir ; B) En se concentrant sur les taches non urgentes ; C) En reduisant la procrastination en hierarchisant les taches importantes et urgentes ; D) En divisant les taches en segments de 5 minutes.",
+          "correction": "Reponse : C. En hierarchisant les taches selon importance et urgence, la matrice reduit la procrastination et oriente l'effort vers l'essentiel.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q6",
+          "enonce": "Dans une matrice de decision, comment les alternatives sont-elles generalement evaluees ? A) Par un vote des employes ; B) En attribuant des poids et des scores a chaque critere pour chaque alternative ; C) En utilisant un algorithme de tri rapide ; D) En suivant l'opinion du decideur principal sans structure formelle.",
+          "correction": "Reponse : B. On pondere chaque critere et on note chaque alternative ; le score pondere total departage les options.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q7",
+          "enonce": "Quelle methode est couramment utilisee pour ponderer les criteres dans une matrice de decision ? A) Analyse de regression ; B) Methode de la hierarchie analytique (AHP) ; C) Analyse de variance ; D) Diagramme de Gantt.",
+          "correction": "Reponse : B. L'AHP (Analytic Hierarchy Process) de Saaty pondere les criteres par comparaisons par paires (echelle 1-9).",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q8",
+          "enonce": "Quelle technique peut etre utilisee pour normaliser les scores dans une matrice de decision ? A) Multiplication des scores par un facteur constant ; B) Conversion des scores en valeurs comprises entre 0 et 1 ; C) Utilisation de l'algorithme de tri rapide ; D) Chiffrement des donnees.",
+          "correction": "Reponse : B. La normalisation ramene les scores a une echelle commune (par ex. entre 0 et 1) pour rendre comparables des criteres heterogenes.",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q9",
+          "enonce": "Laquelle des affirmations suivantes est une application correcte de la loi de Pareto dans le domaine des affaires ? A) 80 % des produits d'une entreprise representent 20 % des ventes ; B) 80 % des ventes proviennent de 20 % des clients ; C) 20 % des employes sont responsables de 80 % des problemes ; D) 80 % des couts sont dus a 20 % des fournisseurs.",
+          "correction": "Reponse : B (exemple commercial canonique). Remarque : B, C et D illustrent toutes correctement le principe 80/20 ; si l'enonce admet plusieurs reponses, on peut cocher B, C et D. A est incorrecte car elle inverse le ratio (80 % des produits pour seulement 20 % des ventes ne correspond pas a la concentration 80/20 attendue).",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P1-Q10",
+          "enonce": "Quel est un potentiel inconvenient de l'application stricte de la loi de Pareto ? A) Cela peut entrainer une surcharge de travail pour les employes ; B) Cela peut conduire a une negligence des problemes moins frequents mais critiques ; C) Cela peut augmenter les couts de production ; D) Cela peut reduire la qualite des produits.",
+          "correction": "Reponse : B. En ne ciblant que les 20 % de causes dominantes, on risque d'ignorer des problemes rares mais a fort impact (ex. risques critiques).",
+          "bareme": "0,5 pt / -0,5 pt / 0 pt"
+        },
+        {
+          "numero": "P2-1",
+          "enonce": "PARTIE 2. Presenter le schema de la matrice d'Eisenhower. (6 pts)",
+          "correction": "La matrice d'Eisenhower est un tableau 2x2 croisant l'axe IMPORTANCE (Important / Non important) et l'axe URGENCE (Urgent / Non urgent), soit quatre quadrants :\n\n                URGENT              NON URGENT\nIMPORTANT     | FAIRE             | PLANIFIER       |\nNON IMPORTANT | DELEGUER          | ELIMINER        |\n\n- Important & Urgent -> FAIRE (traiter soi-meme et tout de suite).\n- Important & Non urgent -> PLANIFIER (programmer ces taches a forte valeur).\n- Non important & Urgent -> DELEGUER (confier a un tiers).\n- Non important & Non urgent -> ELIMINER (abandonner).\n\nLe schema doit faire apparaitre clairement les deux axes, les quatre cases et l'action associee a chaque case.",
+          "bareme": "6 pts (axes corrects, 4 quadrants nommes, actions associees)"
+        },
+        {
+          "numero": "P2-2",
+          "enonce": "PARTIE 2. Donner un exemple pour chaque cadran (de la matrice d'Eisenhower). (4 pts)",
+          "correction": "Un exemple coherent par cadran (1 pt chacun) :\n- Important/Urgent (Faire) : gerer une panne serveur en production ; rendre un rapport du le jour meme.\n- Important/Non urgent (Planifier) : preparer un examen dans trois semaines ; mettre en place une politique de sauvegarde ; se former.\n- Non important/Urgent (Deleguer) : repondre a des appels ou e-mails qui pressent mais qu'un collegue peut traiter.\n- Non important/Non urgent (Eliminer) : navigation sans but sur les reseaux sociaux ; reunion sans enjeu ; tri d'e-mails publicitaires.",
+          "bareme": "4 pts (1 pt par exemple pertinent et bien classe)"
+        }
+      ]
+    }
+  ],
+  "oracle": [
+    {
+      "titre": "CC SGBD ORACLE - GL3 A et C (Duree 2H)",
+      "source": "IAI Cameroun (Institut Africain d'Informatique) - Centre d'Excellence Technologique Paul Biya, Yaounde - 17 janvier 2025",
+      "questions": [
+        {
+          "numero": "Partie 1 - QCM Q1",
+          "enonce": "Qu'est-ce qui nous permet d'effectuer diverses taches de nettoyage au niveau d'une instance de BD ? A. CKPT  B. Les fichiers journaux  D. PMON  F. Aucune reponses justes (Bonne reponse +1, mauvaise -1, pas de reponse 0).",
+          "correction": "Reponse : D. PMON. Le processus PMON (Process Monitor) effectue le nettoyage au niveau de l'instance : il detecte les processus utilisateur defaillants, effectue le rollback des transactions non validees et libere les verrous et ressources. SMON ferait egalement du nettoyage (coalescence, recuperation), mais parmi les options proposees, PMON est la reponse de nettoyage des processus. CKPT ne fait que declencher les checkpoints ; les fichiers journaux ne sont pas un processus.",
+          "bareme": "1 pt (+1 bonne, -1 mauvaise, 0 sans reponse)"
+        },
+        {
+          "numero": "Partie 1 - QCM Q2",
+          "enonce": "Quels sont les outils utilises pour administrer un SGBD Oracle ? A. Oracle Enterprise Manager  B. SQL Developer et une version d'Oracle  C. SQL*Plus Worksheet et Oracle 10G  D. SQL*Plus et Oracle 11G  F. Pas de reponses.",
+          "correction": "Reponses correctes : A, B, C et D. Oracle s'administre via Oracle Enterprise Manager (OEM, console graphique), SQL Developer (IDE graphique) et SQL*Plus / SQL*Plus Worksheet (interfaces ligne de commande), generalement associes a une version du moteur Oracle (10G, 11G...). Toutes ces options designent des outils d'administration Oracle valides.",
+          "bareme": "1 pt (+1 / -1 / 0)"
+        },
+        {
+          "numero": "Partie 1 - QCM Q3",
+          "enonce": "Quand la SGA est-elle creee dans l'environnement de la base de donnees ? A. A la creation de la base  B. Quand la base est montee  C. Quand le processus utilisateur est demarre  D. Quand le processus serveur est demarre  E. Quand l'instance est demarree  F. B et C.",
+          "correction": "Reponse : E. Quand l'instance est demarree. La SGA (System Global Area) est allouee en memoire des le demarrage de l'instance, c'est-a-dire en phase STARTUP NOMOUNT, avant le montage (MOUNT) et l'ouverture (OPEN) de la base. Elle existe donc independamment du fait que la base soit montee ou ouverte.",
+          "bareme": "1 pt (+1 / -1 / 0)"
+        },
+        {
+          "numero": "Partie 1 - QCM Q4",
+          "enonce": "Quel est le role de la memoire PGA ? A. Propre a chaque processus utilisateur  B. Est l'argument INITIAL de la commande CREATE TABLESPACE  C. Est l'argument MINEXTENTS de la commande CREATE TABLESPACE  D. Est la somme des arguments INITIAL et NEXT de CREATE TABLESPACE  E. Pas de reponses.",
+          "correction": "Reponse : A. Propre a chaque processus utilisateur/serveur. La PGA (Program Global Area) est une zone memoire privee et non partagee, allouee a chaque processus serveur, contenant la zone de tri, les informations de session et l'etat des curseurs. Les options B, C et D confondent avec les parametres de stockage disque (allocation des extents) de CREATE TABLESPACE, qui n'ont aucun rapport avec la memoire PGA.",
+          "bareme": "1 pt (+1 / -1 / 0)"
+        },
+        {
+          "numero": "Partie II - Q1",
+          "enonce": "Donner la difference entre ROLLUP et CUBE (3 pts).",
+          "correction": "GROUP BY ROLLUP(a, b) produit une agregation HIERARCHIQUE en cascade de droite a gauche : les regroupements detailles, les sous-totaux par premier niveau, puis le total general (n+1 niveaux). GROUP BY CUBE(a, b) produit TOUTES les combinaisons possibles de sous-totaux (2^n niveaux) : detail, sous-totaux par chaque dimension prise isolement, et total general. Autrement dit, ROLLUP convient aux donnees hierarchiques (annee>mois>jour) et CUBE aux analyses croisees multidimensionnelles. ROLLUP est un sous-ensemble de CUBE.",
+          "bareme": "3 pts"
+        },
+        {
+          "numero": "Partie II - Q2",
+          "enonce": "A quoi sert la clause CONNECT BY PRIOR dans une requete (2 pts).",
+          "correction": "La clause CONNECT BY PRIOR (utilisee avec START WITH) sert a effectuer une REQUETE HIERARCHIQUE (arborescente) dans Oracle : elle permet de parcourir des donnees organisees en relation parent-enfant (ex. organigramme employe/manager, nomenclature de produits). PRIOR designe la ligne parente et definit le sens du parcours de l'arbre. Exemple : SELECT nom FROM employes START WITH manager_id IS NULL CONNECT BY PRIOR id = manager_id; affiche la hierarchie a partir de la racine.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Partie II - Q3",
+          "enonce": "Representer l'architecture d'un serveur Oracle ainsi que les 2 TYPES (8 pts).",
+          "correction": "Architecture = INSTANCE + BASE DE DONNEES. L'instance (memoire) comprend : la SGA (Database Buffer Cache, Shared Pool, Redo Log Buffer), la PGA (privee par processus) et les processus d'arriere-plan (DBWR ecrit les blocs vers les datafiles, LGWR ecrit le redo buffer vers les redo logs, SMON recuperation d'instance, PMON nettoyage des processus, CKPT checkpoints). La base de donnees (disque) comprend trois types de fichiers : datafiles (donnees), control files (metadonnees de structure), redo log files (journalisation). Les 2 TYPES de configuration serveur sont : (1) le serveur DEDIE (Dedicated Server : un processus serveur par processus utilisateur) et (2) le serveur PARTAGE (Shared/Multi-Threaded Server : un pool de processus serveur partages servant plusieurs clients via un dispatcher).",
+          "bareme": "8 pts"
+        },
+        {
+          "numero": "Partie II - Q4",
+          "enonce": "Definir : SGBD ORACLE, Operateur d'ensemble, Integrite des donnees, operateur INTERSECT (2 pts).",
+          "correction": "SGBD ORACLE : Systeme de Gestion de Base de Donnees relationnel edite par Oracle Corporation, permettant de definir, stocker, manipuler, securiser et administrer de grands volumes de donnees avec garantie des proprietes ACID. Operateur d'ensemble : operateur SQL combinant les resultats de deux SELECT compatibles selon la theorie des ensembles (UNION, UNION ALL, INTERSECT, MINUS). Integrite des donnees : ensemble de contraintes garantissant l'exactitude et la coherence des donnees (integrite de domaine, d'entite/cle primaire, referentielle/cle etrangere). INTERSECT : operateur retournant uniquement les lignes communes (intersection) aux deux ensembles de resultats, sans doublons.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Exercice 1 - Q1",
+          "enonce": "Definir : SGBD ORACLE, Operateur d'ensemble, Integrite des donnees, Operateur CUBE (2 pts).",
+          "correction": "SGBD ORACLE : SGBD relationnel d'Oracle Corporation (cf. definition ci-dessus). Operateur d'ensemble : operateur combinant deux SELECT compatibles (UNION, UNION ALL, INTERSECT, MINUS). Integrite des donnees : regles assurant exactitude et coherence (domaine, entite, referentielle). Operateur CUBE : extension de GROUP BY generant tous les sous-totaux de toutes les combinaisons possibles des colonnes specifiees (2^n niveaux d'agregation), produisant un tableau croise multidimensionnel complet. Exemple : GROUP BY CUBE(region, produit) donne le detail, le sous-total par region, le sous-total par produit et le total general.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Exercice 1 - Q2",
+          "enonce": "Donner les principales fonctions et composants d'un systeme d'information (2 pts).",
+          "correction": "Les principales FONCTIONS d'un systeme d'information (SI) sont : la COLLECTE (acquisition/saisie des donnees), le STOCKAGE (conservation et organisation, ex. dans une base de donnees), le TRAITEMENT (transformation des donnees en informations utiles) et la DIFFUSION (restitution/communication des informations aux acteurs). Les principaux COMPOSANTS sont : le materiel (hardware), les logiciels (software), les donnees (bases de donnees), les procedures/methodes, les reseaux de telecommunication et les ressources humaines (utilisateurs/acteurs).",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "Exercice 1 - Q3",
+          "enonce": "Donner la difference entre le GROUP BY et le GROUP BY ROLLUP (2 pts).",
+          "correction": "GROUP BY regroupe les lignes par valeurs communes des colonnes specifiees et applique les fonctions d'agregation, en ne produisant QUE les lignes detaillees de chaque groupe (aucun sous-total ni total general). GROUP BY ROLLUP produit en PLUS de ces regroupements detailles des sous-totaux hierarchiques (agregation en cascade de droite a gauche) ainsi qu'une ligne de total general. Ainsi ROLLUP(a, b) genere n+1 niveaux d'agregation la ou un simple GROUP BY n'en genere qu'un.",
+          "bareme": "2 pts (+ Presentation 1 pt sur l'ensemble de l'epreuve)"
+        }
+      ]
+    },
+    {
+      "titre": "Examen / Controle Continu SGBD Oracle - Licence 3 (QCM 20 pts)",
+      "source": "IAI Cameroun (Institut Africain d'Informatique / African Institute of Computer Sciences), Yaounde - Annee academique 2021/2022, Session juillet 2025, Classe Licence 3",
+      "questions": [
+        {
+          "numero": "QCM Q1",
+          "enonce": "L'instance Oracle est composee de : a) SGA + Processus d'arriere-plan  b) SGA + PGA + Processus d'arriere-plan  c) Base de donnees + SGA  d) Fichiers de donnees uniquement. (Bonne reponse +2, mauvaise -2, pas de reponse -2).",
+          "correction": "Reponse : b) SGA + PGA + Processus d'arriere-plan. Une instance Oracle est constituee des structures memoire (la SGA partagee et les PGA privees) et des processus d'arriere-plan (DBWR, LGWR, SMON, PMON, CKPT...). La base de donnees (fichiers sur disque) est une entite distincte de l'instance.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q2",
+          "enonce": "La SGA (System Global Area) contient : a) Database Buffer Cache, Shared Pool, Redo Log Buffer  b) Uniquement le Database Buffer Cache  c) Les fichiers de controle  d) Les processus utilisateur.",
+          "correction": "Reponse : a) Database Buffer Cache, Shared Pool, Redo Log Buffer. Ce sont les trois composants fondamentaux de la SGA (auxquels peuvent s'ajouter Large Pool et Java Pool). Les fichiers de controle sont sur disque et les processus utilisateur ne font pas partie de la SGA.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q3",
+          "enonce": "Le processus DBWR (Database Writer) a pour role : a) Ecrire les modifications dans les fichiers redo log  b) Ecrire les blocs modifies du buffer cache vers les fichiers de donnees  c) Gerer les connexions utilisateur  d) Archiver les fichiers redo log.",
+          "correction": "Reponse : b) Ecrire les blocs modifies du buffer cache vers les fichiers de donnees. DBWR transfere les dirty buffers du Database Buffer Cache vers les datafiles. L'ecriture dans les redo logs est faite par LGWR (a), et l'archivage des redo logs par ARCn (d).",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q4",
+          "enonce": "Les fichiers de controle Oracle contiennent : a) Les donnees des tables  b) Les metadonnees sur la structure de la base  c) Les requetes SQL en cours  d) Les index uniquement.",
+          "correction": "Reponse : b) Les metadonnees sur la structure de la base. Les control files stockent le nom de la base, l'emplacement des datafiles et redo logs, le numero de sequence (SCN), les informations de checkpoint et les metadonnees RMAN. Les donnees et index reels sont dans les datafiles.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q5",
+          "enonce": "Le tablespace SYSTEM : a) Peut etre supprime sans probleme  b) Contient le dictionnaire de donnees d'Oracle  c) Ne contient que des donnees utilisateur  d) Est optionnel dans une base Oracle.",
+          "correction": "Reponse : b) Contient le dictionnaire de donnees d'Oracle. Le tablespace SYSTEM est obligatoire, cree automatiquement, et heberge le data dictionary (metadonnees du systeme). Il ne peut etre supprime (a et d faux) et ne contient pas que des donnees utilisateur (c faux).",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q6",
+          "enonce": "Une jointure INNER JOIN retourne : a) Toutes les lignes de la table de gauche  b) Toutes les lignes de la table de droite  c) Uniquement les lignes ayant une correspondance dans les deux tables  d) Toutes les lignes des deux tables.",
+          "correction": "Reponse : c) Uniquement les lignes ayant une correspondance dans les deux tables. L'INNER JOIN ne conserve que les paires de lignes satisfaisant la condition de jointure ; les lignes sans correspondance sont exclues.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q7",
+          "enonce": "La syntaxe Oracle traditionnelle pour une jointure interne est : a) SELECT * FROM A INNER JOIN B ON A.id = B.id  b) SELECT * FROM A, B WHERE A.id = B.id  c) SELECT * FROM A LEFT JOIN B ON A.id = B.id  d) SELECT * FROM A UNION B.",
+          "correction": "Reponse : b) SELECT * FROM A, B WHERE A.id = B.id. La syntaxe traditionnelle (implicite) d'Oracle exprime la jointure interne en listant les tables dans le FROM et la condition de liaison dans le WHERE. L'option a) est la syntaxe ANSI/SQL standard (egalement valide), mais b) est la forme traditionnelle Oracle demandee.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q8",
+          "enonce": "Un LEFT OUTER JOIN : a) Retourne toutes les lignes de la table de droite  b) Retourne toutes les lignes de la table de gauche, sans correspondance NULL  c) Est identique a un INNER JOIN  d) Ne peut pas utiliser NULL.",
+          "correction": "Reponse : b) Retourne toutes les lignes de la table de gauche, avec des valeurs NULL pour les colonnes de droite lorsqu'il n'y a pas de correspondance. C'est le principe de la jointure externe gauche : preservation de toutes les lignes du cote gauche.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q9",
+          "enonce": "Pour eviter le produit cartesien, il faut : a) Utiliser DISTINCT  b) Specifier une condition de jointure (WHERE ou ON)  c) Utiliser ORDER BY  d) Limiter avec ROWNUM.",
+          "correction": "Reponse : b) Specifier une condition de jointure (WHERE ou ON). Sans condition reliant les tables, Oracle combine chaque ligne d'une table avec toutes les lignes de l'autre (produit cartesien). DISTINCT, ORDER BY et ROWNUM ne suppriment pas ce produit, ils ne font que filtrer/trier le resultat.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        },
+        {
+          "numero": "QCM Q10",
+          "enonce": "La jointure suivante est-elle correcte ? SELECT e.nom, d.nom_dept FROM employes e, departements d WHERE e.dept_id = d.id ;  a) Vrai - syntaxe Oracle classique  b) Faux - manque INNER JOIN  c) Faux - alias incorrects  d) Faux - WHERE mal place.",
+          "correction": "Reponse : a) Vrai - syntaxe Oracle classique. La requete utilise la syntaxe de jointure traditionnelle Oracle : les tables sont aliasees (e, d) dans le FROM et la condition de jointure (e.dept_id = d.id) figure dans le WHERE. Elle est parfaitement valide et retourne les employes avec le nom de leur departement.",
+          "bareme": "2 pts (+2 / -2 / -2)"
+        }
+      ]
+    }
+  ],
+  "techcom": [
+    {
+      "titre": "Examen de fin de rattrapage - Techniques de Communication (Session de Juin 2024)",
+      "source": "CETIC Paul Biya / IAI Cameroun - Niveau 3 - Genie Logiciel, Syst. et Reseaux - Annee 2024-2025 - Duree : 1h",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Communication institutionnelle (10 points) : a) Definition. b) Donnez ses cibles et ses objectifs. c) Quelles sont les techniques ; choisir quelques exemples dans l'environnement camerounais.",
+          "correction": "a) DEFINITION : la communication institutionnelle (ou corporate) est l'ensemble des actions de communication par lesquelles une organisation construit et valorise son image, son identite et sa notoriete globales, independamment de la promotion d'un produit precis. b) CIBLES : publics internes (salaries) et externes (clients, partenaires, fournisseurs, medias, pouvoirs publics, grand public, milieux financiers). OBJECTIFS : faire connaitre l'entreprise (notoriete), faire aimer (image et reputation favorables), creer la confiance et l'adhesion, affirmer ses valeurs et sa responsabilite sociale. c) TECHNIQUES : relations presse et relations publiques, mecenat et sponsoring, evenementiel, publicite institutionnelle, site web et reseaux sociaux institutionnels, rapport annuel, communication de crise. Exemples camerounais : une banque (ex. Afriland, BICEC) qui sponsorise une manifestation culturelle ou sportive ; une entreprise comme la SABC ou MTN/Orange Cameroun qui communique sur ses actions de responsabilite sociale (sante, education) pour renforcer son image.",
+          "bareme": "10 points (definition 2, cibles 2, objectifs 2, techniques 2, exemples camerounais 2)"
+        },
+        {
+          "numero": "Ex.2",
+          "enonce": "Communication marketing - marque (10 points) : a) Definition de la communication de marque. b) La contrefacon : de quoi s'agit-il ? Donnez un exemple. c) Comment lutter contre la contrefacon ?",
+          "correction": "a) DEFINITION : la communication de marque est l'ensemble des actions visant a faire connaitre, valoriser et differencier une marque, a construire son identite et a creer un lien affectif et durable avec les consommateurs (image de marque, positionnement, notoriete). b) CONTREFACON : reproduction, imitation ou usage frauduleux d'une marque, d'un logo ou d'un produit protege, sans autorisation du titulaire des droits de propriete intellectuelle. Exemple : la vente de telephones, vetements ou medicaments portant illegalement le logo d'une marque connue sur les marches (ex. faux produits griffes ou faux medicaments vendus dans certains marches). c) LUTTE : depot et protection juridique de la marque (INPI/OAPI), poursuites judiciaires, controles et saisies douanieres, traçabilite et marquage securise des produits, sensibilisation des consommateurs et cooperation entre entreprises et autorites.",
+          "bareme": "10 points (definition 3, definition+exemple contrefacon 4, lutte 3)"
+        }
+      ]
+    },
+    {
+      "titre": "Examen de fin de semestre - Techniques de Communication (Session de Fevrier 2025)",
+      "source": "CETIC Paul Biya / IAI Cameroun - Niveau 3 - Genie Logiciel, Syst. et Reseaux - Annee 2024-2025 - Duree : 2h",
+      "questions": [
+        {
+          "numero": "Partie I - Ex.1 Q1",
+          "enonce": "Evaluation des savoirs (3 pts). Choisissez la bonne reponse : Quel est l'objectif principal de la communication verbale ? a) transmettre des informations, influencer les autres, etablir des relations, resoudre des problemes ; b) ... ; c) ... ; d) ...",
+          "correction": "Reponse : a) transmettre des informations, influencer les autres, etablir des relations et resoudre des problemes. La communication verbale a pour fonction premiere d'echanger de l'information et de creer/maintenir des relations.",
+          "bareme": "3 pts (1 pt par bonne reponse du QCM)"
+        },
+        {
+          "numero": "Partie I - Ex.1 Q2",
+          "enonce": "Quel est le role de l'ecoute active dans la communication verbale ? a) comprendre le message ; b) repondre au message ; c) controler la conversation ; d) ignorer le message.",
+          "correction": "Reponse : a) comprendre le message. L'ecoute active vise prioritairement la comprehension reelle du message de l'interlocuteur avant toute reponse.",
+          "bareme": "3 pts QCM"
+        },
+        {
+          "numero": "Partie I - Ex.1 Q3",
+          "enonce": "Quel est l'avantage de la communication verbale par rapport a la communication non verbale ? a) elle est plus rapide ; b) elle est plus precise ; c) elle est plus personnelle ; d) elle est plus formelle.",
+          "correction": "Reponse : b) elle est plus precise. Le langage verbal permet une formulation explicite et donc une plus grande precision du message que le seul non-verbal.",
+          "bareme": "3 pts QCM"
+        },
+        {
+          "numero": "Partie I - Ex.2",
+          "enonce": "Definitions des termes (3 pts) : Influenceur, Leader d'opinion, Community manager, Wiki, Blog, Podcast.",
+          "correction": "INFLUENCEUR : personne disposant d'une audience sur les reseaux sociaux et capable d'orienter les opinions et comportements de sa communaute. LEADER D'OPINION : personnalite credible et reconnue dont les avis influencent ceux de son groupe de reference. COMMUNITY MANAGER : professionnel charge d'animer, moderer et federer la communaute en ligne d'une marque ou organisation. WIKI : site web collaboratif dont le contenu peut etre cree et modifie par les utilisateurs (ex. encyclopedie collaborative). BLOG : site publiant regulierement des articles dates, outil de contenu et d'expression. PODCAST : contenu audio (ou video) diffuse et ecoutable a la demande / telechargeable.",
+          "bareme": "3 pts (0,5 pt par definition exacte)"
+        },
+        {
+          "numero": "Partie I - Ex.3",
+          "enonce": "Citez par ordre d'importance les techniques de communication hors medias ; donnez des exemples (4 pts).",
+          "correction": "Techniques de communication HORS MEDIAS (communication directe, sans achat d'espace publicitaire) : 1) Marketing direct (e-mailing, mailing postal, SMS, telephone) ; 2) Promotion des ventes (reductions, echantillons, jeux-concours) ; 3) Relations publiques et relations presse ; 4) Evenementiel (salons, foires, inaugurations) ; 5) Sponsoring et mecenat ; 6) PLV (publicite sur le lieu de vente) et merchandising ; 7) Communication digitale ciblee (reseaux sociaux, site). Exemples : envoi d'un e-mailing promotionnel a un fichier clients, distribution d'echantillons gratuits en supermarche, participation a une foire (PROMOTE a Yaounde), parrainage d'un evenement sportif.",
+          "bareme": "4 pts (techniques ordonnees 2, exemples 2)"
+        },
+        {
+          "numero": "Partie II",
+          "enonce": "Evaluation des competences (10 pts). Un plan de communication englobe toutes les actions necessaires pour guider la strategie de communication d'une entreprise. Comment definir votre plan de communication ? 1. Analysez le contexte global de votre entreprise ; 2. Fixez les objectifs de votre strategie de communication ; 3. Determinez vos cibles ; 4. Determinez vos messages ; 5. Definissez vos outils ; 6. Elaborez votre plan de communication. (Cas : vous etes responsable de la communication d'une entreprise qui vient de lancer un nouveau produit ; creez un plan de communication pour le promouvoir aupres de clients potentiels.)",
+          "correction": "Plan de communication pour le lancement d'un nouveau produit : 1) CONTEXTE : diagnostic interne et externe (SWOT : forces, faiblesses, opportunites, menaces, concurrence, marche). 2) OBJECTIFS : cognitif (faire connaitre le produit, notoriete), affectif (creer une image favorable), conatif (declencher l'essai et l'achat) - objectifs mesurables et dates. 3) CIBLES : clients potentiels segmentes (profil, besoins), prescripteurs et distributeurs. 4) MESSAGES : message cle clair traduisant le positionnement et la promesse, decline selon chaque cible. 5) OUTILS : mix de supports - publicite (radio, affichage, reseaux sociaux), e-mailing, evenement de lancement, relations presse, PLV - selon budget et cible. 6) ELABORATION : calendrier, budget, repartition des actions, puis mise en oeuvre et evaluation par indicateurs (notoriete, engagement, ventes) avec ajustements. Le plan doit etre coherent (objectifs-cibles-messages-outils) et evaluable.",
+          "bareme": "10 points (une note par etape correctement traitee et appliquee au cas)"
+        }
+      ]
+    },
+    {
+      "titre": "Examen de fin de rattrapage CC - Techniques de Communication (Session de Juin 2025)",
+      "source": "CETIC Paul Biya / IAI Cameroun - Niveau 3 - Genie Logiciel, Syst. et Reseaux - Annee 2024-2025 - Duree : 1h",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "Communication interne (10 points) : Donnez la difference entre la lettre administrative a caractere personnel et la lettre administrative entre services.",
+          "correction": "La LETTRE ADMINISTRATIVE A CARACTERE PERSONNEL s'adresse nominativement a une personne physique (un usager, un agent) ; elle comporte une formule d'appel personnalisee (Madame, Monsieur), un ton respectueux et une formule de politesse complete ; elle est utilisee pour les relations administration-administre. La LETTRE ADMINISTRATIVE ENTRE SERVICES (forme administrative) est echangee entre services ou agents d'une meme administration ou entre administrations ; elle est impersonnelle, sans formule d'appel ni formule de politesse, plus concise et directe, identifiee par un timbre, un numero d'enregistrement, l'objet et les references. En resume : la premiere est personnalisee et courtoise (relation avec un individu), la seconde est impersonnelle et fonctionnelle (relation entre services).",
+          "bareme": "10 points (caracterisation de chaque type 4+4, comparaison/synthese 2)"
+        },
+        {
+          "numero": "Ex.2",
+          "enonce": "Communication externe (10 points) : La communication electronique - parmi les techniques du Web 2.0 que vous connaissez, choisissez-en deux et montrez leur importance dans la communication marketing de l'entreprise.",
+          "correction": "La communication electronique exploite les outils du Web 2.0 pour communiquer de facon interactive et a faible cout. Deux techniques au choix : 1) LES RESEAUX SOCIAUX (Facebook, Instagram, LinkedIn, X) : permettent un contact direct et interactif avec les clients, l'animation de communaute, le ciblage publicitaire precis, la diffusion virale des messages et la collecte de feedback ; importance marketing : visibilite, notoriete, engagement et fidelisation a faible cout. 2) L'E-MAILING / NEWSLETTER : envoi cible et personnalise d'offres et d'informations a une base de contacts ; importance marketing : relation directe, fidelisation, relance commerciale et mesure precise des resultats (taux d'ouverture, de clic). (Autres possibles : site web, blog, podcast, video, SEO/SEA.) Conclusion : ces outils augmentent la portee, l'interactivite et le retour sur investissement de la communication marketing, tout en exigeant la gestion de l'e-reputation.",
+          "bareme": "10 points (choix et description des 2 outils 4, importance marketing demontree 4, exemples/qualite 2)"
+        }
+      ]
+    },
+    {
+      "titre": "Examen de fin de semestre - Techniques de Communication (Session de Juin 2019)",
+      "source": "CETIC Paul Biya / IAI Cameroun - Classe SR3 - Duree : 2h",
+      "questions": [
+        {
+          "numero": "Ex.1",
+          "enonce": "(10 pts) Pour se developper et etre competitive, l'entreprise ne peut se passer de communication. Il s'agit non seulement d'une communication interne qui permet d'etablir un climat social favorable aux bons resultats, mais aussi d'une communication interne vis-a-vis du marche (externe). a) Quels sont les outils incontournables dans le domaine des TIC pour assurer une communication institutionnelle efficace ? Donnez les avantages de chaque outil. b) Quelle strategie digitale pour mettre en place une communication de marque et une communication produit ? Citez les differents moyens utilises et leur impact dans la promotion et la differenciation face a la concurrence.",
+          "correction": "a) OUTILS TIC pour la communication institutionnelle : SITE WEB INSTITUTIONNEL (vitrine credible, disponible 24/7, controle du message), RESEAUX SOCIAUX (interaction, notoriete, proximite, viralite), E-MAILING/NEWSLETTER (information ciblee et fidelisation a faible cout), BLOG D'ENTREPRISE (expertise, referencement, image), INTRANET (cohesion interne), VIDEO/WEBINAIRE (pedagogie et engagement). Avantages communs : rapidite, large portee, faible cout, mesurabilite, interactivite et feedback. b) STRATEGIE DIGITALE : definir un positionnement et une identite de marque coherents, produire du contenu (content marketing : articles, videos, posts), utiliser le SEO/SEA pour la visibilite, animer les reseaux sociaux et le community management, recourir aux influenceurs, a l'e-mailing et au retargeting pour la communication produit. MOYENS : reseaux sociaux, site, blog, publicite en ligne, influenceurs, marketing direct. IMPACT : accroissement de la notoriete, differenciation par l'image et le contenu, fidelisation, interaction client et avantage concurrentiel face a la concurrence.",
+          "bareme": "10 pts (outils TIC + avantages 5, strategie digitale, moyens et impact 5)"
+        },
+        {
+          "numero": "Ex.2",
+          "enonce": "(10 pts) Quels sont les freins a l'introduction des TIC dans la circulation des informations dans les entreprises ? A partir d'exemples concrets, donnez sur differents plans les difficultes rencontrees pour ameliorer la communication au sein des entreprises.",
+          "correction": "FREINS A L'INTRODUCTION DES TIC : 1) Plan FINANCIER : cout d'acquisition du materiel, des logiciels, de la connexion et de la maintenance (ex. PME ne pouvant financer un ERP ou une bonne connexion Internet). 2) Plan TECHNIQUE / INFRASTRUCTUREL : faible couverture reseau, coupures d'electricite, debit insuffisant (ex. zones rurales mal connectees au Cameroun). 3) Plan HUMAIN / COMPETENCES : manque de formation, illettrisme numerique, resistance au changement du personnel (ex. employes refusant d'abandonner le papier). 4) Plan ORGANISATIONNEL / CULTUREL : absence de strategie numerique, cloisonnement des services, habitudes ancrees. 5) Plan SECURITAIRE / JURIDIQUE : risques de cyberattaques, perte de donnees, manque de cadre juridique. DIFFICULTES POUR AMELIORER LA COMMUNICATION : surcharge informationnelle, mauvaise appropriation des outils, deshumanisation des echanges. SOLUTIONS : formation, accompagnement au changement, investissement progressif et politique de securite.",
+          "bareme": "10 pts (freins par plan 6, exemples concrets et difficultes 4)"
+        }
+      ]
+    },
+    {
+      "titre": "Controle continu - Technique de communication (GL3B)",
+      "source": "CETIC Paul Biya / IAI Cameroun - Niveau 3 - Genie Logiciel (GL3B) - Documents autorises (2H)",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Quels sont les avantages de la communication au sein d'une entreprise (2 pts) ?",
+          "correction": "AVANTAGES : meilleure circulation de l'information et coordination, cohesion et motivation des equipes, climat social favorable, prise de decision plus rapide et eclairee, reduction des conflits et des malentendus, meilleure image interne et externe, gain de productivite et de competitivite.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "2",
+          "enonce": "Dans le cadre de la communication interne d'une administration publique, quels sont les fondements qui caracterisent le style administratif (2 pts) ?",
+          "correction": "FONDEMENTS DU STYLE ADMINISTRATIF : la dignite/courtoisie, la neutralite et l'objectivite, la precision et la clarte, la concision, la prudence (responsabilite), la hierarchie (respect du circuit hierarchique et des formules protocolaires), l'impersonnalite et le respect des conventions de presentation.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "3",
+          "enonce": "Qu'est-ce que la redaction administrative (2 pts) ?",
+          "correction": "La REDACTION ADMINISTRATIVE est l'art de rediger les ecrits officiels d'une administration en respectant des regles precises de fond et de forme (clarte, objectivite, courtoisie, concision, respect de la hierarchie et des conventions de presentation). Ses ecrits types sont la lettre administrative, la note de service, le compte rendu, le proces-verbal et le rapport.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "4",
+          "enonce": "Presentez les elements d'une correspondance administrative (2 pts).",
+          "correction": "ELEMENTS : le timbre (en-tete de l'administration expeditrice), le lieu et la date, les references (numero d'enregistrement), l'objet, eventuellement les pieces jointes, le nom/qualite du destinataire et de l'expediteur, la formule d'appel (pour la lettre a caractere personnel), le corps du message structure (introduction, developpement, conclusion), la formule de politesse et la signature (nom, fonction).",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "5",
+          "enonce": "Presentez quelques outils et techniques efficaces pour la communication externe (2 pts).",
+          "correction": "OUTILS/TECHNIQUES DE COMMUNICATION EXTERNE : publicite medias (radio, TV, affichage, presse), site web et reseaux sociaux, relations presse et relations publiques, e-mailing, evenementiel, sponsoring/mecenat, marketing direct, PLV. Ils servent a informer, vendre et construire l'image aupres des publics externes.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "6",
+          "enonce": "Quelle est la pertinence des objectifs cognitifs, emotionnels (affectifs), conatifs et de fidelisation pour l'entreprise (2 pts) ?",
+          "correction": "PERTINENCE : l'objectif COGNITIF fait connaitre l'entreprise/le produit (notoriete) ; l'objectif AFFECTIF (emotionnel) fait aimer et cree une image favorable ; l'objectif CONATIF fait agir (essai, achat, comportement) ; l'objectif de FIDELISATION cherche a conserver et reacheter le client (relation durable). Ensemble, ils couvrent tout le parcours du client - de la connaissance a la fidelite - et structurent la strategie de communication.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "7",
+          "enonce": "Presentez deux types de communication externes. Comment se manifestent ces types de communication aupres de la cible (2 pts) ?",
+          "correction": "DEUX TYPES : 1) Communication COMMERCIALE/MARKETING : promeut un produit ou service et vise l'achat ; se manifeste par la publicite, la promotion, le marketing direct aupres des clients et prospects. 2) Communication INSTITUTIONNELLE (corporate) : valorise l'image et l'identite de l'entreprise ; se manifeste par les relations presse, le sponsoring, la communication de marque aupres du grand public, des partenaires et des medias.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "8",
+          "enonce": "Vous etes responsable de la communication dans une entreprise de la place. Quelles sont les strategies d'approche de la clientele que vous pourriez mettre en place pour maximiser la visibilite des ventes et de la notoriete d'un produit (2 pts) ?",
+          "correction": "STRATEGIES D'APPROCHE : segmentation et ciblage de la clientele ; positionnement clair du produit ; mix de communication (publicite + digital + promotion) ; presence sur les reseaux sociaux et community management ; marketing direct (e-mailing, SMS) ; partenariats et influenceurs ; promotions et evenements de lancement ; suivi de la satisfaction et fidelisation. Objectif : maximiser la visibilite, stimuler les ventes et accroitre la notoriete.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quels sont les avantages de la communication electronique pour la communication interne et externe de l'entreprise (2 pts) ?",
+          "correction": "AVANTAGES : rapidite et instantaneite de la diffusion, large portee et accessibilite, faible cout, interactivite et feedback immediat, ciblage precis, archivage et tracabilite, renforcement de la visibilite/notoriete (externe) et de la cohesion/coordination (interne).",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "10",
+          "enonce": "Presentez deux outils numeriques phares dans la strategie de communication electronique (2 pts).",
+          "correction": "DEUX OUTILS PHARES : 1) LES RESEAUX SOCIAUX : plateformes d'interaction, d'animation de communaute et de diffusion virale (visibilite, engagement, notoriete). 2) LE SITE WEB / E-MAILING : le site web sert de vitrine institutionnelle et commerciale disponible 24/7, l'e-mailing assure une communication ciblee et la fidelisation. (Autres : blog, application mobile, podcast.)",
+          "bareme": "2 pts"
+        }
+      ]
+    }
+  ],
+  "sqlserver": [
+    {
+      "titre": "Rattrapage Contrôle Continu - Administration des bases de données sous SQL Server",
+      "source": "IAI-Cameroun, Centre d'Excellence Technologique Paul Biya - Rattrapage Contrôle Continu d'Administration des bases de données sous SQL Server",
+      "questions": [
+        {
+          "numero": "I-1",
+          "enonce": "Définir : Base de données, système de gestion de bases de données, Tabular Data Stream, Transact-SQL.",
+          "correction": "Base de données : ensemble structuré et persistant de données reliées entre elles, organisées (souvent en tables relationnelles) pour être interrogées et mises à jour de façon cohérente. SGBD : logiciel assurant la création, le stockage, la sécurité, la cohérence, l'interrogation et la maintenance d'une base de données, et l'accès concurrent des utilisateurs (ex. SQL Server). Tabular Data Stream (TDS) : protocole applicatif propriétaire (Microsoft/Sybase) qui transporte requêtes et résultats tabulaires entre un client et le serveur SQL Server. Transact-SQL (T-SQL) : extension procédurale propriétaire du langage SQL par Microsoft, ajoutant variables, structures de contrôle, procédures stockées, triggers et gestion des transactions.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "I-2",
+          "enonce": "Donner trois différences entre un serveur OLTP et un serveur OLAP.",
+          "correction": "1) Nature de la charge : OLTP traite de nombreuses petites transactions courantes (INSERT/UPDATE/DELETE) ; OLAP exécute peu de requêtes complexes d'agrégation/lecture. 2) Modélisation des données : OLTP utilise un schéma fortement normalisé ; OLAP un schéma dénormalisé en étoile ou flocon. 3) Objectif et données : OLTP gère des données opérationnelles courantes en priorisant l'intégrité et le temps de réponse ; OLAP gère de gros volumes historiques pour l'aide à la décision en priorisant la rapidité d'agrégation. (Autres différences acceptées : nombre d'utilisateurs, fraîcheur des données, type d'utilisateur.)",
+          "bareme": "1.5 pts"
+        },
+        {
+          "numero": "I-3",
+          "enonce": "Citer les différents composants de Microsoft SQL Server.",
+          "correction": "Database Engine (moteur de base de données relationnel) ; SSIS (Integration Services - ETL) ; SSAS (Analysis Services - OLAP/data mining) ; SSRS (Reporting Services - rapports) ; ainsi que les outils SSMS (Management Studio), SQL Server Profiler, sqlcmd, Database Engine Tuning Advisor et SQL Server Agent.",
+          "bareme": "1.25 pts"
+        },
+        {
+          "numero": "I-4",
+          "enonce": "Donner la différence entre DROP et DELETE.",
+          "correction": "DELETE est une instruction DML qui supprime des lignes d'une table (avec une clause WHERE optionnelle), tout en conservant la structure de la table ; l'opération est journalisée et peut déclencher des triggers et un ROLLBACK. DROP est une instruction DDL qui supprime entièrement l'objet (la table elle-même : structure ET données), qui disparaît du schéma.",
+          "bareme": "0.75 pt"
+        },
+        {
+          "numero": "I-5",
+          "enonce": "Citer quatre tâches d'un administrateur de BD SQL Server.",
+          "correction": "1) Installer, configurer et mettre à jour les instances. 2) Gérer la sécurité : logins, users, rôles et permissions. 3) Planifier et exécuter les sauvegardes et restaurations (plan de récupération). 4) Surveiller et optimiser les performances (index, statistiques, tuning, surveillance des ressources). (Autres réponses valables : gestion de l'espace disque et des fichiers, automatisation via SQL Server Agent, maintenance et intégrité des données.)",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "II-1",
+          "enonce": "QCM - Trouver l'intrus : a. SSMS  b. SQL Server Profiler  c. SQL SERVER  d. SQL CMD",
+          "correction": "Réponse : c. SQL SERVER. SSMS, SQL Server Profiler et SQL CMD (sqlcmd) sont des OUTILS de la suite ; SQL SERVER désigne le SGBD lui-même, c'est donc l'intrus.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "II-2",
+          "enonce": "QCM - L'ETL (Extraction Transformation Loading) est utilisé par : a. SSIS  b. SSMS  c. SSAS",
+          "correction": "Réponse : a. SSIS. SQL Server Integration Services est le composant ETL de SQL Server.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "II-3",
+          "enonce": "QCM - En quelle année est sortie la première version de SQL Server ? a. 1979  b. 1969  c. 1989  d. 1959",
+          "correction": "Réponse : c. 1989 (SQL Server 1.0, sous OS/2, fruit du partenariat Microsoft-Sybase-Ashton-Tate).",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "II-4",
+          "enonce": "QCM - L'assistant de paramétrage du moteur de BD permet : a. Une optimisation du fonctionnement du moteur de BD  b. Réaliser toutes les opérations au niveau du moteur de bases de données  c. D'exécuter des requêtes au niveau du moteur de BD",
+          "correction": "Réponse : a. Le Database Engine Tuning Advisor analyse une charge de travail et recommande index, vues indexées et statistiques : il optimise les performances du moteur.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "II-5",
+          "enonce": "QCM - Quelle est l'extension d'un fichier secondaire de données ? a. .ldf  b. .mdf  c. .pdf  d. .ndf",
+          "correction": "Réponse : d. .ndf (fichier de données secondaire). .mdf = primaire, .ldf = journal des transactions.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "III",
+          "enonce": "CAS PRATIQUE (9.5 pts). Soit le schéma relationnel suivant : CLIENT (Numcli, nom, prenom, email), VOYAGE (codeVoyage, destination, durée, prix), RESERVATION (Numcli, codeVoyage, DateRes).",
+          "correction": "Schéma relationnel de référence pour les questions III-1 à III-7. Clés primaires : CLIENT.Numcli, VOYAGE.codeVoyage, RESERVATION(Numcli, codeVoyage). Clés étrangères : RESERVATION.Numcli -> CLIENT, RESERVATION.codeVoyage -> VOYAGE.",
+          "bareme": "Énoncé du cas"
+        },
+        {
+          "numero": "III-1",
+          "enonce": "Créer la base de données gestion_reservation avec un fichier primaire 'gestion_prim', un fichier secondaire 'gestion_sec' et un fichier journal 'gestion_log'. Chemin d'accès : 'C:\\Program Files\\Microsoft SQL SERVER\\MSSQL13.MSSQLSERVER\\MSSQL'. NB : taille des fichiers de 10 Go pouvant s'accroître de 5 Go après saturation.",
+          "correction": "CREATE DATABASE gestion_reservation\nON PRIMARY\n( NAME = N'gestion_prim',\n  FILENAME = N'C:\\Program Files\\Microsoft SQL SERVER\\MSSQL13.MSSQLSERVER\\MSSQL\\gestion_prim.mdf',\n  SIZE = 10GB, FILEGROWTH = 5GB ),\n( NAME = N'gestion_sec',\n  FILENAME = N'C:\\Program Files\\Microsoft SQL SERVER\\MSSQL13.MSSQLSERVER\\MSSQL\\gestion_sec.ndf',\n  SIZE = 10GB, FILEGROWTH = 5GB )\nLOG ON\n( NAME = N'gestion_log',\n  FILENAME = N'C:\\Program Files\\Microsoft SQL SERVER\\MSSQL13.MSSQLSERVER\\MSSQL\\gestion_log.ldf',\n  SIZE = 10GB, FILEGROWTH = 5GB );\nGO\nSIZE fixe la taille initiale (10 Go) et FILEGROWTH l'incrément de croissance (5 Go) à chaque saturation.",
+          "bareme": "1.5 pts"
+        },
+        {
+          "numero": "III-2",
+          "enonce": "Créer toutes les tables.",
+          "correction": "USE gestion_reservation;\nGO\nCREATE TABLE CLIENT (\n  Numcli INT PRIMARY KEY,\n  nom VARCHAR(50) NOT NULL,\n  prenom VARCHAR(50),\n  email VARCHAR(100) );\n\nCREATE TABLE VOYAGE (\n  codeVoyage INT PRIMARY KEY,\n  destination VARCHAR(100) NOT NULL,\n  duree INT,\n  prix DECIMAL(12,2) );\n\nCREATE TABLE RESERVATION (\n  Numcli INT,\n  codeVoyage INT,\n  DateRes DATE,\n  CONSTRAINT PK_RESERVATION PRIMARY KEY (Numcli, codeVoyage),\n  CONSTRAINT FK_RES_CLIENT FOREIGN KEY (Numcli) REFERENCES CLIENT(Numcli),\n  CONSTRAINT FK_RES_VOYAGE FOREIGN KEY (codeVoyage) REFERENCES VOYAGE(codeVoyage) );",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "III-3",
+          "enonce": "Renommez la colonne durée en DureeVoyage.",
+          "correction": "EXEC sp_rename 'VOYAGE.duree', 'DureeVoyage', 'COLUMN';\nGO\nLa procédure système sp_rename renomme une colonne ; le troisième argument 'COLUMN' précise qu'il s'agit d'une colonne.",
+          "bareme": "0.5 pt"
+        },
+        {
+          "numero": "III-4",
+          "enonce": "Afficher la destination et la liste des clients ayant réservé pour un voyage de plus de 10 jours et coûtant moins de 100 000 FCFA.",
+          "correction": "SELECT V.destination, C.nom, C.prenom\nFROM CLIENT C\nJOIN RESERVATION R ON C.Numcli = R.Numcli\nJOIN VOYAGE V ON R.codeVoyage = V.codeVoyage\nWHERE V.DureeVoyage > 10 AND V.prix < 100000;\nLa jointure relie les trois tables ; le WHERE filtre les voyages de plus de 10 jours et de prix inférieur à 100 000.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "III-5",
+          "enonce": "Afficher les noms des clients ayant réservé sur tous les voyages proposés.",
+          "correction": "-- Division relationnelle : aucun voyage ne doit manquer aux réservations du client\nSELECT C.nom\nFROM CLIENT C\nWHERE NOT EXISTS (\n  SELECT 1 FROM VOYAGE V\n  WHERE NOT EXISTS (\n    SELECT 1 FROM RESERVATION R\n    WHERE R.Numcli = C.Numcli AND R.codeVoyage = V.codeVoyage ) );\n-- Variante par comptage :\nSELECT C.nom\nFROM CLIENT C\nJOIN RESERVATION R ON C.Numcli = R.Numcli\nGROUP BY C.Numcli, C.nom\nHAVING COUNT(DISTINCT R.codeVoyage) = (SELECT COUNT(*) FROM VOYAGE);",
+          "bareme": "1.5 pts"
+        },
+        {
+          "numero": "III-6",
+          "enonce": "La liste des clients qui n'ont fait aucune réservation.",
+          "correction": "SELECT C.nom, C.prenom\nFROM CLIENT C\nWHERE NOT EXISTS (\n  SELECT 1 FROM RESERVATION R WHERE R.Numcli = C.Numcli );\n-- Variante avec LEFT JOIN :\nSELECT C.nom, C.prenom\nFROM CLIENT C\nLEFT JOIN RESERVATION R ON C.Numcli = R.Numcli\nWHERE R.Numcli IS NULL;",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "III-7",
+          "enonce": "Afficher les noms des clients commençant par A et dont la 2e lettre n'est pas 'L'.",
+          "correction": "SELECT nom\nFROM CLIENT\nWHERE nom LIKE 'A%' AND nom NOT LIKE 'AL%';\n-- 'A%' impose une 1re lettre A ; NOT LIKE 'AL%' exclut ceux dont la 2e lettre est L.\n-- Variante : WHERE nom LIKE 'A[^L]%';",
+          "bareme": "1 pt"
+        }
+      ]
+    },
+    {
+      "titre": "Examen de fin de Semestre 2 (Session de juin 2024) - Administration des bases de données sur SQL Server",
+      "source": "IAI-Cameroun, Centre d'Excellence Technologique Paul Biya - Examen de fin de Semestre 2, juin 2024. Examinateurs : Mme Belinga epse Bonono, M. Messio, M. Yesibi",
+      "questions": [
+        {
+          "numero": "P1-1",
+          "enonce": "Définir : SSAS, SSRS, TDS, MDX.",
+          "correction": "SSAS (SQL Server Analysis Services) : composant OLAP/data mining qui construit et interroge des cubes multidimensionnels et modèles tabulaires pour l'analyse décisionnelle. SSRS (SQL Server Reporting Services) : composant de création, publication et diffusion de rapports/états à partir des données. TDS (Tabular Data Stream) : protocole applicatif transportant requêtes et résultats tabulaires entre client et serveur SQL Server. MDX (MultiDimensional eXpressions) : langage d'interrogation des cubes multidimensionnels de SSAS.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "P1-2",
+          "enonce": "Pourquoi SQL SERVER est considéré comme un SGBD multi-base et multi-schéma ?",
+          "correction": "Multi-base : une seule instance SQL Server peut héberger et gérer simultanément plusieurs bases de données indépendantes (chacune avec ses fichiers, ses users et son journal). Multi-schéma : à l'intérieur d'une base, les objets (tables, vues, procédures) sont organisés en plusieurs schémas (dbo, ventes, rh, ...), namespaces logiques qui isolent et sécurisent les objets et servent d'unité de gestion des permissions. SQL Server combine donc les deux niveaux d'organisation.",
+          "bareme": "0.75 pt"
+        },
+        {
+          "numero": "P1-3",
+          "enonce": "Donner deux différences entre une restauration complète et différentielle.",
+          "correction": "1) Contenu : la restauration complète part d'une sauvegarde FULL contenant toute la base ; la différentielle restaure une sauvegarde ne contenant que les pages modifiées depuis la dernière full. 2) Dépendance : la restauration complète est autonome ; la restauration différentielle EXIGE d'abord la restauration de sa sauvegarde complète de base (WITH NORECOVERY), elle ne peut s'appliquer seule. (Différence supplémentaire : la différentielle est plus rapide et plus petite, mais ne remonte pas plus loin que sa full de référence.)",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P1-4",
+          "enonce": "Après avoir défini ce qu'est une trace, peut-on considérer une trace comme un fichier log si oui dans quelle mesure ?",
+          "correction": "Une trace est un enregistrement chronologique des événements survenant sur le serveur (requêtes exécutées, connexions, verrous, deadlocks, erreurs), capturé par SQL Server Profiler ou les Extended Events. Oui, on peut la considérer comme un fichier log dans la mesure où, lorsqu'elle est persistée (fichier .trc ou table), elle constitue un journal d'activité et d'audit horodaté permettant le diagnostic, la surveillance des performances et la traçabilité des actions. Elle diffère toutefois du journal des transactions (.ldf) : la trace sert à l'audit/diagnostic et n'intervient pas dans la récupération (recovery) ni le rollback des transactions, alors que le journal des transactions est indispensable à la cohérence et à la restauration de la base.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P1-5",
+          "enonce": "Donner deux différences entre le MDX et le DAX.",
+          "correction": "1) Modèle ciblé : MDX interroge les cubes MULTIDIMENSIONNELS (OLAP) de SSAS ; DAX cible les modèles TABULAIRES (SSAS Tabular, Power Pivot, Power BI). 2) Paradigme/syntaxe : MDX raisonne en termes de dimensions, membres, tuples et jeux (sets) sur plusieurs axes ; DAX est un langage de formules orienté tables/colonnes et mesures, proche d'Excel, manipulant des contextes de ligne et de filtre. (Différence supplémentaire : DAX est plus récent et plus simple à apprendre pour des utilisateurs Excel.)",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P1-6",
+          "enonce": "Citer les composants de SQL SERVER.",
+          "correction": "Database Engine (moteur relationnel) ; SSIS (Integration Services - ETL) ; SSAS (Analysis Services - OLAP) ; SSRS (Reporting Services - rapports) ; SQL Server Agent (planification/jobs) ; et les outils SSMS, SQL Server Profiler, sqlcmd, Database Engine Tuning Advisor.",
+          "bareme": "1.25 pts"
+        },
+        {
+          "numero": "P1-7",
+          "enonce": "Citer deux différences entre BULK INSERT et le BCP.",
+          "correction": "1) Nature/emplacement : BULK INSERT est une instruction T-SQL exécutée À L'INTÉRIEUR du serveur (depuis SSMS/une requête) ; bcp est un utilitaire EXTERNE en ligne de commande (programme indépendant). 2) Sens du transfert : BULK INSERT ne fait que de l'IMPORT (fichier -> table) ; bcp est BIDIRECTIONNEL (import ET export entre fichier et table). (Différence supplémentaire : bcp est facilement scriptable hors de l'environnement SQL et utilisable en automatisation/batch.)",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P2",
+          "enonce": "CAS PRATIQUE (12 pts). Mme BELINGA veut organiser son mariage et vous êtes en charge d'administrer sa base de données. Elle vous donne les accès à sa sauvegarde ainsi qu'au schéma où sont stockés tous les objets. Structure : Invités(Id_invité, nom, sexe, #id_type_billet, #id_table) ; TypeBillet(id_type_billet, nom_type) ; Table(Id_table, nom_table, places) ; Menu(id_menu, #id_invité, #id_plat, #id_boisson) ; Plat(id_plat, nom_plat) ; Boisson(id_boisson, type_boisson) ; Commande(#id_invité, #id_menu, #id_plat, #id_boisson).",
+          "correction": "Schéma relationnel de référence pour les questions P2-1 à P2-7. Les attributs soulignés sont les clés primaires, les attributs préfixés de # sont des clés étrangères.",
+          "bareme": "Énoncé du cas"
+        },
+        {
+          "numero": "P2-1",
+          "enonce": "Restaurer la base de données à l'aide du fichier Mariage.bak.",
+          "correction": "RESTORE DATABASE Mariage\nFROM DISK = N'C:\\Backups\\Mariage.bak'\nWITH RECOVERY,\n  MOVE 'Mariage'     TO N'C:\\...\\MSSQL\\DATA\\Mariage.mdf',\n  MOVE 'Mariage_log' TO N'C:\\...\\MSSQL\\DATA\\Mariage_log.ldf';\nGO\nWITH RECOVERY finalise la restauration et rend la base accessible ; les clauses MOVE relocalisent les fichiers logiques si nécessaire (sinon facultatives). On peut lister le contenu du backup avec RESTORE FILELISTONLY FROM DISK = N'...Mariage.bak'.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P2-2",
+          "enonce": "La belle-famille veut rajouter ses invités à la liste des invités ; complétez grâce aux informations contenues dans le fichier invités.txt.",
+          "correction": "-- Import en masse depuis le fichier plat invités.txt\nBULK INSERT Invités\nFROM 'C:\\Data\\invités.txt'\nWITH (\n  FIELDTERMINATOR = ';',   -- séparateur de champs\n  ROWTERMINATOR  = '\\n',   -- fin de ligne\n  FIRSTROW = 2,            -- ignorer la ligne d'en-tête\n  CODEPAGE = '65001' );    -- UTF-8\n-- Alternative en ligne de commande : \n-- bcp Mariage.dbo.Invités in C:\\Data\\invités.txt -c -t \";\" -S serveur -T",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P2-3",
+          "enonce": "Créer une procédure stockée qui récupère une table spécifique et affiche les invités présents sur celle-ci.",
+          "correction": "CREATE PROCEDURE InvitesParTable @id_table INT\nAS\nBEGIN\n  SET NOCOUNT ON;\n  SELECT I.Id_invité, I.nom, I.sexe\n  FROM Invités I\n  WHERE I.id_table = @id_table;\nEND;\nGO\n-- Exécution :\nEXEC InvitesParTable @id_table = 3;\nLe paramètre @id_table reçoit la table ciblée et la procédure retourne les invités qui y sont affectés.",
+          "bareme": "1 pt"
+        },
+        {
+          "numero": "P2-4",
+          "enonce": "Créer une procédure stockée qui récupère les tables où sont assis monsieur MESSIO et monsieur YESIBI et afficher le type de billet de chacun, puis exécuter cette procédure.",
+          "correction": "CREATE PROCEDURE TablesMessioYesibi\nAS\nBEGIN\n  SET NOCOUNT ON;\n  SELECT I.nom, T.nom_table, T.Id_table, TB.nom_type AS type_billet\n  FROM Invités I\n  JOIN [Table] T      ON I.id_table = T.Id_table\n  JOIN TypeBillet TB  ON I.id_type_billet = TB.id_type_billet\n  WHERE I.nom IN ('MESSIO', 'YESIBI');\nEND;\nGO\n-- Exécution :\nEXEC TablesMessioYesibi;\nLa jointure Invités-Table donne la table de chaque invité et la jointure Invités-TypeBillet donne le type de billet ; le filtre WHERE ... IN ne retient que MESSIO et YESIBI.",
+          "bareme": "3 pts"
+        },
+        {
+          "numero": "P2-5",
+          "enonce": "Créer une procédure stockée qui, en se basant sur les informations des tables Menu, Plat, Boisson, Invités et TypeBillet, calcule le nombre total de plats et de boissons commandés pour un invité spécifique, en prenant en compte le type de billet de l'invité et le nombre de places à sa table.",
+          "correction": "CREATE PROCEDURE TotalCommandeInvite @id_invité INT\nAS\nBEGIN\n  SET NOCOUNT ON;\n  SELECT\n    I.Id_invité,\n    I.nom,\n    TB.nom_type             AS type_billet,\n    T.places                AS places_table,\n    COUNT(DISTINCT M.id_plat)    AS nb_plats,\n    COUNT(DISTINCT M.id_boisson) AS nb_boissons\n  FROM Invités I\n  JOIN TypeBillet TB ON I.id_type_billet = TB.id_type_billet\n  JOIN [Table] T     ON I.id_table = T.Id_table\n  LEFT JOIN Menu M   ON M.id_invité = I.Id_invité\n  LEFT JOIN Plat P   ON M.id_plat = P.id_plat\n  LEFT JOIN Boisson B ON M.id_boisson = B.id_boisson\n  WHERE I.Id_invité = @id_invité\n  GROUP BY I.Id_invité, I.nom, TB.nom_type, T.places;\nEND;\nGO\n-- Exécution : EXEC TotalCommandeInvite @id_invité = 10;\nLa procédure agrège les plats et boissons du Menu de l'invité, en restituant aussi son type de billet (TypeBillet) et le nombre de places de sa table (Table). Les LEFT JOIN évitent d'exclure un invité sans commande ; COUNT(DISTINCT ...) compte les plats/boissons distincts.",
+          "bareme": "3 pts"
+        },
+        {
+          "numero": "P2-6",
+          "enonce": "Comment s'assurer que lorsque des commandes sont passées, le nombre total de places disponibles à une table spécifique est mis à jour automatiquement, en tenant compte du nombre de personnes ajoutées à la commande ?",
+          "correction": "On crée un DÉCLENCHEUR (trigger) DML sur la table qui matérialise l'affectation des personnes (Invités ou Commande) : il met automatiquement à jour la colonne 'places' de la Table concernée à chaque INSERT/DELETE.\nCREATE TRIGGER trg_MajPlaces ON Invités\nAFTER INSERT, DELETE\nAS\nBEGIN\n  SET NOCOUNT ON;\n  -- Décrémenter les places pour les invités ajoutés\n  UPDATE T SET T.places = T.places - x.nb\n  FROM [Table] T\n  JOIN ( SELECT id_table, COUNT(*) nb FROM inserted GROUP BY id_table ) x\n    ON x.id_table = T.Id_table;\n  -- Ré-incrémenter les places pour les invités retirés\n  UPDATE T SET T.places = T.places + y.nb\n  FROM [Table] T\n  JOIN ( SELECT id_table, COUNT(*) nb FROM deleted GROUP BY id_table ) y\n    ON y.id_table = T.Id_table;\nEND;\nGO\nLe trigger exploite les tables logiques inserted/deleted pour ajuster le solde de places sans intervention manuelle. Une contrainte CHECK (places >= 0) sur Table empêche tout dépassement de capacité.",
+          "bareme": "2 pts"
+        },
+        {
+          "numero": "P2-7",
+          "enonce": "Sauvegarder la nouvelle base de données.",
+          "correction": "BACKUP DATABASE Mariage\nTO DISK = N'C:\\Backups\\Mariage_new.bak'\nWITH FORMAT, INIT,\n  NAME = N'Sauvegarde complete Mariage',\n  STATS = 10;\nGO\nBACKUP DATABASE effectue une sauvegarde complète ; FORMAT/INIT réinitialisent le média et STATS affiche la progression. Une stratégie complète combinerait ensuite des sauvegardes différentielles et de log.",
+          "bareme": "1 pt"
+        }
+      ]
+    }
   ]
 };
