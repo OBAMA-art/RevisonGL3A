@@ -26,7 +26,7 @@ Application web de révision pour les examens de **Génie Logiciel niveau 3** à
 ## 🚀 Utilisation
 
 ### En ligne
-👉 **https://revisions-gl3a.up.railway.app** (URL définitive après déploiement)
+👉 **https://revisions-gl3a-production.up.railway.app** (URL définitive, à partager aux camarades)
 
 ### En local
 ```bash
