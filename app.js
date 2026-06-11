@@ -57,6 +57,7 @@ function dispatchRoute(route) {
   const m = (route && route.m && typeof findMatiereById === 'function') ? findMatiereById(route.m) : null;
   if (m) state.matiere = m;   // rétablit le contexte matière après restauration
   switch (route && route.screen) {
+    case 'planning':        renderPlanning(); break;
     case 'matiere':         m ? renderMatiere(m) : renderHome(); break;
     case 'resume':          m ? renderResume(m) : renderHome(); break;
     case 'sujets':          m ? renderSujets(m) : renderHome(); break;
@@ -115,14 +116,22 @@ function getEffectiveUE(m) {
   const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
   return (c && c.ue) || m.ue;
 }
-// Horaire/date d'examen = uniquement ce que l'admin a renseigné (sinon rien).
+// Horaire/date d'examen : priorité à l'admin (Supabase), sinon programme officiel embarqué.
 function getExamLabel(m) {
   const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
-  return (c && c.exam_label) ? c.exam_label : '';
+  if (c && c.exam_label) return c.exam_label;
+  return (typeof programmeLabel === 'function') ? programmeLabel(m.id) : '';
 }
 function getMatiereOrdre(m) {
   const c = (typeof getMatiereConfig === 'function') ? getMatiereConfig(m.id) : null;
-  return (c && typeof c.ordre === 'number') ? c.ordre : 999;
+  if (c && typeof c.ordre === 'number' && c.ordre > 0) return c.ordre;
+  const p = (typeof programmeInfo === 'function') ? programmeInfo(m.id) : null;
+  if (p && typeof p.ordre === 'number' && p.ordre > 0) return p.ordre;
+  return 999;
+}
+// Statut de l'épreuve selon l'horloge : 'passe' | 'encours' | 'avenir' | null.
+function getExamStatus(m) {
+  return (typeof programmeStatus === 'function') ? programmeStatus(m.id) : null;
 }
 
 function renderHome(skipConfigRefresh) {
@@ -133,14 +142,26 @@ function renderHome(skipConfigRefresh) {
   const renderCard = m => {
     const vide = isMatiereVide(m);
     const examLabel = getExamLabel(m);
+    const status = getExamStatus(m);
+    let statusClass = '', badge = '';
+    if (status === 'passe') {
+      statusClass = ' exam-passe';
+      badge = '<span class="exam-badge badge-passe">✅ Déjà passé</span>';
+    } else if (status === 'encours') {
+      statusClass = ' exam-encours';
+      badge = '<span class="exam-badge badge-encours">🔴 En ce moment</span>';
+    } else if (status === 'avenir') {
+      badge = '<span class="exam-badge badge-avenir">⏳ À passer</span>';
+    }
     const meta = examLabel ? `📅 ${escapeHtml(examLabel)}` : (vide ? '📭 Contenu à venir' : '📚 Disponible');
     return `
-    <button class="matiere-card${vide ? ' matiere-vide' : ''}" data-id="${m.id}" style="--accent: ${m.couleur}">
+    <button class="matiere-card${vide ? ' matiere-vide' : ''}${statusClass}" data-id="${m.id}" style="--accent: ${m.couleur}">
       <span class="icon">${m.icone}</span>
       <span class="info">
-        <h3>${m.titre}</h3>
-        <p>${m.sousTitre}</p>
+        <h3>${escapeHtml(m.titre)}</h3>
+        <p>${escapeHtml(m.sousTitre)}</p>
         <span class="time">${meta}</span>
+        ${badge}
       </span>
       <span class="arrow">›</span>
     </button>`;
@@ -149,14 +170,16 @@ function renderHome(skipConfigRefresh) {
   const openSet = getOpenUEs();
   const sectionHTML = (ueId, icone, label, items) => {
     const prets = items.filter(m => !isMatiereVide(m)).length;
+    const passes = items.filter(m => getExamStatus(m) === 'passe').length;
     const open = openSet.has(ueId);
+    const passesTxt = passes ? ` · ${passes} déjà passée${passes > 1 ? 's' : ''}` : '';
     return `
       <div class="ue-section${open ? ' ue-open' : ''}" data-ue="${ueId}">
         <button class="ue-header" data-ue-toggle="${ueId}">
           <span class="ue-icon">${icone || '📦'}</span>
           <div class="ue-title">
             <h3>${label}</h3>
-            <span class="ue-sub">${items.length} matières · ${prets} avec contenu</span>
+            <span class="ue-sub">${items.length} matières · ${prets} avec contenu${passesTxt}</span>
           </div>
           <span class="ue-chevron">▾</span>
         </button>
@@ -199,6 +222,19 @@ function renderHome(skipConfigRefresh) {
       renderMatiere(m);
     });
   });
+  // Bouton « Planning des rattrapages » + sous-titre dynamique (X passées · Y à venir)
+  const _plan = $('btn-planning');
+  if (_plan) {
+    const scheduled = allMatieres.filter(m => getExamStatus(m) !== null);
+    const passes = scheduled.filter(m => getExamStatus(m) === 'passe').length;
+    const restants = scheduled.length - passes;
+    const sub = $('planning-cta-sub');
+    if (sub) sub.textContent = scheduled.length
+      ? `${passes} passée${passes > 1 ? 's' : ''} · ${restants} restante${restants > 1 ? 's' : ''}`
+      : 'Calendrier des épreuves';
+    _plan.onclick = () => renderPlanning();
+  }
+
   // Bouton espace délégué (modération)
   const _adm = $('btn-admin');
   if (_adm) {
@@ -220,6 +256,98 @@ function renderHome(skipConfigRefresh) {
       if (state.currentScreen === 'home') renderHome(true);
     }).catch(() => {});
   }
+}
+
+// ============ ÉCRAN PLANNING DES RATTRAPAGES ============
+function renderPlanning() {
+  const all = getAllMatieres();
+  const now = new Date();
+  const scheduled = all
+    .filter(m => programmeInfo(m.id))
+    .sort((a, b) => programmeInfo(a.id).ordre - programmeInfo(b.id).ordre)
+    .map(m => ({ m, p: programmeInfo(m.id), st: programmeStatus(m.id, now) }));
+
+  const passes  = scheduled.filter(x => x.st === 'passe');
+  const encours = scheduled.filter(x => x.st === 'encours');
+  const avenir  = scheduled.filter(x => x.st === 'avenir');
+  const total = scheduled.length;
+  const done = passes.length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  const row = (x, opts) => {
+    opts = opts || {};
+    const vide = isMatiereVide(x.m);
+    const cls = 'plan-row' + (opts.passe ? ' plan-row-passe' : '') + (opts.now ? ' plan-row-now' : '');
+    const tag = opts.passe ? '<span class="plan-tag tag-passe">✅ Fait</span>'
+              : opts.now   ? '<span class="plan-tag tag-now">🔴 Maintenant</span>'
+              : (vide ? '<span class="plan-tag tag-vide">📭 à venir</span>' : '<span class="plan-tag tag-go">Réviser →</span>');
+    return `
+      <button class="${cls}" data-id="${x.m.id}" style="--accent:${x.m.couleur}">
+        <span class="plan-creneau">${escapeHtml(x.p.creneau)}</span>
+        <span class="plan-body">
+          <span class="plan-name"><span class="plan-emoji">${x.m.icone}</span><span class="plan-name-txt">${escapeHtml(x.m.titre)}</span></span>
+          <span class="plan-sub">${escapeHtml(x.m.sousTitre)}</span>
+        </span>
+        ${tag}
+      </button>`;
+  };
+
+  // « À passer » groupé par jour, dans l'ordre chronologique.
+  let aVenirHTML = '';
+  let lastJour = null;
+  avenir.forEach(x => {
+    if (x.p.jour !== lastJour) {
+      aVenirHTML += `<div class="plan-day">${escapeHtml(x.p.jour)}</div>`;
+      lastJour = x.p.jour;
+    }
+    aVenirHTML += row(x);
+  });
+
+  const encoursHTML = encours.map(x => row(x, { now: true })).join('');
+  const passesHTML = passes.map(x => row(x, { passe: true })).join('');
+
+  const clockWarn = (typeof horlogeImplausible === 'function' && horlogeImplausible(now))
+    ? `<div class="plan-clockwarn">⚠️ L'heure de ton téléphone semble incorrecte (réglée avant juin 2026). Les statuts « déjà passé / à venir » risquent d'être faux — vérifie la date et l'heure de ton appareil.</div>`
+    : '';
+
+  $('planning-content').innerHTML = `
+    ${clockWarn}
+    <div class="plan-progress-card">
+      <div class="plan-progress-top">
+        <span>Avancement du rattrapage</span>
+        <strong>${done} / ${total}</strong>
+      </div>
+      <div class="plan-bar"><div class="plan-bar-fill" style="width:${pct}%"></div></div>
+      <div class="plan-progress-legend">${done} épreuve${done > 1 ? 's' : ''} passée${done > 1 ? 's' : ''} · ${total - done} restante${(total - done) > 1 ? 's' : ''}</div>
+    </div>
+
+    ${encours.length ? `<div class="plan-section plan-section-now">
+      <h3 class="plan-section-title">🔴 En ce moment</h3>
+      ${encoursHTML}
+    </div>` : ''}
+
+    <div class="plan-section">
+      <h3 class="plan-section-title">⏳ À passer ${avenir.length ? `(${avenir.length})` : ''}</h3>
+      ${avenir.length ? aVenirHTML : '<p class="plan-empty">🎉 Plus aucune épreuve à venir au programme. Bon courage pour la suite !</p>'}
+    </div>
+
+    ${passes.length ? `<details class="plan-section plan-done">
+      <summary class="plan-section-title" aria-label="Afficher ou masquer les matières déjà passées">✅ Déjà passées (${passes.length})</summary>
+      <div class="plan-done-list">${passesHTML}</div>
+    </details>` : ''}
+  `;
+
+  // Clic sur une ligne → ouvrir la matière pour réviser.
+  $('planning-content').querySelectorAll('.plan-row').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const m = all.find(x => x.id === btn.dataset.id);
+      if (m) renderMatiere(m);
+    });
+  });
+
+  $('appTitle').textContent = 'Planning rattrapages';
+  $('appSubtitle').textContent = '10 → 13 juin 2026';
+  go('planning');
 }
 
 // ============ ÉCRAN MATIÈRE ============
@@ -914,3 +1042,22 @@ if (_savedRoute && _savedRoute.screen && _savedRoute.screen !== 'home') {
 showWelcomeIfFirstVisit();
 // Compteur de visiteurs (Supabase) — au plus une visite/appareil/jour
 if (typeof cloudTrackVisit === 'function') cloudTrackVisit();
+
+// ============ MISE À JOUR AUTO DES STATUTS D'ÉPREUVE ============
+// Pendant que l'utilisateur reste sur l'accueil ou le planning, les badges
+// (passé / en cours / à venir) doivent évoluer avec l'heure sans rechargement.
+// On ne re-render QUE si un statut a réellement changé (évite de perturber
+// l'accordéon ou le repli des « déjà passées » à chaque tick).
+function _statusSignature() {
+  if (typeof getAllMatieres !== 'function' || typeof programmeStatus !== 'function') return '';
+  const now = new Date();
+  return getAllMatieres().map(m => programmeStatus(m.id, now) || '-').join('');
+}
+let _lastStatusSig = _statusSignature();
+setInterval(() => {
+  const sig = _statusSignature();
+  if (sig === _lastStatusSig) return;
+  _lastStatusSig = sig;
+  if (state.currentScreen === 'home') renderHome(true);
+  else if (state.currentScreen === 'planning') renderPlanning();
+}, 30000);
