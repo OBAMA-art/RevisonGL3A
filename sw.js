@@ -1,5 +1,5 @@
 // Service Worker - Révisions GL3A
-const VERSION = "v26";
+const VERSION = "v27";
 const SHELL_CACHE = `revisions-gl3a-shell-${VERSION}`;
 const DATA_CACHE = `revisions-gl3a-data-${VERSION}`;
 const OCR_CACHE = `revisions-gl3a-ocr-${VERSION}`;
@@ -11,6 +11,7 @@ const SHELL_ASSETS = [
   './styles.css',
   './theme-futuristic.css',
   './app.js',
+  './programme.js',   // programme officiel daté (cache-first) : si une date change, bumper VERSION ci-dessus
   './ocr.js',
   './cloud-config.js',
   './cloud.js',

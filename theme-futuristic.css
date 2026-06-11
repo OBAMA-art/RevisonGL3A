@@ -347,7 +347,7 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
   .matiere-header .big-icon, .result-emoji { animation: none; }
-  * { transition: none !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
 /* ---------------- STATISTIQUES DE FRÉQUENTATION (admin) ---------------- */
@@ -404,3 +404,162 @@ body::after {
 .bar-n { font-size: 12px; font-weight: 700; color: var(--neon2); flex: 0 0 auto; }
 
 .stat-empty { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 4px 0; }
+
+/* ============================================================================
+   PLANNING DES RATTRAPAGES — statut des matières (passé / en cours / à venir)
+   ============================================================================ */
+
+/* --- Badges de statut sur les cartes matières --- */
+.exam-badge {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  line-height: 1.4;
+}
+.badge-passe {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 45%, transparent);
+}
+.badge-avenir {
+  color: color-mix(in srgb, var(--warning) 90%, var(--text));
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+}
+.badge-encours {
+  color: #fff;
+  background: var(--danger);
+  border: 1px solid var(--danger);
+  animation: examPulse 1.6s ease-in-out infinite;
+}
+
+/* --- États de carte --- */
+.matiere-card.exam-passe { opacity: .58; filter: grayscale(.4); }
+.matiere-card.exam-passe:hover { opacity: .9; filter: grayscale(0); }
+.matiere-card.exam-encours {
+  border-color: color-mix(in srgb, var(--danger) 60%, transparent);
+  box-shadow: 0 12px 38px color-mix(in srgb, var(--danger) 32%, rgba(0,0,0,0.3));
+  animation: examPulse 2s ease-in-out infinite;
+}
+
+@keyframes examPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent); }
+  50%      { box-shadow: 0 0 0 7px color-mix(in srgb, var(--danger) 0%, transparent); }
+}
+
+/* --- Bouton d'accès au planning (accueil) --- */
+.planning-cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 2px 0 20px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon2) 45%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--neon1) 22%, var(--bg-card)), color-mix(in srgb, var(--neon2) 18%, var(--bg-card)));
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--neon1) 26%, rgba(0,0,0,0.3));
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .25s;
+}
+.planning-cta:hover { transform: translateY(-3px); box-shadow: 0 18px 46px color-mix(in srgb, var(--neon2) 30%, rgba(0,0,0,0.35)); }
+.planning-cta-ico { font-size: 26px; flex: 0 0 auto; }
+.planning-cta-txt { flex: 1; min-width: 0; }
+.planning-cta-title { display: block; font-weight: 800; font-size: 15px; letter-spacing: -0.2px; }
+.planning-cta-sub { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.planning-cta-arrow { margin-left: auto; font-size: 26px; color: var(--neon2); flex: 0 0 auto; }
+
+/* --- Écran planning --- */
+.planning-head h2 { margin: 0 0 6px; }
+.planning-intro { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0 0 16px; }
+
+.plan-progress-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.26);
+  margin-bottom: 4px;
+}
+.plan-progress-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--text-muted); }
+.plan-progress-top strong { font-size: 18px; color: var(--neon2); }
+.plan-bar { height: 10px; border-radius: 999px; background: color-mix(in srgb, var(--text) 8%, transparent); overflow: hidden; margin: 10px 0 0; }
+.plan-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--neon2), var(--neon1)); box-shadow: 0 0 14px color-mix(in srgb, var(--neon2) 50%, transparent); transition: width .5s cubic-bezier(.2,.7,.3,1); }
+.plan-progress-legend { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+.plan-section { margin-top: 20px; }
+.plan-section-title { font-size: 14px; font-weight: 800; margin: 0 0 12px; letter-spacing: -0.2px; }
+.plan-section-now .plan-section-title { color: var(--danger); }
+.plan-day { font-size: 11px; font-weight: 800; color: var(--neon2); text-transform: uppercase; letter-spacing: .8px; margin: 16px 0 9px; }
+
+.plan-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 9px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .18s, border-color .2s, box-shadow .2s;
+}
+.plan-row:hover { transform: translateX(3px); box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 26%, rgba(0,0,0,0.3)); }
+.plan-creneau { flex: 0 0 auto; width: 92px; font-size: 11px; font-weight: 700; white-space: nowrap; color: color-mix(in srgb, var(--accent) 80%, var(--text)); }
+.plan-body { flex: 1; min-width: 0; }
+.plan-name { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; min-width: 0; }
+.plan-name-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.plan-emoji { font-size: 18px; flex: 0 0 auto; }
+.plan-sub { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plan-tag { flex: 0 0 auto; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px; }
+.tag-go { color: var(--neon2); border: 1px solid color-mix(in srgb, var(--neon2) 45%, transparent); }
+.tag-now { color: #fff; background: var(--danger); animation: examPulse 1.6s ease-in-out infinite; }
+.tag-passe { color: var(--success); }
+.tag-vide { color: var(--text-muted); border: 1px solid var(--border); }
+
+.plan-row-passe { opacity: .56; filter: grayscale(.45); border-left-color: color-mix(in srgb, var(--success) 60%, var(--accent)); }
+.plan-row-passe:hover { opacity: .9; filter: grayscale(0); }
+.plan-row-now { border-color: color-mix(in srgb, var(--danger) 55%, transparent); box-shadow: 0 0 22px color-mix(in srgb, var(--danger) 28%, transparent); }
+
+.plan-empty { font-size: 13px; color: var(--text-muted); padding: 8px 2px; }
+.plan-done { margin-top: 22px; }
+.plan-done > summary { cursor: pointer; list-style: none; }
+.plan-done > summary::-webkit-details-marker { display: none; }
+.plan-done > summary::before { content: '▸ '; color: var(--success); }
+.plan-done[open] > summary::before { content: '▾ '; }
+.plan-done-list { margin-top: 12px; }
+
+/* Alerte horloge incorrecte (statuts non fiables) */
+.plan-clockwarn {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--warning) 92%, var(--text));
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+}
+
+/* Petits écrans : éviter tout débordement des lignes de planning */
+@media (max-width: 360px) {
+  .plan-creneau { width: 66px; font-size: 10px; }
+  .plan-row { gap: 9px; padding: 11px 12px; }
+  .plan-tag { padding: 3px 8px; font-size: 10px; }
+}
