@@ -2854,5 +2854,103 @@ const EPREUVES_DATA = {
         }
       ]
     }
+  ],
+  "droittravail": [
+    {
+      "titre": "Contrôle Continu — Droit du Travail et Sécurité Sociale (GL3D, 2h, mars 2004)",
+      "source": "IAI Cameroun / Centre PAUL BIYA — CC Droit du Travail et Sécurité Sociale, GL3D, durée 2h",
+      "questions": [
+        {
+          "numero": "I",
+          "enonce": "Première partie : définition des termes (5 pts). Définissez : 1- employeur ; 2- salarié ; 3- mise à pied ; 4- pension de survivant ; 5- invalidité.",
+          "correction": "1- Employeur : personne physique ou morale qui emploie un ou plusieurs travailleurs, leur fournit du travail, paie le salaire et exerce sur eux le pouvoir de direction, de contrôle et de sanction.\n2- Salarié (travailleur) : personne physique qui s'engage à fournir une prestation de travail au profit et sous la subordination d'un employeur, contre rémunération.\n3- Mise à pied : sanction disciplinaire (ou mesure conservatoire) suspendant temporairement le contrat et privant le travailleur de salaire pour la durée concernée, sans rompre le lien contractuel.\n4- Pension de survivant : prestation de sécurité sociale versée par la CNPS aux ayants droit (conjoint survivant, orphelins) d'un assuré décédé qui remplissait les conditions de cotisation.\n5- Invalidité : état d'un assuré qui, par suite de maladie ou d'accident non professionnel, subit une réduction durable de sa capacité de travail ou de gain, ouvrant droit à une pension d'invalidité servie par la CNPS.",
+          "bareme": "5 pts (1 pt par définition exacte)"
+        },
+        {
+          "numero": "II",
+          "enonce": "Deuxième partie : questions théoriques (10 pts). 1- Les prestations servies par la CNPS (5 pts). 2- La gestion des salariés en cas de modifications relatives au changement d'employeur (5 pts).",
+          "correction": "1- Prestations servies par la CNPS : la CNPS gère trois branches. a) Branche des prestations familiales : allocations familiales, allocations prénatales et de maternité, indemnité journalière de maternité. b) Branche des risques professionnels : prise en charge des accidents du travail et maladies professionnelles (soins, indemnités journalières, rente d'incapacité, rente de survivants). c) Branche des pensions (vieillesse, invalidité, décès) : pension de vieillesse, pension d'invalidité, allocation de vieillesse et pension de survivant. Ces prestations supposent l'immatriculation de l'assuré et le versement régulier des cotisations.\n2- Changement d'employeur : en cas de modification dans la situation juridique de l'employeur (succession, vente, fusion, transformation de fonds, mise en société), tous les contrats de travail en cours subsistent de plein droit entre le nouvel employeur et les travailleurs : il y a transfert automatique des contrats. Le nouvel employeur reprend les obligations (ancienneté, salaires, congés) ; les travailleurs conservent leurs droits acquis. Ce mécanisme assure la continuité de l'emploi et protège les salariés contre la perte d'emploi du seul fait du changement d'employeur.",
+          "bareme": "10 pts (5 + 5)"
+        },
+        {
+          "numero": "III",
+          "enonce": "Troisième partie : cas pratique (5 pts). Rémunération de M. Ekengue pour mars 2004 : salaire de base 200 000 FCFA ; heures supplémentaires 45 000 FCFA ; prime de transport 15 000 FCFA ; indemnité de nourriture 18 000 FCFA ; prime d'ancienneté 20 000 FCFA. 1- Déterminez son salaire brut. 2- Quels prélèvements sociaux et fiscaux pour obtenir le salaire net ?",
+          "correction": "1- Salaire brut total (toutes rubriques) = 200 000 + 45 000 + 15 000 + 18 000 + 20 000 = 298 000 FCFA. Le brut cotisable de référence exclut en principe les remboursements de frais : il correspond essentiellement au salaire de base + heures supplémentaires + prime d'ancienneté (= 265 000 FCFA), la prime de transport et l'indemnité de nourriture étant exonérées dans la limite des plafonds.\n2- Prélèvements : a) Sociaux : cotisation CNPS branche pension vieillesse-invalidité-décès, part salariale (sur le salaire cotisable plafonné), la part patronale et les branches risques pro et prestations familiales étant à la charge de l'employeur. b) Fiscaux : IRPP catégorie traitements et salaires, centimes additionnels communaux, redevance audiovisuelle (RAV), Crédit Foncier (CFC) part salariale, cotisation FNE. Salaire net = brut − (CNPS salariale + IRPP + CFC + RAV + FNE + taxe communale). L'énoncé ne fournit pas les taux : citer la nature de chaque prélèvement et la logique brut → cotisations → base imposable → impôts → net.",
+          "bareme": "5 pts (brut 2 pts ; prélèvements 3 pts)"
+        }
+      ]
+    },
+    {
+      "titre": "Examen — Droit du Travail (SR3A/B/D, 2h, 2018-2019)",
+      "source": "IAI Cameroun / Centre PAUL BIYA — Contrôle continu de droit du travail, 2018-2019",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Définition des termes (5 pts) : 1- droit du travail ; 2- secteur d'activité ; 3- CDD ; 4- principe de la résiliation unilatérale ; 5- accident de travail.",
+          "correction": "1- Droit du travail : ensemble des règles régissant les relations individuelles et collectives entre employeurs et travailleurs salariés liés par un lien de subordination.\n2- Secteur d'activité : domaine économique d'exercice (primaire, secondaire, tertiaire) ou branche professionnelle, rattachant l'entreprise à la convention collective applicable.\n3- CDD : contrat conclu pour une durée précise ou un ouvrage déterminé, prenant fin de plein droit au terme, avec encadrement strict du renouvellement.\n4- Résiliation unilatérale : possibilité pour chaque partie de rompre seule le contrat (démission/licenciement), sous réserve du motif légitime, du préavis et des indemnités, l'abus étant sanctionné.\n5- Accident de travail : accident survenu par le fait ou à l'occasion du travail, ouvrant droit à réparation au titre des risques professionnels (CNPS).",
+          "bareme": "5 pts (1 pt par terme)"
+        },
+        {
+          "numero": "2",
+          "enonce": "QCM Vrai/Faux (8 pts). 1- La loi camerounaise prévoit 15 catégories socioprofessionnelles. 2- Le contrat de travail comme contrat d'adhésion signifie que les deux parties ont des obligations réciproques. 3- L'objet et la cause doivent être illicites pour la validité du contrat. 4- Un employé sous CDD doit être immatriculé à la CNPS. 5- Les cotisations patronales sont supportées par les employés. 6- L'obligation matérielle du travailleur = ne pas concurrencer son employeur. 7- Le contrat de la femme salariée peut être rompu durant son congé de maternité. 8- L'allocataire perçoit l'allocation vieillesse s'il a cotisé 15 ans.",
+          "correction": "1- VRAI (la classification comporte ~12 à 15 catégories selon les conventions).\n2- FAUX : les obligations réciproques relèvent du caractère synallagmatique, pas du contrat d'adhésion (adhésion = conditions prédéfinies non négociées).\n3- FAUX : objet et cause doivent être LICITES.\n4- VRAI : tout travailleur, même sous CDD, doit être immatriculé à la CNPS.\n5- FAUX : la cotisation patronale est supportée par l'employeur.\n6- VRAI : obligation de loyauté/non-concurrence durant le contrat.\n7- FAUX : le contrat est suspendu ; pas de licenciement pour cause de grossesse/maternité.\n8- VRAI : 15 ans de cotisation pour l'allocation/pension de vieillesse.",
+          "bareme": "8 pts (1 pt par proposition)"
+        },
+        {
+          "numero": "3",
+          "enonce": "Questions de cours (7 pts) : 1- Liberté de choix de la forme du contrat : définition et exceptions (2 pts). 2- Engagement à l'essai : définition et caractéristiques (2 pts). 3- Mise à pied : définition et caractéristiques (1,5 pt). 4- Processus de mise sur pied d'un règlement intérieur (1,5 pt).",
+          "correction": "1- Le contrat se forme par le seul consentement (consensualisme) et peut être verbal ou écrit. Exceptions imposant l'écrit : CDD de plus d'un mois, contrat d'apprentissage, contrat de travailleur étranger, contrat nécessitant l'installation hors résidence, et tout contrat dont la loi/convention exige un écrit visé.\n2- Engagement à l'essai : stipulation permettant d'apprécier l'autre partie avant l'engagement définitif. Écrit obligatoire, durée limitée selon la catégorie (renouvelable une fois), rupture libre sans préavis ni indemnité mais sans abus, rémunération de l'emploi essayé.\n3- Mise à pied : sanction disciplinaire suspendant le contrat et privant de salaire pour la période, sans rompre le contrat ; durée limitée, motivée, notifiée par écrit, respect des droits de la défense ; peut être conservatoire.\n4- Règlement intérieur : l'employeur élabore un projet (discipline, hygiène, sécurité, paie) ; avis des délégués du personnel ; communication à l'inspecteur du travail qui le vise et peut exiger le retrait des clauses illégales ; affichage/dépôt puis entrée en vigueur et opposabilité.",
+          "bareme": "7 pts (2 + 2 + 1,5 + 1,5)"
+        }
+      ]
+    },
+    {
+      "titre": "Rattrapage CC — Droit du Travail (GL Niveau III, 4h, 2022)",
+      "source": "IAI Cameroun / Centre PAUL BIYA — Rattrapage CC, Génie Logiciel Niveau III, durée 4h, 2022",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Définitions (10 pts) : 1- Contrat de travail ; 2- Résiliation unilatérale ; 3- Catégorie socio-professionnelle ; 4- Travailleur ; 5- Règlement intérieur.",
+          "correction": "1- Contrat de travail : convention par laquelle un travailleur s'engage à fournir une prestation sous la subordination d'un employeur moyennant rémunération.\n2- Résiliation unilatérale : rupture décidée par une seule partie — démission (travailleur) ou licenciement (employeur) — sous réserve du motif légitime, du préavis et des indemnités.\n3- Catégorie socio-professionnelle : classement hiérarchique des emplois (manœuvres, employés, agents de maîtrise, cadres) défini par les conventions collectives, déterminant le salaire minimum de catégorie.\n4- Travailleur : personne physique qui met son activité professionnelle, contre rémunération, sous l'autorité d'un employeur, quels que soient son sexe et sa nationalité.\n5- Règlement intérieur : document de l'employeur fixant discipline, hygiène et sécurité, soumis à l'avis des délégués et au visa de l'inspecteur du travail.",
+          "bareme": "10 pts (2 pts par définition)"
+        },
+        {
+          "numero": "2",
+          "enonce": "QCM (10 pts). 1- Principale loi du travail au Cameroun ? 2- Trois éléments du contrat de travail ? 3- Durée max d'un CDD camerounais renouvelé une fois ? 4- Droits en cas de faute lourde ? 5- La démission est à l'initiative de qui ?",
+          "correction": "1- c) La loi n°92/007 du 14 août 1992 portant Code du Travail.\n2- b) Prestation de travail + rémunération + lien de subordination juridique.\n3- b) 2 ans.\n4- b) Uniquement certificat de travail + solde de tout compte.\n5- b) Du travailleur.",
+          "bareme": "10 pts (2 pts par bonne réponse)"
+        }
+      ]
+    },
+    {
+      "titre": "Épreuve de Droit du Travail — Définitions et cas pratiques (GL & SR III, 2h, 2024-2025)",
+      "source": "IAI Cameroun / Centre PAUL BIYA — Épreuve de Droit du Travail, GL et SR III, Semestre I, 2024-2025",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Définitions (5 pts) : 1- Contrat de travail ; 2- Travailleur ; 3- Engagement à l'essai ; 4- Accident de travail ; 5- Licenciement.",
+          "correction": "1- Contrat de travail : convention par laquelle un travailleur fournit une prestation sous la subordination d'un employeur contre rémunération.\n2- Travailleur : personne physique mettant son activité, contre rémunération, sous l'autorité d'un employeur.\n3- Engagement à l'essai : période écrite permettant d'apprécier l'autre partie avant l'engagement définitif, rompable sans préavis ni indemnité dans la limite légale.\n4- Accident de travail : accident survenu par le fait ou à l'occasion du travail, pris en charge au titre des risques professionnels (CNPS).\n5- Licenciement : rupture à l'initiative de l'employeur, reposant sur un motif légitime et respectant, sauf faute lourde, préavis et indemnités.",
+          "bareme": "5 pts (1 pt par terme)"
+        },
+        {
+          "numero": "2",
+          "enonce": "Cas pratique (Cas 1) : Calcul de la part patronale reversée pour l'employé Enzo (salaire brut 780 860 FCFA) — rubriques pension vieillesse-invalidité-décès (PVID) et FNE.",
+          "correction": "a) Branche PVID : la cotisation totale se partage entre part salariale et part patronale, calculées sur le salaire brut dans la limite du plafond mensuel CNPS. Part patronale PVID = taux patronal PVID × base cotisable plafonnée. b) FNE : contribution entièrement patronale = taux FNE × salaire brut. Méthode : identifier la base cotisable (brut plafonné), appliquer le taux patronal PVID puis le taux FNE, sommer. Part patronale totale = part patronale PVID + cotisation FNE, à la charge exclusive de l'employeur (non prélevée sur le salaire d'Enzo). L'énoncé ne donnant pas les taux, poser les formules et préciser le rôle du plafond CNPS.",
+          "bareme": "5 pts (base/plafond 2 ; formules PVID+FNE 2 ; conclusion charge patronale 1)"
+        },
+        {
+          "numero": "3",
+          "enonce": "Cas 2 : Treena, en difficulté financière, décide de démissionner en ne se présentant plus à son poste. Est-elle en droit de le faire ? Justifiez.",
+          "correction": "Treena ne peut pas valablement démissionner par simple abandon de poste : l'abandon n'est pas une démission régulière. La démission doit être : 1) claire et non équivoque ; 2) notifiée à l'employeur (en principe par écrit) ; 3) assortie du respect du préavis (selon catégorie et ancienneté). En cessant unilatéralement de venir sans notification ni préavis, elle commet un abandon de poste fautif : l'employeur peut la mettre en demeure de reprendre, puis engager un licenciement pour faute et réclamer l'indemnité compensatrice du préavis non exécuté. Conclusion : elle a le droit de démissionner, mais pas dans ces conditions ; la rupture régulière suppose une démission expresse et le respect du préavis (sauf dispense).",
+          "bareme": "5 pts (qualification abandon 2 ; conditions/préavis 2 ; conséquences 1)"
+        },
+        {
+          "numero": "4",
+          "enonce": "Cas 3 : SHEMA SOLUTION, face à des difficultés conjoncturelles, décide de compresser une partie de son personnel. Analysez au regard du droit du travail.",
+          "correction": "La compression pour difficultés conjoncturelles = licenciement pour motif économique, licite seulement si la procédure protectrice est respectée : 1) réalité du motif économique ; 2) information et consultation des délégués du personnel (mesures, ordre des licenciements, alternatives : réduction d'heures, mutations, départs volontaires) ; 3) critères objectifs (ancienneté, aptitudes, charges de famille) ; 4) notification à l'inspecteur du travail qui contrôle ; 5) droits des licenciés : indemnité de préavis, indemnité de licenciement (selon ancienneté), solde de tout compte, et priorité de réembauchage en cas d'amélioration. Conclusion : SHEMA SOLUTION peut comprimer mais en suivant la procédure ; à défaut, le licenciement est abusif et ouvre droit à des dommages-intérêts.",
+          "bareme": "5 pts (qualification 1 ; procédure 3 ; droits/réembauchage 1)"
+        }
+      ]
+    }
   ]
 };

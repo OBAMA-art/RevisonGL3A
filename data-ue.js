@@ -3451,10 +3451,416 @@ const MATIERES_EXTRA = [
     "icone": "⚖️",
     "couleur": "#f43f5e",
     "ue": "droit",
-    "placeholder": true,
-    "resume": [],
-    "qcm": [],
-    "questionsOuvertes": []
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "Définition et objet du droit du travail",
+        "contenu": "Le droit du travail est l'ensemble des règles juridiques régissant les relations individuelles et collectives nées du travail salarié subordonné. Il ne s'applique qu'au travail exécuté pour le compte d'autrui, contre rémunération et sous l'autorité d'un employeur, à l'exclusion du travail indépendant et de la fonction publique régie par un statut propre."
+      },
+      {
+        "titre": "Sources du droit du travail camerounais",
+        "contenu": "Au Cameroun, la source principale est la loi n°92/007 du 14 août 1992 portant Code du travail, complétée par ses décrets d'application, les conventions collectives, le règlement intérieur de l'entreprise, le contrat de travail, les usages, la jurisprudence et les conventions internationales de l'OIT ratifiées. La Constitution et le Code civil ne sont que des sources subsidiaires."
+      },
+      {
+        "titre": "Définition et éléments du contrat de travail",
+        "contenu": "Le contrat de travail est la convention par laquelle une personne (le travailleur) s'engage à mettre son activité professionnelle sous la direction et l'autorité d'une autre (l'employeur) moyennant rémunération. Ses trois éléments essentiels et cumulatifs sont : la prestation de travail, la rémunération (salaire) et le lien de subordination juridique, ce dernier étant le critère déterminant."
+      },
+      {
+        "titre": "Conditions de validité et objet licite",
+        "contenu": "Comme tout contrat, le contrat de travail suppose le consentement, la capacité, un objet et une cause licites. L'objet et la cause doivent être conformes à l'ordre public et aux bonnes mœurs : un contrat dont l'objet est illicite (travail clandestin, activité interdite) est nul et ne produit aucun effet."
+      },
+      {
+        "titre": "CDI, CDD et contrat d'apprentissage",
+        "contenu": "Le CDI est conclu sans terme et constitue la forme normale du contrat. Le CDD est conclu pour une durée précise ou pour un ouvrage déterminé ; pour un travailleur de nationalité camerounaise, il ne peut être renouvelé qu'une seule fois et sa durée totale ne peut excéder 2 ans, faute de quoi il se mue en CDI. L'apprentissage vise la formation professionnelle d'un jeune par un maître d'apprentissage, sous contrat écrit obligatoire."
+      },
+      {
+        "titre": "Période d'essai",
+        "contenu": "La période d'essai permet à chaque partie d'apprécier l'autre avant l'engagement définitif ; elle doit être stipulée par écrit et sa durée est encadrée selon la catégorie professionnelle (jusqu'à six mois renouvellement compris pour les cadres). Pendant l'essai, le contrat peut être rompu librement, sans préavis ni indemnité de rupture, mais sans abus."
+      },
+      {
+        "titre": "Droits et obligations des parties",
+        "contenu": "L'employeur doit fournir le travail convenu, payer le salaire, assurer l'hygiène et la sécurité, déclarer et affilier le travailleur à la CNPS et respecter la dignité du salarié. Le travailleur doit exécuter personnellement et loyalement sa prestation, obéir aux ordres licites, respecter le règlement intérieur et observer une obligation de discrétion et de non-concurrence pendant l'exécution du contrat."
+      },
+      {
+        "titre": "Durée du travail et heures supplémentaires",
+        "contenu": "La durée légale du travail est fixée à 40 heures par semaine dans les établissements non agricoles. Les heures effectuées au-delà sont des heures supplémentaires donnant droit à une majoration de salaire (taux croissants selon les tranches et le travail de nuit, dimanche ou jour férié), dans la limite d'un contingent réglementaire."
+      },
+      {
+        "titre": "Congés, repos et protection de la maternité",
+        "contenu": "Le travailleur a droit à un repos hebdomadaire d'au moins 24 heures consécutives et à un congé payé acquis à raison d'un jour et demi ouvrable par mois de service effectif. La femme enceinte bénéficie d'un congé de maternité de quatorze semaines pendant lequel le contrat est suspendu, et elle perçoit des indemnités journalières servies par la CNPS, l'employeur ne pouvant la licencier en raison de sa grossesse."
+      },
+      {
+        "titre": "Rémunération et SMIG",
+        "contenu": "Le salaire comprend le salaire de base et ses accessoires (primes, indemnités, avantages en nature). Aucun salaire ne peut être inférieur au SMIG fixé par voie réglementaire. Du salaire brut sont déduits les prélèvements sociaux (cotisation CNPS part salariale) et fiscaux (impôts sur les salaires) pour obtenir le salaire net effectivement perçu."
+      },
+      {
+        "titre": "Suspension du contrat de travail",
+        "contenu": "Certains événements suspendent le contrat sans le rompre : maladie, accident, congé de maternité, mise à pied disciplinaire, force majeure, exercice d'un mandat. Pendant la suspension, l'obligation de fournir le travail et, le plus souvent, celle de payer le salaire sont gelées, mais le lien contractuel et l'ancienneté sont en principe préservés."
+      },
+      {
+        "titre": "Rupture du contrat : démission, licenciement, préavis, indemnités",
+        "contenu": "La démission est la rupture à l'initiative du travailleur ; le licenciement, celle à l'initiative de l'employeur, qui doit reposer sur un motif légitime. Sauf faute lourde, la partie qui rompt doit respecter un préavis ou en payer l'indemnité compensatrice. En cas de licenciement non motivé par une faute lourde, le travailleur a droit à l'indemnité de licenciement, à l'indemnité de préavis et au solde de tout compte ; en cas de faute lourde, il ne reçoit que son certificat de travail et son solde de tout compte (salaires dus, congés payés)."
+      },
+      {
+        "titre": "Licenciement économique et compression de personnel",
+        "contenu": "Lorsqu'une entreprise réduit ses charges pour des difficultés conjoncturelles ou structurelles, elle peut procéder à un licenciement pour motif économique (compression de personnel) selon une procédure d'ordre : information des délégués du personnel, recherche de critères objectifs (ancienneté, charges de famille, aptitude) et notification à l'inspecteur du travail, le travailleur conservant ses indemnités."
+      },
+      {
+        "titre": "Conflits collectifs, grève et règlement",
+        "contenu": "Les conflits collectifs opposant un groupe de travailleurs à l'employeur sont d'abord soumis à une procédure de conciliation puis d'arbitrage. La grève, cessation collective et concertée du travail pour des revendications professionnelles, n'est licite qu'après épuisement des voies de règlement amiable ; exercée régulièrement, elle suspend le contrat sans le rompre."
+      },
+      {
+        "titre": "Représentation des travailleurs et syndicats",
+        "contenu": "Les travailleurs sont représentés par les délégués du personnel, élus dans tout établissement employant un nombre minimal de salariés, qui présentent les réclamations individuelles et collectives. La liberté syndicale est garantie : les syndicats défendent les intérêts professionnels et négocient les conventions collectives, leurs dirigeants bénéficiant d'une protection contre le licenciement."
+      },
+      {
+        "titre": "Inspection et tribunal du travail",
+        "contenu": "L'inspecteur du travail contrôle l'application de la législation, concilie les parties et constate les infractions ; sa saisine est souvent un préalable obligatoire avant le contentieux. Le tribunal du travail, juridiction spécialisée, tranche les litiges individuels du travail après échec de la tentative de conciliation devant l'inspecteur."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Quelle est la principale loi régissant les relations de travail au Cameroun ?",
+        "options": [
+          "A) La Constitution de 1996",
+          "B) Le Code civil",
+          "C) La loi n°92/007 du 14 août 1992 portant Code du travail",
+          "D) Le Code pénal"
+        ],
+        "reponse": "C",
+        "explication": "Le Code du travail camerounais résulte de la loi n°92/007 du 14 août 1992 ; c'est la source spéciale qui prime sur le Code civil."
+      },
+      {
+        "q": "Quels sont les trois éléments essentiels qui caractérisent un contrat de travail ?",
+        "options": [
+          "A) Une prestation, une rémunération et un lien de parenté",
+          "B) Une prestation de travail, une rémunération et un lien de subordination juridique",
+          "C) Un accord écrit, un casier judiciaire vierge et une rémunération",
+          "D) Un bénévolat, un horaire fixe et un lien de travail"
+        ],
+        "reponse": "B",
+        "explication": "La prestation de travail, la rémunération et surtout le lien de subordination juridique sont les trois critères cumulatifs du contrat de travail."
+      },
+      {
+        "q": "Un CDD ne pouvant être renouvelé qu'une seule fois pour un travailleur de nationalité camerounaise, quelle est sa durée maximale ?",
+        "options": [
+          "A) 1 an",
+          "B) 2 ans",
+          "C) 4 ans",
+          "D) Il n'y a pas de limite"
+        ],
+        "reponse": "B",
+        "explication": "Pour un travailleur camerounais, le CDD ne peut être renouvelé qu'une fois et la durée totale ne peut excéder 2 ans, sous peine de requalification en CDI."
+      },
+      {
+        "q": "En cas de licenciement pour faute lourde, le travailleur a droit à :",
+        "options": [
+          "A) Une indemnité de licenciement et une indemnité de préavis",
+          "B) Uniquement un certificat de travail et son solde de tout compte (salaires dus, congés payés)",
+          "C) Une double indemnité de licenciement",
+          "D) Une réintégration immédiate"
+        ],
+        "reponse": "B",
+        "explication": "La faute lourde prive le travailleur des indemnités de préavis et de licenciement ; il ne conserve que son certificat de travail et son solde de tout compte."
+      },
+      {
+        "q": "La démission est un mode de rupture du contrat de travail à l'initiative :",
+        "options": [
+          "A) De l'employeur",
+          "B) Du travailleur",
+          "C) Des deux parties d'un commun accord",
+          "D) De l'inspecteur du travail"
+        ],
+        "reponse": "B",
+        "explication": "La démission émane unilatéralement du travailleur ; la rupture à l'initiative de l'employeur est le licenciement, et l'accord des deux est une rupture conventionnelle."
+      },
+      {
+        "q": "La rupture du contrat décidée d'un commun accord par les deux parties s'appelle :",
+        "options": [
+          "A) Le licenciement",
+          "B) La démission",
+          "C) La rupture conventionnelle (résiliation amiable)",
+          "D) La mise à pied"
+        ],
+        "reponse": "C",
+        "explication": "Lorsque employeur et travailleur conviennent ensemble de mettre fin au contrat, il s'agit d'une rupture amiable, distincte de la démission et du licenciement."
+      },
+      {
+        "q": "La résiliation unilatérale du contrat à l'initiative de l'employeur porte le nom de :",
+        "options": [
+          "A) Démission",
+          "B) Licenciement",
+          "C) Mutation",
+          "D) Suspension"
+        ],
+        "reponse": "B",
+        "explication": "Le licenciement est la rupture du contrat décidée par l'employeur ; il doit reposer sur un motif légitime."
+      },
+      {
+        "q": "Quelle est la durée légale hebdomadaire du travail dans les établissements non agricoles au Cameroun ?",
+        "options": [
+          "A) 35 heures",
+          "B) 40 heures",
+          "C) 45 heures",
+          "D) 48 heures"
+        ],
+        "reponse": "B",
+        "explication": "La durée légale est fixée à 40 heures par semaine ; au-delà, on entre dans le régime des heures supplémentaires majorées."
+      },
+      {
+        "q": "Les heures effectuées au-delà de la durée légale du travail donnent lieu à :",
+        "options": [
+          "A) Aucune compensation",
+          "B) Une majoration de salaire (heures supplémentaires)",
+          "C) Un simple repos non rémunéré obligatoire",
+          "D) Une retenue sur salaire"
+        ],
+        "reponse": "B",
+        "explication": "Les heures supplémentaires sont rémunérées avec une majoration croissante selon les tranches et le caractère (nuit, dimanche, jour férié)."
+      },
+      {
+        "q": "Le salaire minimum en dessous duquel aucun travailleur ne peut être rémunéré est appelé :",
+        "options": [
+          "A) Le salaire brut",
+          "B) Le SMIG",
+          "C) Le solde de tout compte",
+          "D) La prime d'ancienneté"
+        ],
+        "reponse": "B",
+        "explication": "Le SMIG (salaire minimum interprofessionnel garanti) est fixé par voie réglementaire et constitue le plancher légal de rémunération."
+      },
+      {
+        "q": "Le salaire net se calcule en déduisant du salaire brut :",
+        "options": [
+          "A) Les primes et indemnités",
+          "B) Les prélèvements sociaux (CNPS) et fiscaux",
+          "C) Le salaire de base",
+          "D) Les heures supplémentaires"
+        ],
+        "reponse": "B",
+        "explication": "Le net résulte du brut diminué de la cotisation sociale salariale (CNPS) et des impôts et taxes sur les salaires."
+      },
+      {
+        "q": "L'objet et la cause du contrat de travail doivent être :",
+        "options": [
+          "A) Toujours écrits",
+          "B) Licites pour que le contrat soit valable",
+          "C) Déterminés par l'inspecteur",
+          "D) Renouvelés chaque année"
+        ],
+        "reponse": "B",
+        "explication": "Un objet ou une cause illicites entraînent la nullité du contrat, qui ne produit alors aucun effet."
+      },
+      {
+        "q": "Un employeur ayant signé un contrat de travail temporaire (CDD) doit obligatoirement :",
+        "options": [
+          "A) Le renouveler indéfiniment",
+          "B) Immatriculer le travailleur à la CNPS",
+          "C) Lui refuser tout congé",
+          "D) Le rémunérer au-dessous du SMIG"
+        ],
+        "reponse": "B",
+        "explication": "Tout travailleur, même sous CDD, doit être immatriculé et affilié à la CNPS, qui sert les prestations sociales."
+      },
+      {
+        "q": "Les cotisations patronales versées à la CNPS sont :",
+        "options": [
+          "A) Calculées sur le salaire des employés mais supportées par ces derniers",
+          "B) À la charge de l'employeur",
+          "C) Déduites du salaire net du travailleur",
+          "D) Facultatives"
+        ],
+        "reponse": "B",
+        "explication": "La part patronale des cotisations sociales est supportée par l'employeur et ne peut être prélevée sur le salaire du travailleur."
+      },
+      {
+        "q": "L'obligation de non-concurrence du travailleur signifie pendant l'exécution du contrat qu'il :",
+        "options": [
+          "A) Peut concurrencer librement son employeur",
+          "B) Ne peut mener une activité concurrente de celle de son employeur",
+          "C) Doit créer sa propre entreprise",
+          "D) Peut travailler pour un concurrent le week-end"
+        ],
+        "reponse": "B",
+        "explication": "Le travailleur est tenu d'une obligation de loyauté qui lui interdit de concurrencer son employeur durant le contrat."
+      },
+      {
+        "q": "Pendant le congé de maternité, le contrat de travail de la femme salariée est :",
+        "options": [
+          "A) Définitivement rompu",
+          "B) Suspendu",
+          "C) Transformé en CDD",
+          "D) Annulé"
+        ],
+        "reponse": "B",
+        "explication": "Le congé de maternité suspend le contrat sans le rompre ; le lien contractuel et l'ancienneté sont préservés."
+      },
+      {
+        "q": "L'allocataire régulièrement immatriculé perçoit une allocation vieillesse s'il a cotisé pendant :",
+        "options": [
+          "A) 5 ans de service",
+          "B) 10 ans de service",
+          "C) 15 ans de service",
+          "D) 20 ans de service"
+        ],
+        "reponse": "C",
+        "explication": "Le bénéfice de la pension/allocation de vieillesse suppose une durée minimale de cotisation, fixée à 15 ans de service."
+      },
+      {
+        "q": "Le repos hebdomadaire légal du travailleur est au minimum de :",
+        "options": [
+          "A) 12 heures consécutives",
+          "B) 24 heures consécutives",
+          "C) 36 heures consécutives",
+          "D) 48 heures consécutives"
+        ],
+        "reponse": "B",
+        "explication": "Le Code du travail garantit un repos hebdomadaire d'au moins 24 heures consécutives, en principe le dimanche."
+      },
+      {
+        "q": "Le congé payé s'acquiert, sauf disposition plus favorable, à raison de :",
+        "options": [
+          "A) Un jour ouvrable par mois",
+          "B) Un jour et demi ouvrable par mois de service effectif",
+          "C) Trois jours par mois",
+          "D) Un jour par semaine"
+        ],
+        "reponse": "B",
+        "explication": "Le droit de base au congé payé est d'un jour et demi ouvrable par mois de service effectif, soit dix-huit jours par an."
+      },
+      {
+        "q": "La période d'essai a pour fonction de :",
+        "options": [
+          "A) Garantir un emploi à vie",
+          "B) Permettre à chaque partie d'apprécier l'autre avant l'engagement définitif",
+          "C) Réduire le salaire de moitié",
+          "D) Dispenser de l'immatriculation à la CNPS"
+        ],
+        "reponse": "B",
+        "explication": "L'essai permet d'évaluer mutuellement l'aptitude et la convenance ; le contrat peut y être rompu sans préavis ni indemnité, sans abus."
+      },
+      {
+        "q": "Le règlement intérieur de l'entreprise est mis en vigueur :",
+        "options": [
+          "A) Par décision unilatérale du seul travailleur",
+          "B) Après consultation des délégués du personnel et visa de l'inspecteur du travail",
+          "C) Par le tribunal du travail",
+          "D) Sans aucune formalité"
+        ],
+        "reponse": "B",
+        "explication": "Le règlement intérieur n'est opposable qu'après consultation des représentants du personnel et communication/visa de l'inspecteur du travail."
+      },
+      {
+        "q": "Les délégués du personnel ont principalement pour mission de :",
+        "options": [
+          "A) Fixer le SMIG",
+          "B) Présenter à l'employeur les réclamations individuelles et collectives des travailleurs",
+          "C) Juger les conflits de travail",
+          "D) Recouvrer les cotisations CNPS"
+        ],
+        "reponse": "B",
+        "explication": "Élus dans l'établissement, les délégués du personnel portent les réclamations des salariés relatives à l'application de la législation et des conventions."
+      },
+      {
+        "q": "La grève est un mode légal d'action collective qui, exercée régulièrement :",
+        "options": [
+          "A) Rompt automatiquement le contrat de travail",
+          "B) Suspend le contrat de travail sans le rompre",
+          "C) Entraîne le licenciement pour faute lourde",
+          "D) Est toujours interdite"
+        ],
+        "reponse": "B",
+        "explication": "La grève licite, après épuisement des procédures de règlement, suspend le contrat ; elle ne le rompt pas et n'est pas en soi fautive."
+      },
+      {
+        "q": "Avant la saisine du tribunal du travail, le litige individuel doit en principe passer par :",
+        "options": [
+          "A) Le Conseil constitutionnel",
+          "B) La tentative de conciliation devant l'inspecteur du travail",
+          "C) Le Code pénal",
+          "D) Une médiation bancaire"
+        ],
+        "reponse": "B",
+        "explication": "La conciliation devant l'inspecteur du travail constitue un préalable au contentieux ; à défaut d'accord, le tribunal du travail est saisi."
+      },
+      {
+        "q": "Le licenciement décidé en raison de difficultés économiques de l'entreprise est qualifié de :",
+        "options": [
+          "A) Licenciement disciplinaire",
+          "B) Licenciement pour motif économique (compression de personnel)",
+          "C) Démission forcée",
+          "D) Mise à pied conservatoire"
+        ],
+        "reponse": "B",
+        "explication": "La réduction des effectifs pour difficultés conjoncturelles ou structurelles relève du licenciement économique, soumis à une procédure protectrice."
+      },
+      {
+        "q": "Le lien de subordination juridique se caractérise par le pouvoir de l'employeur de :",
+        "options": [
+          "A) Saisir les biens du travailleur",
+          "B) Donner des ordres, en contrôler l'exécution et sanctionner les manquements",
+          "C) Fixer librement les impôts",
+          "D) Modifier la Constitution"
+        ],
+        "reponse": "B",
+        "explication": "La subordination juridique se manifeste par le pouvoir de direction, de contrôle et de sanction de l'employeur sur le travailleur."
+      },
+      {
+        "q": "L'accident survenu par le fait ou à l'occasion du travail est qualifié d' :",
+        "options": [
+          "A) Accident de droit commun",
+          "B) Accident du travail, pris en charge au titre des risques professionnels",
+          "C) Faute lourde du travailleur",
+          "D) Cas de force majeure exonératoire"
+        ],
+        "reponse": "B",
+        "explication": "L'accident du travail est celui survenu par le fait ou à l'occasion du travail ; il ouvre droit à réparation au titre des risques professionnels gérés par la CNPS."
+      },
+      {
+        "q": "La catégorie socio-professionnelle d'un travailleur sert principalement à :",
+        "options": [
+          "A) Déterminer sa nationalité",
+          "B) Classer le poste et fixer le salaire minimum de catégorie applicable",
+          "C) Calculer ses impôts fonciers",
+          "D) Fixer la durée de la grève"
+        ],
+        "reponse": "B",
+        "explication": "La classification catégorielle (issue des conventions collectives) détermine le positionnement du poste et le salaire de base minimal correspondant."
+      },
+      {
+        "q": "Sauf en cas de faute lourde, la partie qui rompt le contrat à durée indéterminée doit :",
+        "options": [
+          "A) Verser une amende pénale",
+          "B) Respecter un préavis ou en payer l'indemnité compensatrice",
+          "C) Saisir le Conseil constitutionnel",
+          "D) Obtenir l'accord de la CNPS"
+        ],
+        "reponse": "B",
+        "explication": "Le préavis est obligatoire dans le CDI sauf faute lourde ; à défaut de l'exécuter, son auteur doit l'indemnité compensatrice de préavis."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Définissez le contrat de travail et exposez ses trois éléments constitutifs essentiels, en précisant le critère déterminant.",
+        "reponseAttendue": "Le contrat de travail est la convention par laquelle une personne, le travailleur, s'engage à mettre son activité professionnelle au service et sous la direction d'une autre, l'employeur, moyennant une rémunération. Ses trois éléments cumulatifs sont : 1) la prestation de travail, activité personnelle fournie par le salarié ; 2) la rémunération, contrepartie versée par l'employeur (salaire de base et accessoires) ; 3) le lien de subordination juridique, qui place le travailleur sous l'autorité de l'employeur disposant du pouvoir de direction, de contrôle et de sanction. Le lien de subordination est le critère déterminant : c'est lui qui distingue le travailleur salarié du travailleur indépendant, même lorsque prestation et rémunération existent dans les deux cas."
+      },
+      {
+        "q": "Distinguez le CDI du CDD et exposez le régime du renouvellement du CDD pour un travailleur de nationalité camerounaise.",
+        "reponseAttendue": "Le CDI (contrat à durée indéterminée) est conclu sans terme préfix et constitue la forme normale et de droit commun du contrat de travail ; il prend fin par démission, licenciement, rupture amiable, départ à la retraite ou décès. Le CDD (contrat à durée déterminée) comporte un terme précis (date ou ouvrage déterminé) et prend fin de plein droit à l'arrivée du terme. Pour un travailleur de nationalité camerounaise, le CDD ne peut être renouvelé qu'une seule fois et la durée totale (contrat initial plus renouvellement) ne peut dépasser deux ans ; au-delà de ce plafond, ou en cas de second renouvellement, le contrat est requalifié en CDI. Cette limitation protège le travailleur contre la précarité par enchaînement abusif de contrats à durée déterminée."
+      },
+      {
+        "q": "Comparez les droits du travailleur en cas de licenciement pour faute lourde et en cas de licenciement non fondé sur une faute lourde.",
+        "reponseAttendue": "En cas de licenciement pour faute lourde (faute d'une particulière gravité rendant impossible le maintien du lien), le travailleur perd le bénéfice des indemnités de rupture : il n'a droit ni à l'indemnité de préavis ni à l'indemnité de licenciement. Il conserve néanmoins son certificat de travail et son solde de tout compte, comprenant les salaires effectivement dus et l'indemnité compensatrice de congés payés acquis et non pris. En revanche, lorsque le licenciement n'est pas fondé sur une faute lourde (licenciement pour motif personnel non grave, insuffisance, ou motif économique), le travailleur a droit, outre le solde de tout compte, à l'indemnité de préavis (ou à l'exécution du préavis) et à l'indemnité de licenciement calculée selon l'ancienneté. Si le licenciement est abusif ou sans motif légitime, il ouvre en plus droit à des dommages-intérêts."
+      },
+      {
+        "q": "Présentez les modes de rupture du contrat de travail à durée indéterminée et le rôle du préavis.",
+        "reponseAttendue": "Le CDI peut être rompu : par démission, à l'initiative du travailleur ; par licenciement, à l'initiative de l'employeur, qui doit reposer sur un motif légitime (personnel ou économique) ; par rupture conventionnelle ou amiable, d'un commun accord des deux parties ; et par des causes objectives comme le départ à la retraite, la force majeure ou le décès. Sauf en cas de faute lourde, la partie qui prend l'initiative de la rupture doit respecter un préavis, période durant laquelle le contrat continue de produire ses effets afin de permettre à l'autre partie de s'organiser (rechercher un emploi ou un remplaçant). La durée du préavis varie selon la catégorie professionnelle et l'ancienneté. Si la partie n'exécute pas le préavis, elle doit verser une indemnité compensatrice de préavis égale à la rémunération correspondant à la période non observée."
+      },
+      {
+        "q": "Décrivez le mécanisme de passage du salaire brut au salaire net et la nature des prélèvements opérés, en vous appuyant sur l'exemple d'un bulletin de paie.",
+        "reponseAttendue": "Le salaire brut est l'assiette globale de rémunération : il additionne le salaire de base, le salaire des heures supplémentaires (majorées) et les éléments accessoires de nature salariale (prime d'ancienneté, etc.). Certaines sommes, comme la prime de transport ou l'indemnité de nourriture, peuvent être à caractère de remboursement de frais et donc, dans la limite des barèmes, exonérées. Pour obtenir le salaire net, on déduit du brut deux catégories de prélèvements : d'une part les prélèvements sociaux, c'est-à-dire la cotisation salariale à la CNPS (notamment la branche pension de vieillesse, invalidité et décès), la part patronale restant à la charge de l'employeur et n'étant pas prélevée sur le salaire ; d'autre part les prélèvements fiscaux, à savoir l'impôt sur le revenu des personnes physiques sur les salaires et les taxes assimilées (taxes communales, redevance audiovisuelle, contributions au Crédit Foncier et au FNE). Le salaire net est donc le brut diminué de l'ensemble de ces cotisations sociales et impôts ; c'est la somme effectivement perçue par le travailleur."
+      }
+    ]
   },
   {
     "id": "multimedia",
