@@ -1023,6 +1023,10 @@ body {
 .scan-badge-dup   { background: color-mix(in srgb, var(--danger) 18%, transparent);  color: var(--danger); }
 .scan-badge-maybe { background: color-mix(in srgb, var(--warning) 18%, transparent); color: var(--warning); }
 .scan-titre-prop { margin-top: 10px; }
+.scan-ai-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.scan-ai-actions .btn-primary, .scan-ai-actions .btn-secondary { flex: 1 1 auto; }
+.scan-ai-preview { margin: 10px 0 0; padding-left: 18px; font-size: .9rem; color: var(--text-muted, #555); }
+.scan-ai-preview li { margin: 4px 0; }
 .scan-raw { margin: 12px 0; }
 .scan-raw summary { cursor: pointer; color: var(--primary); font-weight: 600; }
 .scan-raw pre {

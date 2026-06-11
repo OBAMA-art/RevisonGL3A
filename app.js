@@ -359,7 +359,7 @@ function renderMatiere(m) {
   $('appSubtitle').textContent = m.sousTitre;
   const examLabel = getExamLabel(m);
   const sousLigne = examLabel ? `${m.sousTitre} · 📅 ${escapeHtml(examLabel)}` : m.sousTitre;
-  const nResume = (m.resume || []).length, nQcm = (m.qcm || []).length, nSujets = (m.questionsOuvertes || []).length;
+  const nResume = (m.resume || []).length, nQcm = qcmPool(m).length, nSujets = (m.questionsOuvertes || []).length;
   $('matiere-header').innerHTML = `
     <div class="big-icon">${m.icone}</div>
     <h2>${m.titre}</h2>
@@ -421,6 +421,18 @@ function getUserEpreuvesAll() {
 }
 function getUserEpreuves(matiereId) {
   return getUserEpreuvesAll()[matiereId] || [];
+}
+// QCM des épreuves perso (scannées + corrigées par l'IA) d'une matière.
+function getUserQuiz(matiereId) {
+  return getUserEpreuves(matiereId)
+    .flatMap(e => Array.isArray(e.quiz) ? e.quiz : [])
+    .filter(q => q && q.q && Array.isArray(q.options) && q.options.length >= 2);
+}
+// Pool complet de QCM d'une matière : statiques + cloud validés + perso.
+function qcmPool(m) {
+  const cloud = (typeof getCloudQuiz === 'function') ? getCloudQuiz(m.id) : [];
+  const user = getUserQuiz(m.id);
+  return [...(m.qcm || []), ...cloud, ...user];
 }
 function saveUserEpreuves(matiereId, list) {
   const all = getUserEpreuvesAll();
@@ -792,7 +804,7 @@ function renderResume(m) {
 // ============ QUIZ ============
 function startQuiz(m) {
   state.quiz = {
-    questions: shuffle(m.qcm.slice()),
+    questions: shuffle(qcmPool(m).slice()),
     index: 0,
     score: 0,
     answered: false,

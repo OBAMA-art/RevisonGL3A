@@ -53,6 +53,12 @@ function getCloudCache() {
 function getCloudApproved(matiereId) {
   return getCloudCache()[matiereId] || [];
 }
+// QCM (quiz) extraits des épreuves approuvées en ligne, pour cette matière.
+function getCloudQuiz(matiereId) {
+  return getCloudApproved(matiereId)
+    .flatMap(e => Array.isArray(e.quiz) ? e.quiz : [])
+    .filter(q => q && q.q && Array.isArray(q.options) && q.options.length >= 2);
+}
 function getCloudCacheAge() {
   try { const o = JSON.parse(localStorage.getItem(CLOUD_CACHE_KEY) || '{}'); return o.at || 0; }
   catch { return 0; }
@@ -62,7 +68,7 @@ function getCloudCacheAge() {
 async function cloudFetchApproved() {
   const c = await sbClient();
   const { data, error } = await c.from('epreuves')
-    .select('id,matiere_id,titre,source,questions,signature,created_at')
+    .select('id,matiere_id,titre,source,questions,quiz,signature,created_at')
     .eq('status', 'approved')
     .order('created_at', { ascending: false });
   if (error) throw error;
@@ -175,6 +181,7 @@ async function cloudSubmitEpreuve(matiereId, epreuve, submittedBy) {
     titre: (epreuve.titre || '').trim(),
     source: epreuve.source || '',
     questions: epreuve.questions || [],
+    quiz: Array.isArray(epreuve.quiz) ? epreuve.quiz : [],
     signature: epreuve.signature || normalizeTitle(epreuve.titre || ''),
     status: 'pending',
     submitted_by: submittedBy || ''
