@@ -877,6 +877,132 @@ const EPREUVES_DATA = {
           "bareme": "+1 / -1"
         }
       ]
+    },
+    {
+      "titre": "RATTRAPAGE EXAMEN DE FIN DE SEMESTRE - Session de Juin 2026 - Examen Outils de programmation web (Laravel) (Niveau 3, Durée 01h20, Filière Génie Logiciel)",
+      "source": "Centre d'Excellence Technologique Paul Biya — QCM 20 questions (+1 / -0,5)",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Laravel est basé sur :\nA) Django  B) Ruby on Rails  C) PHP  D) Python  E) JavaScript",
+          "correction": "Réponse correcte : C) PHP\n\nLaravel est un framework MVC écrit en PHP, créé par Taylor Otwell en 2011. Il s'inspire de la philosophie de Ruby on Rails (conventions, élégance) mais reste un framework 100 % PHP. Django (B/Python) est son équivalent côté Python.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "2",
+          "enonce": "Quel fichier contient la configuration principale de l'application ?\nA) database.php  B) app.php  C) .env  D) routes.xml  E) composer.json",
+          "correction": "Réponse correcte : B) config/app.php\n\nconfig/app.php est le fichier de configuration principal de l'application (nom, timezone, locale, fournisseurs de services, alias). Nuance importante : le fichier .env (C) contient les variables d'ENVIRONNEMENT (clés, identifiants BD, mode debug) qui sont ensuite lues par les fichiers config via env('CLE'). Les fichiers de config/ sont versionnés, le .env ne l'est jamais.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "3",
+          "enonce": "Le framework Laravel utilise quel outil pour gérer les dépendances ?\nA) Maven  B) Composer  C) Gradle  D) Npm",
+          "correction": "Réponse correcte : B) Composer\n\nComposer est le gestionnaire de dépendances de PHP (équivalent de npm pour Node ou Maven/Gradle pour Java). Il lit composer.json et installe les paquets dans vendor/. Création d'un projet : composer create-project laravel/laravel monApp. Npm (D) sert uniquement aux dépendances front-end (JS/CSS).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "4",
+          "enonce": "Comment s'appelle le dossier où se trouvent les contrôleurs ?\nA) models  B) controllers  C) views  D) app/Http/Controllers  E) public",
+          "correction": "Réponse correcte : D) app/Http/Controllers\n\nLes contrôleurs sont rangés dans app/Http/Controllers. Ils sont générés via php artisan make:controller NomController et regroupent la logique de traitement des requêtes HTTP.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "5",
+          "enonce": "Quel dossier contient les vues (templates) ?\nA) database  B) resources/views  C) storage/views  D) app/views  E) routes/views",
+          "correction": "Réponse correcte : B) resources/views\n\nLes vues Blade (fichiers .blade.php) sont stockées dans resources/views. On les retourne depuis un contrôleur avec view('nom_vue'). Les vues compilées sont mises en cache dans storage/framework/views (différent du dossier source).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "6",
+          "enonce": "Le système de routage dans Laravel se trouve principalement dans :\nA) app/Models  B) bootstrap/routes.php  C) web/web.php  D) routes/web.php  E) storage/api.php",
+          "correction": "Réponse correcte : D) routes/web.php\n\nLes routes web (avec sessions, cookies, protection CSRF) sont définies dans routes/web.php. Les routes d'API sont dans routes/api.php (préfixées par /api). Exemple : Route::get('/produits', [ProduitController::class, 'index']);",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "7",
+          "enonce": "Pour créer une route GET vers une page, on utilise :\nA) Route::post()  B) Route::put()  C) Route::get()  D) Route::patch()",
+          "correction": "Réponse correcte : C) Route::get()\n\nRoute::get() répond aux requêtes HTTP GET (affichage). post() sert à créer, put()/patch() à modifier, delete() à supprimer (verbes RESTful).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "8",
+          "enonce": "Comment lancer le serveur de développement Laravel ?\nA) php artisan serve  B) php artisan start  C) node artisan serve  D) php serve  E) docker artisan serve",
+          "correction": "Réponse correcte : A) php artisan serve\n\nphp artisan serve démarre le serveur de développement intégré sur http://127.0.0.1:8000. On peut changer le port avec --port=8080. Artisan est la console en ligne de commande de Laravel.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quelle commande sert à créer un contrôleur ?\nA) php artisan controller:make NomController  B) php artisan make:controller NomController  C) php artisan new:controller NomController  D) php artisan build:controller",
+          "correction": "Réponse correcte : B) php artisan make:controller NomController\n\nToutes les commandes de génération suivent le schéma make:<type>. Options utiles : --resource (les 7 méthodes RESTful), --model=Produit (injection du modèle), --invokable (contrôleur à méthode unique).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "10",
+          "enonce": "Pour créer un modèle, on utilise :\nA) php artisan make:model NomModele  B) php artisan create:model NomModele  C) php artisan model:new NomModele  D) php artisan make:create model  E) php artisan make:entity NomModele",
+          "correction": "Réponse correcte : A) php artisan make:model NomModele\n\nExemple : php artisan make:model Produit. Options pratiques : -m (crée aussi la migration), -c (le contrôleur), -f (la factory), ou le raccourci -mcr pour tout générer d'un coup.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "11",
+          "enonce": "À quoi sert php artisan migrate ?\nA) Supprimer la base de données  B) Mettre à jour la base de données selon les migrations  C) Générer les vues automatiquement  D) Lancer les tests  E) Créer des routes",
+          "correction": "Réponse correcte : B) Mettre à jour la base de données selon les migrations\n\nmigrate exécute les migrations non encore appliquées (création/modification de tables). Commandes liées : migrate:rollback (annule le dernier lot), migrate:fresh (supprime tout et recrée), migrate:status (état des migrations).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "12",
+          "enonce": "Où sont stockées les migrations ?\nA) storage/migrations  B) database/migrations  C) app/migrations  D) public/migrations  E) resources/migrations",
+          "correction": "Réponse correcte : B) database/migrations\n\nChaque migration y est un fichier horodaté (ex : 2024_01_01_000000_create_produits_table.php) avec une méthode up() (appliquer) et down() (annuler). L'horodatage garantit l'ordre d'exécution.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "13",
+          "enonce": "En Eloquent, le modèle correspond à :\nA) Une vue Blade  B) Une table de la base de données  C) Un fichier CSS  D) Un middleware",
+          "correction": "Réponse correcte : B) Une table de la base de données\n\nEloquent est l'ORM (Object-Relational Mapping) de Laravel : chaque modèle (ex : Produit) représente une table (produits, au pluriel par convention) et chaque instance une ligne. Exemples : Produit::all(), Produit::find(1), $produit->save().",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "14",
+          "enonce": "Quel est le nom du système de templates de Laravel ?\nA) React  B) Blade  C) Twig  D) Mustache  E) Handlebars",
+          "correction": "Réponse correcte : B) Blade\n\nBlade est le moteur de templates de Laravel (fichiers .blade.php). Il fournit {{ }} pour afficher, des directives @if/@foreach/@extends/@section, et compile les vues en PHP natif mis en cache pour la performance.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "15",
+          "enonce": "Comment afficher une variable dans une vue Blade ?\nA) {{ $var }}  B) {% $var %}  C) {! $var !}  D) <%= $var %>  E) $var",
+          "correction": "Réponse correcte : A) {{ $var }}\n\n{{ $var }} affiche la valeur en l'échappant automatiquement (protection contre les failles XSS). Pour afficher du HTML brut NON échappé (à utiliser avec prudence), on emploie {!! $var !!}.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "16",
+          "enonce": "Un « middleware » dans Laravel sert à :\nA) Gérer les bases de données  B) Traiter une requête avant/après la route  C) Créer automatiquement les vues  D) Compresser les images  E) Modifier le CSS",
+          "correction": "Réponse correcte : B) Traiter une requête avant/après la route\n\nUn middleware est une couche qui filtre/transforme les requêtes HTTP entrantes (et les réponses sortantes). Exemples natifs : auth (authentification), throttle (limitation de débit), verifyCsrfToken. On l'attache avec ->middleware('auth').",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "17",
+          "enonce": "Qu'est-ce qu'un « route model binding » ?\nA) Lier une route à une page HTML statique  B) Lier automatiquement un paramètre de route à une instance de modèle  C) Lier deux bases de données ensemble  D) Convertir du texte en JSON  E) Compresser une réponse",
+          "correction": "Réponse correcte : B) Lier automatiquement un paramètre de route à une instance de modèle\n\nAvec le Route Model Binding, Laravel récupère automatiquement le modèle correspondant à l'id de l'URL. Exemple : Route::get('/produits/{produit}', ...) puis public function show(Produit $produit) — Laravel injecte directement le bon produit (ou renvoie 404 s'il n'existe pas).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "18",
+          "enonce": "Quel fichier contient les middlewares globaux ?\nA) routes/middleware.php  B) app/Http/Kernel.php  C) database/Kernel.php  D) public/Kernel.php  E) app/Kernel.php",
+          "correction": "Réponse correcte : B) app/Http/Kernel.php\n\nLes middlewares globaux, les groupes (web, api) et les alias y sont enregistrés (Laravel ≤ 10). Note : depuis Laravel 11, cette configuration a été déplacée vers bootstrap/app.php (méthode ->withMiddleware()).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "19",
+          "enonce": "La commande pour créer une migration est :\nA) php artisan migrate:create  B) php artisan make:migration NomMigration  C) php artisan new:migration  D) php artisan migration:make  E) php artisan make:db",
+          "correction": "Réponse correcte : B) php artisan make:migration NomMigration\n\nExemple : php artisan make:migration create_produits_table --create=produits. Laravel devine la structure d'après le nom (create_..._table, add_..._to_..._table).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "20",
+          "enonce": "En général, pour renvoyer une vue depuis un contrôleur, on utilise :\nA) return render(view())  B) return view('nom_vue')  C) echo view('nom_vue')  D) output view('nom_vue')  E) redirect('nom_vue')",
+          "correction": "Réponse correcte : B) return view('nom_vue')\n\nLe helper view() retourne un objet réponse contenant la vue Blade rendue. On peut lui passer des données : return view('produits.index', ['produits' => $produits]); ou return view('produits.index', compact('produits'));. redirect() (E) sert à rediriger vers une AUTRE URL, pas à afficher une vue.",
+          "bareme": "+1 / -0,5"
+        }
+      ]
     }
   ],
   "ia": [
@@ -1699,6 +1825,126 @@ const EPREUVES_DATA = {
           "enonce": "Comparez Hadoop MapReduce et Apache Spark sur 4 critères. Dans quel cas chacun est-il préférable ?",
           "correction": "(1) Modèle d'exécution : MapReduce lit/écrit le disque entre chaque job (Map → disque → Reduce), Spark conserve les RDD en mémoire entre transformations. (2) Performance : Spark est 10 à 100x plus rapide pour des pipelines itératifs (machine learning, graphes) grâce au in-memory. MapReduce reste compétitif pour des jobs simples one-shot très volumineux. (3) API : MapReduce a une API bas niveau verbeuse en Java, Spark offre des API riches en Scala/Java/Python/R avec abstractions de haut niveau (DataFrames, Datasets, SQL). (4) Écosystème : MapReduce est centré batch, Spark unifie batch, streaming (Spark Streaming/Structured Streaming), ML (MLlib), graphes (GraphX), SQL. (5) Tolérance aux pannes : MapReduce recalcule depuis disque, Spark via lineage des RDD. Cas d'usage : MapReduce préférable pour des ETL volumineux nocturnes sur cluster Hadoop existant avec ressources limitées (RAM). Spark préférable pour ML/Deep Learning, requêtes interactives, streaming temps réel, pipelines complexes nécessitant plusieurs passes sur les données.",
           "bareme": "4 points"
+        }
+      ]
+    },
+    {
+      "titre": "RATTRAPAGE CC BIG DATA - Niveau 3 GL et SR (Durée 1H) - Examen de calcul et de raisonnement",
+      "source": "Centre d'Excellence Technologique Paul Biya — QCM 19 questions (+1 / -0,5)",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Une entreprise possède : 12 DataNodes, 24 To par DataNode, facteur de réplication = 3. Après la perte simultanée de 2 DataNodes contenant chacun uniquement des répliques secondaires, quelle affirmation est exacte ?\nA. Le cluster perd immédiatement 48 To de données utilisateur.\nB. La capacité exploitable reste inchangée mais Hadoop déclenche une reconstruction des répliques.\nC. Le NameNode devient inaccessible.\nD. La réplication passe automatiquement à 2 pour rester performante.",
+          "correction": "Réponse correcte : B.\n\nAvec un facteur de réplication 3, chaque bloc existe en 3 exemplaires sur des nœuds (et racks) différents. Perdre 2 DataNodes ne provoque AUCUNE perte de données utilisateur : il reste au moins une réplique de chaque bloc. Le NameNode détecte les blocs sous-répliqués (via l'absence de Heartbeat) et ordonne une re-réplication vers d'autres nœuds pour revenir à 3 copies. A est faux (aucune donnée perdue), C est faux (le NameNode n'est pas hébergé sur les DataNodes), D est faux (le facteur de réplication est une cible fixe, pas une valeur qui « baisse »).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "2",
+          "enonce": "Dans Spark, quelle situation provoque généralement le plus de trafic réseau ?\nA. rdd.map(x => x*2)  B. rdd.filter(x => x>100)  C. rdd.groupByKey()  D. rdd.persist()",
+          "correction": "Réponse correcte : C. rdd.groupByKey()\n\nmap et filter sont des transformations « narrow » (étroites) : chaque partition est traitée localement, sans échange réseau. groupByKey est une transformation « wide » (large) qui déclenche un SHUFFLE : toutes les valeurs d'une même clé doivent être regroupées sur le même nœud, ce qui transfère massivement les données à travers le réseau. persist (D) ne fait que mettre en cache en mémoire/disque local.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "3",
+          "enonce": "Une application Spark utilise 25 Executors, 8 Go de RAM par Executor, le Driver possède 4 Go. Quelle quantité de mémoire est allouée au traitement ?\nA. 200 Go  B. 196 Go  C. 204 Go  D. 208 Go",
+          "correction": "Réponse correcte : A. 200 Go\n\nLe traitement (calcul distribué) est réalisé par les Executors : 25 × 8 Go = 200 Go. Le Driver (4 Go) coordonne l'application mais n'exécute pas les tâches de traitement des données ; il n'est donc pas compté dans la mémoire « de traitement ». (La mémoire totale réservée serait 204 Go, mais la question porte sur le traitement.)",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "4",
+          "enonce": "Un DataNode tombe en panne. Quelle est la première action effectuée par HDFS ?\nA. Réplication immédiate des nouvelles répliques.\nB. Élection d'un nouveau NameNode.\nC. Détection de l'absence de Heartbeat.\nD. Redémarrage automatique du DataNode.",
+          "correction": "Réponse correcte : C. Détection de l'absence de Heartbeat\n\nChaque DataNode envoie périodiquement un Heartbeat au NameNode (toutes les 3 s par défaut). C'est l'ABSENCE de plusieurs Heartbeats (≈ 10 min) qui permet au NameNode de déclarer le nœud mort. La re-réplication des blocs (A) n'intervient qu'APRÈS cette détection : c'est une conséquence, pas la première action.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "5",
+          "enonce": "Pourquoi Spark SQL est-il souvent plus performant que MapReduce pour les requêtes analytiques ?\nA. Spark SQL élimine totalement les accès disque.\nB. Spark utilise Catalyst et Tungsten pour optimiser l'exécution.\nC. Spark SQL ne nécessite pas de cluster.\nD. Spark SQL stocke les données directement dans YARN.",
+          "correction": "Réponse correcte : B. Spark utilise Catalyst et Tungsten\n\nCatalyst est l'optimiseur de requêtes de Spark SQL (réécriture du plan logique/physique, pushdown des prédicats), et Tungsten optimise l'exécution physique (gestion mémoire off-heap, génération de code « whole-stage codegen »). Couplé au traitement en mémoire, cela rend Spark bien plus rapide que MapReduce (qui écrit sur disque entre chaque étape). A est exagéré (Spark déborde sur disque si nécessaire), C est faux.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "6",
+          "enonce": "Une entreprise reçoit 1 500 000 événements/s, 1,5 Ko par événement. Le débit entrant est proche de :\nA. 1,5 Go/s  B. 2,25 Go/s  C. 3 Go/s  D. 4,5 Go/s",
+          "correction": "Réponse correcte : B. 2,25 Go/s\n\nCalcul : 1 500 000 événements/s × 1,5 Ko = 2 250 000 Ko/s = 2 250 Mo/s ≈ 2,25 Go/s. Ce type de calcul de débit sert à dimensionner l'ingestion (Kafka, partitions, etc.).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "7",
+          "enonce": "Quel scénario justifie réellement l'architecture Lambda ?\nA. Archivage annuel des factures.\nB. Analyse historique + détection de fraude temps réel.\nC. Sauvegarde d'une base MySQL.\nD. Hébergement d'un site statique.",
+          "correction": "Réponse correcte : B. Analyse historique + détection de fraude temps réel\n\nL'architecture Lambda combine une couche BATCH (vues précises sur l'historique complet) et une couche SPEED/temps réel (résultats immédiats mais approximatifs), réconciliées dans une couche de service. Elle n'a de sens que lorsqu'on a BESOIN à la fois de l'historique exhaustif ET de la faible latence — exactement le cas de la détection de fraude. Les autres scénarios sont du batch simple ou du stockage statique.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "8",
+          "enonce": "Dans un cluster Hadoop réparti sur 4 racks, pourquoi une réplique est-elle souvent placée sur un rack différent ?\nA. Pour équilibrer la charge CPU.\nB. Pour réduire la consommation RAM.\nC. Pour survivre à la panne complète d'un rack.\nD. Pour accélérer Spark Streaming.",
+          "correction": "Réponse correcte : C. Pour survivre à la panne complète d'un rack\n\nC'est le principe du « rack awareness » de HDFS. La politique par défaut place 2 répliques sur un rack et 1 sur un autre rack : ainsi, même si un rack entier tombe (panne de switch, d'alimentation), il reste au moins une copie de chaque bloc accessible. C'est un compromis entre tolérance aux pannes et trafic inter-racks.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quel composant Spark transforme le DAG logique en stages ?\nA. Executor Manager  B. DAG Scheduler  C. Task Tracker  D. Node Manager",
+          "correction": "Réponse correcte : B. DAG Scheduler\n\nLe DAGScheduler découpe le graphe d'opérations (DAG) en STAGES délimités par les shuffles (frontières « wide »). Il transmet ensuite chaque stage au TaskScheduler qui lance les tâches sur les Executors. Task Tracker (C) et Node Manager (D) appartiennent au monde Hadoop/YARN, pas au cœur de Spark.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "10",
+          "enonce": "Un cluster dispose de 40 nœuds, 32 cœurs par nœud. Une application utilise 960 tâches parallèles. Quelle affirmation est correcte ?\nA. Toutes les tâches peuvent s'exécuter simultanément.\nB. Les tâches seront exécutées en plusieurs vagues.\nC. Spark limite automatiquement à 500 tâches.\nD. YARN refuse l'exécution.",
+          "correction": "Réponse correcte : A. Toutes les tâches peuvent s'exécuter simultanément\n\nNombre total de cœurs (slots de tâches) = 40 × 32 = 1 280. Comme 960 tâches ≤ 1 280 slots, toutes peuvent tourner en parallèle en une seule vague. Les « vagues » (B) n'apparaîtraient que si le nombre de tâches dépassait le nombre de cœurs disponibles.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "11",
+          "enonce": "Dans HDFS, quel est le principal inconvénient des petits fichiers ?\nA. Ils occupent plus de bande passante.\nB. Ils augmentent fortement les métadonnées gérées par le NameNode.\nC. Ils désactivent la réplication.\nD. Ils empêchent l'utilisation de Spark.",
+          "correction": "Réponse correcte : B. Ils augmentent fortement les métadonnées gérées par le NameNode\n\nC'est le célèbre « small files problem ». Le NameNode garde EN MÉMOIRE les métadonnées de chaque fichier/bloc (≈ 150 octets chacun). Des millions de petits fichiers saturent la RAM du NameNode et dégradent les performances. Solutions : HAR, SequenceFiles, Parquet, ou fusion des fichiers.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "12",
+          "enonce": "Quelle opération est généralement plus efficace, A. groupByKey() ou B. reduceByKey() ? Et pourquoi ?\nA. Réduction locale avant transfert réseau.\nB. Utilisation de HDFS.\nC. Compression automatique.\nD. Réduction du nombre de DataNodes.",
+          "correction": "Réponse correcte : reduceByKey() est plus efficace — raison A. Réduction locale avant transfert réseau\n\nreduceByKey applique une agrégation LOCALE sur chaque partition (effet « combiner ») AVANT le shuffle : il ne transfère sur le réseau que les résultats partiels déjà réduits. groupByKey, lui, transfère TOUTES les valeurs brutes à travers le réseau avant de regrouper, d'où un trafic et une pression mémoire bien plus élevés. À privilégier dès qu'une agrégation est possible.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "13",
+          "enonce": "Une entreprise traite 8 Po de données avec un facteur de réplication 3. L'espace physique minimal requis est :\nA. 8 Po  B. 16 Po  C. 24 Po  D. 32 Po",
+          "correction": "Réponse correcte : C. 24 Po\n\nLe facteur de réplication 3 signifie que chaque donnée est stockée en 3 exemplaires : 8 Po × 3 = 24 Po d'espace physique brut. (En pratique on ajoute encore une marge pour les fichiers temporaires et le shuffle, mais le minimum lié à la réplication est 24 Po.)",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "14",
+          "enonce": "Quel composant est responsable de l'allocation globale des ressources dans YARN ?\nA. NodeManager  B. ResourceManager  C. Executor  D. DataNode",
+          "correction": "Réponse correcte : B. ResourceManager\n\nLe ResourceManager (RM) est le maître de YARN : il arbitre et alloue globalement les ressources (CPU, mémoire) entre toutes les applications du cluster. Le NodeManager (A) gère les ressources d'UN seul nœud et rapporte au RM. Le DataNode (D) appartient à HDFS (stockage), pas à YARN.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "15",
+          "enonce": "Une opération Spark provoque un Shuffle de 12 To. Le réseau du cluster est saturé. Quelle optimisation est la plus pertinente ?\nA. Augmenter la taille des blocs HDFS.\nB. Remplacer groupByKey par reduceByKey.\nC. Augmenter la RAM du NameNode.\nD. Réduire le facteur de réplication.",
+          "correction": "Réponse correcte : B. Remplacer groupByKey par reduceByKey\n\nLe problème est le VOLUME du shuffle (réseau saturé). reduceByKey (avec agrégation locale type combiner) réduit drastiquement la quantité de données transférées par rapport à groupByKey. Augmenter la taille des blocs HDFS, la RAM du NameNode ou changer la réplication n'agissent pas sur le trafic de shuffle.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "16",
+          "enonce": "Pourquoi ElasticSearch n'est-il généralement pas considéré comme un remplaçant de Hadoop ?\nA. ElasticSearch ne stocke aucune donnée.\nB. ElasticSearch est optimisé pour la recherche alors que Hadoop est une plateforme complète de stockage et traitement distribué.\nC. Hadoop ne supporte pas l'indexation.\nD. Les deux sont identiques.",
+          "correction": "Réponse correcte : B.\n\nElasticSearch est un moteur de recherche et d'analyse plein texte (basé sur Lucene), excellent pour l'indexation et les requêtes quasi temps réel. Hadoop (HDFS + YARN + MapReduce/Spark) est un écosystème complet de stockage distribué et de traitement batch/analytique massif. Ils sont COMPLÉMENTAIRES (souvent Hadoop pour le stockage/traitement, ElasticSearch pour la recherche), pas substituables. A est faux (ES stocke bien les documents indexés).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "17",
+          "enonce": "Dans une architecture Microservices Big Data, quel risque apparaît fréquemment ?\nA. Couplage fort.\nB. Multiplication des communications réseau.\nC. Disparition du besoin de monitoring.\nD. Suppression des API.",
+          "correction": "Réponse correcte : B. Multiplication des communications réseau\n\nDécouper un système en de nombreux microservices augmente mécaniquement les appels inter-services sur le réseau (latence, débit, points de défaillance). À l'inverse, les microservices VISENT un couplage faible (A est l'opposé du but) et AUGMENTENT le besoin de monitoring/observabilité (C est faux). Les API sont au contraire le mode d'interaction central (D faux).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "18",
+          "enonce": "Une entreprise possède 100 nœuds, 64 Go de RAM par nœud. Combien de RAM totale possède le cluster ?\nA. 6,4 To  B. 5,12 To  C. 640 Go  D. 12,8 To",
+          "correction": "Réponse correcte : A. 6,4 To\n\nCalcul : 100 × 64 Go = 6 400 Go = 6,4 To. (1 To = 1 000 Go en notation décimale usuelle pour le dimensionnement.)",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "19",
+          "enonce": "Lors d'une panne réseau entre deux racks, quel mécanisme Hadoop permet généralement d'éviter une perte de données ?\nA. Spark DAG  B. Réplication HDFS multi-racks  C. Spark Streaming  D. Hive Metastore",
+          "correction": "Réponse correcte : B. Réplication HDFS multi-racks\n\nGrâce au « rack awareness », HDFS place les répliques d'un bloc sur des racks différents. Si un rack devient injoignable (panne réseau/switch), les répliques situées sur les autres racks restent accessibles : aucune perte de données. Spark DAG, Spark Streaming et le Hive Metastore ne traitent pas la tolérance aux pannes du stockage.",
+          "bareme": "+1 / -0,5"
         }
       ]
     }
@@ -2949,6 +3195,134 @@ const EPREUVES_DATA = {
           "enonce": "Cas 3 : SHEMA SOLUTION, face à des difficultés conjoncturelles, décide de compresser une partie de son personnel. Analysez au regard du droit du travail.",
           "correction": "La compression pour difficultés conjoncturelles = licenciement pour motif économique, licite seulement si la procédure protectrice est respectée : 1) réalité du motif économique ; 2) information et consultation des délégués du personnel (mesures, ordre des licenciements, alternatives : réduction d'heures, mutations, départs volontaires) ; 3) critères objectifs (ancienneté, aptitudes, charges de famille) ; 4) notification à l'inspecteur du travail qui contrôle ; 5) droits des licenciés : indemnité de préavis, indemnité de licenciement (selon ancienneté), solde de tout compte, et priorité de réembauchage en cas d'amélioration. Conclusion : SHEMA SOLUTION peut comprimer mais en suivant la procédure ; à défaut, le licenciement est abusif et ouvre droit à des dommages-intérêts.",
           "bareme": "5 pts (qualification 1 ; procédure 3 ; droits/réembauchage 1)"
+        }
+      ]
+    }
+  ],
+  "j2e": [
+    {
+      "titre": "RATTRAPAGE EXAMEN DE FIN DE SEMESTRE - Examen de Programmation J2E (Jakarta EE) (Niveau 3, Filière Génie Logiciel)",
+      "source": "Centre d'Excellence Technologique Paul Biya — QCM 20 questions (+1 / -0,5)",
+      "questions": [
+        {
+          "numero": "1",
+          "enonce": "Quelle est l'organisation responsable actuellement de la gouvernance et de la standardisation de Jakarta EE ?\nA. Oracle  B. Google  C. Eclipse Foundation  D. Apache Software Foundation",
+          "correction": "Réponse correcte : C. Eclipse Foundation\n\nDepuis 2017-2018, Oracle a transféré Java EE à l'Eclipse Foundation, où il a été renommé Jakarta EE (pour des raisons de marque autour du nom « Java »). C'est l'Eclipse Foundation qui pilote désormais les spécifications via un processus ouvert (le Jakarta EE Working Group).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "2",
+          "enonce": "Depuis Jakarta EE 9, quel est le préfixe standard des packages pour toutes les API ?\nA. javax.*  B. java.*  C. jakarta.*  D. org.eclipse.*",
+          "correction": "Réponse correcte : C. jakarta.*\n\nJakarta EE 9 a opéré le « big bang » : tous les packages javax.* (ex : javax.servlet, javax.persistence) ont été renommés en jakarta.* (jakarta.servlet, jakarta.persistence). C'est un changement de rupture qui oblige à adapter les imports lors de la migration depuis Java EE.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "3",
+          "enonce": "Quelle spécification est utilisée pour développer des services Web RESTful dans Jakarta EE ?\nA. JAX-WS  B. JAX-RS  C. JDBC  D. JMS",
+          "correction": "Réponse correcte : B. JAX-RS (Jakarta RESTful Web Services)\n\nJAX-RS est l'API standard pour créer des services REST, à base d'annotations (@Path, @GET, @POST, @Produces, @Consumes). JAX-WS (A) concerne les services web SOAP, JDBC l'accès aux bases relationnelles, JMS la messagerie asynchrone.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "4",
+          "enonce": "Quelle annotation est utilisée pour définir une classe comme un Servlet géré par le conteneur ?\nA. @WebServlet  B. @Controller  C. @Entity  D. @Path",
+          "correction": "Réponse correcte : A. @WebServlet\n\n@WebServlet(\"/url\") déclare une classe (héritant de HttpServlet) comme un servlet et déclare son mapping d'URL, sans passer par le web.xml. @Controller n'existe pas en Jakarta EE standard (c'est du Spring), @Entity est pour JPA, @Path pour JAX-RS.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "5",
+          "enonce": "Quelle technologie/annotation Jakarta EE est standard pour l'injection de dépendances (CDI) ?\nA. @Inject  B. @Autowired  C. @EJB  D. @Resource",
+          "correction": "Réponse correcte : A. @Inject\n\n@Inject est l'annotation standard de CDI (Contexts and Dependency Injection) pour injecter un bean. @Autowired (B) appartient à Spring (non standard Jakarta EE). @EJB injecte spécifiquement un EJB, et @Resource injecte des ressources gérées (DataSource, etc.) : ce sont des cas plus restreints.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "6",
+          "enonce": "Quelle technologie Jakarta EE fournit les fonctionnalités de validation des données des beans (ex : vérifier qu'un champ n'est pas null) ?\nA. Jakarta Bean Validation  B. Jakarta Security  C. Jakarta Persistence  D. Jakarta Faces",
+          "correction": "Réponse correcte : A. Jakarta Bean Validation\n\nJakarta Bean Validation (ex Bean Validation / JSR 380, implémentation de référence Hibernate Validator) permet de déclarer des contraintes par annotations : @NotNull, @Size, @Min, @Max, @Email, @Pattern… directement sur les champs des beans. Persistence (C) gère la BD, Security la sécurité, Faces (JSF) l'interface web.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "7",
+          "enonce": "Quelle est l'extension standard d'un fichier d'archive pour une application Web Jakarta EE ?\nA. .jar  B. .ear  C. .war  D. .rar",
+          "correction": "Réponse correcte : C. .war (Web Application Archive)\n\nUne application web se package en .war (Servlets, JSP, JSF + ressources web). Le .jar contient des classes/bibliothèques Java standard, le .ear (Enterprise Archive) regroupe plusieurs modules (web + EJB) pour un serveur d'applications complet, et le .rar est un Resource Adapter Archive (connecteurs JCA).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "8",
+          "enonce": "Dans Jakarta Persistence (JPA), quelle annotation est obligatoire pour définir une classe entité (Entity) ?\nA. @Table  B. @Id  C. @Entity  D. @Column",
+          "correction": "Réponse correcte : C. @Entity\n\n@Entity marque une classe comme entité persistante mappée à une table. @Id (B) est aussi obligatoire mais il marque la CLÉ PRIMAIRE, pas la classe ; @Table et @Column sont optionnels (mapping affiné, valeurs par défaut sinon). La question porte sur la définition de la CLASSE entité → @Entity.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "9",
+          "enonce": "Quelle annotation est utilisée pour déclarer une transaction gérée par le conteneur ?\nA. @TransactionManagement  B. @Transactional  C. @TransactionAttribute  D. @Transaction",
+          "correction": "Réponse correcte : C. @TransactionAttribute\n\nDans un EJB, les transactions gérées par le conteneur (CMT) sont configurées avec @TransactionAttribute, qui précise le comportement : REQUIRED (défaut), REQUIRES_NEW, MANDATORY, SUPPORTS, NOT_SUPPORTED, NEVER. À noter : @Transactional (jakarta.transaction.Transactional) joue un rôle équivalent sur les beans CDI (hors EJB) ; @TransactionManagement sert seulement à choisir entre gestion par le conteneur (CMT) ou par le bean (BMT).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "10",
+          "enonce": "Quelle technologie Jakarta EE permet la communication asynchrone et faiblement couplée (loosely-coupled) via des messages ?\nA. JPA  B. JMS (Jakarta Messaging)  C. JAX-RS  D. JDBC",
+          "correction": "Réponse correcte : B. JMS (Jakarta Messaging)\n\nJMS permet à des composants d'échanger des messages de façon asynchrone et découplée, via des Queues (point à point) ou des Topics (publish/subscribe). L'émetteur et le récepteur ne se connaissent pas directement et n'ont pas besoin d'être actifs en même temps. JPA et JDBC concernent les bases de données, JAX-RS le REST synchrone.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "11",
+          "enonce": "Quel composant est utilisé pour encapsuler la logique métier côté serveur, historiquement géré par le conteneur EJB ?\nA. Servlet  B. Managed Bean  C. Enterprise Bean (EJB)  D. Filter",
+          "correction": "Réponse correcte : C. Enterprise Bean (EJB)\n\nLes EJB (Enterprise JavaBeans), notamment les Session Beans (Stateless, Stateful, Singleton), encapsulent la logique métier et bénéficient des services du conteneur (transactions, sécurité, concurrence, pooling). Le Servlet (A) gère les requêtes HTTP (couche web), le Filter (D) intercepte les requêtes, le Managed Bean (B) relie l'IHM (JSF) au métier.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "12",
+          "enonce": "Quelle interface JPA permet de gérer le cycle de vie des entités (persistance, récupération, suppression) ?\nA. EntityManagerFactory  B. EntityManager  C. EntityTransaction  D. Query",
+          "correction": "Réponse correcte : B. EntityManager\n\nL'EntityManager est l'interface centrale de JPA : persist() (insérer), find() (récupérer par clé), merge() (mettre à jour), remove() (supprimer), createQuery() (JPQL). L'EntityManagerFactory (A) sert seulement à CRÉER des EntityManager, EntityTransaction (C) gère les transactions, Query (D) exécute des requêtes.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "13",
+          "enonce": "Dans JAX-RS, quelle annotation est utilisée pour définir le chemin d'accès (URL) d'une ressource ?\nA. @GET  B. @Produces  C. @Path  D. @ApplicationPath",
+          "correction": "Réponse correcte : C. @Path\n\n@Path(\"/clients\") définit l'URI relatif d'une ressource (sur la classe et/ou les méthodes). @GET indique le verbe HTTP, @Produces le type MIME de la réponse (ex : application/json), et @ApplicationPath définit le préfixe RACINE de toutes les ressources REST de l'application (ex : @ApplicationPath(\"/api\")).",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "14",
+          "enonce": "Quelle spécification Jakarta EE est utilisée pour le traitement par lots (Batch) automatisé ?\nA. Jakarta Batch  B. Jakarta Concurrency  C. Jakarta WebSocket  D. Jakarta MVC",
+          "correction": "Réponse correcte : A. Jakarta Batch\n\nJakarta Batch (ex JSR 352) standardise les traitements par lots : on définit des Jobs composés de Steps, selon le modèle « reader-processor-writer » (lecture par chunks, traitement, écriture). Concurrency gère le multithreading géré par le conteneur, WebSocket la communication bidirectionnelle, MVC le pattern Model-View-Controller côté action.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "15",
+          "enonce": "Quel est le rôle principal d'un « Application Server » compatible Jakarta EE (comme GlassFish ou WildFly) ?\nA. Fournir uniquement un conteneur de Servlets.\nB. Exécuter du code Java SE uniquement.\nC. Fournir un conteneur complet gérant les composants Web, EJB, Transactions, Sécurité, etc.\nD. Agir uniquement comme une base de données.",
+          "correction": "Réponse correcte : C.\n\nUn serveur d'applications Jakarta EE complet (GlassFish, WildFly, Payara, Open Liberty) implémente l'ensemble du « Platform Profile » : conteneur web (Servlet/JSP/JSF), conteneur EJB, JTA (transactions), JPA, CDI, JMS, sécurité, etc. À l'inverse, un simple conteneur web comme Tomcat (réponse A) ne fournit nativement que la partie Servlet/JSP, sans EJB ni JTA.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "16",
+          "enonce": "Quelle annotation CDI permet de définir le scope d'un bean pour la durée d'une requête HTTP ?\nA. @ApplicationScoped  B. @SessionScoped  C. @RequestScoped  D. @Dependent",
+          "correction": "Réponse correcte : C. @RequestScoped\n\n@RequestScoped : le bean vit le temps d'une seule requête HTTP. @SessionScoped couvre toute la session d'un utilisateur, @ApplicationScoped une instance unique partagée par toute l'application, et @Dependent (scope par défaut) lie le cycle de vie du bean à celui de l'objet qui l'injecte.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "17",
+          "enonce": "Pour quelle technologie Jakarta EE l'annotation @ServerEndpoint est-elle utilisée ?\nA. REST  B. SOAP  C. WebSocket  D. Servlet",
+          "correction": "Réponse correcte : C. WebSocket\n\n@ServerEndpoint(\"/chat\") déclare une classe comme point de terminaison serveur WebSocket (Jakarta WebSocket). On y trouve les callbacks @OnOpen, @OnMessage, @OnClose, @OnError. WebSocket fournit un canal de communication bidirectionnel et persistant, contrairement au modèle requête/réponse de REST ou des servlets.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "18",
+          "enonce": "Quelle interface permet de rechercher et d'accéder aux ressources et objets gérés par le serveur (JNDI) ?\nA. Context  B. Lookup  C. Environment  D. Registry",
+          "correction": "Réponse correcte : A. Context (jakarta.naming.Context / javax.naming.Context)\n\nJNDI (Java Naming and Directory Interface) expose les ressources via l'interface Context, dont la méthode lookup(\"java:comp/env/...\") permet de retrouver un objet géré (DataSource, EJB, file JMS) par son nom. « lookup » est une MÉTHODE, pas l'interface ; Environment et Registry ne sont pas les interfaces standard de JNDI.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "19",
+          "enonce": "Quelle technologie est utilisée pour le traitement de JSON dans Jakarta EE (binding JSON vers objet Java) ?\nA. JSON-B (Jakarta JSON Binding)  B. JSON-P (Jakarta JSON Processing)  C. JAXB  D. DOM",
+          "correction": "Réponse correcte : A. JSON-B (Jakarta JSON Binding)\n\nJSON-B réalise le mapping automatique (binding) entre objets Java et JSON : jsonb.toJson(objet) et jsonb.fromJson(chaine, Classe.class). JSON-P (B) est l'API de plus bas niveau pour analyser/construire du JSON (streaming/objet) sans binding direct. JAXB (C) concerne le XML, pas le JSON.",
+          "bareme": "+1 / -0,5"
+        },
+        {
+          "numero": "20",
+          "enonce": "Dans l'Expression Language (EL) utilisé dans les pages Jakarta (Faces ou JSP), comment encadre-t-on une expression ?\nA. ${ expression }  B. #{ expression }  C. {{ expression }}  D. <% expression %>",
+          "correction": "Réponse correcte : A. ${ expression }\n\n${ } est la syntaxe EL d'évaluation immédiate, historiquement utilisée dans les pages JSP. #{ } (réponse B) est l'évaluation différée (deferred), utilisée par JSF/Faces pour lire ET écrire des valeurs liées aux managed beans : les deux formes appartiennent bien à l'EL, mais ${ } est la forme générale demandée ici. <% %> (D) est un scriptlet JSP (du code Java brut), pas de l'EL.",
+          "bareme": "+1 / -0,5"
         }
       ]
     }
