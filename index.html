@@ -47,6 +47,14 @@
         </span>
         <span class="planning-cta-arrow">›</span>
       </button>
+      <button id="btn-mes-notes" class="planning-cta">
+        <span class="planning-cta-ico">🎓</span>
+        <span class="planning-cta-txt">
+          <span class="planning-cta-title">Mes notes &amp; moyennes</span>
+          <span class="planning-cta-sub">CC + SN par matière · modules validés · moyenne finale — privé, sur ton téléphone</span>
+        </span>
+        <span class="planning-cta-arrow">›</span>
+      </button>
       <div id="matieres-list"></div>
       <div class="tip">
         <strong>💡 Astuce :</strong> mode <em>Résumé</em> pour ancrer les notions ; mode <em>Quiz</em> pour t'auto-évaluer ; mode <em>Sujets</em> pour t'entraîner aux questions ouvertes.
@@ -61,6 +69,14 @@
         <p class="planning-intro">Session du 10 au 13 juin 2026. Touche une matière pour la réviser. Le statut se met à jour tout seul selon l'heure.</p>
       </div>
       <div id="planning-content"></div>
+    </section>
+
+    <!-- ÉCRAN MES NOTES (bordereau LMD personnel, 100% local) -->
+    <section id="screen-mes-notes" class="screen">
+      <div class="planning-head">
+        <h2>🎓 Mes notes &amp; moyennes</h2>
+      </div>
+      <div id="notes-content"></div>
     </section>
 
     <!-- ÉCRAN MATIÈRE : choix mode (résumé / quiz / sujets) -->
@@ -235,6 +251,7 @@
   <script src="ocr.js"></script>
   <script src="cloud-config.js"></script>
   <script src="cloud.js"></script>
+  <script src="notes.js"></script>
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
