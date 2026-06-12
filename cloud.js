@@ -104,6 +104,123 @@ async function cloudSaveMatiereConfig(rows) {
   return true;
 }
 
+/* -------------- ANNONCES D'EXAMEN (templates du délégué) ----------------- */
+const ANNONCE_CACHE_KEY = 'gl3a_annonce';
+const ANNONCE_VUE_KEY = 'gl3a_annonce_vue';
+
+// Les 4 types d'examens du planning annuel IAI (+ annonce libre).
+// 1er semestre : SN1 · 2nd semestre : SN2, puis Rattrapage des CC,
+// et enfin Rattrapage des SN1 & SN2.
+const EXAM_TEMPLATES = {
+  sn1: {
+    icone: '📘', label: 'Session Normale — 1er semestre (SN1)',
+    titre: 'Session Normale du 1er semestre (SN1)',
+    message: "Chers camarades, la Session Normale du 1er semestre (SN1) se tiendra {periode}. Mettez toutes les chances de votre côté : résumés, quiz et épreuves corrigées vous attendent dans l'app. Bonne révision à tous ! 💪"
+  },
+  sn2: {
+    icone: '📗', label: 'Session Normale — 2nd semestre (SN2)',
+    titre: 'Session Normale du 2nd semestre (SN2)',
+    message: "Chers camarades, la Session Normale du 2nd semestre (SN2) se tiendra {periode}. C'est la dernière ligne droite du semestre : révisez régulièrement, entraînez-vous sur les épreuves corrigées. On se donne à fond ! 💪"
+  },
+  rattrapage_cc: {
+    icone: '🔁', label: 'Rattrapage des Contrôles Continus (CC)',
+    titre: 'Rattrapage des Contrôles Continus',
+    message: "Chers camarades, le rattrapage des Contrôles Continus est programmé {periode}. Concernés : vérifiez vos matières, et appuyez-vous sur les quiz et épreuves corrigées de l'app pour combler les lacunes. Courage à tous ! 💪"
+  },
+  rattrapage_sn: {
+    icone: '🔂', label: 'Rattrapage SN1 & SN2',
+    titre: 'Rattrapage des Sessions Normales (SN1 & SN2)',
+    message: "Chers camarades, le rattrapage des Sessions Normales (SN1 & SN2) se déroulera {periode}. C'est l'ultime chance de valider vos modules : consultez le planning dans l'app et révisez les matières concernées. Bonne chance à tous ! 💪"
+  },
+  libre: {
+    icone: '📢', label: 'Annonce libre',
+    titre: '',
+    message: ''
+  }
+};
+
+// '2026-06-10' → '10 juin 2026' (en UTC des deux côtés : la date affichée ne
+// dépend pas du fuseau de l'appareil — pas de glissement au jour précédent).
+function fmtDateFrISO(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || '');
+  if (!m) return '';
+  return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]))
+    .toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+function annoncePeriode(a) {
+  const d = fmtDateFrISO(a && a.date_debut), f = fmtDateFrISO(a && a.date_fin);
+  if (d && f) return 'du ' + d + ' au ' + f;
+  if (d) return 'à partir du ' + d;
+  return '';
+}
+
+// HTML de la bannière (partagé : accueil + aperçu admin). Tout est échappé.
+function annonceBannerHTML(a, opts) {
+  const t = EXAM_TEMPLATES[a.type] || EXAM_TEMPLATES.libre;
+  const periode = annoncePeriode(a);
+  const typeClass = /^[a-z0-9_]+$/.test(a.type || '') ? a.type : 'libre';
+  return `
+    <div class="annonce-banner annonce-${typeClass}">
+      <div class="annonce-head">
+        <span class="annonce-ico">${t.icone}</span>
+        <div class="annonce-titles">
+          <span class="annonce-kicker">📣 Annonce du délégué</span>
+          <strong class="annonce-titre">${escapeHtml(a.titre || t.label)}</strong>
+        </div>
+        ${opts && opts.dismiss ? '<button class="annonce-close" id="annonce-close" aria-label="Fermer l\'annonce">✕</button>' : ''}
+      </div>
+      ${periode ? `<div class="annonce-periode">📅 ${escapeHtml(periode.charAt(0).toUpperCase() + periode.slice(1))}</div>` : ''}
+      ${a.message ? `<p class="annonce-msg">${escapeHtml(a.message)}</p>` : ''}
+    </div>`;
+}
+
+function getAnnonceCached() {
+  try {
+    const o = JSON.parse(localStorage.getItem(ANNONCE_CACHE_KEY) || 'null');
+    const a = o && o.data;
+    // Validation minimale : un cache corrompu ne doit pas casser le rendu.
+    return (a && a.id && a.titre) ? a : null;
+  } catch { return null; }
+}
+async function cloudFetchAnnonce() {
+  const c = await sbClient();
+  const { data, error } = await c.from('annonces')
+    .select('id,type,titre,message,date_debut,date_fin,active,created_at')
+    .eq('active', true)
+    .order('created_at', { ascending: false })
+    .limit(1);
+  if (error) throw error;
+  const a = (data && data[0]) || null;
+  try { localStorage.setItem(ANNONCE_CACHE_KEY, JSON.stringify({ at: Date.now(), data: a })); } catch {}
+  return a;
+}
+// Publie une annonce (et désactive la précédente : une seule active à la fois).
+// NB : pas de transaction (2 requêtes) — sans gravité car il n'y a qu'un seul
+// délégué, et la lecture (limit 1, plus récente) reste correcte même si deux
+// annonces se retrouvaient actives.
+async function cloudSaveAnnonce(a) {
+  const c = await sbClient();
+  const off = await c.from('annonces').update({ active: false }).eq('active', true);
+  if (off.error) throw off.error;
+  const { error } = await c.from('annonces').insert({
+    type: a.type || 'libre',
+    titre: a.titre,
+    message: a.message || '',
+    date_debut: a.date_debut || null,
+    date_fin: a.date_fin || null,
+    active: true
+  });
+  if (error) throw error;
+  return cloudFetchAnnonce();
+}
+async function cloudDesactiverAnnonce() {
+  const c = await sbClient();
+  const { error } = await c.from('annonces').update({ active: false }).eq('active', true);
+  if (error) throw error;
+  try { localStorage.setItem(ANNONCE_CACHE_KEY, JSON.stringify({ at: Date.now(), data: null })); } catch {}
+  return true;
+}
+
 /* ----------------- COMPTEUR DE VISITEURS (analytics) --------------------- */
 function getVisitorId() {
   let id = null;
@@ -302,11 +419,13 @@ async function showAdminQueue(email) {
     </div>
     <div id="admin-stats" class="admin-stats"><p class="scan-status">📊 Chargement des statistiques…</p></div>
     <button id="admin-prog-btn" class="btn-primary btn-block">📅 Organiser le programme (UE & horaires)</button>
+    <button id="admin-annonce-btn" class="btn-primary btn-block">📢 Annoncer un examen</button>
     <h3 class="admin-h3">⏳ Épreuves en attente</h3>
     <div id="admin-pending"><p class="scan-status">Chargement…</p></div>
     <button id="admin-home-btn" class="btn-secondary btn-block" style="margin-top:16px;">🏠 Accueil</button>`;
   $('admin-logout-btn').onclick = async () => { try { await cloudLogout(); } catch {} renderAdminScreen(); };
   $('admin-prog-btn').onclick = () => renderAdminProgramme(email);
+  $('admin-annonce-btn').onclick = () => renderAdminAnnonce(email);
   $('admin-home-btn').onclick = () => renderHome();
 
   // Tableau de bord de fréquentation (détaillé)
@@ -500,4 +619,147 @@ async function moderate(id, approve, email) {
     if (card) card.style.opacity = '1';
     alert('❌ Action impossible : ' + (e.message || e));
   }
+}
+
+/* ============== UI : ADMIN — ANNONCER UN EXAMEN (templates) ============== */
+async function renderAdminAnnonce(email) {
+  $('admin-content').innerHTML = '<p class="scan-status">⏳ Chargement…</p>';
+  if (typeof EXAM_TEMPLATES === 'undefined') {
+    $('admin-content').innerHTML = '<p class="form-error">Configuration des annonces indisponible (ancien cache). Recharge l\'application.</p>';
+    return;
+  }
+  let cur = null;
+  try { cur = await cloudFetchAnnonce(); } catch { cur = getAnnonceCached(); }
+
+  const types = Object.keys(EXAM_TEMPLATES);
+  $('admin-content').innerHTML = `
+    <div class="admin-bar">
+      <span class="admin-who">📢 Annoncer un examen</span>
+      <button id="annonce-back" class="btn-secondary">← Modération</button>
+    </div>
+    <p class="form-intro">Les <strong>4 types d'examens du planning annuel</strong> sont prédéfinis :
+    choisis-en un, le titre et le message se remplissent tout seuls (tu peux les retoucher),
+    ajoute les dates, publie — l'annonce s'affiche sur l'accueil de tous les camarades.</p>
+    ${cur ? `
+    <div class="annonce-cur">
+      <span>Annonce active : <strong>${escapeHtml(cur.titre)}</strong></span>
+      <button id="annonce-off" class="btn-secondary">🚫 Désactiver</button>
+    </div>` : ''}
+    <div class="annonce-types">
+      ${types.map(t => `
+        <button class="annonce-type" data-t="${t}">
+          <span class="annonce-type-ico">${EXAM_TEMPLATES[t].icone}</span>
+          <span>${escapeHtml(EXAM_TEMPLATES[t].label)}</span>
+        </button>`).join('')}
+    </div>
+    <div class="annonce-dates">
+      <div class="form-group"><label for="annonce-debut">Date de début</label>
+        <input type="date" id="annonce-debut"></div>
+      <div class="form-group"><label for="annonce-fin">Date de fin</label>
+        <input type="date" id="annonce-fin"></div>
+    </div>
+    <div class="form-group">
+      <label for="annonce-titre">Titre de l'annonce <span class="required">*</span></label>
+      <input type="text" id="annonce-titre" maxlength="120" placeholder="ex: Session Normale du 1er semestre (SN1)">
+    </div>
+    <div class="form-group">
+      <label for="annonce-msg">Message aux camarades</label>
+      <textarea id="annonce-msg" rows="4" maxlength="600" placeholder="Le message qui accompagne l'annonce…"></textarea>
+    </div>
+    <div class="form-divider">Aperçu (ce que verront les camarades)</div>
+    <div id="annonce-preview"></div>
+    <div id="annonce-msg-zone"></div>
+    <div class="form-actions">
+      <button id="annonce-save" class="btn-primary">📣 Publier l'annonce</button>
+    </div>`;
+
+  let selType = (cur && cur.type) || null;
+
+  const readForm = () => ({
+    type: selType || 'libre',
+    titre: $('annonce-titre').value.trim(),
+    message: $('annonce-msg').value.trim(),
+    date_debut: $('annonce-debut').value || null,
+    date_fin: $('annonce-fin').value || null
+  });
+  const updatePreview = () => {
+    const a = readForm();
+    $('annonce-preview').innerHTML = (a.titre || a.message)
+      ? annonceBannerHTML(a)
+      : '<p class="scan-status">Choisis un type d\'examen ci-dessus pour générer l\'annonce.</p>';
+  };
+
+  // Le message est-il encore celui du template ? (si le délégué l'a retouché
+  // à la main, on ne l'écrase plus automatiquement)
+  let msgEdited = false;
+
+  const applyTemplate = (t) => {
+    selType = t;
+    document.querySelectorAll('.annonce-type').forEach(b =>
+      b.classList.toggle('annonce-type-sel', b.dataset.t === t));
+    const tpl = EXAM_TEMPLATES[t];
+    const periode = annoncePeriode(readForm()) || 'prochainement (dates à confirmer)';
+    if (tpl.titre) $('annonce-titre').value = tpl.titre;
+    if (tpl.message) $('annonce-msg').value = tpl.message.replace('{periode}', periode);
+    msgEdited = false;   // choisir un template régénère volontairement le message
+    updatePreview();
+  };
+
+  document.querySelectorAll('.annonce-type').forEach(b => {
+    b.onclick = () => applyTemplate(b.dataset.t);
+  });
+  ['annonce-titre', 'annonce-msg', 'annonce-debut', 'annonce-fin'].forEach(id => {
+    $(id).addEventListener('input', updatePreview);
+  });
+  $('annonce-msg').addEventListener('input', () => { msgEdited = true; });
+  // Si les dates changent APRÈS le choix du template, on régénère le message
+  // SAUF si le délégué l'a déjà personnalisé (pas de perte de saisie).
+  ['annonce-debut', 'annonce-fin'].forEach(id => {
+    $(id).addEventListener('change', () => {
+      if (selType && selType !== 'libre' && !msgEdited) applyTemplate(selType);
+    });
+  });
+
+  // Pré-remplir depuis l'annonce active (pour modification rapide)
+  if (cur) {
+    if (cur.date_debut) $('annonce-debut').value = String(cur.date_debut).slice(0, 10);
+    if (cur.date_fin) $('annonce-fin').value = String(cur.date_fin).slice(0, 10);
+    $('annonce-titre').value = cur.titre || '';
+    $('annonce-msg').value = cur.message || '';
+    if (cur.message) msgEdited = true;   // message existant = à préserver
+    document.querySelectorAll('.annonce-type').forEach(b =>
+      b.classList.toggle('annonce-type-sel', b.dataset.t === selType));
+  }
+  updatePreview();
+
+  $('annonce-back').onclick = () => showAdminQueue(email);
+  const offBtn = $('annonce-off');
+  if (offBtn) offBtn.onclick = async () => {
+    if (!confirm('Désactiver l\'annonce actuellement affichée sur l\'accueil ?')) return;
+    offBtn.disabled = true;
+    try { await cloudDesactiverAnnonce(); renderAdminAnnonce(email); }
+    catch (e) { alert('❌ ' + (e.message || 'Échec')); offBtn.disabled = false; }
+  };
+
+  $('annonce-save').onclick = async () => {
+    const a = readForm();
+    if (!a.titre) {
+      $('annonce-msg-zone').innerHTML = '<div class="form-error">Le titre est obligatoire.</div>';
+      return;
+    }
+    if (a.date_debut && a.date_fin && a.date_fin < a.date_debut) {
+      $('annonce-msg-zone').innerHTML = '<div class="form-error">La date de fin est avant la date de début.</div>';
+      return;
+    }
+    const btn = $('annonce-save');
+    btn.disabled = true; btn.textContent = '⏳ Publication…';
+    try {
+      await cloudSaveAnnonce(a);
+      $('annonce-msg-zone').innerHTML = '<div class="form-success">✅ Annonce publiée ! Elle s\'affiche maintenant sur l\'accueil de tous.</div>';
+    } catch (e) {
+      $('annonce-msg-zone').innerHTML = `<div class="form-error">❌ ${escapeHtml(e.message || 'Échec')}.<br>As-tu exécuté le SQL <code>supabase-annonces.sql</code> ?</div>`;
+    } finally {
+      btn.disabled = false; btn.textContent = '📣 Publier l\'annonce';
+    }
+  };
 }

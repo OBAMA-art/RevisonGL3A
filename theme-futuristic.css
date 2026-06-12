@@ -563,3 +563,293 @@ body::after {
   .plan-row { gap: 9px; padding: 11px 12px; }
   .plan-tag { padding: 3px 8px; font-size: 10px; }
 }
+
+/* ============================================================================
+   📢 ANNONCES D'EXAMEN — bannière accueil + écran admin (templates)
+   ============================================================================ */
+.annonce-banner {
+  position: relative;
+  margin: 2px 0 18px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon1) 45%, transparent);
+  background:
+    linear-gradient(125deg, color-mix(in srgb, var(--neon1) 26%, var(--bg-card)),
+                            color-mix(in srgb, var(--neon2) 14%, var(--bg-card)) 70%);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  box-shadow: 0 14px 40px color-mix(in srgb, var(--neon1) 30%, rgba(0,0,0,0.32));
+  overflow: hidden;
+}
+.annonce-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 120% at 110% -10%, color-mix(in srgb, var(--neon2) 30%, transparent), transparent 70%);
+  pointer-events: none;
+}
+/* Accent par type d'examen */
+.annonce-sn1           { border-color: color-mix(in srgb, var(--neon1) 55%, transparent); }
+.annonce-sn2           { border-color: color-mix(in srgb, var(--neon2) 55%, transparent);
+  background: linear-gradient(125deg, color-mix(in srgb, var(--neon2) 22%, var(--bg-card)), color-mix(in srgb, var(--neon1) 12%, var(--bg-card)) 70%); }
+.annonce-rattrapage_cc { border-color: color-mix(in srgb, var(--warning) 55%, transparent);
+  background: linear-gradient(125deg, color-mix(in srgb, var(--warning) 20%, var(--bg-card)), color-mix(in srgb, var(--neon1) 12%, var(--bg-card)) 70%); }
+.annonce-rattrapage_sn { border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+  background: linear-gradient(125deg, color-mix(in srgb, var(--danger) 20%, var(--bg-card)), color-mix(in srgb, var(--neon1) 12%, var(--bg-card)) 70%); }
+
+.annonce-head { display: flex; align-items: flex-start; gap: 12px; position: relative; }
+.annonce-ico {
+  font-size: 26px; flex: 0 0 auto;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--neon2) 50%, transparent));
+}
+.annonce-titles { flex: 1; min-width: 0; }
+.annonce-kicker {
+  display: block;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+  color: color-mix(in srgb, var(--neon2) 85%, var(--text));
+  margin-bottom: 3px;
+}
+.annonce-titre { display: block; font-size: 15.5px; letter-spacing: -0.2px; line-height: 1.3; }
+.annonce-close {
+  flex: 0 0 auto;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  color: var(--text-muted); font-size: 13px; cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.annonce-close:hover { color: var(--text); border-color: var(--neon2); }
+.annonce-periode {
+  position: relative;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12.5px; font-weight: 800;
+  color: color-mix(in srgb, var(--neon2) 90%, var(--text));
+  background: color-mix(in srgb, var(--neon2) 13%, transparent);
+  border: 1px solid color-mix(in srgb, var(--neon2) 40%, transparent);
+}
+.annonce-msg {
+  position: relative;
+  margin: 10px 0 0;
+  font-size: 13.5px; line-height: 1.55;
+  color: color-mix(in srgb, var(--text) 88%, transparent);
+}
+
+/* --- Écran admin : choix du template --- */
+.annonce-cur {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  margin: 0 0 14px; padding: 11px 14px;
+  border-radius: 12px; font-size: 13px;
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 38%, transparent);
+}
+.annonce-types {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
+  margin: 0 0 16px;
+}
+.annonce-type {
+  display: flex; align-items: center; gap: 9px;
+  padding: 11px 12px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  color: var(--text); font-size: 12.5px; font-weight: 700; text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;   /* labels longs : pas de débordement sur mobile */
+  transition: transform .15s, border-color .2s, box-shadow .2s;
+}
+.annonce-type:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--neon2) 55%, transparent); }
+.annonce-type-sel {
+  border-color: var(--neon2);
+  box-shadow: 0 0 0 1px var(--neon2), 0 8px 26px color-mix(in srgb, var(--neon2) 28%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--neon1) 18%, var(--bg-card)), color-mix(in srgb, var(--neon2) 14%, var(--bg-card)));
+}
+.annonce-type-ico { font-size: 19px; flex: 0 0 auto; }
+.annonce-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 380px) { .annonce-types { grid-template-columns: 1fr; } }
+
+/* ============================================================================
+   🎓 MES NOTES — refonte futuriste (héro KPI + anneau crédits + cartes UE)
+   ============================================================================ */
+
+/* Permet d'ANIMER l'anneau de crédits (conic-gradient sur variable custom). */
+@property --p {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
+/* --- Héro --- */
+.nh {
+  display: flex; align-items: center; gap: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon1) 40%, transparent);
+  background:
+    radial-gradient(90% 160% at 0% 0%, color-mix(in srgb, var(--neon1) 22%, transparent), transparent 60%),
+    radial-gradient(80% 140% at 100% 100%, color-mix(in srgb, var(--neon2) 18%, transparent), transparent 65%),
+    var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  box-shadow: 0 16px 46px color-mix(in srgb, var(--neon1) 26%, rgba(0,0,0,0.34));
+}
+.nh-ring {
+  flex: 0 0 auto;
+  width: 96px; height: 96px; border-radius: 50%;
+  background: conic-gradient(var(--neon2) var(--p, 0%), color-mix(in srgb, var(--text) 10%, transparent) var(--p, 0%));
+  display: grid; place-items: center;
+  box-shadow: 0 0 26px color-mix(in srgb, var(--neon2) 35%, transparent);
+  transition: --p .4s;
+}
+.nh-ring-in {
+  width: 74px; height: 74px; border-radius: 50%;
+  background: var(--bg-elevated);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+}
+.nh-ring-in strong {
+  font-size: 22px; line-height: 1;
+  background: linear-gradient(92deg, var(--neon2), var(--neon1));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.nh-ring-in em { font-style: normal; font-size: 9.5px; color: var(--text-muted); margin-top: 3px; font-weight: 700; letter-spacing: .3px; }
+.nh-main { flex: 1; min-width: 0; }
+.nh-label {
+  display: block;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 2px;
+}
+.nh-value {
+  display: block;
+  font-size: 34px; font-weight: 900; line-height: 1.1; letter-spacing: -1px;
+  background: linear-gradient(96deg, #fff 0%, var(--neon2) 55%, var(--neon1) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 14px color-mix(in srgb, var(--neon2) 30%, transparent));
+}
+.nh-value.note-ko {
+  background: linear-gradient(96deg, #fff 0%, var(--danger) 70%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+/* Thème clair : pas de blanc dans les gradients de texte (illisible sur fond clair) */
+[data-theme="light"] .nh-value {
+  background: linear-gradient(96deg, var(--neon1) 0%, var(--neon2) 80%);
+  -webkit-background-clip: text; background-clip: text;
+}
+[data-theme="light"] .nh-value.note-ko {
+  background: linear-gradient(96deg, #8b1f33 0%, var(--danger) 80%);
+  -webkit-background-clip: text; background-clip: text;
+}
+.nh-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.nh-chip {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 45%, transparent);
+}
+.nh-chip strong { color: var(--text); margin-left: 3px; }
+.nh-chip strong.note-ok { color: var(--success); }
+.nh-chip strong.note-ko { color: var(--danger); }
+/* Thème clair : teintes plus profondes pour un meilleur contraste */
+[data-theme="light"] .nh-chip strong.note-ok { color: #00875f; }
+[data-theme="light"] .nh-chip strong.note-ko { color: #d22b40; }
+[data-theme="light"] .notes-note.note-ok { color: #00875f; }
+[data-theme="light"] .notes-note.note-ko { color: #d22b40; }
+.nh-chip-final {
+  border-color: color-mix(in srgb, var(--neon1) 55%, transparent);
+  background: color-mix(in srgb, var(--neon1) 14%, transparent);
+  color: color-mix(in srgb, var(--neon1) 70%, var(--text));
+}
+.nh-hint { display: block; margin-top: 8px; font-size: 11.5px; color: var(--text-muted); }
+
+.notes-privacy {
+  font-size: 12px; color: var(--text-muted); line-height: 1.55;
+  padding: 10px 14px; margin: 0 0 18px;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--neon2) 35%, var(--border));
+  background: color-mix(in srgb, var(--neon2) 5%, transparent);
+}
+
+/* --- Titres de semestre --- */
+.notes-sem-title { display: flex; align-items: center; gap: 10px; }
+.notes-sem-badge {
+  flex: 0 0 auto;
+  font-size: 12px; font-weight: 900; letter-spacing: .5px;
+  padding: 4px 11px; border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(96deg, var(--neon1), var(--neon2));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--neon1) 45%, transparent);
+}
+
+/* --- Cartes UE (verre + statut) --- */
+.notes-ue {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.26);
+  transition: border-color .3s, box-shadow .3s;
+}
+.notes-ue-ok { border-color: color-mix(in srgb, var(--success) 45%, transparent); }
+.notes-ue-ko { border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+.notes-ue-title { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; min-width: 0; }
+.notes-ue-status {
+  flex: 0 0 auto;
+  font-size: 11.5px; font-weight: 800; white-space: nowrap;
+  padding: 4px 11px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-muted);
+}
+.ue-st-ok   { color: var(--success); border-color: color-mix(in srgb, var(--success) 50%, transparent); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.ue-st-ko   { color: var(--danger);  border-color: color-mix(in srgb, var(--danger) 50%, transparent);  background: color-mix(in srgb, var(--danger) 12%, transparent); }
+.ue-st-part { color: color-mix(in srgb, var(--warning) 90%, var(--text)); border-color: color-mix(in srgb, var(--warning) 45%, transparent); background: color-mix(in srgb, var(--warning) 10%, transparent); }
+.notes-ue-bar {
+  height: 7px; border-radius: 999px; overflow: hidden;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  margin: 2px 0 10px;
+}
+.notes-ue-fill {
+  display: block; height: 100%; width: 0; border-radius: 999px;
+  background: linear-gradient(90deg, var(--neon2), var(--neon1));
+  transition: width .45s cubic-bezier(.2,.7,.3,1);
+}
+.ue-fill-ok   { background: linear-gradient(90deg, var(--neon2), var(--success)); box-shadow: 0 0 12px color-mix(in srgb, var(--success) 50%, transparent); }
+.ue-fill-ko   { background: linear-gradient(90deg, var(--warning), var(--danger)); box-shadow: 0 0 12px color-mix(in srgb, var(--danger) 45%, transparent); }
+.ue-fill-part { background: linear-gradient(90deg, var(--neon2), var(--warning)); }
+
+/* --- Saisie : champs néon --- */
+.notes-in {
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  border: 1px solid var(--border);
+  min-height: 42px;   /* cible tactile confortable sur mobile */
+  transition: border-color .2s, box-shadow .2s;
+}
+.notes-in:focus {
+  outline: none;
+  border-color: var(--neon2);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--neon2) 35%, transparent), 0 0 16px color-mix(in srgb, var(--neon2) 25%, transparent);
+}
+.notes-in-bad {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 35%, transparent) !important;
+}
+.notes-note { font-variant-numeric: tabular-nums; }
+.notes-note.note-ok { text-shadow: 0 0 12px color-mix(in srgb, var(--success) 45%, transparent); }
+.notes-note.note-ko { text-shadow: 0 0 12px color-mix(in srgb, var(--danger) 45%, transparent); }
+
+/* --- Carte stage --- */
+.notes-stage {
+  border-color: color-mix(in srgb, var(--neon1) 55%, transparent);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--neon1) 24%, rgba(0,0,0,0.3));
+}
+
+/* --- Responsive héro --- */
+@media (max-width: 380px) {
+  .nh { flex-direction: column; text-align: center; gap: 12px; }
+  .nh-chips { justify-content: center; }
+  .nh-value { font-size: 30px; }
+  .notes-row { grid-template-columns: 1fr 54px 54px 48px; gap: 6px; }
+}
