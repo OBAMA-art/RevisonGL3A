@@ -158,7 +158,8 @@ function renderMesNotes() {
             <input class="notes-in" data-k="${mat.k}" data-f="sn" inputmode="decimal"
                    placeholder="SN" value="${typeof e.sn === 'number' ? String(e.sn).replace('.', ',') : ''}">
             <div class="notes-note ${noteClass(note)}" id="note-${mat.k}">${fmtNote(note)}</div>
-          </div>`;
+          </div>
+          <div class="notes-sn-hint" id="snhint-${mat.k}" role="status" hidden></div>`;
       }).join('');
       return `
         <div class="notes-ue" id="ue-card-${ue.id}">
@@ -205,8 +206,10 @@ function renderMesNotes() {
         <span class="nh-hint" id="nh-hint"></span>
       </div>
     </div>
-    <p class="notes-privacy">🔒 Tes notes restent <strong>uniquement sur ton téléphone</strong> — rien n'est envoyé en ligne.
+    <p class="notes-privacy">🔒 Tes notes sont <strong>privées</strong> : stockées sur ton téléphone (et, si tu actives la
+    sauvegarde en ligne, dans ton espace personnel — personne d'autre n'y a accès, pas même le délégué).
     Note matière = CC×40% + SN×60% · UE validée si moyenne ≥ 10 (compensation) → crédits débloqués.</p>
+    <div class="notes-cloud" id="notes-cloud-card" hidden></div>
     ${semBlocks}
     <div class="notes-ue notes-stage" id="ue-card-stage">
       <div class="notes-ue-head">
@@ -223,17 +226,33 @@ function renderMesNotes() {
         <div class="notes-note ${noteClass(typeof store._stage === 'number' ? store._stage : null)}" id="note-_stage">${fmtNote(typeof store._stage === 'number' ? store._stage : null)}</div>
       </div>
     </div>
+    <div class="epreuves-actions-row notes-io">
+      <button id="btn-notes-export" class="btn-secondary">📤 Exporter mes notes</button>
+      <button id="btn-notes-import" class="btn-secondary">📥 Importer</button>
+      <input type="file" id="notes-file-import" accept=".json" hidden>
+    </div>
     <button id="btn-notes-reset" class="btn-secondary notes-reset">🗑️ Effacer toutes mes notes</button>
   `;
 
-  // Saisie : parse (virgule acceptée), borne 0–20, sauvegarde, recalcul live.
+  // Saisie STRICTE : chiffres + une virgule/point, max 2 décimales, max 20.
+  // Tout caractère invalide est refusé à la frappe (la valeur précédente
+  // valide est restaurée), puis sauvegarde + recalcul en direct.
   $('notes-content').querySelectorAll('.notes-in').forEach(inp => {
+    inp.dataset.prev = inp.value;
     inp.addEventListener('input', () => {
-      const raw = inp.value.trim().replace(',', '.');
-      const v = raw === '' ? null : parseFloat(raw);
-      const valid = v === null || (!isNaN(v) && v >= 0 && v <= 20);
-      inp.classList.toggle('notes-in-bad', !valid);
-      if (!valid) return;
+      // 1) Nettoyage : on ne garde que chiffres et premier séparateur (2 déc. max)
+      let raw = inp.value.replace(/[^0-9.,]/g, '');
+      const m = /^(\d{0,2})(?:([.,])(\d{0,2})?)?/.exec(raw);
+      raw = (m[1] || '') + (m[2] ? m[2] + (m[3] || '') : '');
+      // 2) Borne : une note ne peut pas dépasser 20
+      const v = (raw === '' || /^[.,]$/.test(raw)) ? null : parseFloat(raw.replace(',', '.'));
+      if (v !== null && (isNaN(v) || v > 20)) {
+        inp.value = inp.dataset.prev;   // saisie refusée
+        return;
+      }
+      if (inp.value !== raw) inp.value = raw;
+      inp.dataset.prev = raw;
+
       const st = notesLoad();
       if (inp.dataset.k === '_stage') {
         if (v === null) delete st._stage; else st._stage = v;
@@ -244,6 +263,7 @@ function renderMesNotes() {
         if (!Object.keys(st[inp.dataset.k]).length) delete st[inp.dataset.k];
       }
       notesSave(st);
+      if (typeof compteNotesChanged === 'function') compteNotesChanged();   // sync cloud (si connecté)
       refreshNotesComputed();
     });
   });
@@ -264,8 +284,92 @@ function renderMesNotes() {
     }
   };
 
+  // Sauvegarde fichier (filet de sécurité sans compte)
+  $('btn-notes-export').onclick = exportNotes;
+  $('btn-notes-import').onclick = () => $('notes-file-import').click();
+  $('notes-file-import').onchange = importNotes;
+
+  renderNotesCloudCard();   // carte « sauvegarde en ligne » (asynchrone)
   refreshNotesComputed();
   go('mes-notes');
+}
+
+/* --------------------- Sauvegarde fichier (export/import) ---------------- */
+function exportNotes() {
+  const data = { app: 'revisions-gl3a', type: 'notes', version: 1, exporte_le: new Date().toISOString(), notes: notesLoad() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'mes-notes-gl3a.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function importNotes(ev) {
+  const file = ev.target.files && ev.target.files[0];
+  ev.target.value = '';
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      const src = (data && data.notes && typeof data.notes === 'object') ? data.notes : null;
+      if (!src) throw new Error('format');
+      // Assainissement : on ne garde que des notes numériques valides (0–20).
+      const okNum = (x) => typeof x === 'number' && !isNaN(x) && x >= 0 && x <= 20;
+      const clean = {};
+      Object.keys(src).forEach(k => {
+        if (k === '_stage') { if (okNum(src[k])) clean._stage = src[k]; return; }
+        const e = src[k];
+        if (e && typeof e === 'object') {
+          const out = {};
+          if (okNum(e.cc)) out.cc = e.cc;
+          if (okNum(e.sn)) out.sn = e.sn;
+          if (Object.keys(out).length) clean[k] = out;
+        }
+      });
+      if (!confirm('Importer ces notes ? Elles remplaceront celles enregistrées sur cet appareil.')) return;
+      notesSave(clean);
+      if (typeof compteNotesChanged === 'function') compteNotesChanged();
+      renderMesNotes();
+    } catch {
+      alert('❌ Fichier invalide : choisis un export « mes-notes-gl3a.json » créé par l\'application.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ------------------- Carte « Sauvegarde en ligne » ----------------------- */
+async function renderNotesCloudCard() {
+  const el = $('notes-cloud-card');
+  if (!el) return;
+  if (typeof compteCurrentUser !== 'function' || typeof cloudConfigured !== 'function' || !cloudConfigured()) {
+    el.hidden = true;
+    return;
+  }
+  // Pas de session sur cet appareil → carte « Activer » immédiate, zéro réseau.
+  let user = null;
+  if (typeof compteHasLocalSession !== 'function' || compteHasLocalSession()) {
+    try { user = await compteCurrentUser(); } catch {}
+  }
+  if (document.getElementById('notes-cloud-card') !== el) return;   // l'écran a changé entre-temps
+  el.hidden = false;
+  if (user) {
+    el.innerHTML = `
+      <span class="notes-cloud-txt">☁️ <strong>Sauvegarde en ligne active</strong>
+        <span id="notes-sync-state" class="notes-sync-state"></span></span>
+      <button id="notes-cloud-btn" class="btn-secondary">👤 Mon compte</button>`;
+    $('notes-cloud-btn').onclick = () => renderCompte();
+    if (typeof notesSyncPull === 'function') notesSyncPull().catch(() => {});
+  } else {
+    el.innerHTML = `
+      <span class="notes-cloud-txt">☁️ <strong>Sauvegarde en ligne — 100% optionnel.</strong>
+        Garde tes notes même si tu perds ton téléphone, et retrouve-les sur PC.
+        Sans compte, tout reste sur cet appareil et continue de marcher normalement.</span>
+      <button id="notes-cloud-btn" class="btn-primary">Activer la sauvegarde</button>`;
+    $('notes-cloud-btn').onclick = () => renderCompte();
+  }
 }
 
 // Met à jour toutes les valeurs calculées sans re-rendre les champs (focus conservé).
@@ -281,6 +385,26 @@ function refreshNotesComputed() {
         const note = noteFinaleMatiere(store[mat.k]);
         cell.textContent = fmtNote(note);
         cell.className = 'notes-note ' + noteClass(note);
+
+        // Objectif : « combien il faut à l'autre épreuve pour avoir 10/20 »
+        // (note matière = CC×40% + SN×60%, arrondi au centième SUPÉRIEUR
+        //  pour que la valeur affichée suffise réellement)
+        const hint = $(`snhint-${mat.k}`);
+        if (hint) {
+          const e = store[mat.k] || {};
+          let txt = '';
+          if (typeof e.cc === 'number' && typeof e.sn !== 'number') {
+            const req = Math.ceil(((10 - e.cc * 0.4) / 0.6) * 100) / 100;
+            txt = `🎯 Avec ${fmtNote(e.cc)} de CC, il te faut ${fmtNote(req)}/20 à la SN pour valider cette matière (10/20).`;
+          } else if (typeof e.sn === 'number' && typeof e.cc !== 'number') {
+            const req = Math.ceil(((10 - e.sn * 0.6) / 0.4) * 100) / 100;
+            if (req <= 0) txt = `🎉 Avec ${fmtNote(e.sn)} à la SN, la matière est ≥ 10 même avec 0 au CC.`;
+            else if (req > 20) txt = `⚠️ Avec ${fmtNote(e.sn)} à la SN, même 20/20 au CC ne donne pas 10 — mise sur la compensation de l'UE.`;
+            else txt = `🎯 Avec ${fmtNote(e.sn)} à la SN, il te faut ${fmtNote(req)}/20 au CC pour valider cette matière (10/20).`;
+          }
+          hint.textContent = txt;
+          hint.hidden = !txt;
+        }
       });
 
       const foot = $(`ue-foot-${ue.id}`);
