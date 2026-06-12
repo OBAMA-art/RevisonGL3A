@@ -58,6 +58,7 @@ function dispatchRoute(route) {
   if (m) state.matiere = m;   // rétablit le contexte matière après restauration
   switch (route && route.screen) {
     case 'planning':        renderPlanning(); break;
+    case 'mes-notes':       (typeof renderMesNotes === 'function') ? renderMesNotes() : renderHome(); break;
     case 'matiere':         m ? renderMatiere(m) : renderHome(); break;
     case 'resume':          m ? renderResume(m) : renderHome(); break;
     case 'sujets':          m ? renderSujets(m) : renderHome(); break;

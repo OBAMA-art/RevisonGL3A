@@ -1224,3 +1224,99 @@ body {
   font-family: inherit;
 }
 .btn-block { display: block; width: 100%; }
+
+/* ============ 🎓 MES NOTES & MOYENNES ============ */
+.notes-intro {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: .9rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.notes-sem-title {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  margin: 22px 0 10px;
+}
+.notes-sem-moy { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
+.notes-ue {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.notes-ue-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.notes-credits {
+  font-size: .78rem; font-weight: 700; color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  padding: 3px 8px; border-radius: var(--radius-sm); white-space: nowrap;
+}
+.notes-row {
+  display: grid;
+  grid-template-columns: 1fr 64px 64px 56px;
+  gap: 8px; align-items: center;
+  padding: 6px 0;
+  border-top: 1px solid var(--border);
+}
+.notes-row-head {
+  font-size: .75rem; color: var(--text-muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em;
+  border-top: none; padding-top: 0;
+}
+.notes-mat { font-size: .88rem; }
+.notes-coef { display: block; font-size: .74rem; color: var(--text-muted); }
+.notes-in {
+  width: 100%; padding: 8px 6px; text-align: center;
+  background: var(--bg-elevated); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-size: .95rem; font-weight: 600;
+}
+.notes-in:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
+.notes-in-bad { border-color: var(--danger); outline-color: var(--danger); }
+.notes-note { text-align: center; font-weight: 800; font-size: .95rem; }
+.note-ok { color: var(--success); }
+.note-ko { color: var(--danger); }
+.notes-ue-foot {
+  border-top: 1px dashed var(--border);
+  margin-top: 6px; padding-top: 8px;
+  font-size: .86rem; line-height: 1.6;
+}
+.notes-valide   { color: var(--success); font-weight: 600; }
+.notes-nonvalide{ color: var(--danger); font-weight: 600; }
+.notes-attente  { color: var(--text-muted); }
+.notes-compense { color: var(--warning); font-weight: 600; }
+.notes-conseil  { display: block; margin-top: 4px; color: var(--text); }
+.notes-revise {
+  margin-left: 8px; padding: 3px 10px;
+  background: color-mix(in srgb, var(--primary) 16%, transparent);
+  color: var(--primary); border: 1px solid var(--primary);
+  border-radius: var(--radius-sm); font-size: .78rem; font-weight: 700;
+  cursor: pointer;
+}
+.notes-stage { border-color: var(--primary); }
+.notes-summary {
+  background: var(--bg-card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 18px 0 12px;
+}
+.notes-summary h3 { margin: 0 0 10px; }
+.notes-sum-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  padding: 7px 0; border-top: 1px solid var(--border);
+  font-size: .9rem;
+}
+.notes-sum-row em { color: var(--text-muted); font-size: .78rem; }
+.notes-sum-final {
+  font-size: 1rem;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+}
+.notes-reset { margin-bottom: 24px; }
