@@ -161,11 +161,15 @@ function renderMesNotes() {
           </div>`;
       }).join('');
       return `
-        <div class="notes-ue">
+        <div class="notes-ue" id="ue-card-${ue.id}">
           <div class="notes-ue-head">
-            <strong>${escapeHtml(ue.label)}</strong>
-            <span class="notes-credits">${ue.credits} crédits</span>
+            <div class="notes-ue-title">
+              <strong>${escapeHtml(ue.label)}</strong>
+              <span class="notes-credits">💎 ${ue.credits} crédits</span>
+            </div>
+            <span class="notes-ue-status" id="ue-status-${ue.id}">⏳</span>
           </div>
+          <div class="notes-ue-bar"><div class="notes-ue-fill" id="ue-fill-${ue.id}"></div></div>
           <div class="notes-row notes-row-head">
             <div class="notes-mat">Matière</div><div>CC /20</div><div>SN /20</div><div>Note</div>
           </div>
@@ -175,29 +179,50 @@ function renderMesNotes() {
     }).join('');
     return `
       <div class="notes-sem">
-        <h3 class="notes-sem-title">📘 ${escapeHtml(s.label)} <span id="sem-moy-${s.sem}" class="notes-sem-moy"></span></h3>
+        <h3 class="notes-sem-title"><span class="notes-sem-badge">${s.sem}</span> ${escapeHtml(s.label)}
+          <span id="sem-moy-${s.sem}" class="notes-sem-moy"></span></h3>
         ${ueBlocks}
       </div>`;
   }).join('');
 
   $('notes-content').innerHTML = `
-    <p class="notes-intro">Saisis tes notes de <strong>CC</strong> et de <strong>Session Normale</strong> (sur 20).
-    Note matière = CC×40% + SN×60%. Un module (UE) est <strong>validé</strong> si sa moyenne pondérée ≥ 10
-    (compensation entre matières) — il débloque alors ses crédits.<br>
-    🔒 <em>Tes notes restent uniquement sur ton téléphone, rien n'est envoyé en ligne.</em></p>
+    <div class="nh">
+      <div class="nh-ring" id="nh-ring">
+        <div class="nh-ring-in">
+          <strong id="nh-credits">0</strong>
+          <em>/ 60 crédits</em>
+        </div>
+      </div>
+      <div class="nh-main">
+        <span class="nh-label">Moyenne de classe</span>
+        <span class="nh-value" id="nh-classe">—</span>
+        <div class="nh-chips">
+          <span class="nh-chip">S5 <strong id="nh-s5">—</strong></span>
+          <span class="nh-chip">S6 <strong id="nh-s6">—</strong></span>
+          <span class="nh-chip">Stage <strong id="nh-stage">—</strong></span>
+          <span class="nh-chip nh-chip-final">🎓 Finale <strong id="nh-finale">—</strong></span>
+        </div>
+        <span class="nh-hint" id="nh-hint"></span>
+      </div>
+    </div>
+    <p class="notes-privacy">🔒 Tes notes restent <strong>uniquement sur ton téléphone</strong> — rien n'est envoyé en ligne.
+    Note matière = CC×40% + SN×60% · UE validée si moyenne ≥ 10 (compensation) → crédits débloqués.</p>
     ${semBlocks}
-    <div class="notes-ue notes-stage">
-      <div class="notes-ue-head"><strong>🎯 Projet final d'études (stage)</strong>
-        <span class="notes-credits">coef ${NOTES_STAGE.coef} · ${NOTES_STAGE.credits} crédits</span></div>
+    <div class="notes-ue notes-stage" id="ue-card-stage">
+      <div class="notes-ue-head">
+        <div class="notes-ue-title">
+          <strong>🎯 Projet final d'études (stage)</strong>
+          <span class="notes-credits">coef ${NOTES_STAGE.coef} · 💎 ${NOTES_STAGE.credits} crédits</span>
+        </div>
+      </div>
       <div class="notes-row">
-        <div class="notes-mat">Note du projet de stage <span class="notes-coef">hors UE — décisif</span></div>
+        <div class="notes-mat">Note du projet de stage <span class="notes-coef">hors UE — 60% de la moyenne finale</span></div>
         <input class="notes-in" data-k="_stage" data-f="solo" inputmode="decimal" placeholder="/20"
                value="${typeof store._stage === 'number' ? String(store._stage).replace('.', ',') : ''}">
         <div></div>
         <div class="notes-note ${noteClass(typeof store._stage === 'number' ? store._stage : null)}" id="note-_stage">${fmtNote(typeof store._stage === 'number' ? store._stage : null)}</div>
       </div>
     </div>
-    <div class="notes-summary" id="notes-summary"></div>
     <button id="btn-notes-reset" class="btn-secondary notes-reset">🗑️ Effacer toutes mes notes</button>
   `;
 
@@ -246,6 +271,7 @@ function renderMesNotes() {
 // Met à jour toutes les valeurs calculées sans re-rendre les champs (focus conservé).
 function refreshNotesComputed() {
   const store = notesLoad();
+  const g = bilanGlobal(store);   // calculé une seule fois (boucle semestres + héro)
 
   NOTES_STRUCTURE.forEach(s => {
     s.ues.forEach(ue => {
@@ -260,9 +286,31 @@ function refreshNotesComputed() {
       const foot = $(`ue-foot-${ue.id}`);
       if (!foot) return;
       const b = bilanUE(ue, store);
+
+      // Chip de statut + barre de progression de l'UE (moyenne /20)
+      const chip = $(`ue-status-${ue.id}`);
+      const fill = $(`ue-fill-${ue.id}`);
+      const card = $(`ue-card-${ue.id}`);
+      const stateCls = b.moyenne === null ? 'wait' : (!b.complete ? 'part' : (b.valide ? 'ok' : 'ko'));
+      if (chip) {
+        chip.textContent = b.moyenne === null ? '⏳ à saisir'
+          : !b.complete ? `⏳ ${fmtNote(b.moyenne)}/20`
+          : b.valide ? `✅ ${fmtNote(b.moyenne)}/20`
+          : `❌ ${fmtNote(b.moyenne)}/20`;
+        chip.className = 'notes-ue-status ue-st-' + stateCls;
+      }
+      if (fill) {
+        fill.style.width = b.moyenne === null ? '0%' : Math.min(100, Math.max(0, b.moyenne / 20 * 100)) + '%';
+        fill.className = 'notes-ue-fill ue-fill-' + stateCls;
+      }
+      if (card) {
+        card.classList.toggle('notes-ue-ok', stateCls === 'ok');
+        card.classList.toggle('notes-ue-ko', stateCls === 'ko');
+      }
+
       const conseils = b.faibles.map(f => `
         <span class="notes-conseil">📌 ${escapeHtml(f.nom)} : <strong>${fmtNote(f.note)}</strong>/20
-          ${f.mid ? `<button class="notes-revise" data-revise="${f.mid}">📚 Réviser</button>` : ''}
+          ${f.mid ? `<button class="notes-revise" data-revise="${escapeHtml(f.mid)}">📚 Réviser</button>` : ''}
         </span>`).join('');
 
       if (b.moyenne === null) {
@@ -283,9 +331,9 @@ function refreshNotesComputed() {
 
     const semEl = $(`sem-moy-${s.sem}`);
     if (semEl) {
-      const g = bilanGlobal(store).parSem[s.sem];
-      semEl.textContent = g.moyenne !== null
-        ? `moyenne : ${fmtNote(g.moyenne)}/20${g.manquantes ? ' (provisoire)' : ''}` : '';
+      const sg = g.parSem[s.sem];
+      semEl.textContent = sg.moyenne !== null
+        ? `moyenne : ${fmtNote(sg.moyenne)}/20${sg.manquantes ? ' (provisoire)' : ''}` : '';
     }
   });
 
@@ -296,19 +344,32 @@ function refreshNotesComputed() {
     cellStage.className = 'notes-note ' + noteClass(v);
   }
 
-  const sum = $('notes-summary');
-  if (sum) {
-    const g = bilanGlobal(store);
-    sum.innerHTML = `
-      <h3>🧮 Bilan général</h3>
-      <div class="notes-sum-row"><span>Moyenne S5</span><strong class="${noteClass(g.parSem.S5.moyenne)}">${fmtNote(g.parSem.S5.moyenne)}/20</strong></div>
-      <div class="notes-sum-row"><span>Moyenne S6</span><strong class="${noteClass(g.parSem.S6.moyenne)}">${fmtNote(g.parSem.S6.moyenne)}/20</strong></div>
-      <div class="notes-sum-row"><span>Moyenne de classe ${g.manquantes ? `<em>(provisoire — ${g.manquantes} note${g.manquantes > 1 ? 's' : ''} manquante${g.manquantes > 1 ? 's' : ''})</em>` : ''}</span><strong class="${noteClass(g.classe)}">${fmtNote(g.classe)}/20</strong></div>
-      <div class="notes-sum-row"><span>Projet de stage (60% de la moyenne finale)</span><strong class="${noteClass(g.stage)}">${fmtNote(g.stage)}/20</strong></div>
-      <div class="notes-sum-row notes-sum-final"><span>🎓 MOYENNE FINALE <em>(classe×40% + stage×60%)</em></span><strong class="${noteClass(g.finale)}">${fmtNote(g.finale)}/20</strong></div>
-      <div class="notes-sum-row"><span>Crédits débloqués</span><strong>${g.credits} / 60</strong></div>
-      ${g.finale === null ? '<p class="notes-attente">La moyenne finale s\'affichera quand la note de stage sera saisie.</p>' : ''}
-    `;
+  // ----- Héro : anneau de crédits + moyennes clés -----
+  const set = (id, v, withClass) => {
+    const el = $(id);
+    if (!el) return;
+    el.textContent = fmtNote(v);
+    if (withClass) {
+      el.classList.remove('note-ok', 'note-ko');
+      if (v !== null) el.classList.add(v >= 10 ? 'note-ok' : 'note-ko');
+    }
+  };
+  set('nh-classe', g.classe, true);
+  set('nh-s5', g.parSem.S5.moyenne, true);
+  set('nh-s6', g.parSem.S6.moyenne, true);
+  set('nh-stage', g.stage, true);
+  set('nh-finale', g.finale, true);
+  const cred = $('nh-credits');
+  if (cred) cred.textContent = String(g.credits);
+  const ring = $('nh-ring');
+  if (ring) ring.style.setProperty('--p', Math.min(100, g.credits / 60 * 100) + '%');
+  const hint = $('nh-hint');
+  if (hint) {
+    hint.textContent = g.finale !== null
+      ? '🎓 Moyenne finale = classe×40% + stage×60%'
+      : g.manquantes
+        ? `⏳ Provisoire — ${g.manquantes} note${g.manquantes > 1 ? 's' : ''} manquante${g.manquantes > 1 ? 's' : ''}${g.stage === null ? ' · note de stage à saisir' : ''}`
+        : (g.stage === null ? '🎯 Saisis ta note de stage pour la moyenne finale' : '');
   }
 }
 

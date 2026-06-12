@@ -223,6 +223,9 @@ function renderHome(skipConfigRefresh) {
       renderMatiere(m);
     });
   });
+  // Bannière d'annonce d'examen (publiée par le délégué, cache hors-ligne)
+  renderAnnonceBanner();
+
   // Bouton « Planning des rattrapages » + sous-titre dynamique (X passées · Y à venir)
   const _plan = $('btn-planning');
   if (_plan) {
@@ -256,7 +259,39 @@ function renderHome(skipConfigRefresh) {
     cloudFetchMatiereConfig().then(() => {
       if (state.currentScreen === 'home') renderHome(true);
     }).catch(() => {});
+    // Annonce du délégué : récupère la dernière, puis met à jour la bannière.
+    if (typeof cloudFetchAnnonce === 'function') {
+      cloudFetchAnnonce().then(() => {
+        if (state.currentScreen === 'home') renderAnnonceBanner();
+      }).catch(e => { console.warn('[GL3A] Annonces indisponibles (SQL supabase-annonces.sql exécuté ?) :', e && e.message); });
+    }
   }
+}
+
+// Bannière d'annonce (accueil) : rend l'annonce active depuis le cache local.
+// Masquable par annonce (réapparaît si le délégué en publie une nouvelle).
+function renderAnnonceBanner() {
+  const el = $('annonce-banner');
+  if (!el) return;
+  const a = (typeof getAnnonceCached === 'function') ? getAnnonceCached() : null;
+  let vue = null;
+  try { vue = localStorage.getItem('gl3a_annonce_vue'); } catch {}
+  if (!a || !a.id || vue === a.id || typeof annonceBannerHTML !== 'function') {
+    el.innerHTML = '';
+    return;
+  }
+  // Annonce périmée (date de fin dépassée) : on ne l'affiche plus.
+  const mFin = /^(\d{4})-(\d{2})-(\d{2})/.exec(a.date_fin || '');
+  if (mFin && new Date() > new Date(+mFin[1], +mFin[2] - 1, +mFin[3], 23, 59, 59)) {
+    el.innerHTML = '';
+    return;
+  }
+  el.innerHTML = annonceBannerHTML(a, { dismiss: true });
+  const x = $('annonce-close');
+  if (x) x.onclick = () => {
+    try { localStorage.setItem('gl3a_annonce_vue', a.id); } catch {}
+    el.innerHTML = '';
+  };
 }
 
 // ============ ÉCRAN PLANNING DES RATTRAPAGES ============
