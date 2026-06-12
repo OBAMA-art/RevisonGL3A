@@ -59,6 +59,7 @@ function dispatchRoute(route) {
   switch (route && route.screen) {
     case 'planning':        renderPlanning(); break;
     case 'mes-notes':       (typeof renderMesNotes === 'function') ? renderMesNotes() : renderHome(); break;
+    case 'compte':          (typeof renderCompte === 'function') ? renderCompte() : renderHome(); break;
     case 'matiere':         m ? renderMatiere(m) : renderHome(); break;
     case 'resume':          m ? renderResume(m) : renderHome(); break;
     case 'sujets':          m ? renderSujets(m) : renderHome(); break;

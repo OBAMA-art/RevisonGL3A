@@ -1,5 +1,5 @@
 // Service Worker - Révisions GL3A
-const VERSION = "v30";
+const VERSION = "v31";
 const SHELL_CACHE = `revisions-gl3a-shell-${VERSION}`;
 const DATA_CACHE = `revisions-gl3a-data-${VERSION}`;
 const OCR_CACHE = `revisions-gl3a-ocr-${VERSION}`;
@@ -16,6 +16,7 @@ const SHELL_ASSETS = [
   './cloud-config.js',
   './cloud.js',
   './notes.js',
+  './compte.js',
   './manifest.json'
 ];
 

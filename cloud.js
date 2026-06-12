@@ -420,12 +420,14 @@ async function showAdminQueue(email) {
     <div id="admin-stats" class="admin-stats"><p class="scan-status">📊 Chargement des statistiques…</p></div>
     <button id="admin-prog-btn" class="btn-primary btn-block">📅 Organiser le programme (UE & horaires)</button>
     <button id="admin-annonce-btn" class="btn-primary btn-block">📢 Annoncer un examen</button>
+    <button id="admin-etudiants-btn" class="btn-primary btn-block">👥 Étudiants inscrits</button>
     <h3 class="admin-h3">⏳ Épreuves en attente</h3>
     <div id="admin-pending"><p class="scan-status">Chargement…</p></div>
     <button id="admin-home-btn" class="btn-secondary btn-block" style="margin-top:16px;">🏠 Accueil</button>`;
   $('admin-logout-btn').onclick = async () => { try { await cloudLogout(); } catch {} renderAdminScreen(); };
   $('admin-prog-btn').onclick = () => renderAdminProgramme(email);
   $('admin-annonce-btn').onclick = () => renderAdminAnnonce(email);
+  $('admin-etudiants-btn').onclick = () => renderAdminEtudiants(email);
   $('admin-home-btn').onclick = () => renderHome();
 
   // Tableau de bord de fréquentation (détaillé)
@@ -762,4 +764,69 @@ async function renderAdminAnnonce(email) {
       btn.disabled = false; btn.textContent = '📣 Publier l\'annonce';
     }
   };
+}
+
+/* ============== UI : ADMIN — ÉTUDIANTS INSCRITS (profils) ================ */
+// Le délégué voit les PROFILS (pour redonner un matricule oublié) —
+// jamais les notes (RLS owner-only) ni les mots de passe (hachés).
+async function renderAdminEtudiants(email) {
+  $('admin-content').innerHTML = '<p class="scan-status">⏳ Chargement des étudiants…</p>';
+  let rows = [];
+  try {
+    const c = await sbClient();
+    const { data, error } = await c.from('etudiants')
+      .select('nom,prenoms,email,date_naissance,lieu_naissance,classe,matricule,annee_academique,created_at')
+      .order('nom', { ascending: true });
+    if (error) throw error;
+    rows = data || [];
+  } catch (e) {
+    $('admin-content').innerHTML = `
+      <div class="admin-bar"><span class="admin-who">👥 Étudiants inscrits</span>
+        <button id="etu-back" class="btn-secondary">← Modération</button></div>
+      <div class="form-error">Erreur : ${escapeHtml(e.message || 'chargement impossible')}.<br>
+      As-tu exécuté le SQL <code>supabase-comptes.sql</code> ?</div>`;
+    $('etu-back').onclick = () => showAdminQueue(email);
+    return;
+  }
+
+  const card = (r) => `
+    <div class="etu-card" data-search="${escapeHtml(((r.nom || '') + ' ' + (r.prenoms || '') + ' ' + (r.matricule || '') + ' ' + (r.classe || '')).toLowerCase())}">
+      <div class="etu-head">
+        <strong>${escapeHtml((r.nom || '').toUpperCase())} ${escapeHtml(r.prenoms || '')}</strong>
+        <span class="etu-matricule">${escapeHtml(r.matricule || '—')}</span>
+      </div>
+      <div class="etu-infos">
+        <span>🏫 ${escapeHtml(r.classe || '—')} · ${escapeHtml(r.annee_academique || '—')}</span>
+        <span>✉️ ${escapeHtml(r.email || '—')}</span>
+        <span>🎂 ${r.date_naissance ? escapeHtml(fmtDateFrISO(r.date_naissance)) : '—'}${r.lieu_naissance ? ' à ' + escapeHtml(r.lieu_naissance) : ''}</span>
+      </div>
+    </div>`;
+
+  $('admin-content').innerHTML = `
+    <div class="admin-bar">
+      <span class="admin-who">👥 ${rows.length} étudiant${rows.length > 1 ? 's' : ''} inscrit${rows.length > 1 ? 's' : ''}</span>
+      <button id="etu-back" class="btn-secondary">← Modération</button>
+    </div>
+    <p class="form-intro">Si un camarade a oublié son <strong>matricule</strong>, retrouve-le ici pour le lui
+    redonner (il pourra alors réinitialiser son mot de passe). Les <strong>notes</strong> des étudiants ne sont
+    pas visibles : elles restent privées.</p>
+    <div class="form-group">
+      <input type="text" id="etu-search" placeholder="🔍 Rechercher (nom, matricule, classe…)" maxlength="60">
+    </div>
+    <p id="etu-count" class="scan-status" role="status" aria-live="polite"></p>
+    <div id="etu-list">${rows.length ? rows.map(card).join('') : '<p class="scan-status">Aucun étudiant inscrit pour le moment.</p>'}</div>`;
+
+  $('etu-back').onclick = () => showAdminQueue(email);
+  $('etu-search').addEventListener('input', () => {
+    const q = $('etu-search').value.trim().toLowerCase();
+    let visibles = 0;
+    document.querySelectorAll('.etu-card').forEach(c => {
+      const hide = q !== '' && !(c.dataset.search || '').includes(q);
+      c.hidden = hide;
+      if (!hide) visibles++;
+    });
+    $('etu-count').textContent = q === '' ? ''
+      : visibles === 0 ? `Aucun étudiant ne correspond à « ${q} ».`
+      : `${visibles} résultat${visibles > 1 ? 's' : ''} sur ${rows.length}.`;
+  });
 }

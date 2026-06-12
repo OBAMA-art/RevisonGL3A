@@ -853,3 +853,113 @@ body::after {
   .nh-value { font-size: 30px; }
   .notes-row { grid-template-columns: 1fr 54px 54px 48px; gap: 6px; }
 }
+
+/* ============================================================================
+   ☁️ COMPTE ÉTUDIANT + SYNC DES NOTES + HINT SN
+   ============================================================================ */
+
+/* Conseil "combien il faut à la SN" sous une ligne de saisie */
+.notes-sn-hint {
+  font-size: 12px; line-height: 1.5;
+  padding: 7px 11px; margin: 2px 0 6px;
+  border-radius: 10px;
+  color: color-mix(in srgb, var(--neon2) 85%, var(--text));
+  background: color-mix(in srgb, var(--neon2) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--neon2) 30%, transparent);
+}
+
+/* Carte "sauvegarde en ligne" sur l'écran Mes notes */
+.notes-cloud {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 13px 15px; margin: 0 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon1) 40%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--neon1) 14%, var(--bg-card)), color-mix(in srgb, var(--neon2) 10%, var(--bg-card)));
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+}
+.notes-cloud-txt { flex: 1; min-width: 200px; font-size: 12.5px; line-height: 1.5; color: var(--text); }
+.notes-cloud .btn-primary, .notes-cloud .btn-secondary { flex: 0 0 auto; }
+.notes-sync-state { display: inline-block; margin-left: 8px; font-size: 11px; font-weight: 700; }
+.notes-sync-state.sync-ok   { color: var(--success); }
+.notes-sync-state.sync-busy { color: var(--neon2); }
+.notes-sync-state.sync-off  { color: var(--warning); }
+.notes-io { margin: 14px 0 10px; }
+
+/* Écran compte */
+.compte-card {
+  text-align: center;
+  padding: 22px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon1) 40%, transparent);
+  background:
+    radial-gradient(80% 140% at 50% 0%, color-mix(in srgb, var(--neon1) 18%, transparent), transparent 60%),
+    var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  box-shadow: 0 14px 42px color-mix(in srgb, var(--neon1) 24%, rgba(0,0,0,0.32));
+}
+.compte-avatar {
+  width: 64px; height: 64px; margin: 0 auto 10px;
+  display: grid; place-items: center;
+  font-size: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--neon1) 35%, transparent), color-mix(in srgb, var(--neon2) 28%, transparent));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--neon2) 35%, transparent);
+}
+.compte-card h3 { margin: 0 0 12px; letter-spacing: -0.2px; }
+.compte-pitch, .compte-sync-note { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 14px; }
+.compte-infos {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin: 0 0 14px; text-align: left;
+}
+.compte-infos > div {
+  padding: 9px 12px; border-radius: 12px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 45%, transparent);
+}
+.compte-infos span { display: block; font-size: 10px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--text-muted); }
+.compte-infos strong { font-size: 13px; word-break: break-all; }
+.compte-h3 { margin: 0 0 12px; }
+.compte-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+@media (max-width: 380px) { .compte-grid2, .compte-infos { grid-template-columns: 1fr; } }
+.compte-link {
+  display: block; width: 100%;
+  margin-top: 12px; padding: 10px;
+  background: none; border: none;
+  color: var(--neon2); font-size: 13px; font-weight: 700;
+  text-align: center; cursor: pointer;
+}
+.compte-link:hover { text-decoration: underline; }
+
+/* Admin : liste des étudiants inscrits */
+.etu-card {
+  padding: 12px 14px; margin-bottom: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--neon2);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+}
+.etu-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.etu-matricule {
+  font-size: 13px; font-weight: 900; letter-spacing: .5px;
+  padding: 3px 11px; border-radius: 999px;
+  color: var(--neon2);
+  background: color-mix(in srgb, var(--neon2) 13%, transparent);
+  border: 1px solid color-mix(in srgb, var(--neon2) 40%, transparent);
+}
+.etu-infos { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--text-muted); }
+.etu-infos span { word-break: break-all; }
+
+/* Thème clair : meilleure délimitation des nouveaux éléments */
+[data-theme="light"] .notes-in { background: #ffffff; border-color: rgba(20, 30, 70, 0.18); }
+[data-theme="light"] .notes-sn-hint {
+  color: #0e5e74;
+  background: rgba(34, 211, 238, 0.10);
+  border-color: rgba(14, 94, 116, 0.30);
+}
+[data-theme="light"] .etu-card,
+[data-theme="light"] .admin-card { background: #fbfcff; border-color: rgba(20, 30, 70, 0.16); box-shadow: 0 2px 10px rgba(15, 23, 42, 0.07); }
+[data-theme="light"] .compte-infos > div { background: #f4f6fd; }
+[data-theme="light"] .compte-link { color: #0e7490; }
