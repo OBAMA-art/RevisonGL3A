@@ -60,9 +60,14 @@ ou : Dashboard → **Edge Functions** → **Secrets** → ajouter `GEMINI_API_KE
 
 Réglages optionnels :
 ```bash
-supabase secrets set GEMINI_MODEL=gemini-2.0-flash   # modèle (défaut)
+supabase secrets set GEMINI_MODEL=gemini-2.5-flash   # modèle (défaut)
 supabase secrets set IA_QUOTA_JOUR=10                # appels IA/jour/appareil
+supabase secrets set IA_QUOTA_GLOBAL_JOUR=300        # plafond global/jour (promo)
 ```
+> ℹ️ Défaut `gemini-2.5-flash` : sur les projets Google récents, le palier
+> gratuit de `gemini-2.0-flash` est à 0 (erreur 429 `limit: 0`). Le 2.5-flash
+> est gratuit. Pour changer de modèle sans redéployer, pose juste le secret
+> `GEMINI_MODEL`.
 
 ---
 
