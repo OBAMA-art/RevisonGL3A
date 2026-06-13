@@ -773,7 +773,15 @@ async function renderAdminAnnonce(email) {
       await cloudSaveAnnonce(a);
       $('annonce-msg-zone').innerHTML = '<div class="form-success">✅ Annonce publiée ! Elle s\'affiche maintenant sur l\'accueil de tous.</div>';
     } catch (e) {
-      $('annonce-msg-zone').innerHTML = `<div class="form-error">❌ ${escapeHtml(e.message || 'Échec')}.<br>As-tu exécuté le SQL <code>supabase-annonces.sql</code> ?</div>`;
+      const msg = (e && e.message) || 'Échec';
+      // L'erreur RLS « new row violates row-level security policy » ne veut PAS
+      // dire que le SQL manque : la table existe, mais Supabase ne reconnaît pas
+      // le compte connecté comme délégué (is_admin = faux → email absent de la
+      // table public.admins). On affiche la vraie cause + le correctif exact.
+      const rls = /row-level security|violates row-level|permission denied|not authorized|insufficient/i.test(msg);
+      $('annonce-msg-zone').innerHTML = rls
+        ? `<div class="form-error">❌ Publication refusée : ton compte <strong>${escapeHtml(email)}</strong> n'est pas reconnu comme <strong>délégué (admin)</strong>.<br>Dans Supabase → SQL Editor, exécute une fois :<br><code>insert into public.admins (email) values ('${escapeHtml(email)}') on conflict (email) do nothing;</code><br>puis reconnecte-toi.</div>`
+        : `<div class="form-error">❌ ${escapeHtml(msg)}.<br>As-tu exécuté le SQL <code>supabase-annonces.sql</code> ?</div>`;
     } finally {
       btn.disabled = false; btn.textContent = '📣 Publier l\'annonce';
     }
