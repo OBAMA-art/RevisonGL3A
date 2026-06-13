@@ -50,9 +50,15 @@ function json(body: unknown, status = 200) {
 }
 
 // ----------------------------- Appel Gemini ------------------------------
-async function gemini(prompt: string, maxTokens = 8192): Promise<string> {
-  const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}`,
+// Modèle principal + repli (gemini-2.0-flash a une limite gratuite de 0 ;
+// 2.5-flash et 2.5-flash-lite sont gratuits — le lite est souvent moins
+// sollicité, d'où son rôle de filet de secours en cas de surcharge Google).
+const MODELS = [MODEL, Deno.env.get("GEMINI_MODEL_FALLBACK") ?? "gemini-2.5-flash-lite"];
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function geminiTry(model: string, prompt: string, maxTokens: number): Promise<Response> {
+  return await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -62,33 +68,45 @@ async function gemini(prompt: string, maxTokens = 8192): Promise<string> {
           temperature: 0.3,
           maxOutputTokens: maxTokens,
           responseMimeType: "application/json",
-          // « thinking » désactivé : tous les tokens vont à la réponse JSON
-          // (sinon les modèles 2.5 consomment le budget en réflexion interne).
+          // « thinking » désactivé : tous les tokens vont à la réponse JSON.
           thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     },
   );
-  if (r.status === 429) {
-    throw new Error(
-      "Le palier gratuit de Gemini est saturé pour le moment — réessaie dans une minute.",
-    );
+}
+
+// Essaie le modèle principal puis le repli, avec relance courte sur les
+// surcharges passagères (503/429) côté Google.
+async function gemini(prompt: string, maxTokens = 8192): Promise<string> {
+  let overloaded = false;
+  for (const model of MODELS) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const r = await geminiTry(model, prompt, maxTokens);
+      if (r.ok) {
+        const data = await r.json();
+        const cand = data?.candidates?.[0];
+        const text = (cand?.content?.parts ?? [])
+          .map((p: { text?: string }) => p.text ?? "")
+          .join("");
+        if (text) return text;
+        break; // réponse vide (filtre de sécurité…) → on tente le repli
+      }
+      if (r.status === 503 || r.status === 429) {
+        overloaded = true;
+        try { await r.body?.cancel(); } catch { /* ignore */ }
+        await sleep(600 * (attempt + 1)); // relance brève
+        continue;
+      }
+      const detail = await r.text();
+      throw new Error("Erreur Gemini (HTTP " + r.status + ") : " + detail.slice(0, 200));
+    }
   }
-  if (!r.ok) {
-    const detail = await r.text();
-    throw new Error("Erreur Gemini (HTTP " + r.status + ") : " + detail.slice(0, 200));
-  }
-  const data = await r.json();
-  const cand = data?.candidates?.[0];
-  const text = (cand?.content?.parts ?? [])
-    .map((p: { text?: string }) => p.text ?? "")
-    .join("");
-  if (!text) {
-    throw new Error(
-      "Réponse Gemini vide" + (cand?.finishReason ? " (" + cand.finishReason + ")" : "") + ".",
-    );
-  }
-  return text;
+  throw new Error(
+    overloaded
+      ? "L'IA est très sollicitée en ce moment — réessaie dans une minute."
+      : "L'IA n'a pas pu répondre — réessaie dans un instant.",
+  );
 }
 
 // JSON.parse tolérant (retire d'éventuelles clôtures ```json ... ```).
