@@ -663,7 +663,12 @@ function renderScanResult(m, header, status) {
       <summary>📄 Voir le texte OCR brut</summary>
       <pre>${escapeHtml(_ocrLastText)}</pre>
     </details>
-    <button id="btn-scan-fill" class="btn-primary">✏️ Pré-remplir le formulaire d'ajout</button>
+    <div class="scan-ai-actions">
+      ${(typeof aiAvailable === 'function' && aiAvailable())
+        ? '<button id="btn-scan-ai" class="btn-primary">🤖 Corriger automatiquement (IA)</button>'
+        : ''}
+      <button id="btn-scan-fill" class="btn-secondary">✏️ Remplir le formulaire à la main</button>
+    </div>
   `;
 
   const sel = $('scan-matiere-select');
@@ -677,6 +682,8 @@ function renderScanResult(m, header, status) {
   }
 
   $('btn-scan-fill').onclick = () => fillAddFormFromOCR(m, header, status);
+  const aiBtn = $('btn-scan-ai');
+  if (aiBtn) aiBtn.onclick = () => runAICorrection(m);
 }
 
 function fillAddFormFromOCR(m, header, status) {
