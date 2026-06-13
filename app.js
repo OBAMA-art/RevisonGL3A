@@ -252,7 +252,7 @@ function renderHome(skipConfigRefresh) {
     }
   }
   $('appTitle').textContent = 'Révisions GL3A';
-  $('appSubtitle').textContent = 'Rattrapages SN1 & SN2';
+  applyHomeTheme();   // titre/sous-titre/planning : config délégué (cloud) sinon défauts
   go('home', false);
   state.history = [];
 
@@ -267,7 +267,31 @@ function renderHome(skipConfigRefresh) {
         if (state.currentScreen === 'home') renderAnnonceBanner();
       }).catch(e => { console.warn('[GL3A] Annonces indisponibles (SQL supabase-annonces.sql exécuté ?) :', e && e.message); });
     }
+    // Thème de l'accueil (titre/contexte défini par le délégué) : rafraîchit puis ré-applique.
+    if (typeof cloudFetchHomeConfig === 'function') {
+      cloudFetchHomeConfig().then(() => {
+        if (state.currentScreen === 'home') applyHomeTheme();
+      }).catch(e => { console.warn('[GL3A] Thème accueil indisponible (SQL supabase-app-config.sql exécuté ?) :', e && e.message); });
+    }
   }
+}
+
+// Défauts du thème d'accueil (utilisés tant que le délégué n'a rien personnalisé).
+const HOME_DEFAULTS = {
+  titre: 'Rattrapages SN1 & SN2',
+  sous_titre: 'Rattrapages du 10 au 13 juin 2026. Les matières déjà passées sont signalées ✅ — consulte le planning pour voir ce qu\'il te reste.',
+  planning_label: 'Planning des rattrapages'
+};
+// Applique le thème d'accueil (config cloud cachée localement, sinon défauts).
+function applyHomeTheme() {
+  const cfg = (typeof getHomeConfigCached === 'function' && getHomeConfigCached()) || {};
+  const titre = cfg.titre || HOME_DEFAULTS.titre;
+  const sous  = cfg.sous_titre || HOME_DEFAULTS.sous_titre;
+  const plan  = cfg.planning_label || HOME_DEFAULTS.planning_label;
+  const h = $('hero-title'); if (h) h.textContent = titre;
+  const s = $('hero-sub'); if (s) s.textContent = sous;
+  const as = $('appSubtitle'); if (as) as.textContent = titre;
+  const pl = $('planning-cta-title'); if (pl) pl.textContent = plan;
 }
 
 // Bannière d'annonce (accueil) : rend l'annonce active depuis le cache local.

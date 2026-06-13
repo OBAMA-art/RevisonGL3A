@@ -112,6 +112,37 @@ async function cloudSaveMatiereConfig(rows) {
   return true;
 }
 
+/* ---------- THÈME DE L'ACCUEIL (titre/sous-titre, par le délégué) -------- */
+// Stocké côté cloud (table app_config, clé 'home') + caché en local pour
+// l'offline-first. Permet au délégué de changer le contexte affiché à tous
+// (ex. après les rattrapages : « Préparation projet personnel »).
+const HOME_CFG_CACHE_KEY = 'gl3a_home_cfg';
+function getHomeConfigCached() {
+  try { const o = JSON.parse(localStorage.getItem(HOME_CFG_CACHE_KEY) || 'null'); return (o && o.data) || null; }
+  catch { return null; }
+}
+async function cloudFetchHomeConfig() {
+  const c = await sbClient();
+  const { data, error } = await c.from('app_config').select('value').eq('key', 'home').limit(1);
+  if (error) throw error;
+  const cfg = (data && data[0] && data[0].value) || null;
+  try { localStorage.setItem(HOME_CFG_CACHE_KEY, JSON.stringify({ at: Date.now(), data: cfg })); } catch {}
+  return cfg;
+}
+async function cloudSaveHomeConfig(cfg) {
+  const c = await sbClient();
+  const value = {
+    titre: (cfg.titre || '').trim(),
+    sous_titre: (cfg.sous_titre || '').trim(),
+    planning_label: (cfg.planning_label || '').trim()
+  };
+  const { error } = await c.from('app_config').upsert(
+    { key: 'home', value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+  if (error) throw error;
+  try { localStorage.setItem(HOME_CFG_CACHE_KEY, JSON.stringify({ at: Date.now(), data: value })); } catch {}
+  return value;
+}
+
 /* -------------- ANNONCES D'EXAMEN (templates du délégué) ----------------- */
 const ANNONCE_CACHE_KEY = 'gl3a_annonce';
 const ANNONCE_VUE_KEY = 'gl3a_annonce_vue';
@@ -430,6 +461,7 @@ async function showAdminQueue(email) {
       <button id="admin-logout-btn" class="btn-secondary">Déconnexion</button>
     </div>
     <div id="admin-stats" class="admin-stats"><p class="scan-status">📊 Chargement des statistiques…</p></div>
+    <button id="admin-accueil-btn" class="btn-primary btn-block">🎨 Personnaliser l'accueil (titre & contexte)</button>
     <button id="admin-prog-btn" class="btn-primary btn-block">📅 Organiser le programme (UE & horaires)</button>
     <button id="admin-annonce-btn" class="btn-primary btn-block">📢 Annoncer un examen</button>
     <button id="admin-etudiants-btn" class="btn-primary btn-block">👥 Étudiants inscrits</button>
@@ -438,6 +470,7 @@ async function showAdminQueue(email) {
     <div id="admin-pending"><p class="scan-status">Chargement…</p></div>
     <button id="admin-home-btn" class="btn-secondary btn-block" style="margin-top:16px;">🏠 Accueil</button>`;
   $('admin-logout-btn').onclick = async () => { try { await cloudLogout(); } catch {} renderAdminScreen(); };
+  $('admin-accueil-btn').onclick = () => renderAdminAccueil(email);
   $('admin-prog-btn').onclick = () => renderAdminProgramme(email);
   $('admin-annonce-btn').onclick = () => renderAdminAnnonce(email);
   $('admin-etudiants-btn').onclick = () => renderAdminEtudiants(email);
@@ -638,6 +671,59 @@ async function moderate(id, approve, email) {
 }
 
 /* ============== UI : ADMIN — ANNONCER UN EXAMEN (templates) ============== */
+// Écran délégué : personnaliser le titre/sous-titre de l'accueil (la « saison »).
+async function renderAdminAccueil(email) {
+  $('admin-content').innerHTML = '<p class="scan-status">⏳ Chargement…</p>';
+  const DEF = (typeof HOME_DEFAULTS !== 'undefined') ? HOME_DEFAULTS
+    : { titre: '', sous_titre: '', planning_label: '' };
+  let cur = null;
+  try { cur = await cloudFetchHomeConfig(); } catch { cur = getHomeConfigCached(); }
+  cur = cur || {};
+  $('admin-content').innerHTML = `
+    <div class="admin-bar">
+      <span class="admin-who">🎨 Personnaliser l'accueil</span>
+      <button id="accueil-back" class="btn-secondary">← Retour</button>
+    </div>
+    <p class="form-intro">Change le <strong>titre</strong> et le <strong>contexte</strong> affichés sur l'accueil de <strong>tous les camarades</strong> (ex. après les rattrapages : « Préparation projet personnel »). Laisse un champ <strong>vide</strong> pour revenir au texte par défaut.</p>
+    <div class="form-group">
+      <label for="accueil-titre">Titre de l'accueil</label>
+      <input type="text" id="accueil-titre" maxlength="80" placeholder="${escapeHtml(DEF.titre)}" value="${escapeHtml(cur.titre || '')}">
+    </div>
+    <div class="form-group">
+      <label for="accueil-sous">Sous-titre / description</label>
+      <textarea id="accueil-sous" rows="3" maxlength="300" placeholder="${escapeHtml(DEF.sous_titre)}">${escapeHtml(cur.sous_titre || '')}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="accueil-plan">Libellé du bouton « Planning »</label>
+      <input type="text" id="accueil-plan" maxlength="60" placeholder="${escapeHtml(DEF.planning_label)}" value="${escapeHtml(cur.planning_label || '')}">
+    </div>
+    <div id="accueil-msg-zone"></div>
+    <div class="form-actions">
+      <button id="accueil-save" class="btn-primary">💾 Enregistrer l'accueil</button>
+    </div>`;
+  $('accueil-back').onclick = () => showAdminQueue(email);
+  $('accueil-save').onclick = async () => {
+    const btn = $('accueil-save'); btn.disabled = true; btn.textContent = '⏳ Enregistrement…';
+    try {
+      await cloudSaveHomeConfig({
+        titre: $('accueil-titre').value,
+        sous_titre: $('accueil-sous').value,
+        planning_label: $('accueil-plan').value
+      });
+      if (typeof applyHomeTheme === 'function') applyHomeTheme();
+      $('accueil-msg-zone').innerHTML = '<div class="form-success">✅ Accueil mis à jour ! Les camarades le verront à leur prochaine ouverture.</div>';
+    } catch (e) {
+      const msg = (e && e.message) || 'Échec';
+      const rls = /row-level security|violates row-level|permission denied|not authorized|insufficient/i.test(msg);
+      $('accueil-msg-zone').innerHTML = rls
+        ? `<div class="form-error">❌ Refusé : ton compte <strong>${escapeHtml(email)}</strong> n'est pas reconnu comme <strong>délégué (admin)</strong>.</div>`
+        : `<div class="form-error">❌ ${escapeHtml(msg)}.<br>As-tu exécuté le SQL <code>supabase-app-config.sql</code> ?</div>`;
+    } finally {
+      btn.disabled = false; btn.textContent = '💾 Enregistrer l\'accueil';
+    }
+  };
+}
+
 async function renderAdminAnnonce(email) {
   $('admin-content').innerHTML = '<p class="scan-status">⏳ Chargement…</p>';
   if (typeof EXAM_TEMPLATES === 'undefined') {
