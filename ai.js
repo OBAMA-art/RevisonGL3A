@@ -154,20 +154,77 @@ function renderAIPreview(m, matiereId, epreuve) {
     </div>
     <div class="scan-ai-actions">
       <button id="btn-ai-save" class="btn-primary">✅ Ajouter aux épreuves + quiz</button>
+      <button id="btn-ai-edit" class="btn-secondary">✏️ Modifier / compléter</button>
       <button id="btn-ai-discard" class="btn-secondary">↩️ Annuler</button>
     </div>
     <details class="scan-raw"><summary>📄 Texte OCR brut</summary><pre>${escapeHtml(_ocrLastText)}</pre></details>
   `;
-  $('scan-status').textContent = '✅ Correction prête. Vérifie puis ajoute.';
+  $('scan-status').textContent = '✅ Correction prête. Vérifie, complète si besoin, puis ajoute.';
   $('btn-ai-save').onclick = () => saveAIEpreuve(m);
+  $('btn-ai-edit').onclick = () => renderAIEditForm(m, matiereId, epreuve);
   $('btn-ai-discard').onclick = () => { _aiLastResult = null; renderEpreuves(m); };
+}
+
+// Ouvre le formulaire d'ajout PRÉ-REMPLI avec la correction de l'IA, pour
+// que l'utilisateur complète ce qui manque (type, session, durée, niveau →
+// champ Source) ou corrige une question, sans tout retaper. Les QCM extraits
+// par l'IA sont préservés.
+function renderAIEditForm(m, matiereId, epreuve) {
+  const targetM = (typeof findMatiereById === 'function' && findMatiereById(matiereId)) || m;
+  addFormState.matiere = targetM;
+  addFormState.questions = (epreuve.questions && epreuve.questions.length ? epreuve.questions : [{}])
+    .map(q => ({ enonce: q.enonce || '', correction: q.correction || '', bareme: q.bareme || '' }));
+
+  $('add-titre').textContent = `✏️ Vérifier / compléter — ${targetM.titre}`;
+  const intro = document.querySelector('#screen-add-epreuve .form-intro');
+  if (intro) intro.innerHTML = '🤖 L\'IA a déjà rempli ce formulaire. <strong>Complète ce qui manque</strong> — mets le type, la session/année, la durée et le niveau dans le champ <strong>Source</strong> — puis enregistre. Tu n\'as rien à retaper.';
+  $('ep-titre').value = epreuve.titre || '';
+  $('ep-source').value = epreuve.source || '';
+  $('form-error').hidden = true; $('form-error').className = 'form-error';
+  const saveBtn = $('btn-save-epreuve'); saveBtn.disabled = false; saveBtn.textContent = "💾 Enregistrer l'épreuve";
+  renderQuestionsForm();
+
+  $('btn-add-question').onclick = () => {
+    addFormState.questions.push({ enonce: '', correction: '', bareme: '' });
+    renderQuestionsForm();
+  };
+  $('btn-cancel-epreuve').onclick = () => renderAIPreview(m, matiereId, epreuve);
+  $('btn-save-epreuve').onclick = () => {
+    document.querySelectorAll('.question-form-card').forEach((card, i) => {
+      if (!addFormState.questions[i]) return;
+      addFormState.questions[i].enonce = card.querySelector('[data-field="enonce"]').value;
+      addFormState.questions[i].correction = card.querySelector('[data-field="correction"]').value;
+      addFormState.questions[i].bareme = card.querySelector('[data-field="bareme"]').value;
+    });
+    const titre = $('ep-titre').value.trim();
+    const source = $('ep-source').value.trim();
+    const questions = addFormState.questions
+      .map((q, i) => ({ numero: String(i + 1), enonce: (q.enonce || '').trim(), correction: (q.correction || '').trim(), bareme: (q.bareme || '').trim() }))
+      .filter(q => q.enonce && q.correction);
+    const err = $('form-error'); err.className = 'form-error';
+    if (!titre) { err.textContent = '⚠️ Le titre est obligatoire.'; err.hidden = false; window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (!questions.length) { err.textContent = '⚠️ Garde au moins une question (énoncé + correction).'; err.hidden = false; return; }
+    const edited = {
+      titre, source, questions,
+      quiz: Array.isArray(epreuve.quiz) ? epreuve.quiz : [],   // QCM IA préservés
+      signature: (typeof normalizeTitle === 'function') ? normalizeTitle(titre) : titre,
+      _ai: true,
+    };
+    _aiPersist(m, matiereId, edited, $('btn-save-epreuve'));
+  };
+  go('add-epreuve');
 }
 
 // Enregistre : visible localement tout de suite + envoyé au cloud (pending).
 async function saveAIEpreuve(m) {
   if (!_aiLastResult) return;
-  const { matiereId, epreuve } = _aiLastResult;
-  const btn = $('btn-ai-save');
+  await _aiPersist(m, _aiLastResult.matiereId, _aiLastResult.epreuve, $('btn-ai-save'));
+}
+
+// Logique de persistance partagée par « ✅ Ajouter » (saveAIEpreuve) et par
+// le formulaire d'édition (renderAIEditForm) : cache local immédiat + envoi
+// cloud (pending), avec préservation des QCM (epreuve.quiz).
+async function _aiPersist(m, matiereId, epreuve, btn) {
   if (btn) { btn.disabled = true; btn.textContent = '💾 Enregistrement…'; }
 
   // 1) Cache local → l'auteur voit l'épreuve et ses QCM immédiatement.
@@ -191,8 +248,8 @@ async function saveAIEpreuve(m) {
   }
 
   alert('✅ Épreuve ajoutée !\n\n' +
-    epreuve.questions.length + ' question(s) corrigée(s) et ' +
-    epreuve.quiz.length + ' QCM ajoutés au quiz.' + cloudMsg);
+    (epreuve.questions || []).length + ' question(s) et ' +
+    (epreuve.quiz || []).length + ' QCM ajoutés au quiz.' + cloudMsg);
 
   _aiLastResult = null;
   const targetM = (typeof findMatiereById === 'function' && findMatiereById(matiereId)) || m;
