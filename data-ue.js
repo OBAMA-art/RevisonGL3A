@@ -41,10 +41,119 @@ const UNITES = [
     "label": "Programmation avancée & Multimédia 2",
     "semestre": "S6",
     "icone": "🚀"
+  },
+  {
+    "id": "soutenance",
+    "label": "Projet & Soutenance",
+    "semestre": "S6",
+    "icone": "🎓"
   }
 ];
 
 const MATIERES_EXTRA = [
+  {
+    "id": "prepa_soutenance",
+    "titre": "Revue de projet & prepa soutenance",
+    "sousTitre": "Reussir la soutenance de son projet personnel",
+    "icone": "🎤",
+    "couleur": "#a855f7",
+    "ue": "soutenance",
+    "placeholder": false,
+    "resume": [
+      {
+        "titre": "Gerer le stress de la soutenance",
+        "contenu": "Le stress avant une soutenance est normal et meme utile a faible dose : il rend vigilant. Pour le maitriser, la cle est la PREPARATION : un travail maitrise rassure. Repetez votre presentation a voix haute plusieurs fois, idealement devant un proche, et chronometrez-vous. La veille, dormez suffisamment et evitez de reviser tard dans la nuit. Le jour J, arrivez en avance et testez le materiel (videoprojecteur, demonstration) AVANT de commencer. Pratiquez la respiration abdominale (inspirez lentement par le nez, expirez longuement) pour calmer le rythme cardiaque. Pendant l'expose, parlez lentement car le stress accelere le debit ; acceptez les silences et buvez une gorgee d'eau si besoin. Rappelez-vous : vous etes la personne qui connait le mieux votre projet."
+      },
+      {
+        "titre": "Structurer sa presentation orale",
+        "contenu": "Une soutenance de projet dure generalement 15 a 20 minutes d'expose, suivies des questions du jury. Decoupez votre temps : (1) Introduction (1-2 min) : votre nom, le titre du projet, le contexte et la problematique. (2) Objectifs et solution proposee (2-3 min). (3) Conception et choix techniques (3-4 min) : architecture, technologies, en justifiant vos choix. (4) Demonstration (3-5 min) : montrez le produit qui fonctionne sur les cas d'usage cles ; preparez un scenario et des donnees de test a l'avance. (5) Tests, difficultes rencontrees et solutions (2 min). (6) Conclusion et perspectives (1-2 min) : bilan, limites, ameliorations futures. Annoncez votre plan au debut, faites des transitions claires, et prevoyez une capture video de secours au cas ou la demonstration en direct echouerait."
+      },
+      {
+        "titre": "Concevoir un bon support (diaporama)",
+        "contenu": "Le diaporama appuie votre discours, il ne le remplace pas. Regles d'or : une seule idee par diapositive ; peu de texte (des mots-cles, jamais des paragraphes) ; une police lisible de loin (au moins 24 points) ; un contraste fort. Visez environ 10 a 12 diapositives pour 15 minutes. Privilegiez les schemas et diagrammes (cas d'utilisation, architecture, captures d'ecran) plutot que le texte. Numerotez vos diapositives. SURTOUT, ne lisez pas vos diapositives : le jury sait lire. Trame type : page de titre (theme, nom, encadrant, annee) ; plan ; contexte et problematique ; objectifs ; solution et architecture ; technologies ; captures / demonstration ; tests ; conclusion et perspectives ; diapositive de remerciement. Verifiez l'orthographe : des fautes sur les slides decredibilisent le travail."
+      },
+      {
+        "titre": "Communication non verbale : gestuelle, voix, regard",
+        "contenu": "La forme compte autant que le fond. Posture : tenez-vous droit, face au jury, sans vous appuyer ni vous balancer. Ne tournez pas le dos a la salle pour lire l'ecran ; jetez un coup d'oeil puis revenez vers le jury. Regard : balayez l'ensemble du jury, ne fixez ni vos notes ni un seul examinateur. Voix : parlez fort, articulez, variez l'intonation pour ne pas etre monotone et menagez des pauses. Gerez vos mains : des gestes ouverts qui accompagnent le propos ; evitez de jouer avec un stylo ou de croiser les bras. Adoptez une tenue propre et sobre. Souriez en arrivant et remerciez le jury a la fin. Respectez le temps imparti : un expose trop long sera interrompu, ce qui penalise la note."
+      },
+      {
+        "titre": "Anticiper les questions du jury (dossier par dossier)",
+        "contenu": "Apres l'expose, le jury pose des questions pour evaluer votre maitrise reelle. Anticipez-les en relisant votre rapport, dossier par dossier. EXISTANT et PROBLEMATIQUE : pourquoi ce projet ? quel probleme reel resolvez-vous ? qui sont les beneficiaires et la cible ? CAHIER DES CHARGES : quels etaient vos objectifs ? les avez-vous tous atteints ? quels besoins fonctionnels et non fonctionnels ? ANALYSE (UML) : pourquoi UML plutot que Merise ? expliquez tel diagramme de cas d'utilisation, de sequence ou d'activite. CONCEPTION : justifiez votre diagramme de classes et vos choix de structure. REALISATION : pourquoi ces technologies (langage, framework, base de donnees) et pas d'autres ? quelle architecture ? TESTS : comment avez-vous teste, et avec quels resultats ? Questions transverses frequentes : quelle a ete votre plus grande difficulte ? qu'amelioreriez-vous ? quelles perspectives ? Regles d'or : ecoutez la question en entier, reformulez-la si besoin, repondez avec honnetete. Si vous ignorez la reponse, dites-le sans bluffer : 'je n'ai pas traite ce point, mais voici comment je m'y prendrais'."
+      },
+      {
+        "titre": "Specificites du projet personnel a l'IAI",
+        "contenu": "A l'IAI, le projet personnel se prepare durant toute l'annee academique, d'octobre a juin (le mois de soutenance), contrairement au rapport de fin de stage qui se deroule de juillet a septembre. Le rapport de projet personnel reprend la structure du rapport de stage MAIS sans la phase d'insertion (accueil et presentation de l'entreprise) ni les annexes lourdes : on se concentre sur la PHASE TECHNIQUE. Celle-ci comprend sept dossiers : (1) l'existant (theme, critique, problematique, proposition de solution) ; (2) le cahier des charges (objectifs, besoins, planning de Gantt, couts, livrables) ; (3) l'analyse (UML : cas d'utilisation, sequence, activite) ; (4) la conception (diagramme de classes, etat-transition, paquetages) ; (5) la realisation (choix technologiques, architecture) ; (6) les tests de fonctionnalites ; (7) les guides d'installation et d'utilisation. PARTICULARITE IMPORTANTE : le projet personnel n'a qu'UN SEUL encadrant academique, alors que le stage en a deux (un encadrant academique et un encadrant professionnel). Le rapport comporte aussi les pages liminaires (dedicace, remerciements, sommaire, resume/abstract) et se termine par une conclusion generale, la bibliographie/webographie et la table des matieres."
+      }
+    ],
+    "qcm": [
+      {
+        "q": "Combien de temps dure generalement l'expose oral d'une soutenance de projet ?",
+        "options": ["A) 5 minutes", "B) 15 a 20 minutes", "C) 45 minutes", "D) 1 heure"],
+        "reponse": "B",
+        "explication": "L'expose dure en general 15 a 20 minutes, suivi de la session de questions du jury."
+      },
+      {
+        "q": "Que faut-il eviter de faire avec ses diapositives pendant l'expose ?",
+        "options": ["A) Les numeroter", "B) Mettre des schemas", "C) Les lire mot a mot", "D) Limiter le texte"],
+        "reponse": "C",
+        "explication": "Il ne faut JAMAIS lire ses diapositives : le jury sait lire. Le support appuie le discours, il ne le remplace pas."
+      },
+      {
+        "q": "Combien d'encadrant academique encadre un projet personnel a l'IAI ?",
+        "options": ["A) Aucun", "B) Un seul", "C) Deux", "D) Trois"],
+        "reponse": "B",
+        "explication": "Le projet personnel a UN SEUL encadrant academique, contrairement au stage qui en a deux (academique + professionnel)."
+      },
+      {
+        "q": "Quelle partie du rapport de fin de stage est RETIREE pour le rapport de projet personnel ?",
+        "options": ["A) La phase technique", "B) La conclusion generale", "C) La phase d'insertion", "D) Le cahier des charges"],
+        "reponse": "C",
+        "explication": "On retire la phase d'insertion (accueil et presentation de l'entreprise) et les annexes lourdes ; on garde la phase technique."
+      },
+      {
+        "q": "Que faire si le jury pose une question dont vous ignorez la reponse ?",
+        "options": ["A) Inventer une reponse credible", "B) Le reconnaitre honnetement et proposer une piste", "C) Rester silencieux", "D) Changer de sujet"],
+        "reponse": "B",
+        "explication": "Mieux vaut reconnaitre honnetement ('je n'ai pas traite ce point, mais voici comment je m'y prendrais') que de bluffer : le jury le detecte."
+      },
+      {
+        "q": "Combien de diapositives viser pour un expose d'environ 15 minutes ?",
+        "options": ["A) 3 a 4", "B) 10 a 12", "C) 30 a 40", "D) Le plus possible"],
+        "reponse": "B",
+        "explication": "Une dizaine a une douzaine de diapositives, avec une seule idee par diapositive, est un bon repere pour 15 minutes."
+      },
+      {
+        "q": "Quelle est une bonne pratique de gestion du stress le jour de la soutenance ?",
+        "options": ["A) Arriver a la derniere minute", "B) Reviser toute la nuit", "C) Arriver en avance et tester le materiel", "D) Eviter de repeter avant"],
+        "reponse": "C",
+        "explication": "Arriver en avance, tester le materiel et la demonstration, et avoir repete au prealable reduisent fortement le stress."
+      },
+      {
+        "q": "Le diagramme de classes appartient a quel dossier du rapport ?",
+        "options": ["A) Dossier de l'existant", "B) Cahier des charges", "C) Dossier de conception", "D) Dossier de tests"],
+        "reponse": "C",
+        "explication": "Le diagramme de classes (avec l'etat-transition et les paquetages) fait partie du dossier de CONCEPTION."
+      }
+    ],
+    "questionsOuvertes": [
+      {
+        "q": "Decrivez le plan type d'une presentation orale de soutenance de projet, partie par partie, avec une idee de duree pour chacune.",
+        "reponseAttendue": "Pour un expose de 15 a 20 minutes : (1) Introduction (1-2 min) : se presenter, annoncer le titre du projet, poser le contexte et la problematique, puis annoncer le plan. (2) Objectifs et solution proposee (2-3 min) : ce que le projet vise a resoudre et l'approche retenue. (3) Conception et choix techniques (3-4 min) : architecture du systeme, technologies choisies et JUSTIFICATION de ces choix. (4) Demonstration (3-5 min) : montrer le produit fonctionnel sur les cas d'usage cles, avec un scenario et des donnees de test prepares a l'avance (et une video de secours). (5) Tests, difficultes rencontrees et solutions apportees (2 min). (6) Conclusion et perspectives (1-2 min) : bilan du travail, limites, et ameliorations futures envisagees. Il faut annoncer le plan au debut, soigner les transitions entre parties et respecter le temps imparti."
+      },
+      {
+        "q": "Le jury vous demande de justifier vos choix technologiques (langage, framework, base de donnees). Comment preparez-vous et structurez-vous votre reponse ?",
+        "reponseAttendue": "Il faut anticiper cette question car elle revient presque toujours. Pour chaque technologie, preparez : (1) le besoin auquel elle repond dans le projet ; (2) les alternatives envisagees ; (3) les criteres de choix (adequation au besoin, performance, courbe d'apprentissage, communaute et documentation, gratuite/licence, compatibilite avec le reste de la pile, votre maitrise). Par exemple : 'J'ai choisi tel SGBD car le projet manipule des donnees relationnelles fortement liees, il est gratuit, robuste et je le maitrisais ; j'ai ecarte telle alternative car elle etait surdimensionnee pour le volume de donnees.' La cle est de montrer que le choix est RAISONNE et lie aux besoins du projet, pas arbitraire ni par simple habitude. Restez honnete sur les limites de votre choix."
+      },
+      {
+        "q": "Citez et expliquez au moins cinq bonnes pratiques de communication non verbale pour une soutenance.",
+        "reponseAttendue": "(1) Posture : se tenir droit, face au jury, sans s'appuyer ni se balancer. (2) Regard : balayer l'ensemble du jury, ne pas fixer ses notes ni un seul examinateur, et ne pas tourner le dos a la salle pour lire l'ecran. (3) Voix : parler fort, articuler, varier l'intonation pour ne pas etre monotone et menager des pauses ; parler lentement car le stress accelere le debit. (4) Gestes : des gestes ouverts qui accompagnent le propos, eviter de croiser les bras ou de jouer avec un objet. (5) Apparence et attitude : tenue propre et sobre, sourire en arrivant, remercier le jury a la fin. On peut ajouter : gerer son temps pour ne pas etre interrompu, et respirer calmement pour rester pose."
+      },
+      {
+        "q": "En quoi le rapport de projet personnel differe-t-il du rapport de fin de stage a l'IAI ?",
+        "reponseAttendue": "Les deux partagent la meme ossature (pages liminaires, phase technique en sept dossiers, conclusion generale, bibliographie/webographie, table des matieres), mais le projet personnel s'en distingue sur plusieurs points : (1) il N'A PAS de phase d'insertion (pas d'accueil ni de presentation d'entreprise) puisqu'il ne se deroule pas en entreprise ; on allege aussi les annexes pour se concentrer sur la phase technique. (2) Il n'a qu'UN SEUL encadrant academique, alors que le stage a deux encadrants (un academique et un professionnel). (3) Le calendrier differe : le projet personnel se prepare sur toute l'annee academique (octobre a juin, mois de soutenance), tandis que le rapport de stage couvre la periode de juillet a septembre. Le coeur technique (existant, cahier des charges, analyse UML, conception, realisation, tests, guides) reste identique."
+      }
+    ]
+  },
   {
     "id": "sig",
     "titre": "Système d'Info Géographique",

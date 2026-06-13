@@ -102,10 +102,18 @@ function isMatiereVide(m) {
       && (!m.questionsOuvertes || !m.questionsOuvertes.length);
 }
 
-// État déplié/replié des UE (mémorisé)
+// État déplié/replié des UE (mémorisé). Défaut (jamais touché) : on déroule le
+// dernier semestre en cours (S6) et on replie S5 (terminé).
+function defaultOpenUEs() {
+  const u = (typeof UNITES !== 'undefined') ? UNITES : [];
+  return new Set(u.filter(x => x.semestre === 'S6').map(x => x.id));
+}
 function getOpenUEs() {
-  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_UE_OPEN) || '[]')); }
-  catch { return new Set(); }
+  try {
+    const raw = localStorage.getItem(STORAGE_UE_OPEN);
+    if (raw === null) return defaultOpenUEs();   // aucune préférence encore → défaut S6 ouvert
+    return new Set(JSON.parse(raw));
+  } catch { return new Set(); }
 }
 function toggleUE(ueId) {
   const set = getOpenUEs();
@@ -136,16 +144,24 @@ function getMatiereOrdre(m) {
 function getExamStatus(m) {
   return (typeof programmeStatus === 'function') ? programmeStatus(m.id) : null;
 }
+// Y a-t-il une période d'examen en cours ? (interrupteur du délégué, app_config).
+// Tant qu'aucun examen n'est programmé : pas de bouton planning, pas de
+// dates/heures/statuts sous les matières. Réapparaît dès que le délégué l'active.
+function isExamActif() {
+  const c = (typeof getHomeConfigCached === 'function') ? getHomeConfigCached() : null;
+  return !!(c && c.examen_actif);
+}
 
 function renderHome(skipConfigRefresh) {
   const list = $('matieres-list');
   const allMatieres = getAllMatieres();
   const unites = (typeof UNITES !== 'undefined') ? UNITES : [];
 
+  const examActif = isExamActif();
   const renderCard = m => {
     const vide = isMatiereVide(m);
-    const examLabel = getExamLabel(m);
-    const status = getExamStatus(m);
+    const examLabel = examActif ? getExamLabel(m) : '';
+    const status = examActif ? getExamStatus(m) : null;
     let statusClass = '', badge = '';
     if (status === 'passe') {
       statusClass = ' exam-passe';
@@ -173,7 +189,7 @@ function renderHome(skipConfigRefresh) {
   const openSet = getOpenUEs();
   const sectionHTML = (ueId, icone, label, items) => {
     const prets = items.filter(m => !isMatiereVide(m)).length;
-    const passes = items.filter(m => getExamStatus(m) === 'passe').length;
+    const passes = examActif ? items.filter(m => getExamStatus(m) === 'passe').length : 0;
     const open = openSet.has(ueId);
     const passesTxt = passes ? ` · ${passes} déjà passée${passes > 1 ? 's' : ''}` : '';
     return `
@@ -228,17 +244,21 @@ function renderHome(skipConfigRefresh) {
   // Bannière d'annonce d'examen (publiée par le délégué, cache hors-ligne)
   renderAnnonceBanner();
 
-  // Bouton « Planning des rattrapages » + sous-titre dynamique (X passées · Y à venir)
+  // Bouton « Planning » : visible uniquement si le délégué a activé une période
+  // d'examen. Sinon il disparaît (avec les dates/statuts) jusqu'au prochain examen.
   const _plan = $('btn-planning');
   if (_plan) {
-    const scheduled = allMatieres.filter(m => getExamStatus(m) !== null);
-    const passes = scheduled.filter(m => getExamStatus(m) === 'passe').length;
-    const restants = scheduled.length - passes;
-    const sub = $('planning-cta-sub');
-    if (sub) sub.textContent = scheduled.length
-      ? `${passes} passée${passes > 1 ? 's' : ''} · ${restants} restante${restants > 1 ? 's' : ''}`
-      : 'Calendrier des épreuves';
-    _plan.onclick = () => renderPlanning();
+    _plan.hidden = !examActif;
+    if (examActif) {
+      const scheduled = allMatieres.filter(m => getExamStatus(m) !== null);
+      const passes = scheduled.filter(m => getExamStatus(m) === 'passe').length;
+      const restants = scheduled.length - passes;
+      const sub = $('planning-cta-sub');
+      if (sub) sub.textContent = scheduled.length
+        ? `${passes} passée${passes > 1 ? 's' : ''} · ${restants} restante${restants > 1 ? 's' : ''}`
+        : 'Calendrier des épreuves';
+      _plan.onclick = () => renderPlanning();
+    }
   }
 
   // Bouton espace délégué (modération)
@@ -267,10 +287,11 @@ function renderHome(skipConfigRefresh) {
         if (state.currentScreen === 'home') renderAnnonceBanner();
       }).catch(e => { console.warn('[GL3A] Annonces indisponibles (SQL supabase-annonces.sql exécuté ?) :', e && e.message); });
     }
-    // Thème de l'accueil (titre/contexte défini par le délégué) : rafraîchit puis ré-applique.
+    // Thème de l'accueil (titre/contexte + période d'examen) : rafraîchit puis
+    // re-render complet (le flag examen_actif change les cartes et le planning).
     if (typeof cloudFetchHomeConfig === 'function') {
       cloudFetchHomeConfig().then(() => {
-        if (state.currentScreen === 'home') applyHomeTheme();
+        if (state.currentScreen === 'home') renderHome(true);
       }).catch(e => { console.warn('[GL3A] Thème accueil indisponible (SQL supabase-app-config.sql exécuté ?) :', e && e.message); });
     }
   }
