@@ -31,9 +31,15 @@ insert into public.admins (email) values ('admin@example.com')
   on conflict (email) do nothing;
 
 -- Helper : l'utilisateur courant est-il admin ?
+-- SECURITY DEFINER : la fonction doit lire public.admins même sous le rôle
+-- `authenticated` (qui n'a pas d'accès direct à cette table). Sans cela,
+-- is_admin() renvoie toujours false en usage réel et TOUTES les écritures
+-- admin (annonces, cours, modération…) sont refusées par la RLS.
 create or replace function public.is_admin()
 returns boolean
 language sql stable
+security definer
+set search_path = public
 as $$
   select exists (
     select 1 from public.admins a
