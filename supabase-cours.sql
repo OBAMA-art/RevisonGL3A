@@ -38,16 +38,26 @@ create policy "cours_delete_admin" on public.cours for delete using ( public.is_
 
 -- Recherche classée : renvoie les fiches d'une matière les plus pertinentes
 -- pour une question (ts_rank), pour nourrir le Prof IA.
+-- IMPORTANT : on transforme la requête en OU (| ) plutôt qu'en ET (&) — une
+-- vraie question (« explique-moi ce qu'est un tablespace ») ne doit pas exiger
+-- que TOUS les mots soient dans la même fiche ; ts_rank classe ensuite par
+-- pertinence (la fiche qui contient « tablespace » remonte en tête).
 create or replace function public.cours_search(p_matiere text, p_query text, p_limit int default 4)
 returns table(id uuid, titre text, contenu text, source text)
 language sql stable security definer set search_path = public
 as $$
+  with q as (
+    select nullif(
+             replace(websearch_to_tsquery('french', coalesce(p_query, ''))::text, '&', '|'),
+             ''
+           )::tsquery as tsq
+  )
   select c.id, c.titre, c.contenu, c.source
-  from public.cours c
+  from public.cours c, q
   where c.matiere_id = p_matiere
-    and c.search @@ websearch_to_tsquery('french', p_query)
-  order by ts_rank(c.search, websearch_to_tsquery('french', p_query)) desc,
-           c.ordre asc
+    and q.tsq is not null
+    and c.search @@ q.tsq
+  order by ts_rank(c.search, q.tsq) desc, c.ordre asc
   limit greatest(1, least(coalesce(p_limit, 4), 8));
 $$;
 
