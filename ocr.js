@@ -669,7 +669,7 @@ function renderScanResult(m, header, status) {
         : (typeof aiAvailable === 'function' && aiAvailable() && !navigator.onLine
             ? '<button class="btn-secondary" disabled>🔌 Correction IA : connexion requise</button>'
             : '')}
-      <button id="btn-scan-fill" class="btn-secondary">✏️ Remplir le formulaire à la main</button>
+      <button id="btn-scan-fill" class="btn-secondary">✏️ Saisir sans l'IA</button>
     </div>
   `;
 

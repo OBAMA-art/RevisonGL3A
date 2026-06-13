@@ -704,6 +704,7 @@ function renderAddEpreuve(m) {
   $('ep-source').value = '';
   $('form-error').hidden = true;
   $('form-error').className = 'form-error';
+  const saveBtn = $('btn-save-epreuve'); saveBtn.disabled = false; saveBtn.textContent = "💾 Enregistrer l'épreuve";
   renderQuestionsForm();
 
   $('btn-add-question').onclick = () => {
