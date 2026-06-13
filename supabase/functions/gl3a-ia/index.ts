@@ -22,7 +22,9 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") ?? "";
-const MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.0-flash";
+// gemini-2.5-flash : disponible sur le palier gratuit (gemini-2.0-flash a une
+// limite gratuite de 0 sur les projets récents). Surchargeable via secret.
+const MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.5-flash";
 const QUOTA_JOUR = parseInt(Deno.env.get("IA_QUOTA_JOUR") ?? "10", 10);
 // Plafond GLOBAL/jour (toute la promo) : protège le palier gratuit Gemini
 // même si quelqu'un forge des visitor_id pour contourner le quota individuel.
@@ -60,6 +62,9 @@ async function gemini(prompt: string, maxTokens = 8192): Promise<string> {
           temperature: 0.3,
           maxOutputTokens: maxTokens,
           responseMimeType: "application/json",
+          // « thinking » désactivé : tous les tokens vont à la réponse JSON
+          // (sinon les modèles 2.5 consomment le budget en réflexion interne).
+          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     },
