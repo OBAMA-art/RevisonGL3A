@@ -492,6 +492,7 @@ function renderMatiere(m) {
     };
   });
   updateAiOfflineUI();
+  if (typeof renderJuryGenerator === 'function') renderJuryGenerator(m);
   go('matiere');
 }
 
@@ -510,6 +511,10 @@ function updateAiOfflineUI() {
     const i = $('prof-input'), s = $('prof-send');
     if (i) { i.disabled = off; i.placeholder = off ? '🔌 Connexion requise pour le Prof IA' : 'Pose ta question sur le cours…'; }
     if (s) s.disabled = off;
+  }
+  // Encart « Questions du jury » (écran matière) : se grise/dégrise avec la connexion.
+  if (state.currentScreen === 'matiere' && state.matiere && typeof renderJuryGenerator === 'function') {
+    renderJuryGenerator(state.matiere);
   }
 }
 

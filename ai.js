@@ -100,6 +100,56 @@ async function aiExplainError(p) {
   return txt;
 }
 
+// Questions probables du jury selon le thème du projet personnel.
+// Renvoie [{ dossier, questions: [{ q, piste }] }].
+async function aiJuryQuestions(theme) {
+  const data = await aiCall('jury_questions', { theme });
+  return Array.isArray(data.groupes) ? data.groupes : [];
+}
+
+// Encart « Générateur de questions du jury » : affiché uniquement sur la matière
+// « Prépa soutenance », et seulement si l'IA est configurée. Grisé hors-ligne.
+function renderJuryGenerator(m) {
+  const host = $('jury-generator');
+  if (!host) return;
+  if (!m || m.id !== 'prepa_soutenance' || typeof aiAvailable !== 'function' || !aiAvailable()) {
+    host.innerHTML = '';
+    return;
+  }
+  const offline = !navigator.onLine;
+  host.innerHTML = `
+    <div class="jury-card" style="margin-top:18px;padding:16px;border:1px solid rgba(168,85,247,.4);border-radius:14px;background:rgba(168,85,247,.06);">
+      <h3 style="margin:0 0 6px;">🤖 Questions du jury (IA)</h3>
+      <p style="margin:0 0 10px;opacity:.85;">Donne le <strong>thème de ton projet personnel</strong> : l'IA génère les questions probables du jury, dossier par dossier, pour t'entraîner.</p>
+      <input type="text" id="jury-theme" maxlength="200" placeholder="ex : Application web de gestion de bibliotheque" ${offline ? 'disabled' : ''} style="width:100%;box-sizing:border-box;margin-bottom:10px;">
+      <button id="jury-go" class="btn-primary" ${offline ? 'disabled' : ''} style="width:100%;">${offline ? '🔌 Connexion requise' : '🎯 Générer les questions'}</button>
+      <div id="jury-result" style="margin-top:12px;"></div>
+    </div>`;
+  if (offline) return;
+  const go = $('jury-go'), input = $('jury-theme'), out = $('jury-result');
+  go.onclick = async () => {
+    const theme = (input.value || '').trim();
+    if (theme.length < 5) { out.innerHTML = '<p class="form-error">Donne un theme un peu plus precis 🙂</p>'; return; }
+    go.disabled = true; go.textContent = '🤖 Génération… (10–30 s)';
+    out.innerHTML = '<p class="scan-status">L\'IA prepare tes questions…</p>';
+    try {
+      const groupes = await aiJuryQuestions(theme);
+      if (!groupes.length) { out.innerHTML = '<p class="form-error">Aucune question generee — reformule ton theme.</p>'; return; }
+      out.innerHTML = groupes.map(g => `
+        <div class="jury-group" style="margin-top:14px;">
+          <h4 style="margin:0 0 6px;color:#c084fc;">${escapeHtml(g.dossier)}</h4>
+          <ul style="margin:0;padding-left:18px;">${(g.questions || []).map(q =>
+            `<li style="margin-bottom:8px;"><strong>${escapeHtml(q.q)}</strong>${q.piste ? `<br><span style="opacity:.8;font-size:.92em;">💡 ${escapeHtml(q.piste)}</span>` : ''}</li>`
+          ).join('')}</ul>
+        </div>`).join('');
+    } catch (e) {
+      out.innerHTML = `<p class="form-error">❌ ${escapeHtml(e.message || 'Échec')}</p>`;
+    } finally {
+      go.disabled = false; go.textContent = '🎯 Générer les questions';
+    }
+  };
+}
+
 /* ----------------------- INTÉGRATION DANS LE SCAN ------------------------ */
 
 let _aiLastResult = null;   // { matiereId, epreuve }
