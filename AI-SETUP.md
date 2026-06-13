@@ -27,10 +27,14 @@ serveur**, à faire **une seule fois**.
 
 ## Étape 2 — Exécuter le SQL
 
-Dashboard Supabase → **SQL Editor** → **New query** → colle le contenu de
-[`supabase-ia.sql`](./supabase-ia.sql) → **Run**.
+Dashboard Supabase → **SQL Editor** → **New query**, et exécute (Run) :
+1. [`supabase-ia.sql`](./supabase-ia.sql) — colonne `quiz` + quota IA partagé.
+2. [`supabase-cours.sql`](./supabase-cours.sql) — bibliothèque de cours du **Prof IA** (table `cours` + recherche FR).
+3. [`supabase-cours-seed.sql`](./supabase-cours-seed.sql) — pré-remplit la bibliothèque avec les **notions des 18 matières** déjà dans l'app (264 fiches).
 
-(Crée la colonne `quiz` des épreuves + le quota IA partagé.)
+> Le Prof IA (chat) et le générateur de QCM s'appuient sur cette bibliothèque.
+> Tu peux l'enrichir ensuite via l'espace délégué → **📚 Bibliothèque de cours**
+> (colle un cours validé, conforme au programme).
 
 ## Étape 3 — Déployer l'Edge Function `gl3a-ia`
 

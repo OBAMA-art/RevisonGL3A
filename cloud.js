@@ -433,6 +433,7 @@ async function showAdminQueue(email) {
     <button id="admin-prog-btn" class="btn-primary btn-block">📅 Organiser le programme (UE & horaires)</button>
     <button id="admin-annonce-btn" class="btn-primary btn-block">📢 Annoncer un examen</button>
     <button id="admin-etudiants-btn" class="btn-primary btn-block">👥 Étudiants inscrits</button>
+    <button id="admin-cours-btn" class="btn-primary btn-block">📚 Bibliothèque de cours (Prof IA)</button>
     <h3 class="admin-h3">⏳ Épreuves en attente</h3>
     <div id="admin-pending"><p class="scan-status">Chargement…</p></div>
     <button id="admin-home-btn" class="btn-secondary btn-block" style="margin-top:16px;">🏠 Accueil</button>`;
@@ -440,6 +441,7 @@ async function showAdminQueue(email) {
   $('admin-prog-btn').onclick = () => renderAdminProgramme(email);
   $('admin-annonce-btn').onclick = () => renderAdminAnnonce(email);
   $('admin-etudiants-btn').onclick = () => renderAdminEtudiants(email);
+  $('admin-cours-btn').onclick = () => renderAdminCours(email);
   $('admin-home-btn').onclick = () => renderHome();
 
   // Tableau de bord de fréquentation (détaillé)
@@ -841,4 +843,98 @@ async function renderAdminEtudiants(email) {
       : visibles === 0 ? `Aucun étudiant ne correspond à « ${q} ».`
       : `${visibles} résultat${visibles > 1 ? 's' : ''} sur ${rows.length}.`;
   });
+}
+
+/* ============== UI : ADMIN — BIBLIOTHÈQUE DE COURS (Prof IA) ============= */
+// Ajoute des fiches de cours qui nourrissent le Prof IA (RAG). Le délégué
+// colle un cours validé (ex. trouvé en ligne, conforme au programme).
+async function cloudAddCours(row) {
+  const c = await sbClient();
+  const { error } = await c.from('cours').insert({
+    matiere_id: row.matiere_id,
+    titre: (row.titre || '').trim(),
+    contenu: (row.contenu || '').trim(),
+    source: (row.source || '').trim() || 'Ajout délégué',
+    ordre: 100
+  });
+  if (error) throw error;
+  return true;
+}
+async function cloudCoursCount(matiereId) {
+  const c = await sbClient();
+  const { count, error } = await c.from('cours')
+    .select('id', { count: 'exact', head: true }).eq('matiere_id', matiereId);
+  if (error) throw error;
+  return count || 0;
+}
+
+async function renderAdminCours(email) {
+  const mats = (typeof getAllMatieres === 'function') ? getAllMatieres() : [];
+  const opts = mats.map(m => `<option value="${escapeHtml(m.id)}">${escapeHtml(m.titre)}</option>`).join('');
+  $('admin-content').innerHTML = `
+    <div class="admin-bar">
+      <span class="admin-who">📚 Bibliothèque de cours</span>
+      <button id="cours-back" class="btn-secondary">← Modération</button>
+    </div>
+    <p class="form-intro">Ajoute une <strong>fiche de cours</strong> : elle nourrit le <strong>Prof IA</strong>
+    de la matière (il s'appuie dessus pour répondre). Idéal pour coller un cours validé, conforme au
+    programme. Garde chaque fiche <strong>focalisée sur une notion</strong> (≈ 1 paragraphe) : la recherche
+    n'en sera que plus précise.</p>
+    <div class="form-group">
+      <label for="cours-matiere">Matière <span class="required">*</span></label>
+      <select id="cours-matiere">${opts}</select>
+      <p id="cours-count" class="scan-status" role="status"></p>
+    </div>
+    <div class="form-group">
+      <label for="cours-titre">Titre de la notion <span class="required">*</span></label>
+      <input type="text" id="cours-titre" maxlength="200" placeholder="ex: Les transactions ACID">
+    </div>
+    <div class="form-group">
+      <label for="cours-contenu">Contenu <span class="required">*</span></label>
+      <textarea id="cours-contenu" rows="7" maxlength="6000" placeholder="Le cours sur cette notion, en clair…"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="cours-source">Source (facultatif)</label>
+      <input type="text" id="cours-source" maxlength="200" placeholder="ex: Cours Oracle 2024, openclassrooms…">
+    </div>
+    <div id="cours-msg"></div>
+    <div class="form-actions">
+      <button id="cours-save" class="btn-primary">💾 Ajouter à la bibliothèque</button>
+      <button id="cours-home" class="btn-secondary">🏠 Accueil</button>
+    </div>`;
+
+  const refreshCount = async () => {
+    const el = $('cours-count'); if (!el) return;
+    el.textContent = '⏳ comptage…';
+    try { el.textContent = `📊 ${await cloudCoursCount($('cours-matiere').value)} fiche(s) pour cette matière.`; }
+    catch (e) { el.textContent = 'Bibliothèque indisponible (SQL supabase-cours.sql exécuté ?).'; }
+  };
+  $('cours-matiere').onchange = refreshCount;
+  refreshCount();
+
+  $('cours-back').onclick = () => showAdminQueue(email);
+  $('cours-home').onclick = () => renderHome();
+  $('cours-save').onclick = async () => {
+    const row = {
+      matiere_id: $('cours-matiere').value,
+      titre: $('cours-titre').value.trim(),
+      contenu: $('cours-contenu').value.trim(),
+      source: $('cours-source').value.trim()
+    };
+    if (!row.titre || row.contenu.length < 20) {
+      $('cours-msg').innerHTML = '<div class="form-error">Titre requis et contenu d\'au moins 20 caractères.</div>';
+      return;
+    }
+    const b = $('cours-save'); b.disabled = true; b.textContent = '⏳ Ajout…';
+    try {
+      await cloudAddCours(row);
+      $('cours-msg').innerHTML = '<div class="form-success">✅ Fiche ajoutée ! Le Prof IA peut déjà s\'en servir.</div>';
+      $('cours-titre').value = ''; $('cours-contenu').value = ''; $('cours-source').value = '';
+      refreshCount();
+    } catch (e) {
+      $('cours-msg').innerHTML = `<div class="form-error">❌ ${escapeHtml(e.message || 'Échec')}.<br>As-tu exécuté <code>supabase-cours.sql</code> ?</div>`;
+    } finally {
+      b.disabled = false; b.textContent = '💾 Ajouter à la bibliothèque';
+    }
+  };
 }

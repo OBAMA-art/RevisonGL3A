@@ -1011,3 +1011,67 @@ body::after {
   background: linear-gradient(120deg, rgba(124, 92, 255, 0.14), rgba(34, 211, 238, 0.12));
   border-color: rgba(14, 94, 116, 0.35);
 }
+
+/* ============================================================================
+   🤖 PROF IA — chat ancré sur les cours (RAG)
+   ============================================================================ */
+/* Hauteur bornée → la liste des messages défile à l'intérieur et la barre de
+   saisie reste visible (dvh gère les barres mobiles ; vh en repli). */
+#screen-prof.screen.active {
+  display: flex; flex-direction: column;
+  height: calc(100vh - 140px);
+  height: calc(100dvh - 140px);
+}
+.prof-header { flex: 0 0 auto; margin-bottom: 10px; }
+.prof-intro {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--neon2) 35%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--neon1) 14%, var(--bg-card)), color-mix(in srgb, var(--neon2) 10%, var(--bg-card)));
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+}
+.prof-ava { font-size: 26px; flex: 0 0 auto; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--neon2) 50%, transparent)); }
+.prof-intro strong { letter-spacing: -0.2px; }
+.prof-intro p { margin: 2px 0 0; font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+.prof-chat {
+  flex: 1 1 auto; min-height: 240px;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 12px 4px; overflow-y: auto;
+}
+.prof-msg { display: flex; flex-direction: column; max-width: 88%; }
+.prof-msg-user { align-self: flex-end; align-items: flex-end; }
+.prof-msg-ia { align-self: flex-start; align-items: flex-start; }
+.prof-bubble {
+  padding: 11px 14px; border-radius: 16px;
+  font-size: 14px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;
+}
+.prof-msg-user .prof-bubble {
+  background: linear-gradient(120deg, var(--neon1), color-mix(in srgb, var(--neon2) 70%, var(--neon1)));
+  color: #fff; border-bottom-right-radius: 5px;
+}
+.prof-msg-ia .prof-bubble {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: var(--glass-blur);
+          backdrop-filter: var(--glass-blur);
+  color: var(--text); border-bottom-left-radius: 5px;
+}
+.prof-bubble code { background: color-mix(in srgb, var(--text) 12%, transparent); padding: 1px 5px; border-radius: 5px; font-size: 0.92em; }
+.prof-src { margin-top: 4px; font-size: 10.5px; color: var(--text-muted); padding: 0 6px; }
+.prof-thinking .prof-bubble { color: var(--neon2); animation: quizIaPulse 1.2s ease-in-out infinite; }
+
+.prof-input-bar {
+  flex: 0 0 auto; display: flex; gap: 8px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.prof-input-bar input {
+  flex: 1 1 auto; min-width: 0;
+  padding: 12px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  border: 1px solid var(--border); color: var(--text); font-size: 14px;
+}
+.prof-input-bar input:focus { outline: none; border-color: var(--neon2); box-shadow: 0 0 0 2px color-mix(in srgb, var(--neon2) 30%, transparent); }
+.prof-input-bar .btn-primary { flex: 0 0 auto; width: 48px; padding: 0; border-radius: 50%; font-size: 18px; }
+[data-theme="light"] .prof-msg-user .prof-bubble { color: #fff; }
