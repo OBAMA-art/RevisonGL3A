@@ -88,6 +88,16 @@
       <div id="compte-content"></div>
     </section>
 
+    <!-- ÉCRAN PROF IA (chat ancré sur les cours, RAG) -->
+    <section id="screen-prof" class="screen">
+      <div id="prof-header" class="prof-header"></div>
+      <div id="prof-chat" class="prof-chat"></div>
+      <div class="prof-input-bar">
+        <input type="text" id="prof-input" placeholder="Pose ta question sur le cours…" maxlength="500" autocomplete="off">
+        <button id="prof-send" class="btn-primary" aria-label="Envoyer">➤</button>
+      </div>
+    </section>
+
     <!-- ÉCRAN MATIÈRE : choix mode (résumé / quiz / sujets) -->
     <section id="screen-matiere" class="screen">
       <div id="matiere-header" class="matiere-header"></div>
@@ -111,6 +121,11 @@
           <span class="mode-icon">📋</span>
           <span class="mode-title">Épreuves corrigées</span>
           <span class="mode-desc" id="epreuves-count"></span>
+        </button>
+        <button class="mode-card mode-card-wide" data-mode="prof">
+          <span class="mode-icon">🤖</span>
+          <span class="mode-title">Prof IA</span>
+          <span class="mode-desc">Pose tes questions sur le cours</span>
         </button>
       </div>
       <div id="best-score" class="best-score"></div>

@@ -60,6 +60,7 @@ function dispatchRoute(route) {
     case 'planning':        renderPlanning(); break;
     case 'mes-notes':       (typeof renderMesNotes === 'function') ? renderMesNotes() : renderHome(); break;
     case 'compte':          (typeof renderCompte === 'function') ? renderCompte() : renderHome(); break;
+    case 'prof':            m ? renderProfChat(m) : renderHome(); break;
     case 'matiere':         m ? renderMatiere(m) : renderHome(); break;
     case 'resume':          m ? renderResume(m) : renderHome(); break;
     case 'sujets':          m ? renderSujets(m) : renderHome(); break;
@@ -442,9 +443,81 @@ function renderMatiere(m) {
         if (!nSujets) return toastVide('sujets ouverts');
         renderSujets(m);
       } else if (mode === 'epreuves') renderEpreuves(m);
+      else if (mode === 'prof') renderProfChat(m);
     };
   });
   go('matiere');
+}
+
+// ============ PROF IA (chat ancré sur les cours — RAG) ============
+let _profHistory = [];
+let _profSending = false;
+function renderProfChat(m) {
+  state.matiere = m;
+  _profHistory = [];
+  if (typeof logEvent === 'function') logEvent('prof_ia', m.id);
+  document.documentElement.style.setProperty('--accent', m.couleur);
+  $('appTitle').textContent = '🤖 Prof IA';
+  $('appSubtitle').textContent = m.titre;
+  const dispo = (typeof aiAvailable === 'function' && aiAvailable());
+  $('prof-header').innerHTML = `
+    <div class="prof-intro">
+      <span class="prof-ava">🤖</span>
+      <div>
+        <strong>Prof IA — ${escapeHtml(m.titre)}</strong>
+        <p>Je réponds en m'appuyant sur les fiches de cours de la matière.${dispo ? '' : ' ⚠️ IA pas encore activée par le délégué.'}</p>
+      </div>
+    </div>`;
+  $('prof-chat').innerHTML = '';
+  profAppend('ia', `Bonjour 👋 Pose-moi une question sur « ${m.titre} » pour réviser — par exemple une notion que tu n'as pas comprise.`);
+  const send = () => profSend(m);
+  $('prof-send').onclick = send;
+  $('prof-input').onkeydown = (e) => { if (e.key === 'Enter') send(); };
+  go('prof');
+  setTimeout(() => { const i = $('prof-input'); if (i) i.focus(); }, 200);
+}
+
+function profAppend(role, text, sources) {
+  const wrap = document.createElement('div');
+  wrap.className = 'prof-msg prof-msg-' + (role === 'user' ? 'user' : 'ia');
+  const src = (sources && sources.length)
+    ? `<div class="prof-src">📚 ${sources.map(s => escapeHtml(s)).join(' · ')}</div>` : '';
+  wrap.innerHTML = `<div class="prof-bubble">${role === 'ia' ? formatInline(text) : escapeHtml(text)}</div>${src}`;
+  $('prof-chat').appendChild(wrap);
+  $('prof-chat').scrollTop = $('prof-chat').scrollHeight;
+  return wrap;
+}
+
+async function profSend(m) {
+  if (_profSending) return;            // anti double-envoi (Enter répété pendant l'attente)
+  const inp = $('prof-input');
+  const q = (inp.value || '').trim();
+  if (!q) return;
+  if (typeof aiAvailable === 'function' && !aiAvailable()) {
+    profAppend('ia', '⚠️ Le Prof IA n\'est pas encore activé.');
+    return;
+  }
+  _profSending = true;
+  inp.value = '';
+  profAppend('user', q);
+  _profHistory.push({ role: 'user', text: q });
+  const thinking = profAppend('ia', '…');
+  thinking.classList.add('prof-thinking');
+  $('prof-send').disabled = true;
+  try {
+    const r = await aiProfChat(m.id, m.titre, q, _profHistory.slice(0, -1));
+    thinking.remove();
+    profAppend('ia', r.reponse, r.sources);
+    _profHistory.push({ role: 'ia', text: r.reponse });
+    if (_profHistory.length > 12) _profHistory = _profHistory.slice(-12);
+  } catch (e) {
+    thinking.remove();
+    profAppend('ia', '⚠️ ' + (e.message || 'Le Prof IA est indisponible.'));
+  } finally {
+    _profSending = false;
+    $('prof-send').disabled = false;
+    const i = $('prof-input'); if (i) i.focus();
+  }
 }
 
 function toastVide(quoi) {

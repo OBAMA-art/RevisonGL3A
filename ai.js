@@ -74,6 +74,18 @@ async function aiCorrectExam(ocrText, matiereLabel) {
   return data;
 }
 
+// Prof IA (chat) -> réponse ancrée sur les fiches de cours de la matière.
+// history : [{role:'user'|'ia', text}]. Renvoie { reponse, sources[] }.
+async function aiProfChat(matiereId, matiereLabel, question, history) {
+  const data = await aiCall('prof_chat', {
+    matiereId, matiereLabel: matiereLabel || '', question, history: history || [],
+  });
+  return {
+    reponse: (data.reponse || '').trim(),
+    sources: Array.isArray(data.sources) ? data.sources : [],
+  };
+}
+
 // Quiz -> explication personnalisée d'une erreur. Renvoie une string.
 async function aiExplainError(p) {
   const data = await aiCall('explain_error', {
