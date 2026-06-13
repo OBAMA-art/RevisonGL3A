@@ -446,7 +446,26 @@ function renderMatiere(m) {
       else if (mode === 'prof') renderProfChat(m);
     };
   });
+  updateAiOfflineUI();
   go('matiere');
+}
+
+// Grise les fonctions IA (qui exigent le réseau) quand l'appareil est hors-ligne,
+// avec un libellé clair — le reste de l'app reste pleinement utilisable offline.
+function updateAiOfflineUI() {
+  const off = !navigator.onLine;
+  document.body.classList.toggle('is-offline', off);
+  const pc = document.querySelector('.mode-card[data-mode="prof"]');
+  if (pc) {
+    pc.classList.toggle('mode-offline', off);
+    const d = pc.querySelector('.mode-desc');
+    if (d) d.textContent = off ? '🔌 Connexion requise' : 'Pose tes questions sur le cours';
+  }
+  if (state.currentScreen === 'prof') {
+    const i = $('prof-input'), s = $('prof-send');
+    if (i) { i.disabled = off; i.placeholder = off ? '🔌 Connexion requise pour le Prof IA' : 'Pose ta question sur le cours…'; }
+    if (s) s.disabled = off;
+  }
 }
 
 // ============ PROF IA (chat ancré sur les cours — RAG) ============
@@ -474,6 +493,7 @@ function renderProfChat(m) {
   $('prof-send').onclick = send;
   $('prof-input').onkeydown = (e) => { if (e.key === 'Enter') send(); };
   go('prof');
+  updateAiOfflineUI();
   setTimeout(() => { const i = $('prof-input'); if (i) i.focus(); }, 200);
 }
 
@@ -495,6 +515,10 @@ async function profSend(m) {
   if (!q) return;
   if (typeof aiAvailable === 'function' && !aiAvailable()) {
     profAppend('ia', '⚠️ Le Prof IA n\'est pas encore activé.');
+    return;
+  }
+  if (!navigator.onLine) {
+    profAppend('ia', '🔌 Tu es hors-ligne — le Prof IA a besoin d\'une connexion. Le reste de l\'app (résumés, quiz, épreuves) marche sans réseau.');
     return;
   }
   _profSending = true;
@@ -974,7 +998,7 @@ function handleAnswer(letter, clickedBtn) {
   }
 
   $('quiz-score').textContent = `Score : ${state.quiz.score}`;
-  const iaBtnHtml = (!isCorrect && typeof aiAvailable === 'function' && aiAvailable())
+  const iaBtnHtml = (!isCorrect && typeof aiAvailable === 'function' && aiAvailable() && navigator.onLine)
     ? `<div id="quiz-ia-zone" class="quiz-ia-zone"><button id="btn-quiz-ia" class="btn-quiz-ia">🤖 Pourquoi j'ai faux ? — demande au Prof IA</button></div>`
     : '';
   $('quiz-explication').innerHTML = `<strong>${isCorrect ? '✅ Bonne réponse' : '❌ Mauvaise réponse'}</strong> — ${formatInline(q.explication)}${iaBtnHtml}`;
@@ -1198,6 +1222,11 @@ if (_savedRoute && _savedRoute.screen && _savedRoute.screen !== 'home') {
 showWelcomeIfFirstVisit();
 // Compteur de visiteurs (Supabase) — au plus une visite/appareil/jour
 if (typeof cloudTrackVisit === 'function') cloudTrackVisit();
+
+// État réseau : grise les fonctions IA en direct quand on passe hors-ligne.
+window.addEventListener('online', updateAiOfflineUI);
+window.addEventListener('offline', updateAiOfflineUI);
+updateAiOfflineUI();
 
 // ============ MISE À JOUR AUTO DES STATUTS D'ÉPREUVE ============
 // Pendant que l'utilisateur reste sur l'accueil ou le planning, les badges

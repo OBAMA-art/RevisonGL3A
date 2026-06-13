@@ -109,6 +109,10 @@ async function runAICorrection(m) {
   const matiereId = _ocrChosenMatiereId || m.id;
   const label = (typeof MATIERE_LABEL !== 'undefined' && MATIERE_LABEL[matiereId]) || m.titre;
   const statusEl = $('scan-status');
+  if (!navigator.onLine) {
+    if (statusEl) statusEl.textContent = '🔌 Hors-ligne : la correction IA nécessite une connexion. Tu peux remplir le formulaire à la main.';
+    return;
+  }
   const btn = $('btn-scan-ai');
   if (btn) { btn.disabled = true; btn.textContent = '🤖 Correction en cours… (10–30 s)'; }
   if (statusEl) statusEl.textContent = '🤖 L\'IA lit et corrige l\'épreuve…';

@@ -664,9 +664,11 @@ function renderScanResult(m, header, status) {
       <pre>${escapeHtml(_ocrLastText)}</pre>
     </details>
     <div class="scan-ai-actions">
-      ${(typeof aiAvailable === 'function' && aiAvailable())
+      ${(typeof aiAvailable === 'function' && aiAvailable() && navigator.onLine)
         ? '<button id="btn-scan-ai" class="btn-primary">🤖 Corriger automatiquement (IA)</button>'
-        : ''}
+        : (typeof aiAvailable === 'function' && aiAvailable() && !navigator.onLine
+            ? '<button class="btn-secondary" disabled>🔌 Correction IA : connexion requise</button>'
+            : '')}
       <button id="btn-scan-fill" class="btn-secondary">✏️ Remplir le formulaire à la main</button>
     </div>
   `;

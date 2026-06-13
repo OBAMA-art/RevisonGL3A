@@ -1075,3 +1075,10 @@ body::after {
 .prof-input-bar input:focus { outline: none; border-color: var(--neon2); box-shadow: 0 0 0 2px color-mix(in srgb, var(--neon2) 30%, transparent); }
 .prof-input-bar .btn-primary { flex: 0 0 auto; width: 48px; padding: 0; border-radius: 50%; font-size: 18px; }
 [data-theme="light"] .prof-msg-user .prof-bubble { color: #fff; }
+
+/* État hors-ligne : les fonctions IA (réseau requis) sont grisées et explicites */
+.mode-card.mode-offline { opacity: 0.6; }
+.mode-card.mode-offline .mode-icon { filter: grayscale(0.6); }
+.mode-card.mode-offline .mode-desc { color: var(--warning); }
+.prof-input-bar input:disabled { opacity: 0.55; cursor: not-allowed; }
+.prof-input-bar .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
