@@ -396,7 +396,7 @@ function renderMatiere(m) {
   $('appSubtitle').textContent = m.sousTitre;
   const examLabel = getExamLabel(m);
   const sousLigne = examLabel ? `${m.sousTitre} · 📅 ${escapeHtml(examLabel)}` : m.sousTitre;
-  const nResume = (m.resume || []).length, nQcm = (m.qcm || []).length, nSujets = (m.questionsOuvertes || []).length;
+  const nResume = (m.resume || []).length, nQcm = qcmPool(m).length, nSujets = (m.questionsOuvertes || []).length;
   $('matiere-header').innerHTML = `
     <div class="big-icon">${m.icone}</div>
     <h2>${m.titre}</h2>
@@ -458,6 +458,28 @@ function getUserEpreuvesAll() {
 }
 function getUserEpreuves(matiereId) {
   return getUserEpreuvesAll()[matiereId] || [];
+}
+// QCM des épreuves perso (scannées + corrigées par l'IA) d'une matière.
+function getUserQuiz(matiereId) {
+  return getUserEpreuves(matiereId)
+    .flatMap(e => Array.isArray(e.quiz) ? e.quiz : [])
+    .filter(q => q && q.q && Array.isArray(q.options) && q.options.length >= 2);
+}
+// Pool complet de QCM d'une matière : statiques + cloud validés + perso,
+// dédupliqués par texte de question (une épreuve scannée localement PUIS
+// approuvée en ligne n'introduit pas ses QCM deux fois).
+function qcmPool(m) {
+  const cloud = (typeof getCloudQuiz === 'function') ? getCloudQuiz(m.id) : [];
+  const user = getUserQuiz(m.id);
+  const seen = new Set();
+  const out = [];
+  [...(m.qcm || []), ...cloud, ...user].forEach(q => {
+    const k = (q.q || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    if (k && seen.has(k)) return;
+    if (k) seen.add(k);
+    out.push(q);
+  });
+  return out;
 }
 function saveUserEpreuves(matiereId, list) {
   const all = getUserEpreuvesAll();
@@ -829,7 +851,7 @@ function renderResume(m) {
 // ============ QUIZ ============
 function startQuiz(m) {
   state.quiz = {
-    questions: shuffle(m.qcm.slice()),
+    questions: shuffle(qcmPool(m).slice()),
     index: 0,
     score: 0,
     answered: false,
@@ -879,10 +901,34 @@ function handleAnswer(letter, clickedBtn) {
   }
 
   $('quiz-score').textContent = `Score : ${state.quiz.score}`;
-  $('quiz-explication').innerHTML = `<strong>${isCorrect ? '✅ Bonne réponse' : '❌ Mauvaise réponse'}</strong> — ${formatInline(q.explication)}`;
+  const iaBtnHtml = (!isCorrect && typeof aiAvailable === 'function' && aiAvailable())
+    ? `<div id="quiz-ia-zone" class="quiz-ia-zone"><button id="btn-quiz-ia" class="btn-quiz-ia">🤖 Pourquoi j'ai faux ? — demande au Prof IA</button></div>`
+    : '';
+  $('quiz-explication').innerHTML = `<strong>${isCorrect ? '✅ Bonne réponse' : '❌ Mauvaise réponse'}</strong> — ${formatInline(q.explication)}${iaBtnHtml}`;
   $('quiz-explication').hidden = false;
+  const iaBtn = $('btn-quiz-ia');
+  if (iaBtn) iaBtn.onclick = () => quizExplainIA(q, letter);
   $('btn-next').hidden = false;
   $('btn-next').textContent = (state.quiz.index === state.quiz.questions.length - 1) ? 'Voir le résultat 🏁' : 'Suivant →';
+}
+
+// 🤖 Explication personnalisée d'une erreur de quiz par le Prof IA (Gemini).
+async function quizExplainIA(q, choix) {
+  const zone = $('quiz-ia-zone');
+  if (!zone) return;
+  zone.innerHTML = '<p class="quiz-ia-wait">🤖 Le Prof IA réfléchit…</p>';
+  try {
+    const txt = await aiExplainError({
+      question: q.q,
+      options: q.options || [],
+      reponse: q.reponse,
+      choix,
+      matiereLabel: state.matiere ? state.matiere.titre : ''
+    });
+    zone.innerHTML = `<div class="quiz-ia-rep"><strong>🤖 Prof IA :</strong> ${escapeHtml(txt)}</div>`;
+  } catch (e) {
+    zone.innerHTML = `<div class="quiz-ia-rep quiz-ia-err">🤖 ${escapeHtml(e.message || 'Le Prof IA est indisponible pour le moment.')}</div>`;
+  }
 }
 
 $('btn-next').addEventListener('click', () => {

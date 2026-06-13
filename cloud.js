@@ -53,6 +53,12 @@ function getCloudCache() {
 function getCloudApproved(matiereId) {
   return getCloudCache()[matiereId] || [];
 }
+// QCM (quiz) extraits des épreuves approuvées en ligne, pour cette matière.
+function getCloudQuiz(matiereId) {
+  return getCloudApproved(matiereId)
+    .flatMap(e => Array.isArray(e.quiz) ? e.quiz : [])
+    .filter(q => q && q.q && Array.isArray(q.options) && q.options.length >= 2);
+}
 function getCloudCacheAge() {
   try { const o = JSON.parse(localStorage.getItem(CLOUD_CACHE_KEY) || '{}'); return o.at || 0; }
   catch { return 0; }
@@ -61,8 +67,10 @@ function getCloudCacheAge() {
 // Récupère les épreuves approuvées et met à jour le cache local. Retourne le map par matière.
 async function cloudFetchApproved() {
   const c = await sbClient();
+  // select('*') : tolère l'absence de la colonne quiz tant que
+  // supabase-ia.sql n'a pas été exécuté (elle arrive alors à undefined).
   const { data, error } = await c.from('epreuves')
-    .select('id,matiere_id,titre,source,questions,signature,created_at')
+    .select('*')
     .eq('status', 'approved')
     .order('created_at', { ascending: false });
   if (error) throw error;
@@ -296,6 +304,10 @@ async function cloudSubmitEpreuve(matiereId, epreuve, submittedBy) {
     status: 'pending',
     submitted_by: submittedBy || ''
   };
+  // QCM extraits par l'IA : inclus seulement s'il y en a (la colonne quiz
+  // n'existe qu'après exécution de supabase-ia.sql — les soumissions
+  // classiques restent ainsi compatibles sans elle).
+  if (Array.isArray(epreuve.quiz) && epreuve.quiz.length) row.quiz = epreuve.quiz;
   // Pas de .select() : un anon ne peut pas relire une ligne 'pending' (RLS).
   const { error } = await c.from('epreuves').insert(row);
   if (error) throw error;
