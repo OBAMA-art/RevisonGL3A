@@ -98,10 +98,13 @@ function parseJSON(text: string): Record<string, unknown> {
   }
 }
 
+// Sentinelle du compteur global (≥ 8 caractères : passe la garde de ia_consume).
+const GLOBAL_KEY = "__global__";
+
 // Rend son crédit à l'étudiant quand l'échec vient du serveur, pas de lui.
 async function refund(visitorId: string) {
   try {
-    await supa.rpc("ia_refund", { p_visitor: "_global" });
+    await supa.rpc("ia_refund", { p_visitor: GLOBAL_KEY });
     await supa.rpc("ia_refund", { p_visitor: visitorId });
   } catch { /* best effort */ }
 }
@@ -204,7 +207,7 @@ Deno.serve(async (req) => {
 
   // Quotas : plafond global (toute la promo) puis quota individuel.
   try {
-    const g = await consumeQuota("_global");
+    const g = await consumeQuota(GLOBAL_KEY);
     if (g.n > QUOTA_GLOBAL_JOUR) {
       return json(
         { error: "L'IA a beaucoup travaillé aujourd'hui (plafond de la promo atteint). Réessaie demain 💪" },
