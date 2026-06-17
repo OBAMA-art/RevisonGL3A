@@ -734,8 +734,11 @@ async function renderAdminAccueil(email) {
       $('accueil-msg-zone').innerHTML = '<div class="form-success">✅ Accueil mis à jour ! Les camarades le verront à leur prochaine ouverture.</div>';
     } catch (e) {
       const msg = (e && e.message) || 'Échec';
+      const reseau = !navigator.onLine || /failed to fetch|networkerror|load failed|fetch/i.test(msg);
       const rls = /row-level security|violates row-level|permission denied|not authorized|insufficient/i.test(msg);
-      $('accueil-msg-zone').innerHTML = rls
+      $('accueil-msg-zone').innerHTML = reseau
+        ? `<div class="form-error">📡 <strong>Supabase injoignable</strong> (« ${escapeHtml(msg)} »).<br>Ce n'est pas un problème de SQL. Vérifie : 1) ta connexion Internet ; 2) que le projet Supabase n'est pas <strong>en pause</strong> (dashboard → « Restore project » sur le plan gratuit après inactivité). Puis réessaie.</div>`
+        : rls
         ? `<div class="form-error">❌ Refusé : ton compte <strong>${escapeHtml(email)}</strong> n'est pas reconnu comme <strong>délégué (admin)</strong>.</div>`
         : `<div class="form-error">❌ ${escapeHtml(msg)}.<br>As-tu exécuté le SQL <code>supabase-app-config.sql</code> ?</div>`;
     } finally {
