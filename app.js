@@ -276,10 +276,36 @@ function renderMatieresList(containerId) {
 }
 
 // Écran « Mes révisions » : les matières S5/S6, déplacées hors de l'accueil.
-function renderRevisions() {
+// focusSem ('S5'|'S6') : déroule ce semestre et y défile (lien d'annonce).
+function renderRevisions(focusSem) {
+  if (focusSem === 'S5' || focusSem === 'S6') {
+    try {
+      const u = (typeof UNITES !== 'undefined') ? UNITES : [];
+      const set = getOpenUEs();
+      u.filter(x => x.semestre === focusSem).forEach(x => set.add(x.id));
+      localStorage.setItem(STORAGE_UE_OPEN, JSON.stringify([...set]));
+    } catch {}
+  }
   renderMatieresList('revisions-list');
   $('appTitle').textContent = 'Révisions GL3A';
   go('revisions');
+  if (focusSem === 'S5' || focusSem === 'S6') {
+    requestAnimationFrame(() => {
+      const div = [...document.querySelectorAll('#revisions-list .sem-divider')]
+        .find(d => d.textContent.includes(focusSem === 'S5' ? '5' : '6'));
+      if (div) div.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+}
+
+// Navigation déclenchée par le bouton « 👉 Aller à… » d'une annonce.
+function annonceNavigate(type, val) {
+  if (type === 'semestre' && (val === 'S5' || val === 'S6')) return renderRevisions(val);
+  if (type === 'matiere') {
+    const m = (typeof findMatiereById === 'function') ? findMatiereById(val) : null;
+    if (m) return renderMatiere(m);
+  }
+  renderRevisions();
 }
 
 // « À la une » : actualité éditée par le délégué (app_config clé 'home').
@@ -403,6 +429,8 @@ function renderAnnonceBanner() {
     try { localStorage.setItem('gl3a_annonce_vue', a.id); } catch {}
     el.innerHTML = '';
   };
+  const lien = el.querySelector('.annonce-lien-btn');
+  if (lien) lien.onclick = () => annonceNavigate(lien.dataset.ltype, lien.dataset.lval);
 }
 
 // ============ ÉCRAN PLANNING DES RATTRAPAGES ============

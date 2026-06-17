@@ -1,5 +1,5 @@
 // Service Worker - Révisions GL3A
-const VERSION = "v43";
+const VERSION = "v44";
 const SHELL_CACHE = `revisions-gl3a-shell-${VERSION}`;
 const DATA_CACHE = `revisions-gl3a-data-${VERSION}`;
 const OCR_CACHE = `revisions-gl3a-ocr-${VERSION}`;
