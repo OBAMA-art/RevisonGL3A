@@ -135,7 +135,9 @@ async function cloudSaveHomeConfig(cfg) {
     titre: (cfg.titre || '').trim(),
     sous_titre: (cfg.sous_titre || '').trim(),
     planning_label: (cfg.planning_label || '').trim(),
-    examen_actif: !!cfg.examen_actif
+    examen_actif: !!cfg.examen_actif,
+    actu_titre: (cfg.actu_titre || '').trim(),
+    actu_texte: (cfg.actu_texte || '').trim()
   };
   const { error } = await c.from('app_config').upsert(
     { key: 'home', value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
@@ -698,6 +700,15 @@ async function renderAdminAccueil(email) {
       <label for="accueil-plan">Libellé du bouton « Planning »</label>
       <input type="text" id="accueil-plan" maxlength="60" placeholder="${escapeHtml(DEF.planning_label)}" value="${escapeHtml(cur.planning_label || '')}">
     </div>
+    <div class="form-group">
+      <label for="accueil-actu-titre">📌 « À la une » — titre de l'actualité</label>
+      <input type="text" id="accueil-actu-titre" maxlength="100" placeholder="ex : Soutenance des projets personnels" value="${escapeHtml(cur.actu_titre || '')}">
+    </div>
+    <div class="form-group">
+      <label for="accueil-actu-texte">📌 « À la une » — message (affiché en grand sur l'accueil)</label>
+      <textarea id="accueil-actu-texte" rows="4" maxlength="800" placeholder="ex : La soutenance a lieu le 20 juin à 9h en salle informatique. Dernier cours de préparation samedi. Pense à imprimer ton dossier.">${escapeHtml(cur.actu_texte || '')}</textarea>
+    </div>
+    <p class="form-intro" style="margin-top:-6px;">Laisse ces deux champs <strong>vides</strong> pour ne rien afficher « À la une ».</p>
     <label class="accueil-switch" style="display:flex;gap:10px;align-items:flex-start;margin:14px 0;cursor:pointer;line-height:1.4;">
       <input type="checkbox" id="accueil-examen" ${cur.examen_actif ? 'checked' : ''} style="margin-top:3px;flex:0 0 auto;width:18px;height:18px;cursor:pointer;">
       <span>📅 <strong>Période d'examen en cours</strong> — affiche le bouton « Planning » et les dates/heures/statuts sous chaque matière. Décoche entre deux sessions : tout disparaît jusqu'au prochain examen.</span>
@@ -714,9 +725,12 @@ async function renderAdminAccueil(email) {
         titre: $('accueil-titre').value,
         sous_titre: $('accueil-sous').value,
         planning_label: $('accueil-plan').value,
-        examen_actif: $('accueil-examen').checked
+        examen_actif: $('accueil-examen').checked,
+        actu_titre: $('accueil-actu-titre').value,
+        actu_texte: $('accueil-actu-texte').value
       });
       if (typeof applyHomeTheme === 'function') applyHomeTheme();
+      if (typeof renderHomeActu === 'function') renderHomeActu();
       $('accueil-msg-zone').innerHTML = '<div class="form-success">✅ Accueil mis à jour ! Les camarades le verront à leur prochaine ouverture.</div>';
     } catch (e) {
       const msg = (e && e.message) || 'Échec';
