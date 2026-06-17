@@ -40,6 +40,8 @@
         <p id="hero-sub" class="hero-sub">Rattrapages du 10 au 13 juin 2026. Les matières déjà passées sont signalées ✅ — consulte le planning pour voir ce qu'il te reste.</p>
       </div>
       <div id="annonce-banner"></div>
+      <!-- À la une : actualité publiée par le délégué (ex. affiche de soutenance) -->
+      <div id="home-actu"></div>
       <button id="btn-planning" class="planning-cta">
         <span class="planning-cta-ico">📅</span>
         <span class="planning-cta-txt">
@@ -48,19 +50,27 @@
         </span>
         <span class="planning-cta-arrow">›</span>
       </button>
-      <button id="btn-mes-notes" class="planning-cta">
-        <span class="planning-cta-ico">🎓</span>
+      <button id="btn-revisions" class="planning-cta planning-cta-accent">
+        <span class="planning-cta-ico">📚</span>
         <span class="planning-cta-txt">
-          <span class="planning-cta-title">Mes notes &amp; moyennes</span>
-          <span class="planning-cta-sub">CC + SN par matière · modules validés · moyenne finale — privé, sur ton téléphone</span>
+          <span class="planning-cta-title">Commencer mes révisions</span>
+          <span class="planning-cta-sub">Tes matières du Semestre 5 et du Semestre 6</span>
         </span>
         <span class="planning-cta-arrow">›</span>
       </button>
-      <div id="matieres-list"></div>
+      <button id="btn-admin" class="admin-link">🔐 Espace délégué (modération)</button>
+    </section>
+
+    <!-- ÉCRAN MES RÉVISIONS : matières groupées par semestre (S5 / S6) -->
+    <section id="screen-revisions" class="screen">
+      <div class="planning-head">
+        <h2>📚 Mes révisions</h2>
+        <p class="planning-intro">Tes matières par semestre. Touche une unité d'enseignement pour la dérouler, puis une matière pour la réviser.</p>
+      </div>
+      <div id="revisions-list"></div>
       <div class="tip">
         <strong>💡 Astuce :</strong> mode <em>Résumé</em> pour ancrer les notions ; mode <em>Quiz</em> pour t'auto-évaluer ; mode <em>Sujets</em> pour t'entraîner aux questions ouvertes.
       </div>
-      <button id="btn-admin" class="admin-link">🔐 Espace délégué (modération)</button>
     </section>
 
     <!-- ÉCRAN PLANNING DES RATTRAPAGES -->
@@ -267,6 +277,17 @@
       <div id="epreuve-detail-content" class="epreuve-detail-content"></div>
     </section>
   </main>
+
+  <!-- Barre de navigation principale (mobile-first). Visible uniquement sur les
+       écrans de premier niveau ; masquée dans les écrans de détail (matière,
+       quiz, prof…) où le bouton retour prend le relais. -->
+  <nav id="tabbar" class="tabbar" hidden aria-label="Navigation principale">
+    <button class="tab" data-tab="home"><span class="tab-ico">🏠</span><span class="tab-lbl">Accueil</span></button>
+    <button class="tab" data-tab="revisions"><span class="tab-ico">📚</span><span class="tab-lbl">Révisions</span></button>
+    <button class="tab" data-tab="planning" hidden><span class="tab-ico">📅</span><span class="tab-lbl">Planning</span></button>
+    <button class="tab" data-tab="mes-notes"><span class="tab-ico">🎓</span><span class="tab-lbl">Notes</span></button>
+    <button class="tab" data-tab="compte"><span class="tab-ico">👤</span><span class="tab-lbl">Compte</span></button>
+  </nav>
 
   <script src="data.js"></script>
   <script src="data-jeudi.js"></script>

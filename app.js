@@ -37,6 +37,7 @@ function go(screenId, addToHistory = true) {
   window.scrollTo({top: 0, behavior: 'instant'});
   state.currentScreen = screenId;
   $('btnBack').hidden = (screenId === 'home');
+  syncTabbar();
 
   // Synchronise l'historique du navigateur (sauf pendant une restauration)
   if (!_navLock) {
@@ -46,6 +47,33 @@ function go(screenId, addToHistory = true) {
     else history.replaceState(route, '');
   }
 }
+
+// ---- Barre d'onglets (navigation principale, mobile-first) --------------
+// Affichée uniquement sur les écrans de premier niveau ; masquée dans les
+// écrans de détail (matière, quiz, prof…) où le bouton retour suffit.
+const TAB_SCREENS = ['home', 'revisions', 'planning', 'mes-notes', 'compte'];
+function syncTabbar() {
+  const bar = $('tabbar'); if (!bar) return;
+  const sc = state.currentScreen;
+  bar.hidden = !TAB_SCREENS.includes(sc);
+  document.body.classList.toggle('has-tabbar', !bar.hidden);
+  const planTab = bar.querySelector('[data-tab="planning"]');
+  if (planTab) planTab.hidden = (typeof isExamActif === 'function') ? !isExamActif() : false;
+  bar.querySelectorAll('.tab').forEach(t =>
+    t.classList.toggle('tab-active', t.dataset.tab === sc));
+}
+// Délégation au niveau document : marche quel que soit l'ordre de chargement.
+document.addEventListener('click', (e) => {
+  const tab = e.target.closest && e.target.closest('#tabbar .tab');
+  if (!tab) return;
+  switch (tab.dataset.tab) {
+    case 'home':      renderHome(); break;
+    case 'revisions': renderRevisions(); break;
+    case 'planning':  renderPlanning(); break;
+    case 'mes-notes': if (typeof renderMesNotes === 'function') renderMesNotes(); break;
+    case 'compte':    if (typeof renderCompte === 'function') renderCompte(); break;
+  }
+});
 
 // Le bouton retour de l'app = le bouton retour du téléphone (on dépile l'historique)
 function goBack() {
@@ -58,6 +86,7 @@ function dispatchRoute(route) {
   if (m) state.matiere = m;   // rétablit le contexte matière après restauration
   switch (route && route.screen) {
     case 'planning':        renderPlanning(); break;
+    case 'revisions':       (typeof renderRevisions === 'function') ? renderRevisions() : renderHome(); break;
     case 'mes-notes':       (typeof renderMesNotes === 'function') ? renderMesNotes() : renderHome(); break;
     case 'compte':          (typeof renderCompte === 'function') ? renderCompte() : renderHome(); break;
     case 'prof':            m ? renderProfChat(m) : renderHome(); break;
@@ -152,8 +181,11 @@ function isExamActif() {
   return !!(c && c.examen_actif);
 }
 
-function renderHome(skipConfigRefresh) {
-  const list = $('matieres-list');
+// Construit la liste des matières groupées par UE (Semestre 5 / Semestre 6)
+// dans le conteneur indiqué. Cœur de l'écran « Mes révisions ».
+function renderMatieresList(containerId) {
+  const list = $(containerId);
+  if (!list) return;
   const allMatieres = getAllMatieres();
   const unites = (typeof UNITES !== 'undefined') ? UNITES : [];
 
@@ -241,8 +273,40 @@ function renderHome(skipConfigRefresh) {
       renderMatiere(m);
     });
   });
-  // Bannière d'annonce d'examen (publiée par le délégué, cache hors-ligne)
+}
+
+// Écran « Mes révisions » : les matières S5/S6, déplacées hors de l'accueil.
+function renderRevisions() {
+  renderMatieresList('revisions-list');
+  $('appTitle').textContent = 'Révisions GL3A';
+  go('revisions');
+}
+
+// « À la une » : actualité éditée par le délégué (app_config clé 'home').
+// Masquée tant qu'aucune actualité n'est publiée.
+function renderHomeActu() {
+  const el = $('home-actu'); if (!el) return;
+  const cfg = (typeof getHomeConfigCached === 'function' && getHomeConfigCached()) || {};
+  const titre = (cfg.actu_titre || '').trim();
+  const texte = (cfg.actu_texte || '').trim();
+  if (!titre && !texte) { el.innerHTML = ''; return; }
+  const corps = escapeHtml(texte).replace(/\n/g, '<br>');
+  el.innerHTML = `
+    <div class="home-actu-card">
+      <span class="home-actu-flag">📌 À la une</span>
+      ${titre ? `<h3>${escapeHtml(titre)}</h3>` : ''}
+      ${corps ? `<p>${corps}</p>` : ''}
+    </div>`;
+}
+
+// Accueil : centré sur l'actualité (annonce + « à la une » du délégué),
+// avec accès rapide aux révisions et, en période d'examen, au planning.
+function renderHome(skipConfigRefresh) {
+  const allMatieres = getAllMatieres();
+  const examActif = isExamActif();
   renderAnnonceBanner();
+  renderHomeActu();
+  const _rev = $('btn-revisions'); if (_rev) _rev.onclick = () => renderRevisions();
 
   // Bouton « Planning » : visible uniquement si le délégué a activé une période
   // d'examen. Sinon il disparaît (avec les dates/statuts) jusqu'au prochain examen.
