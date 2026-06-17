@@ -1371,3 +1371,21 @@ body.has-tabbar #app { padding-bottom: 84px; }
 }
 .home-actu-card h3 { font-size: 18px; font-weight: 800; margin: 0 0 6px; }
 .home-actu-card p { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0; }
+
+/* Lien cliquable d'une annonce (vers un semestre ou une matière) */
+.annonce-lien-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 9px 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.annonce-lien-btn:active { transform: scale(0.97); }
+.form-hint { display: block; margin-top: 4px; font-size: 12px; color: var(--text-muted); }

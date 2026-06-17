@@ -213,7 +213,25 @@ function annonceBannerHTML(a, opts) {
       </div>
       ${periode ? `<div class="annonce-periode">📅 ${escapeHtml(periode.charAt(0).toUpperCase() + periode.slice(1))}</div>` : ''}
       ${a.message ? `<p class="annonce-msg">${escapeHtml(a.message)}</p>` : ''}
+      ${annonceLienBtnHTML(a)}
     </div>`;
+}
+
+// Bouton « aller à… » d'une annonce, si un lien (semestre ou matière) est défini.
+function annonceLienBtnHTML(a) {
+  if (!a || !a.lien_type) return '';
+  let label = '';
+  if (a.lien_type === 'semestre') {
+    label = a.lien_valeur === 'S5' ? '👉 Aller au Semestre 5'
+          : a.lien_valeur === 'S6' ? '👉 Aller au Semestre 6'
+          : '👉 Voir le semestre';
+  } else if (a.lien_type === 'matiere') {
+    const m = (typeof findMatiereById === 'function') ? findMatiereById(a.lien_valeur) : null;
+    label = m ? `👉 Réviser : ${m.titre}` : '👉 Ouvrir le cours';
+  } else {
+    return '';
+  }
+  return `<button class="annonce-lien-btn" data-ltype="${escapeHtml(a.lien_type)}" data-lval="${escapeHtml(a.lien_valeur || '')}">${escapeHtml(label)}</button>`;
 }
 
 function getAnnonceCached() {
@@ -226,8 +244,10 @@ function getAnnonceCached() {
 }
 async function cloudFetchAnnonce() {
   const c = await sbClient();
+  // select('*') : tolère l'absence des colonnes lien_type/lien_valeur tant que
+  // supabase-annonces-lien.sql n'a pas été exécuté.
   const { data, error } = await c.from('annonces')
-    .select('id,type,titre,message,date_debut,date_fin,active,created_at')
+    .select('*')
     .eq('active', true)
     .order('created_at', { ascending: false })
     .limit(1);
@@ -244,14 +264,18 @@ async function cloudSaveAnnonce(a) {
   const c = await sbClient();
   const off = await c.from('annonces').update({ active: false }).eq('active', true);
   if (off.error) throw off.error;
-  const { error } = await c.from('annonces').insert({
+  const row = {
     type: a.type || 'libre',
     titre: a.titre,
     message: a.message || '',
     date_debut: a.date_debut || null,
     date_fin: a.date_fin || null,
     active: true
-  });
+  };
+  // Lien optionnel : n'ajoute les colonnes que si un lien est choisi, pour rester
+  // compatible avec les bases où supabase-annonces-lien.sql n'a pas encore tourné.
+  if (a.lien_type) { row.lien_type = a.lien_type; row.lien_valeur = a.lien_valeur || null; }
+  const { error } = await c.from('annonces').insert(row);
   if (error) throw error;
   return cloudFetchAnnonce();
 }
@@ -747,6 +771,29 @@ async function renderAdminAccueil(email) {
   };
 }
 
+// Construit les <option> du sélecteur de lien : aucun, un semestre entier, ou
+// une matière précise (groupée par UE). Encodage : 'sem:S5' / 'mat:<id>'.
+function annonceLienOptions(cur) {
+  const sel = (cur && cur.lien_type)
+    ? (cur.lien_type === 'semestre' ? 'sem:' + cur.lien_valeur : 'mat:' + cur.lien_valeur)
+    : '';
+  const opt = (v, txt) => `<option value="${escapeHtml(v)}"${sel === v ? ' selected' : ''}>${escapeHtml(txt)}</option>`;
+  let html = opt('', 'Aucun lien')
+           + opt('sem:S5', '📘 Tout le Semestre 5')
+           + opt('sem:S6', '📗 Tout le Semestre 6');
+  const mats = (typeof getAllMatieres === 'function') ? getAllMatieres() : [];
+  const unites = (typeof UNITES !== 'undefined') ? UNITES : [];
+  unites.forEach(ue => {
+    const items = mats.filter(m =>
+      (typeof getEffectiveUE === 'function' ? getEffectiveUE(m) : m.ue) === ue.id);
+    if (!items.length) return;
+    html += `<optgroup label="${escapeHtml(ue.label)}">`;
+    items.forEach(m => { html += opt('mat:' + m.id, m.titre); });
+    html += `</optgroup>`;
+  });
+  return html;
+}
+
 async function renderAdminAnnonce(email) {
   $('admin-content').innerHTML = '<p class="scan-status">⏳ Chargement…</p>';
   if (typeof EXAM_TEMPLATES === 'undefined') {
@@ -791,6 +838,11 @@ async function renderAdminAnnonce(email) {
       <label for="annonce-msg">Message aux camarades</label>
       <textarea id="annonce-msg" rows="4" maxlength="600" placeholder="Le message qui accompagne l'annonce…"></textarea>
     </div>
+    <div class="form-group">
+      <label for="annonce-lien">🔗 Lien (optionnel) — où l'annonce mène-t-elle ?</label>
+      <select id="annonce-lien">${annonceLienOptions(cur)}</select>
+      <span class="form-hint">Un bouton « 👉 Aller à… » apparaîtra sous l'annonce.</span>
+    </div>
     <div class="form-divider">Aperçu (ce que verront les camarades)</div>
     <div id="annonce-preview"></div>
     <div id="annonce-msg-zone"></div>
@@ -800,13 +852,20 @@ async function renderAdminAnnonce(email) {
 
   let selType = (cur && cur.type) || null;
 
-  const readForm = () => ({
-    type: selType || 'libre',
-    titre: $('annonce-titre').value.trim(),
-    message: $('annonce-msg').value.trim(),
-    date_debut: $('annonce-debut').value || null,
-    date_fin: $('annonce-fin').value || null
-  });
+  const readForm = () => {
+    const raw = ($('annonce-lien') && $('annonce-lien').value) || '';
+    let lien_type = null, lien_valeur = null;
+    if (raw.indexOf('sem:') === 0) { lien_type = 'semestre'; lien_valeur = raw.slice(4); }
+    else if (raw.indexOf('mat:') === 0) { lien_type = 'matiere'; lien_valeur = raw.slice(4); }
+    return {
+      type: selType || 'libre',
+      titre: $('annonce-titre').value.trim(),
+      message: $('annonce-msg').value.trim(),
+      date_debut: $('annonce-debut').value || null,
+      date_fin: $('annonce-fin').value || null,
+      lien_type, lien_valeur
+    };
+  };
   const updatePreview = () => {
     const a = readForm();
     $('annonce-preview').innerHTML = (a.titre || a.message)
@@ -836,6 +895,7 @@ async function renderAdminAnnonce(email) {
   ['annonce-titre', 'annonce-msg', 'annonce-debut', 'annonce-fin'].forEach(id => {
     $(id).addEventListener('input', updatePreview);
   });
+  $('annonce-lien').addEventListener('change', updatePreview);
   $('annonce-msg').addEventListener('input', () => { msgEdited = true; });
   // Si les dates changent APRÈS le choix du template, on régénère le message
   // SAUF si le délégué l'a déjà personnalisé (pas de perte de saisie).
@@ -887,8 +947,14 @@ async function renderAdminAnnonce(email) {
       // dire que le SQL manque : la table existe, mais Supabase ne reconnaît pas
       // le compte connecté comme délégué (is_admin = faux → email absent de la
       // table public.admins). On affiche la vraie cause + le correctif exact.
+      const reseau = !navigator.onLine || /failed to fetch|networkerror|load failed/i.test(msg);
       const rls = /row-level security|violates row-level|permission denied|not authorized|insufficient/i.test(msg);
-      $('annonce-msg-zone').innerHTML = rls
+      const lienManquant = /lien_type|lien_valeur|column .* does not exist|could not find the .* column/i.test(msg);
+      $('annonce-msg-zone').innerHTML = reseau
+        ? `<div class="form-error">📡 <strong>Supabase injoignable</strong> (« ${escapeHtml(msg)} »). Vérifie ta connexion ; ce n'est pas un problème de SQL.</div>`
+        : lienManquant
+        ? `<div class="form-error">🔗 Pour utiliser un <strong>lien</strong> dans une annonce, exécute d'abord le SQL <code>supabase-annonces-lien.sql</code> (Supabase → SQL Editor). Une annonce sans lien fonctionne sans ça.</div>`
+        : rls
         ? `<div class="form-error">❌ Publication refusée : ton compte <strong>${escapeHtml(email)}</strong> n'est pas reconnu comme <strong>délégué (admin)</strong>.<br>Dans Supabase → SQL Editor, exécute une fois :<br><code>insert into public.admins (email) values ('${escapeHtml(email)}') on conflict (email) do nothing;</code><br>puis reconnecte-toi.</div>`
         : `<div class="form-error">❌ ${escapeHtml(msg)}.<br>As-tu exécuté le SQL <code>supabase-annonces.sql</code> ?</div>`;
     } finally {
