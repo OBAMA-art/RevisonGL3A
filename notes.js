@@ -5,7 +5,7 @@
    L'app calcule : note matière (CC×40% + SN×60%), moyenne de chaque UE
    (pondérée par coefficients, compensation), verdict ✅ Validé / ❌ + conseils
    de révision, crédits débloqués, moyennes S5/S6, moyenne de classe et
-   moyenne finale (classe×40% + projet de stage×60%).
+   moyenne finale (classe×60% + projet de stage×40%).
 
    Confidentialité : tout reste en localStorage — AUCUNE note n'est envoyée
    au cloud. 100% hors-ligne.
@@ -127,7 +127,7 @@ function bilanGlobal(store) {
   const classe = totCoef > 0 ? totPts / totCoef : null;
   const stage = (typeof store._stage === 'number') ? store._stage : null;
   if (stage !== null && stage >= 10) credits += NOTES_STAGE.credits;
-  const finale = (classe !== null && stage !== null) ? classe * 0.4 + stage * 0.6 : null;
+  const finale = (classe !== null && stage !== null) ? classe * 0.6 + stage * 0.4 : null;
 
   return { parSem, classe, stage, finale, credits, manquantes: totManquantes };
 }
@@ -219,7 +219,7 @@ function renderMesNotes() {
         </div>
       </div>
       <div class="notes-row">
-        <div class="notes-mat">Note du projet de stage <span class="notes-coef">hors UE — 60% de la moyenne finale</span></div>
+        <div class="notes-mat">Note du projet de stage <span class="notes-coef">hors UE — 40% de la moyenne finale</span></div>
         <input class="notes-in" data-k="_stage" data-f="solo" inputmode="decimal" placeholder="/20"
                value="${typeof store._stage === 'number' ? String(store._stage).replace('.', ',') : ''}">
         <div></div>
@@ -490,7 +490,7 @@ function refreshNotesComputed() {
   const hint = $('nh-hint');
   if (hint) {
     hint.textContent = g.finale !== null
-      ? '🎓 Moyenne finale = classe×40% + stage×60%'
+      ? '🎓 Moyenne finale = classe×60% + stage×40%'
       : g.manquantes
         ? `⏳ Provisoire — ${g.manquantes} note${g.manquantes > 1 ? 's' : ''} manquante${g.manquantes > 1 ? 's' : ''}${g.stage === null ? ' · note de stage à saisir' : ''}`
         : (g.stage === null ? '🎯 Saisis ta note de stage pour la moyenne finale' : '');
