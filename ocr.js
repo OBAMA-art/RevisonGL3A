@@ -570,6 +570,11 @@ function renderScanEpreuve(m) {
   $('btn-scan-gallery').onclick  = () => $('ocr-file-gallery').click();
   $('ocr-file-camera').onchange  = (e) => handleOCRFile(e, m);
   $('ocr-file-gallery').onchange = (e) => handleOCRFile(e, m);
+  const pdfBtn = $('btn-scan-pdf'), pdfIn = $('ocr-file-pdf');
+  if (pdfBtn && pdfIn) {
+    pdfBtn.onclick = () => pdfIn.click();
+    pdfIn.onchange = (e) => handlePdfFile(e, m);
+  }
   $('btn-scan-cancel').onclick   = () => renderEpreuves(m);
 
   go('scan-epreuve');
@@ -599,25 +604,142 @@ async function handleOCRFile(event, m) {
     const { text, confidence } = await runOCR(cleaned, (p) => {
       $('scan-progress-fill').style.width = Math.round(p * 100) + '%';
     });
-    _ocrLastText = text || '';
-
-    if (!_ocrLastText.trim() || _ocrLastText.replace(/\s/g, '').length < 8) {
-      $('scan-progress-wrap').hidden = true;
-      $('scan-status').textContent =
-        '❌ Texte non détecté. Reprends la photo : bien éclairée, à plat, cadrée serrée, sans flou.';
-      return;
-    }
-
-    const header = parseExamHeader(_ocrLastText);
-    _ocrChosenMatiereId = header.matiereId || m.id;
-    const status = checkScanStatus(_ocrChosenMatiereId, header);
-
-    $('scan-progress-wrap').hidden = true;
-    $('scan-status').textContent = `✅ OCR terminé (confiance ~${Math.round(confidence)}%).`;
-    renderScanResult(m, header, status);
+    finishOCR(text, confidence, m);
   } catch (err) {
     $('scan-progress-wrap').hidden = true;
     $('scan-status').textContent = '❌ ' + (err && err.message ? err.message : 'Échec de l\'OCR.');
+  }
+}
+
+// Étapes communes après obtention du texte (image OU pdf) : validation,
+// détection matière/doublon, affichage du résultat.
+function finishOCR(text, confidence, m) {
+  _ocrLastText = text || '';
+  if (!_ocrLastText.trim() || _ocrLastText.replace(/\s/g, '').length < 8) {
+    $('scan-progress-wrap').hidden = true;
+    $('scan-status').textContent =
+      '❌ Texte non détecté. Reprends une photo nette (bien éclairée, à plat) ou un PDF lisible.';
+    return;
+  }
+  const header = parseExamHeader(_ocrLastText);
+  _ocrChosenMatiereId = header.matiereId || m.id;
+  const status = checkScanStatus(_ocrChosenMatiereId, header);
+
+  $('scan-progress-wrap').hidden = true;
+  $('scan-status').textContent = `✅ Lecture terminée (confiance ~${Math.round(confidence)}%).`;
+  renderScanResult(m, header, status);
+}
+
+/* ---------------------------------------------------------------------------
+   IMPORT PDF : PDF.js (CDN, comme Tesseract) rend/extrait les pages.
+   - Page avec couche texte (PDF « numérique ») → texte extrait directement
+     (instantané, précis, pas d'OCR).
+   - Page sans texte (PDF scanné) → rendue en image puis passée à l'OCR.
+   --------------------------------------------------------------------------- */
+const PDFJS_VERSION = '3.11.174';
+const PDFJS_CDN    = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${PDFJS_VERSION}/build/pdf.min.js`;
+const PDFJS_WORKER = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${PDFJS_VERSION}/build/pdf.worker.min.js`;
+const PDF_MAX_PAGES = 8;   // un sujet d'examen tient quasi toujours en <8 pages
+let _pdfjsLoading = null;
+
+function loadPdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (_pdfjsLoading) return _pdfjsLoading;
+  _pdfjsLoading = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = PDFJS_CDN; s.async = true;
+    s.onload = () => {
+      if (window.pdfjsLib) {
+        try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER; } catch (e) {}
+        resolve(window.pdfjsLib);
+      } else { _pdfjsLoading = null; reject(new Error('Lecteur PDF chargé mais introuvable.')); }
+    };
+    s.onerror = () => {
+      _pdfjsLoading = null;
+      reject(new Error('Impossible de charger le lecteur PDF (connexion Internet requise au 1er usage).'));
+    };
+    document.head.appendChild(s);
+  });
+  return _pdfjsLoading;
+}
+
+// Renvoie { fullText, needOCR:[dataURL], firstImage }.
+async function pdfExtract(file, onProgress) {
+  const pdfjsLib = await loadPdfJs();
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  const n = Math.min(pdf.numPages, PDF_MAX_PAGES);
+  let fullText = '';
+  const needOCR = [];
+  let firstImage = null;
+
+  for (let i = 1; i <= n; i++) {
+    if (onProgress) onProgress(i, n);
+    const page = await pdf.getPage(i);
+    let pageText = '';
+    try {
+      const tc = await page.getTextContent();
+      pageText = (tc.items || []).map(it => it.str).join(' ').trim();
+    } catch (e) { pageText = ''; }
+
+    if (pageText.replace(/\s/g, '').length > 80) {
+      fullText += pageText + '\n\n';                 // PDF numérique : texte direct
+      continue;
+    }
+    // Page sans texte exploitable → on la rend en image pour l'OCR.
+    const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width; canvas.height = viewport.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    const img = canvas.toDataURL('image/png');
+    if (!firstImage) firstImage = img;
+    needOCR.push(img);
+  }
+  return { fullText: fullText.trim(), needOCR, firstImage };
+}
+
+async function handlePdfFile(event, m) {
+  const file = event.target.files && event.target.files[0];
+  event.target.value = '';
+  if (!file) return;
+  if (file.size > 25 * 1024 * 1024) {
+    $('scan-status').textContent = '❌ PDF trop volumineux (>25 Mo).';
+    return;
+  }
+
+  $('scan-result').hidden = true;
+  $('scan-preview-wrap').hidden = true;
+  $('scan-progress-wrap').hidden = false;
+  $('scan-progress-fill').style.width = '0%';
+  $('scan-status').textContent = '📄 Ouverture du PDF…';
+
+  try {
+    const { fullText, needOCR, firstImage } = await pdfExtract(file, (cur, total) => {
+      $('scan-status').textContent = `📄 Lecture du PDF… page ${cur}/${total}`;
+    });
+
+    let text = fullText;
+    let conf = fullText ? 95 : 0;   // texte numérique = confiance élevée
+
+    for (let i = 0; i < needOCR.length; i++) {
+      $('scan-status').textContent = `🔎 OCR de la page ${i + 1}/${needOCR.length} (page scannée)…`;
+      const cleaned = await preprocessImage(needOCR[i]);
+      const { text: t, confidence } = await runOCR(cleaned, (p) => {
+        const overall = (i + p) / needOCR.length;
+        $('scan-progress-fill').style.width = Math.round(overall * 100) + '%';
+      });
+      text += '\n\n' + (t || '');
+      conf = conf ? (conf + (confidence || 0)) / 2 : (confidence || 0);
+    }
+
+    if (firstImage) {
+      $('scan-preview-wrap').hidden = false;
+      $('scan-preview').src = firstImage;
+    }
+    finishOCR(text.trim(), conf, m);
+  } catch (err) {
+    $('scan-progress-wrap').hidden = true;
+    $('scan-status').textContent = '❌ ' + (err && err.message ? err.message : 'Échec de la lecture du PDF.');
   }
 }
 

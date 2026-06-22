@@ -1,5 +1,5 @@
 // Service Worker - Révisions GL3A
-const VERSION = "v44";
+const VERSION = "v45";
 const SHELL_CACHE = `revisions-gl3a-shell-${VERSION}`;
 const DATA_CACHE = `revisions-gl3a-data-${VERSION}`;
 const OCR_CACHE = `revisions-gl3a-ocr-${VERSION}`;
@@ -25,7 +25,7 @@ const SHELL_ASSETS = [
 // Données dynamiques : network-first avec fallback cache
 const DATA_PATTERN = /\/(data|data-jeudi|data-ue|epreuves)\.js(\?.*)?$/;
 // Librairies CDN (Tesseract, modèles de langue, supabase-js) : cache-first runtime isolé
-const OCR_PATTERN = /(cdn\.jsdelivr\.net\/npm\/(tesseract|@supabase)|tessdata\.projectnaptha\.com)/;
+const OCR_PATTERN = /(cdn\.jsdelivr\.net\/npm\/(tesseract|@supabase|pdfjs-dist)|tessdata\.projectnaptha\.com)/;
 // API Supabase : TOUJOURS réseau (jamais de cache — données fraîches + auth)
 const SUPABASE_API_PATTERN = /\.supabase\.co\//;
 
