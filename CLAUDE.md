@@ -52,3 +52,10 @@ Pas de framework de test : QA manuelle.
 - **État local** (localStorage) : `gl3a_best_scores`, `gl3a_theme`, `gl3a_route`, `gl3a_user_epreuves`, `gl3a_ue_open`, `gl3a_cloud_approved`.
 - **Dates examens codées en dur** dans `programme.js` (rattrapages 10–13 juin 2026) — à mettre à jour à chaque session.
 - **Modération** : utilisateur propose (pending) → admin valide dans Supabase (approved) → visible par tous.
+
+## Attribution des commits (IMPORTANT)
+
+- Committer **sous l'identité du propriétaire** : `OBAMA-art <josephottou55@gmail.com>`.
+  Ne **jamais** committer en tant que « Claude ».
+- **Ne pas** ajouter de trailer `Co-Authored-By: Claude …` ni `Claude-Session: …`
+  dans les messages de commit, les PR, ni aucun artefact poussé.
