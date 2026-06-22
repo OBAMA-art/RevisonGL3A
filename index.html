@@ -194,7 +194,7 @@
       <p class="epreuves-intro">Sélectionne une épreuve pour voir toutes ses questions et leurs corrections détaillées.</p>
       <div class="epreuves-actions">
         <button id="btn-add-epreuve" class="btn-primary">➕ Ajouter une épreuve</button>
-        <button id="btn-scan-epreuve" class="btn-primary btn-block">📷 Scanner une épreuve (photo)</button>
+        <button id="btn-scan-epreuve" class="btn-primary btn-block">📷 Scanner ou 📄 importer une épreuve</button>
         <div class="epreuves-actions-row">
           <button id="btn-export-epreuves" class="btn-secondary">📤 Exporter mes épreuves</button>
           <button id="btn-import-epreuves" class="btn-secondary">📥 Importer un fichier</button>
@@ -235,15 +235,17 @@
     <!-- ÉCRAN SCANNER OCR -->
     <section id="screen-scan-epreuve" class="screen">
       <h2 id="scan-titre">📷 Scanner une épreuve</h2>
-      <p class="form-intro">Prends en photo une épreuve papier (ou choisis une image). L'app lit le texte sur ton téléphone, détecte la matière et te dit si l'épreuve est déjà connue. Aucune donnée n'est envoyée sur Internet.</p>
+      <p class="form-intro">Prends en photo une épreuve papier, choisis une image, ou importe un PDF. L'app lit le texte sur ton téléphone, détecte la matière et te dit si l'épreuve est déjà connue. La lecture se fait sur ton appareil.</p>
 
       <div class="scan-buttons">
         <button id="btn-scan-camera" class="btn-primary">📸 Prendre une photo</button>
         <button id="btn-scan-gallery" class="btn-secondary">🖼️ Choisir une image</button>
+        <button id="btn-scan-pdf" class="btn-secondary">📄 Importer un PDF</button>
       </div>
 
       <input type="file" id="ocr-file-camera" accept="image/*" capture="environment" hidden>
       <input type="file" id="ocr-file-gallery" accept="image/*" hidden>
+      <input type="file" id="ocr-file-pdf" accept="application/pdf,.pdf" hidden>
 
       <div id="scan-preview-wrap" class="scan-preview-wrap" hidden>
         <img id="scan-preview" class="scan-preview" alt="Aperçu de l'épreuve scannée">
