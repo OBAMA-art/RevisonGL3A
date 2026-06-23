@@ -7,8 +7,11 @@
    de révision, crédits débloqués, moyennes S5/S6, moyenne de classe et
    moyenne finale (classe×60% + projet de stage×40%).
 
-   Confidentialité : tout reste en localStorage — AUCUNE note n'est envoyée
-   au cloud. 100% hors-ligne.
+   Confidentialité : le CONTENU des notes reste en localStorage et ne quitte
+   jamais l'appareil — sauf sauvegarde optionnelle vers le compte PRIVÉ de
+   l'étudiant (sync RLS owner-only ; le délégué n'y a pas accès). Un signal
+   d'usage ANONYME (id d'appareil + « notes_saved », SANS aucune note) peut
+   être émis pour les statistiques d'usage.
    ========================================================================= */
 
 const STORAGE_NOTES = 'gl3a_mes_notes';
@@ -263,6 +266,7 @@ function renderMesNotes() {
         if (!Object.keys(st[inp.dataset.k]).length) delete st[inp.dataset.k];
       }
       notesSave(st);
+      if (typeof logNotesActivity === 'function') logNotesActivity();   // stat d'usage anonyme (sans les notes)
       if (typeof compteNotesChanged === 'function') compteNotesChanged();   // sync cloud (si connecté)
       refreshNotesComputed();
     });
@@ -331,6 +335,7 @@ function importNotes(ev) {
       });
       if (!confirm('Importer ces notes ? Elles remplaceront celles enregistrées sur cet appareil.')) return;
       notesSave(clean);
+      if (typeof logNotesActivity === 'function') logNotesActivity();   // stat d'usage anonyme (sans les notes)
       if (typeof compteNotesChanged === 'function') compteNotesChanged();
       renderMesNotes();
     } catch {

@@ -354,6 +354,26 @@ function logEvent(type, label) {
     visitor_id: getVisitorId(), type: type, label: label || null
   })).catch(() => {});
 }
+// « A saisi ses notes » : événement anonyme (id appareil, AUCUNE note), au plus
+// une fois par jour et par appareil. Sert à compter les étudiants qui utilisent
+// « Mes notes » — les notes elles-mêmes ne quittent JAMAIS l'appareil.
+const NOTES_EVT_DAY_KEY = 'gl3a_notes_evt_day';
+let _notesEvtSession = false;
+async function logNotesActivity() {
+  if (!cloudConfigured()) return;
+  let today = null;
+  try {
+    today = new Date().toISOString().slice(0, 10);
+    if (localStorage.getItem(NOTES_EVT_DAY_KEY) === today) return; // déjà compté aujourd'hui
+  } catch { today = null; }              // localStorage indispo (navigation privée)
+  if (!today && _notesEvtSession) return; // sans stockage : throttle à 1×/session
+  try {
+    const c = await sbClient();
+    await c.from('events').insert({ visitor_id: getVisitorId(), type: 'notes_saved', label: null });
+    _notesEvtSession = true;
+    try { if (today) localStorage.setItem(NOTES_EVT_DAY_KEY, today); } catch {} // garde posée APRÈS succès
+  } catch { /* offline / table absente : on réessaiera plus tard */ }
+}
 // Renvoie les compteurs agrégés { total, unique, today, today_unique }.
 async function cloudVisitStats() {
   const c = await sbClient();
@@ -680,6 +700,8 @@ function renderAnalytics(a) {
   html += `<div class="stat-grid">
     <div class="stat-box"><span class="stat-num">${tot ? pMob + '%' : '—'}</span><span class="stat-lbl">📱 Mobile (${mob}) · 💻 ${desk}</span></div>
     <div class="stat-box"><span class="stat-num">${a.quiz_done ?? 0}</span><span class="stat-lbl">🎯 Quiz terminés</span></div>
+    <div class="stat-box"><span class="stat-num">${a.notes_users ?? 0}</span><span class="stat-lbl">📝 Ont saisi leurs notes</span></div>
+    <div class="stat-box"><span class="stat-num">${a.notes_today ?? 0}</span><span class="stat-lbl">📝 Notes saisies aujourd'hui</span></div>
   </div>`;
 
   box.innerHTML = html;

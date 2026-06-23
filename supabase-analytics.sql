@@ -57,7 +57,9 @@ as $$
         'desktop', count(*) filter (where ua is not null and ua !~* 'mobile|android|iphone|ipad|ipod')
       ) from visits
     ),
-    'quiz_done', (select count(*) from events where type = 'quiz_done')
+    'quiz_done', (select count(*) from events where type = 'quiz_done'),
+    'notes_users', (select count(distinct visitor_id) from events where type = 'notes_saved'),
+    'notes_today', (select count(distinct visitor_id) from events where type = 'notes_saved' and created_at >= current_date)
   );
 $$;
 
