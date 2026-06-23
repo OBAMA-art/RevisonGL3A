@@ -1334,7 +1334,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 8px 4px 10px;
+  padding: 8px 3px 10px;
   background: none;
   border: none;
   color: var(--text-muted);
@@ -1346,6 +1346,7 @@ body {
 }
 .tab[hidden] { display: none; }
 .tab-ico { font-size: 21px; line-height: 1; }
+.tab-lbl { white-space: nowrap; }
 .tab-active { color: var(--primary); }
 .tab-active .tab-ico { transform: translateY(-1px); }
 /* Le contenu ne doit pas passer sous la barre quand elle est visible. */
@@ -1385,7 +1386,15 @@ body.has-tabbar #app { padding-bottom: 84px; }
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
 }
 .annonce-lien-btn:active { transform: scale(0.97); }
+.stat-box #live-count {
+  color: var(--success, #16a34a);
+  -webkit-text-fill-color: var(--success, #16a34a);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+}
 .form-hint { display: block; margin-top: 4px; font-size: 12px; color: var(--text-muted); }

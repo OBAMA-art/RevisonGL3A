@@ -315,14 +315,19 @@ function renderHomeActu() {
   const cfg = (typeof getHomeConfigCached === 'function' && getHomeConfigCached()) || {};
   const titre = (cfg.actu_titre || '').trim();
   const texte = (cfg.actu_texte || '').trim();
-  if (!titre && !texte) { el.innerHTML = ''; return; }
+  const lienHtml = (typeof lienCibleBtnHTML === 'function')
+    ? lienCibleBtnHTML(cfg.actu_lien_type, cfg.actu_lien_valeur) : '';
+  if (!titre && !texte && !lienHtml) { el.innerHTML = ''; return; }
   const corps = escapeHtml(texte).replace(/\n/g, '<br>');
   el.innerHTML = `
     <div class="home-actu-card">
       <span class="home-actu-flag">📌 À la une</span>
       ${titre ? `<h3>${escapeHtml(titre)}</h3>` : ''}
       ${corps ? `<p>${corps}</p>` : ''}
+      ${lienHtml}
     </div>`;
+  const _b = el.querySelector('button.annonce-lien-btn');
+  if (_b) _b.onclick = () => annonceNavigate(_b.dataset.ltype, _b.dataset.lval);
 }
 
 // Accueil : centré sur l'actualité (annonce + « à la une » du délégué),
@@ -429,7 +434,7 @@ function renderAnnonceBanner() {
     try { localStorage.setItem('gl3a_annonce_vue', a.id); } catch {}
     el.innerHTML = '';
   };
-  const lien = el.querySelector('.annonce-lien-btn');
+  const lien = el.querySelector('button.annonce-lien-btn');
   if (lien) lien.onclick = () => annonceNavigate(lien.dataset.ltype, lien.dataset.lval);
 }
 
@@ -1365,6 +1370,8 @@ if (_savedRoute && _savedRoute.screen && _savedRoute.screen !== 'home') {
 showWelcomeIfFirstVisit();
 // Compteur de visiteurs (Supabase) — au plus une visite/appareil/jour
 if (typeof cloudTrackVisit === 'function') cloudTrackVisit();
+// Présence temps réel : rejoint le canal des « étudiants en ligne maintenant »
+if (typeof cloudJoinPresence === 'function') cloudJoinPresence();
 
 // État réseau : grise les fonctions IA en direct quand on passe hors-ligne.
 window.addEventListener('online', updateAiOfflineUI);

@@ -137,7 +137,9 @@ async function cloudSaveHomeConfig(cfg) {
     planning_label: (cfg.planning_label || '').trim(),
     examen_actif: !!cfg.examen_actif,
     actu_titre: (cfg.actu_titre || '').trim(),
-    actu_texte: (cfg.actu_texte || '').trim()
+    actu_texte: (cfg.actu_texte || '').trim(),
+    actu_lien_type: cfg.actu_lien_type || null,
+    actu_lien_valeur: cfg.actu_lien_valeur || null
   };
   const { error } = await c.from('app_config').upsert(
     { key: 'home', value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
@@ -217,21 +219,52 @@ function annonceBannerHTML(a, opts) {
     </div>`;
 }
 
-// Bouton « aller à… » d'une annonce, si un lien (semestre ou matière) est défini.
-function annonceLienBtnHTML(a) {
-  if (!a || !a.lien_type) return '';
-  let label = '';
-  if (a.lien_type === 'semestre') {
-    label = a.lien_valeur === 'S5' ? '👉 Aller au Semestre 5'
-          : a.lien_valeur === 'S6' ? '👉 Aller au Semestre 6'
-          : '👉 Voir le semestre';
-  } else if (a.lien_type === 'matiere') {
-    const m = (typeof findMatiereById === 'function') ? findMatiereById(a.lien_valeur) : null;
-    label = m ? `👉 Réviser : ${m.titre}` : '👉 Ouvrir le cours';
-  } else {
-    return '';
+// Sécurise une URL de lien externe : bloque les schémas dangereux (javascript:,
+// data:…), force https:// pour un domaine nu, refuse tout autre schéma.
+// Renvoie '' si l'entrée est invalide/dangereuse.
+function sanitizeUrl(raw) {
+  let s = String(raw == null ? '' : raw).trim();
+  if (!s) return '';
+  if (/^(javascript|data|vbscript|file|blob):/i.test(s)) return '';
+  if (/^[/\\]{2}/.test(s)) return '';              // // ou \\ : URL protocole-relative
+  if (!/^https?:\/\//i.test(s)) {
+    if (/^[a-z][a-z0-9+.-]*:/i.test(s)) return '';  // tout autre schéma explicite refusé
+    s = 'https://' + s;                             // domaine nu → https://
   }
-  return `<button class="annonce-lien-btn" data-ltype="${escapeHtml(a.lien_type)}" data-lval="${escapeHtml(a.lien_valeur || '')}">${escapeHtml(label)}</button>`;
+  try {
+    const u = new URL(s);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return '';
+    if (!u.hostname || u.hostname.indexOf('.') < 1) return ''; // hôte plausible (un point min.)
+    return u.href;
+  } catch { return ''; }
+}
+
+// HTML du bouton/lien « aller à… » pour une cible (partagé annonce + « À la une »).
+// type = 'url' (lien externe) | 'semestre' | 'matiere'. Tout est échappé.
+function lienCibleBtnHTML(type, val) {
+  if (!type) return '';
+  if (type === 'url') {
+    const safe = sanitizeUrl(val);
+    if (!safe) return '';
+    return `<a class="annonce-lien-btn" href="${escapeHtml(safe)}" target="_blank" rel="noopener noreferrer nofollow">🔗 Ouvrir le lien</a>`;
+  }
+  if (type === 'semestre') {
+    const label = val === 'S5' ? '👉 Aller au Semestre 5'
+                : val === 'S6' ? '👉 Aller au Semestre 6'
+                : '👉 Voir le semestre';
+    return `<button class="annonce-lien-btn" data-ltype="semestre" data-lval="${escapeHtml(val || '')}">${escapeHtml(label)}</button>`;
+  }
+  if (type === 'matiere') {
+    const m = (typeof findMatiereById === 'function') ? findMatiereById(val) : null;
+    const label = m ? `👉 Réviser : ${m.titre}` : '👉 Ouvrir le cours';
+    return `<button class="annonce-lien-btn" data-ltype="matiere" data-lval="${escapeHtml(val || '')}">${escapeHtml(label)}</button>`;
+  }
+  return '';
+}
+
+// Bouton « aller à… » d'une annonce (semestre, matière ou URL externe).
+function annonceLienBtnHTML(a) {
+  return a ? lienCibleBtnHTML(a.lien_type, a.lien_valeur) : '';
 }
 
 function getAnnonceCached() {
@@ -549,6 +582,42 @@ async function showAdminQueue(email) {
   document.querySelectorAll('.admin-reject').forEach(b => b.onclick = () => moderate(b.dataset.id, false, email));
 }
 
+/* --------- PRÉSENCE TEMPS RÉEL : étudiants en ligne maintenant ---------- */
+// Tous les appareils ouverts rejoignent le canal 'gl3a-presence'. Le nombre de
+// clés de présence distinctes = appareils en ligne à l'instant. Éphémère (aucune
+// table, aucun SQL) : repose sur Supabase Realtime (présence), avec la clé anon.
+let _presenceCh = null, _presenceCount = 0, _presenceCb = null, _presenceWatchStop = null;
+async function _ensurePresence() {
+  if (_presenceCh) return _presenceCh;
+  if (!cloudConfigured()) return null;
+  const c = await sbClient();
+  const ch = c.channel('gl3a-presence', { config: { presence: { key: getVisitorId() } } });
+  const update = () => {
+    try { _presenceCount = Object.keys(ch.presenceState()).length; } catch {}
+    if (typeof _presenceCb === 'function') { try { _presenceCb(_presenceCount); } catch {} }
+  };
+  ch.on('presence', { event: 'sync' }, update);
+  ch.on('presence', { event: 'join' }, update);
+  ch.on('presence', { event: 'leave' }, update);
+  ch.subscribe((status) => {
+    if (status === 'SUBSCRIBED') { try { ch.track({ at: Date.now() }); } catch {} update(); }
+  });
+  _presenceCh = ch;
+  return ch;
+}
+// À appeler au démarrage de l'app : signale cet appareil comme « en ligne ».
+async function cloudJoinPresence() { try { await _ensurePresence(); } catch {} }
+// Abonne un callback au nombre d'en-ligne (mise à jour en direct). Renvoie stop().
+function cloudWatchPresence(onCount) {
+  _presenceCb = onCount;
+  _ensurePresence().then(() => {
+    // N'affiche un nombre que si la présence a déjà sync (>0 = Realtime opérationnel,
+    // l'appareil admin se compte lui-même) ; sinon on garde « … » plutôt qu'un « 0 » trompeur.
+    if (_presenceCount > 0 && typeof onCount === 'function') onCount(_presenceCount);
+  }).catch(() => {});
+  return () => { if (_presenceCb === onCount) _presenceCb = null; };
+}
+
 /* ============== UI : TABLEAU DE BORD DE FRÉQUENTATION ==================== */
 function renderAnalytics(a) {
   a = a || {};
@@ -558,6 +627,7 @@ function renderAnalytics(a) {
   // KPI principaux
   let html = `
     <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num" id="live-count">…</span><span class="stat-lbl">🟢 En ligne maintenant</span></div>
       <div class="stat-box"><span class="stat-num">${a.unique ?? 0}</span><span class="stat-lbl">👥 Visiteurs uniques</span></div>
       <div class="stat-box"><span class="stat-num">${a.today_unique ?? 0}</span><span class="stat-lbl">📆 Uniques aujourd'hui</span></div>
       <div class="stat-box"><span class="stat-num">${a.today ?? 0}</span><span class="stat-lbl">⚡ Visites aujourd'hui</span></div>
@@ -613,6 +683,13 @@ function renderAnalytics(a) {
   </div>`;
 
   box.innerHTML = html;
+  // Compteur « en ligne maintenant » mis à jour en direct via la présence Realtime.
+  if (typeof cloudWatchPresence === 'function') {
+    if (_presenceWatchStop) { try { _presenceWatchStop(); } catch {} }
+    _presenceWatchStop = cloudWatchPresence((n) => {
+      const el = $('live-count'); if (el) el.textContent = n;
+    });
+  }
 }
 
 /* ============== UI : ADMIN — ORGANISER LE PROGRAMME (UE & horaires) ====== */
@@ -732,7 +809,13 @@ async function renderAdminAccueil(email) {
       <label for="accueil-actu-texte">📌 « À la une » — message (affiché en grand sur l'accueil)</label>
       <textarea id="accueil-actu-texte" rows="4" maxlength="800" placeholder="ex : La soutenance a lieu le 20 juin à 9h en salle informatique. Dernier cours de préparation samedi. Pense à imprimer ton dossier.">${escapeHtml(cur.actu_texte || '')}</textarea>
     </div>
-    <p class="form-intro" style="margin-top:-6px;">Laisse ces deux champs <strong>vides</strong> pour ne rien afficher « À la une ».</p>
+    <div class="form-group">
+      <label for="accueil-actu-lien">🔗 « À la une » — lien (optionnel)</label>
+      <select id="accueil-actu-lien">${lienSelectOptions(cur && cur.actu_lien_type, cur && cur.actu_lien_valeur)}</select>
+      <input type="url" id="accueil-actu-lien-url" maxlength="500" placeholder="https://… (Drive, formulaire, vidéo…)" value="${cur && cur.actu_lien_type === 'url' ? escapeHtml(cur.actu_lien_valeur || '') : ''}" style="margin-top:8px;${cur && cur.actu_lien_type === 'url' ? '' : 'display:none;'}">
+      <span class="form-hint">Lien interne (semestre/matière) ou URL externe. Un bouton apparaîtra sous l'actualité.</span>
+    </div>
+    <p class="form-intro" style="margin-top:-6px;">Laisse le titre et le message <strong>vides</strong> pour ne rien afficher « À la une ».</p>
     <label class="accueil-switch" style="display:flex;gap:10px;align-items:flex-start;margin:14px 0;cursor:pointer;line-height:1.4;">
       <input type="checkbox" id="accueil-examen" ${cur.examen_actif ? 'checked' : ''} style="margin-top:3px;flex:0 0 auto;width:18px;height:18px;cursor:pointer;">
       <span>📅 <strong>Période d'examen en cours</strong> — affiche le bouton « Planning » et les dates/heures/statuts sous chaque matière. Décoche entre deux sessions : tout disparaît jusqu'au prochain examen.</span>
@@ -742,16 +825,31 @@ async function renderAdminAccueil(email) {
       <button id="accueil-save" class="btn-primary">💾 Enregistrer l'accueil</button>
     </div>`;
   $('accueil-back').onclick = () => showAdminQueue(email);
+  const _actuLienSel = $('accueil-actu-lien');
+  if (_actuLienSel) _actuLienSel.addEventListener('change', () => {
+    const u = $('accueil-actu-lien-url');
+    if (u) u.style.display = (_actuLienSel.value === 'url') ? '' : 'none';
+  });
   $('accueil-save').onclick = async () => {
     const btn = $('accueil-save'); btn.disabled = true; btn.textContent = '⏳ Enregistrement…';
     try {
+      const _lraw = ($('accueil-actu-lien') && $('accueil-actu-lien').value) || '';
+      let _alt = null, _alv = null;
+      if (_lraw === 'url') {
+        const _u = (typeof sanitizeUrl === 'function')
+          ? sanitizeUrl($('accueil-actu-lien-url') ? $('accueil-actu-lien-url').value : '') : '';
+        if (_u) { _alt = 'url'; _alv = _u; }
+      } else if (_lraw.indexOf('sem:') === 0) { _alt = 'semestre'; _alv = _lraw.slice(4); }
+      else if (_lraw.indexOf('mat:') === 0) { _alt = 'matiere'; _alv = _lraw.slice(4); }
       await cloudSaveHomeConfig({
         titre: $('accueil-titre').value,
         sous_titre: $('accueil-sous').value,
         planning_label: $('accueil-plan').value,
         examen_actif: $('accueil-examen').checked,
         actu_titre: $('accueil-actu-titre').value,
-        actu_texte: $('accueil-actu-texte').value
+        actu_texte: $('accueil-actu-texte').value,
+        actu_lien_type: _alt,
+        actu_lien_valeur: _alv
       });
       if (typeof applyHomeTheme === 'function') applyHomeTheme();
       if (typeof renderHomeActu === 'function') renderHomeActu();
@@ -771,14 +869,17 @@ async function renderAdminAccueil(email) {
   };
 }
 
-// Construit les <option> du sélecteur de lien : aucun, un semestre entier, ou
-// une matière précise (groupée par UE). Encodage : 'sem:S5' / 'mat:<id>'.
-function annonceLienOptions(cur) {
-  const sel = (cur && cur.lien_type)
-    ? (cur.lien_type === 'semestre' ? 'sem:' + cur.lien_valeur : 'mat:' + cur.lien_valeur)
-    : '';
+// Construit les <option> du sélecteur de lien (partagé annonce + « À la une ») :
+// aucun, URL externe, un semestre entier, ou une matière précise (groupée par UE).
+// Encodage : 'url' / 'sem:S5' / 'mat:<id>'.
+function lienSelectOptions(curType, curVal) {
+  const sel = curType === 'url' ? 'url'
+            : curType === 'semestre' ? 'sem:' + curVal
+            : curType === 'matiere' ? 'mat:' + curVal
+            : '';
   const opt = (v, txt) => `<option value="${escapeHtml(v)}"${sel === v ? ' selected' : ''}>${escapeHtml(txt)}</option>`;
   let html = opt('', 'Aucun lien')
+           + opt('url', '🌐 Lien externe (URL)')
            + opt('sem:S5', '📘 Tout le Semestre 5')
            + opt('sem:S6', '📗 Tout le Semestre 6');
   const mats = (typeof getAllMatieres === 'function') ? getAllMatieres() : [];
@@ -840,8 +941,9 @@ async function renderAdminAnnonce(email) {
     </div>
     <div class="form-group">
       <label for="annonce-lien">🔗 Lien (optionnel) — où l'annonce mène-t-elle ?</label>
-      <select id="annonce-lien">${annonceLienOptions(cur)}</select>
-      <span class="form-hint">Un bouton « 👉 Aller à… » apparaîtra sous l'annonce.</span>
+      <select id="annonce-lien">${lienSelectOptions(cur && cur.lien_type, cur && cur.lien_valeur)}</select>
+      <input type="url" id="annonce-lien-url" maxlength="500" placeholder="https://… (Drive, WhatsApp, formulaire)" value="${cur && cur.lien_type === 'url' ? escapeHtml(cur.lien_valeur || '') : ''}" style="margin-top:8px;${cur && cur.lien_type === 'url' ? '' : 'display:none;'}">
+      <span class="form-hint">Lien interne (semestre/matière) ou URL externe. Un bouton « 👉 Aller à… » apparaîtra sous l'annonce.</span>
     </div>
     <div class="form-divider">Aperçu (ce que verront les camarades)</div>
     <div id="annonce-preview"></div>
@@ -855,7 +957,12 @@ async function renderAdminAnnonce(email) {
   const readForm = () => {
     const raw = ($('annonce-lien') && $('annonce-lien').value) || '';
     let lien_type = null, lien_valeur = null;
-    if (raw.indexOf('sem:') === 0) { lien_type = 'semestre'; lien_valeur = raw.slice(4); }
+    if (raw === 'url') {
+      const u = (typeof sanitizeUrl === 'function')
+        ? sanitizeUrl($('annonce-lien-url') ? $('annonce-lien-url').value : '') : '';
+      if (u) { lien_type = 'url'; lien_valeur = u; }
+    }
+    else if (raw.indexOf('sem:') === 0) { lien_type = 'semestre'; lien_valeur = raw.slice(4); }
     else if (raw.indexOf('mat:') === 0) { lien_type = 'matiere'; lien_valeur = raw.slice(4); }
     return {
       type: selType || 'libre',
@@ -895,7 +1002,12 @@ async function renderAdminAnnonce(email) {
   ['annonce-titre', 'annonce-msg', 'annonce-debut', 'annonce-fin'].forEach(id => {
     $(id).addEventListener('input', updatePreview);
   });
-  $('annonce-lien').addEventListener('change', updatePreview);
+  $('annonce-lien').addEventListener('change', () => {
+    const u = $('annonce-lien-url');
+    if (u) u.style.display = ($('annonce-lien').value === 'url') ? '' : 'none';
+    updatePreview();
+  });
+  if ($('annonce-lien-url')) $('annonce-lien-url').addEventListener('input', updatePreview);
   $('annonce-msg').addEventListener('input', () => { msgEdited = true; });
   // Si les dates changent APRÈS le choix du template, on régénère le message
   // SAUF si le délégué l'a déjà personnalisé (pas de perte de saisie).
