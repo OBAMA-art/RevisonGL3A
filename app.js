@@ -1,4 +1,4 @@
-// Application Révisions GL3A - Logique
+// Application Mon Bon Berger (révisions GL3A) - Logique
 'use strict';
 
 const $ = (id) => document.getElementById(id);
@@ -287,7 +287,7 @@ function renderRevisions(focusSem) {
     } catch {}
   }
   renderMatieresList('revisions-list');
-  $('appTitle').textContent = 'Révisions GL3A';
+  $('appTitle').textContent = 'Mon Bon Berger';
   go('revisions');
   if (focusSem === 'S5' || focusSem === 'S6') {
     requestAnimationFrame(() => {
@@ -366,7 +366,7 @@ function renderHome(skipConfigRefresh) {
       _adm.hidden = true;
     }
   }
-  $('appTitle').textContent = 'Révisions GL3A';
+  $('appTitle').textContent = 'Mon Bon Berger';
   applyHomeTheme();   // titre/sous-titre/planning : config délégué (cloud) sinon défauts
   go('home', false);
   state.history = [];

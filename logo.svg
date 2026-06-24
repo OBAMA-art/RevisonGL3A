@@ -1,0 +1,10 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mon Bon Berger">
+  <title>Mon Bon Berger</title>
+  <rect width="512" height="512" fill="#243B6B"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 150 L368 196 L256 242 L144 196 Z" fill="#FBF7EE"/>
+    <path d="M190 206 L322 206 L304 284 Q256 308 208 284 Z" fill="#ECE6D6"/>
+    <path d="M256 196 L352 196 L352 300 Q352 334 324 334 Q300 334 306 308" fill="none" stroke="#E7A93C" stroke-width="13"/>
+    <circle cx="256" cy="196" r="14" fill="#E7A93C"/>
+  </g>
+</svg>

@@ -79,7 +79,7 @@
         '<span style="font-size:26px;line-height:1;">📲</span>' +
         '<div style="flex:1;min-width:0;">' +
           '<div style="font-weight:600;margin-bottom:2px;">Installe l\'application</div>' +
-          '<div style="opacity:.85;font-size:.92em;">Ajoute <strong>Révisions GL3A</strong> à ton écran d\'accueil : ouverture en un toucher, plus rapide, et utilisable hors-ligne.</div>' +
+          '<div style="opacity:.85;font-size:.92em;">Ajoute <strong>Mon Bon Berger</strong> à ton écran d\'accueil : ouverture en un toucher, plus rapide, et utilisable hors-ligne.</div>' +
           '<div id="pwa-install-help" style="display:none;margin-top:8px;font-size:.9em;background:rgba(255,255,255,.07);padding:8px 10px;border-radius:10px;"></div>' +
         '</div>' +
         '<button id="pwa-install-close" aria-label="Fermer" style="background:none;border:none;color:#fff;opacity:.6;font-size:18px;cursor:pointer;padding:2px 6px;line-height:1;">✕</button>' +

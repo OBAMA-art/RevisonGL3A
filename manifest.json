@@ -1,25 +1,16 @@
 {
-  "name": "Révisions GL3A",
-  "short_name": "Révisions",
-  "description": "Application de révision pour l'examen GL3A du 26 mai 2026",
+  "name": "Mon Bon Berger",
+  "short_name": "Mon Bon Berger",
+  "description": "Mon Bon Berger — application de révision des étudiants GL3A (IAI Cameroun) : résumés, QCM, épreuves corrigées, planning et Prof IA.",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#6366f1",
+  "background_color": "#243B6B",
+  "theme_color": "#243B6B",
   "lang": "fr",
   "icons": [
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='30' fill='%236366f1'/%3E%3Ctext x='50%25' y='62%25' font-size='130' text-anchor='middle' dominant-baseline='central'%3E📚%3C/text%3E%3C/svg%3E",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%236366f1'/%3E%3Ctext x='50%25' y='62%25' font-size='340' text-anchor='middle' dominant-baseline='central'%3E📚%3C/text%3E%3C/svg%3E",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

@@ -1,5 +1,5 @@
-// Service Worker - Révisions GL3A
-const VERSION = "v49";
+// Service Worker - Mon Bon Berger
+const VERSION = "v50";
 const SHELL_CACHE = `revisions-gl3a-shell-${VERSION}`;
 const DATA_CACHE = `revisions-gl3a-data-${VERSION}`;
 const OCR_CACHE = `revisions-gl3a-ocr-${VERSION}`;
@@ -19,7 +19,11 @@ const SHELL_ASSETS = [
   './ai.js',
   './notes.js',
   './compte.js',
-  './manifest.json'
+  './manifest.json',
+  './logo.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png'
 ];
 
 // Données dynamiques : network-first avec fallback cache
